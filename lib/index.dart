@@ -35,3 +35,4 @@ export '/authentication/social_sign_in_copy/social_sign_in_copy_widget.dart'
     show SocialSignInCopyWidget;
 export '/authentication/redirection_copy/redirection_copy_widget.dart'
     show RedirectionCopyWidget;
+export '/camera/camera_widget.dart' show CameraWidget;

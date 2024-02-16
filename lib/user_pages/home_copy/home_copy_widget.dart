@@ -229,8 +229,11 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
             key: scaffoldKey,
             backgroundColor: Colors.white,
             floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                print('FloatingActionButton pressed ...');
+              onPressed: () async {
+                logFirebaseEvent('HOME_COPY_FloatingActionButton_nasjbr31_');
+                logFirebaseEvent('FloatingActionButton_navigate_to');
+
+                context.pushNamed('camera');
               },
               backgroundColor: FlutterFlowTheme.of(context).warning,
               elevation: 8.0,

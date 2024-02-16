@@ -244,6 +244,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/Bringers',
           requireAuth: true,
           builder: (context, params) => const RedirectionCopyWidget(),
+        ),
+        FFRoute(
+          name: 'camera',
+          path: '/camera',
+          builder: (context, params) => const CameraWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
