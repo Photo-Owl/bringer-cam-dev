@@ -96,30 +96,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'Upload',
-          path: '/upload',
-          requireAuth: true,
-          builder: (context, params) => UploadWidget(
-            eventName: params.getParam('eventName', ParamType.String),
-          ),
-        ),
-        FFRoute(
-          name: 'Home',
-          path: '/home',
-          builder: (context, params) => const HomeWidget(),
-        ),
-        FFRoute(
-          name: 'Imageexpanded',
-          path: '/imageexpanded',
-          requireAuth: true,
-          asyncParams: {
-            'uploadsDoc': getDoc(['uploads'], UploadsRecord.fromSnapshot),
-          },
-          builder: (context, params) => ImageexpandedWidget(
-            uploadsDoc: params.getParam('uploadsDoc', ParamType.Document),
-          ),
-        ),
-        FFRoute(
           name: 'SignIn',
           path: '/signIn',
           builder: (context, params) => SignInWidget(

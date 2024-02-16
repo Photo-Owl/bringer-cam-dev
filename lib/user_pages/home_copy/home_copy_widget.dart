@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 import 'home_copy_model.dart';
@@ -227,6 +228,18 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Colors.white,
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                print('FloatingActionButton pressed ...');
+              },
+              backgroundColor: FlutterFlowTheme.of(context).warning,
+              elevation: 8.0,
+              child: FaIcon(
+                FontAwesomeIcons.camera,
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                size: 24.0,
+              ),
+            ),
             drawer: Drawer(
               elevation: 16.0,
               child: wrapWithModel(

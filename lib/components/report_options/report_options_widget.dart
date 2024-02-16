@@ -109,7 +109,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                   );
                   logFirebaseEvent('Container_navigate_to');
 
-                  context.goNamed('Home');
+                  context.pushNamed('HomeCopy');
                 },
                 child: Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
@@ -169,7 +169,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                   );
                   logFirebaseEvent('Container_navigate_to');
 
-                  context.goNamed('Home');
+                  context.goNamed('HomeCopy');
                 },
                 child: Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
@@ -229,7 +229,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                   );
                   logFirebaseEvent('Container_navigate_to');
 
-                  context.goNamed('Home');
+                  context.goNamed('HomeCopy');
                 },
                 child: Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,

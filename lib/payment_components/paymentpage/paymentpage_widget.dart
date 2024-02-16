@@ -169,7 +169,7 @@ class _PaymentpageWidgetState extends State<PaymentpageWidget> {
                                 'PAYMENTPAGE_PAGE_Text_6lh3qub4_ON_TAP');
                             logFirebaseEvent('Text_navigate_to');
 
-                            context.goNamed('Home');
+                            context.goNamed('HomeCopy');
                           },
                           child: Text(
                             'You can close this tab',

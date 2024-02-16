@@ -147,20 +147,8 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               30.0, 0.0, 30.0, 0.0),
                           child: FFButtonWidget(
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'ENTER_EVENT_NAME_UploadPhotos_ON_TAP');
-                              logFirebaseEvent('UploadPhotos_navigate_to');
-
-                              context.pushNamed(
-                                'Upload',
-                                queryParameters: {
-                                  'eventName': serializeParam(
-                                    _model.yourNameController.text,
-                                    ParamType.String,
-                                  ),
-                                }.withoutNulls,
-                              );
+                            onPressed: () {
+                              print('UploadPhotos pressed ...');
                             },
                             text: 'Confirm',
                             options: FFButtonOptions(

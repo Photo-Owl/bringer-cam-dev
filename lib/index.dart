@@ -3,10 +3,6 @@ export '/authentication/redirection/redirection_widget.dart'
     show RedirectionWidget;
 export '/authentication/otp_verification/otp_verification_widget.dart'
     show OtpVerificationWidget;
-export '/events/upload/upload_widget.dart' show UploadWidget;
-export '/user_pages/home/home_widget.dart' show HomeWidget;
-export '/user_pages/imageexpanded/imageexpanded_widget.dart'
-    show ImageexpandedWidget;
 export '/authentication/sign_in/sign_in_widget.dart' show SignInWidget;
 export '/authentication/skip_selfie/skip_selfie_widget.dart'
     show SkipSelfieWidget;

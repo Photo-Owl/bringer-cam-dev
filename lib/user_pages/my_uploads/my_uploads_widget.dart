@@ -14,7 +14,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 import 'my_uploads_model.dart';
@@ -179,58 +178,6 @@ class _MyUploadsWidgetState extends State<MyUploadsWidget>
               child: Scaffold(
                 key: scaffoldKey,
                 backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-                floatingActionButton: FloatingActionButton.extended(
-                  onPressed: () async {
-                    logFirebaseEvent(
-                        'MY_UPLOADS_FloatingActionButton_8dl10ait');
-                    logFirebaseEvent(
-                        'FloatingActionButton_google_analytics_ev');
-                    logFirebaseEvent(
-                      'Upload Button from Home',
-                      parameters: {
-                        'Uid': currentUserUid,
-                        'Name': currentUserDisplayName,
-                      },
-                    );
-                    logFirebaseEvent('FloatingActionButton_backend_call');
-
-                    await UserEventsRecord.collection
-                        .doc()
-                        .set(createUserEventsRecordData(
-                          eventName: 'Share photos',
-                          uid: currentUserUid,
-                          timestamp: getCurrentTimestamp,
-                        ));
-                    logFirebaseEvent('FloatingActionButton_navigate_to');
-
-                    context.pushNamed('Upload');
-                  },
-                  backgroundColor: FlutterFlowTheme.of(context).primary,
-                  elevation: 8.0,
-                  label: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      const FaIcon(
-                        FontAwesomeIcons.cloudUploadAlt,
-                        color: Colors.white,
-                        size: 24.0,
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
-                        child: Text(
-                          'Share Photos',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Inter',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 drawer: Drawer(
                   elevation: 16.0,
                   child: wrapWithModel(
@@ -379,68 +326,31 @@ class _MyUploadsWidgetState extends State<MyUploadsWidget>
                                                   gridViewIndex];
                                           return Stack(
                                             children: [
-                                              InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'MY_UPLOADS_PAGE_Image_y1fcyvlj_ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'Image_navigate_to');
-
-                                                  context.pushNamed(
-                                                    'Imageexpanded',
-                                                    queryParameters: {
-                                                      'uploadsDoc':
-                                                          serializeParam(
-                                                        gridViewUploadsRecord,
-                                                        ParamType.Document,
-                                                      ),
-                                                    }.withoutNulls,
-                                                    extra: <String, dynamic>{
-                                                      'uploadsDoc':
-                                                          gridViewUploadsRecord,
-                                                      kTransitionInfoKey:
-                                                          const TransitionInfo(
-                                                        hasTransition: true,
-                                                        transitionType:
-                                                            PageTransitionType
-                                                                .scale,
-                                                        alignment: Alignment
-                                                            .bottomCenter,
-                                                      ),
-                                                    },
-                                                  );
-                                                },
-                                                child: OctoImage(
-                                                  placeholderBuilder:
-                                                      OctoPlaceholder.blurHash(
-                                                    'BEN]Rv-WPn}SQ[VF',
-                                                  ),
-                                                  image:
-                                                      CachedNetworkImageProvider(
-                                                    functions.convertToImagePath(
-                                                        gridViewUploadsRecord
-                                                                        .resizedImage250 !=
-                                                                    ''
-                                                            ? gridViewUploadsRecord
-                                                                .resizedImage250
-                                                            : gridViewUploadsRecord
-                                                                .uploadUrl),
-                                                  ),
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          1.0,
-                                                  height:
-                                                      MediaQuery.sizeOf(context)
-                                                              .height *
-                                                          1.0,
-                                                  fit: BoxFit.cover,
+                                              OctoImage(
+                                                placeholderBuilder:
+                                                    OctoPlaceholder.blurHash(
+                                                  'BEN]Rv-WPn}SQ[VF',
                                                 ),
+                                                image:
+                                                    CachedNetworkImageProvider(
+                                                  functions.convertToImagePath(
+                                                      gridViewUploadsRecord
+                                                                      .resizedImage250 !=
+                                                                  ''
+                                                          ? gridViewUploadsRecord
+                                                              .resizedImage250
+                                                          : gridViewUploadsRecord
+                                                              .uploadUrl),
+                                                ),
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width *
+                                                        1.0,
+                                                height:
+                                                    MediaQuery.sizeOf(context)
+                                                            .height *
+                                                        1.0,
+                                                fit: BoxFit.cover,
                                               ),
                                               if (valueOrDefault<bool>(
                                                     gridViewUploadsRecord

@@ -429,99 +429,42 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                                                       ? imageUploadsRecordList
                                                           .first
                                                       : null;
-                                              return InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'PREMIUM_PHOTOS_Image_l2gb7qgq_ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'Image_backend_call');
-
-                                                  await UserEventsRecord
-                                                      .collection
-                                                      .doc()
-                                                      .set(
-                                                          createUserEventsRecordData(
-                                                        eventName:
-                                                            'Image Expanded',
-                                                        uid: currentUserUid,
-                                                        timestamp:
-                                                            getCurrentTimestamp,
-                                                        albumId:
+                                              return Hero(
+                                                tag: functions.convertToImagePath(
+                                                    imageUploadsRecord
+                                                                    ?.resizedImage250 !=
+                                                                null &&
                                                             imageUploadsRecord
-                                                                .albumId,
-                                                        key: imageUploadsRecord
-                                                            .key,
-                                                      ));
-                                                  logFirebaseEvent(
-                                                      'Image_navigate_to');
-
-                                                  context.pushNamed(
-                                                    'Imageexpanded',
-                                                    queryParameters: {
-                                                      'uploadsDoc':
-                                                          serializeParam(
-                                                        imageUploadsRecord,
-                                                        ParamType.Document,
-                                                      ),
-                                                    }.withoutNulls,
-                                                    extra: <String, dynamic>{
-                                                      'uploadsDoc':
-                                                          imageUploadsRecord,
-                                                      kTransitionInfoKey:
-                                                          const TransitionInfo(
-                                                        hasTransition: true,
-                                                        transitionType:
-                                                            PageTransitionType
-                                                                .scale,
-                                                        alignment: Alignment
-                                                            .bottomCenter,
-                                                      ),
-                                                    },
-                                                  );
-                                                },
-                                                child: Hero(
-                                                  tag: functions.convertToImagePath(
-                                                      imageUploadsRecord
-                                                                      ?.resizedImage250 !=
-                                                                  null &&
-                                                              imageUploadsRecord
-                                                                      ?.resizedImage250 !=
-                                                                  ''
-                                                          ? imageUploadsRecord!
-                                                              .resizedImage250
-                                                          : imageUploadsRecord!
-                                                              .imageUrl),
-                                                  transitionOnUserGestures:
-                                                      true,
-                                                  child: OctoImage(
-                                                    placeholderBuilder:
-                                                        OctoPlaceholder
-                                                            .blurHash(
-                                                      'BEN]Rv-WPn}SQ[VF',
-                                                    ),
-                                                    image:
-                                                        CachedNetworkImageProvider(
-                                                      functions.convertToImagePath(imageUploadsRecord
-                                                                      .resizedImage250 !=
-                                                                  ''
-                                                          ? imageUploadsRecord.resizedImage250
-                                                          : imageUploadsRecord.imageUrl),
-                                                    ),
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
-                                                        1.0,
-                                                    height: MediaQuery.sizeOf(
-                                                                context)
-                                                            .height *
-                                                        1.0,
-                                                    fit: BoxFit.cover,
+                                                                    ?.resizedImage250 !=
+                                                                ''
+                                                        ? imageUploadsRecord!
+                                                            .resizedImage250
+                                                        : imageUploadsRecord!
+                                                            .imageUrl),
+                                                transitionOnUserGestures: true,
+                                                child: OctoImage(
+                                                  placeholderBuilder:
+                                                      OctoPlaceholder.blurHash(
+                                                    'BEN]Rv-WPn}SQ[VF',
                                                   ),
+                                                  image:
+                                                      CachedNetworkImageProvider(
+                                                    functions.convertToImagePath(
+                                                        imageUploadsRecord
+                                                                        .resizedImage250 !=
+                                                                    ''
+                                                            ? imageUploadsRecord.resizedImage250
+                                                            : imageUploadsRecord.imageUrl),
+                                                  ),
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          1.0,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          1.0,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               );
                                             },

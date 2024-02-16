@@ -147,7 +147,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
                 logFirebaseEvent('PAYMENT_FAILED_GO_BACK_TO_HOME_BTN_ON_TA');
                 logFirebaseEvent('Button_navigate_to');
 
-                context.goNamed('Home');
+                context.goNamed('HomeCopy');
               },
               text: 'Go back to Home',
               options: FFButtonOptions(
