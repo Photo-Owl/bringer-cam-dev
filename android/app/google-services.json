@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "451341218107",
+    "project_id": "your-photos-dev",
+    "storage_bucket": "your-photos-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451341218107:android:f5e07dce573717ac98c71e",
+        "android_client_info": {
+          "package_name": "com.smoose.photoowl_dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsTZqHgbw7-TriAYsMtrJ5MsXPsJeHjjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451341218107:android:668dd832695b508398c71e",
+        "android_client_info": {
+          "package_name": "com.smoose.photoowldev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsTZqHgbw7-TriAYsMtrJ5MsXPsJeHjjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
