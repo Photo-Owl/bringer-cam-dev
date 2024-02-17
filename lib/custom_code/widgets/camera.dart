@@ -32,6 +32,11 @@ class _CameraState extends State<Camera> {
   @override
   void initState() {
     super.initState();
+    initCamera();
+  }
+
+  Future<void> initCamera() async {
+    final cameras = await availableCameras();
     controller = CameraController(cameras[0], ResolutionPreset.medium);
     controller.initialize().then((_) {
       if (!mounted) {
@@ -43,7 +48,7 @@ class _CameraState extends State<Camera> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 
