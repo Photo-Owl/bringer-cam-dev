@@ -28,6 +28,8 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   late CameraController controller;
+  int selectedCameraIndex = 0;
+  late List<CameraDescription> cameras;
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _CameraState extends State<Camera> {
   }
 
   Future<void> initCamera() async {
-    final cameras = await availableCameras();
+    cameras = await availableCameras();
     controller = CameraController(cameras[0], ResolutionPreset.medium);
     controller.initialize().then((_) {
       if (!mounted) {
@@ -52,28 +54,65 @@ class _CameraState extends State<Camera> {
     super.dispose();
   }
 
+  void onCapturePressed(context) async {
+    if (controller.value.isTakingPicture) {
+      // A capture is already pending, do nothing.
+      return null;
+    }
+    try {
+      XFile file = await controller.takePicture();
+      print('Image captured and saved to ${file.path}');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void onSwitchCamera() {
+    selectedCameraIndex =
+        selectedCameraIndex < cameras.length - 1 ? selectedCameraIndex + 1 : 0;
+    CameraController _newController = CameraController(
+      cameras[selectedCameraIndex],
+      ResolutionPreset.medium,
+    );
+
+    _newController.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        controller = _newController;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!controller.value.isInitialized) {
       return Container();
     }
-    return GestureDetector(
-      onTap: () async {
-        if (controller.value.isTakingPicture) {
-          // A capture is already pending, do nothing.
-          return null;
-        }
-        try {
-          XFile file = await controller.takePicture();
-          print('Image captured and saved to ${file.path}');
-        } catch (e) {
-          print(e);
-        }
-      },
-      child: AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: CameraPreview(controller),
-      ),
+    return Stack(
+      children: <Widget>[
+        CameraPreview(controller),
+        Positioned(
+          bottom: 0,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.camera, color: Colors.white),
+                  onPressed: () => onCapturePressed(context),
+                ),
+                IconButton(
+                  icon: Icon(Icons.switch_camera, color: Colors.white),
+                  onPressed: onSwitchCamera,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
