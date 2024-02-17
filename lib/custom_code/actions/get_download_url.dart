@@ -13,7 +13,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_saver/file_saver.dart';
-import 'dart:html' as html;
 
 Future<String> getDownloadUrl(
   String userid,
