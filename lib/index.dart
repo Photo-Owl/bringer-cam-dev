@@ -10,12 +10,8 @@ export '/shop/product/product_widget.dart' show ProductWidget;
 export '/shop/select_photos/select_photos_widget.dart' show SelectPhotosWidget;
 export '/shop/address/address_widget.dart' show AddressWidget;
 export '/shop/review_order/review_order_widget.dart' show ReviewOrderWidget;
-export '/payment_components/paymentpage/paymentpage_widget.dart'
-    show PaymentpageWidget;
 export '/user_pages/premium_photos/premium_photos_widget.dart'
     show PremiumPhotosWidget;
-export '/payment_components/payment_confirmation/payment_confirmation_widget.dart'
-    show PaymentConfirmationWidget;
 export '/user_pages/my_uploads/my_uploads_widget.dart' show MyUploadsWidget;
 export '/events/createan_event/createan_event_widget.dart'
     show CreateanEventWidget;

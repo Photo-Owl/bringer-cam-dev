@@ -436,22 +436,6 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                             getCurrentTimestamp.toString(),
                             currentUserUid,
                           );
-                          logFirebaseEvent('Button_navigate_to');
-
-                          context.pushNamed(
-                            'Paymentpage',
-                            queryParameters: {
-                              'paymentRequestId': serializeParam(
-                                InstamojoGroup.createPaymentRequestCall
-                                    .id(
-                                      (_model.apiResult545?.jsonBody ?? ''),
-                                    )
-                                    .toString(),
-                                ParamType.String,
-                              ),
-                            }.withoutNulls,
-                          );
-
                           logFirebaseEvent('Button_launch_u_r_l');
                           await launchURL(
                               InstamojoGroup.createPaymentRequestCall

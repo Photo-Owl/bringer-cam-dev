@@ -136,23 +136,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'Paymentpage',
-          path: '/paymentpage',
-          builder: (context, params) => PaymentpageWidget(
-            paymentRequestId:
-                params.getParam('paymentRequestId', ParamType.String),
-            imagekey: params.getParam('imagekey', ParamType.String),
-          ),
-        ),
-        FFRoute(
           name: 'PremiumPhotos',
           path: '/Premium',
           builder: (context, params) => const PremiumPhotosWidget(),
-        ),
-        FFRoute(
-          name: 'PaymentConfirmation',
-          path: '/paymentConfirmation',
-          builder: (context, params) => const PaymentConfirmationWidget(),
         ),
         FFRoute(
           name: 'MyUploads',
