@@ -91,25 +91,121 @@ class _CameraState extends State<Camera> {
       return Container();
     }
     return Stack(
-      children: <Widget>[
+      children: [
         CameraPreview(controller),
-        Positioned(
-          bottom: 0,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.camera, color: Colors.white),
-                  onPressed: () => onCapturePressed(context),
+        Container(
+          width: MediaQuery.sizeOf(context).width,
+          height: MediaQuery.sizeOf(context).height * 1,
+          decoration: BoxDecoration(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: AlignmentDirectional(-1, -1),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                  child: Container(
+                    decoration: BoxDecoration(),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.safePop();
+                      },
+                      child: Icon(
+                        Icons.close,
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        size: 24,
+                      ),
+                    ),
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.switch_camera, color: Colors.white),
-                  onPressed: onSwitchCamera,
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                        child: InkWell(
+                          onTap: () async {
+                            logFirebaseEvent(
+                                'CAMERA_TEMP_Container_kwyzkp5i_ON_TAP');
+                            logFirebaseEvent('Container_navigate_to');
+                            context.pushNamed('HomeCopy');
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color(0x85000000),
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(12),
+                              child: Icon(
+                                Icons.photo_library,
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        )),
+                    InkWell(
+                      onTap: () => onCapturePressed(context),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                        ),
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding: EdgeInsets.all(4),
+                          child: Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0x85000000),
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: InkWell(
+                            onTap: onSwitchCamera,
+                            child: Padding(
+                              padding: EdgeInsets.all(12),
+                              child: Icon(
+                                Icons.cameraswitch_outlined,
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                size: 20,
+                              ),
+                            ),
+                          )),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
