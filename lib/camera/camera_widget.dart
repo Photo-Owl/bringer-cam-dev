@@ -57,7 +57,7 @@ class _CameraWidgetState extends State<CameraWidget> {
               : FocusScope.of(context).unfocus(),
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            backgroundColor: FlutterFlowTheme.of(context).primaryText,
             body: SafeArea(
               top: true,
               child: Container(
