@@ -63,8 +63,9 @@ class _CameraWidgetState extends State<CameraWidget> {
               child: Container(
                 width: MediaQuery.sizeOf(context).width * 1.0,
                 height: MediaQuery.sizeOf(context).height * 1.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  shape: BoxShape.rectangle,
                 ),
                 child: SizedBox(
                   width: MediaQuery.sizeOf(context).width * 1.0,

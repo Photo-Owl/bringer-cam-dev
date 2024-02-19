@@ -66,14 +66,16 @@ class _CameraState extends State<Camera> {
       XFile file = await controller.takePicture();
       print('Image captured and saved to ${file.path}');
       // Get the local path
-      final directory = await getApplicationDocumentsDirectory();
-      final path = directory.path;
+      final directory = await getExternalStorageDirectory();
+      final path = '${directory.path}/Pictures';
 
       // Copy the file to a new path
       final newPath = '$path/${p.basename(file.path)}';
       await File(file.path).copy(newPath);
 
       print('Image captured and saved locally at $newPath');
+      MethodChannel('flutter/platform')
+          .invokeMethod('updateMediaStore', {'filePath': newPath});
     } catch (e) {
       print(e);
     }
@@ -84,7 +86,7 @@ class _CameraState extends State<Camera> {
         selectedCameraIndex < cameras.length - 1 ? selectedCameraIndex + 1 : 0;
     CameraController _newController = CameraController(
       cameras[selectedCameraIndex],
-      ResolutionPreset.medium,
+      ResolutionPreset.veryHigh,
     );
 
     _newController.initialize().then((_) {
@@ -137,7 +139,7 @@ class _CameraState extends State<Camera> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 15),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 35),
                 child: Container(
                   width: MediaQuery.sizeOf(context).width,
                   decoration: BoxDecoration(),
@@ -185,8 +187,8 @@ class _CameraState extends State<Camera> {
                           child: Padding(
                             padding: EdgeInsets.all(4),
                             child: Container(
-                              width: 36,
-                              height: 36,
+                              width: 42,
+                              height: 42,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
