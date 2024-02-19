@@ -1,19 +1,17 @@
+import '/backend/api_requests/api_calls.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'my_uploads_widget.dart' show MyUploadsWidget;
+import 'uploads_widget.dart' show UploadsWidget;
 import 'package:flutter/material.dart';
 
-class MyUploadsModel extends FlutterFlowModel<MyUploadsWidget> {
+class UploadsModel extends FlutterFlowModel<UploadsWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Custom Action - checkVersion] action in MyUploads widget.
+  // Stores action output result for [Custom Action - checkVersion] action in Uploads widget.
   bool? versionCheckResult;
-  // State field(s) for TabBar widget.
-  TabController? tabBarController;
-  int get tabBarCurrentIndex =>
-      tabBarController != null ? tabBarController!.index : 0;
-
+  // Stores action output result for [Backend Call - API (searchFacesUsingTIF)] action in Column widget.
+  ApiCallResponse? apiResultruf;
   // Model for sidebar component.
   late SidebarModel sidebarModel;
 
@@ -27,7 +25,6 @@ class MyUploadsModel extends FlutterFlowModel<MyUploadsWidget> {
   @override
   void dispose() {
     unfocusNode.dispose();
-    tabBarController?.dispose();
     sidebarModel.dispose();
   }
 

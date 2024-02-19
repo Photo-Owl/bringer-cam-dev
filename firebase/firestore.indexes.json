@@ -23,20 +23,6 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "owner_id",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "uploaded_at",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "uploads",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
           "fieldPath": "album_id",
           "order": "ASCENDING"
         },

@@ -141,11 +141,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const PremiumPhotosWidget(),
         ),
         FFRoute(
-          name: 'MyUploads',
-          path: '/myUploads',
-          builder: (context, params) => const MyUploadsWidget(),
-        ),
-        FFRoute(
           name: 'CreateanEvent',
           path: '/createanEvent',
           builder: (context, params) => const CreateanEventWidget(),
@@ -235,6 +230,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'camera',
           path: '/camera',
           builder: (context, params) => const CameraWidget(),
+        ),
+        FFRoute(
+          name: 'Uploads',
+          path: '/uploads',
+          builder: (context, params) => const UploadsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
