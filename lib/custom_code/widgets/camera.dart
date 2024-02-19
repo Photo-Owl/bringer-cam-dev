@@ -16,6 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Camera extends StatefulWidget {
   const Camera({
@@ -59,9 +60,10 @@ class _CameraState extends State<Camera> {
     super.dispose();
   }
 
-  String getOwnerId() async {
+  Future<String?> getOwnerId() async {
     final user = FirebaseAuth.instance.currentUser;
     final userId = user?.uid;
+    return userId;
   }
 
   void onCapturePressed(context) async {
@@ -165,7 +167,7 @@ class _CameraState extends State<Camera> {
                               logFirebaseEvent(
                                   'CAMERA_TEMP_Container_kwyzkp5i_ON_TAP');
                               logFirebaseEvent('Container_navigate_to');
-                              context.pushNamed('HomeCopy');
+                              context.pushNamed('uploads');
                             },
                             child: Container(
                               decoration: BoxDecoration(
