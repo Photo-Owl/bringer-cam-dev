@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom widgets
@@ -14,6 +15,7 @@ import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
+import 'package:flutter/services.dart';
 
 class Camera extends StatefulWidget {
   const Camera({
@@ -67,8 +69,9 @@ class _CameraState extends State<Camera> {
       print('Image captured and saved to ${file.path}');
       // Get the local path
       final directory = await getExternalStorageDirectory();
-      final path = '${directory.path}/Pictures';
+      final path = '${directory?.path}/Pictures';
 
+      await Directory(path).create(recursive: true);
       // Copy the file to a new path
       final newPath = '$path/${p.basename(file.path)}';
       await File(file.path).copy(newPath);
@@ -76,6 +79,7 @@ class _CameraState extends State<Camera> {
       print('Image captured and saved locally at $newPath');
       MethodChannel('flutter/platform')
           .invokeMethod('updateMediaStore', {'filePath': newPath});
+      InsertImageToSqlite(newPath, 'a', 123123);
     } catch (e) {
       print(e);
     }

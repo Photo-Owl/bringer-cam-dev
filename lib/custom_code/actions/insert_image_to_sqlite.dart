@@ -10,16 +10,27 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'dart:io';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:file_saver/file_saver.dart';
-
-Future<String> downloadImage(
-  String url,
-  String key,
+Future insertImageToSqlite(
+  String? path,
+  String? owner,
+  int? timestamp,
 ) async {
-  await FileSaver.instance
-      .saveFile(name: key + ".jpeg", link: LinkDetails(link: url));
-  return url;
+  final database = openDatabase(
+    join(await getDatabasesPath(), 'camera_media.db'),
+  );
+
+  final Map<String, dynamic> row = {
+    'path': path,
+    'owner': owner,
+    'unix_timestamp': timestamp,
+    'is_uploaded': 0,
+    'is_uploading': 0
+  };
+
+  final db = await database;
+  await db.insert('Images', row);
+  // Add your function code here!
 }

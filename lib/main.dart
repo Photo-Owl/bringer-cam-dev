@@ -6,6 +6,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
+import '/backend/sqlite/sqlite_manager.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -13,6 +14,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await initFirebase();
+
+  await SQLiteManager.initialize();
 
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
