@@ -79,7 +79,7 @@ class _CameraState extends State<Camera> {
       print('Image captured and saved locally at $newPath');
       MethodChannel('flutter/platform')
           .invokeMethod('updateMediaStore', {'filePath': newPath});
-      InsertImageToSqlite(newPath, 'a', 123123);
+      insertImageToSqlite(newPath, 'a', 123123);
     } catch (e) {
       print(e);
     }
