@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'package:camera/camera.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:path/path.dart' as p;
 
 class Camera extends StatefulWidget {
   const Camera({
@@ -62,6 +65,15 @@ class _CameraState extends State<Camera> {
     try {
       XFile file = await controller.takePicture();
       print('Image captured and saved to ${file.path}');
+      // Get the local path
+      final directory = await getApplicationDocumentsDirectory();
+      final path = directory.path;
+
+      // Copy the file to a new path
+      final newPath = '$path/${p.basename(file.path)}';
+      await File(file.path).copy(newPath);
+
+      print('Image captured and saved locally at $newPath');
     } catch (e) {
       print(e);
     }
