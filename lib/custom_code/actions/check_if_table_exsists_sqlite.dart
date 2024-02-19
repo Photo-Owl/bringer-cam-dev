@@ -13,36 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-Future insertImageToSqlite(
-  String? path,
-  String? owner,
-  int? timestamp,
-) async {
+Future checkIfTableExsistsSqlite(String? tableName) async {
   final database = openDatabase(
     join(await getDatabasesPath(), 'camera_media.db'),
   );
 
-  final Map<String, dynamic> row = {
-    'path': path,
-    'owner': owner,
-    'unix_timestamp': timestamp,
-    'is_uploaded': 0,
-    'is_uploading': 0
-  };
   final db = await database;
-  if (!(await checkIfTableExsistsSqlite('Images'))) {
-    await db.execute('''
-    CREATE TABLE Images(
-      id INTEGER PRIMARY KEY,
-      path TEXT,
-      owner TEXT,
-      unix_timestamp INTEGER,
-      is_uploaded INTEGER,
-      is_uploading INTEGER
-    )
-  ''');
-  }
+  var tableExists = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name=?",
+      [tableName]);
 
-  await db.insert('Images', row);
-  // Add your function code here!
+  return tableExists.isNotEmpty;
 }
