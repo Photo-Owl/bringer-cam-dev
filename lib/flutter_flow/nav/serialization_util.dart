@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '/backend/backend.dart';
 
 import '/backend/sqlite/queries/sqlite_row.dart';
+import '/backend/sqlite/queries/read.dart';
 import '../../flutter_flow/place.dart';
 import '../../flutter_flow/uploaded_file.dart';
 
@@ -253,6 +254,8 @@ dynamic deserializeParam<T>(
       case ParamType.SqliteRow:
         final data = json.decode(param) as Map<String, dynamic>;
         switch (T) {
+          case ReadAllImagesRow:
+            return ReadAllImagesRow(data);
           default:
             return null;
         }

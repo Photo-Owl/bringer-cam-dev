@@ -59,6 +59,11 @@ class _CameraState extends State<Camera> {
     super.dispose();
   }
 
+  String getOwnerId() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final userId = user?.uid;
+  }
+
   void onCapturePressed(context) async {
     if (controller.value.isTakingPicture) {
       // A capture is already pending, do nothing.
@@ -79,7 +84,9 @@ class _CameraState extends State<Camera> {
       print('Image captured and saved locally at $newPath');
       MethodChannel('flutter/platform')
           .invokeMethod('updateMediaStore', {'filePath': newPath});
-      insertImageToSqlite(newPath, 'a', 123123);
+      var ownerId = await getOwnerId();
+      final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      insertImageToSqlite(newPath, ownerId, unixTimestamp);
     } catch (e) {
       print(e);
     }

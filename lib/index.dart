@@ -12,7 +12,6 @@ export '/shop/address/address_widget.dart' show AddressWidget;
 export '/shop/review_order/review_order_widget.dart' show ReviewOrderWidget;
 export '/user_pages/premium_photos/premium_photos_widget.dart'
     show PremiumPhotosWidget;
-export '/user_pages/my_uploads/my_uploads_widget.dart' show MyUploadsWidget;
 export '/events/createan_event/createan_event_widget.dart'
     show CreateanEventWidget;
 export '/read_qr/read_qr_widget.dart' show ReadQrWidget;
@@ -32,3 +31,4 @@ export '/authentication/social_sign_in_copy/social_sign_in_copy_widget.dart'
 export '/authentication/redirection_copy/redirection_copy_widget.dart'
     show RedirectionCopyWidget;
 export '/camera/camera_widget.dart' show CameraWidget;
+export '/user_pages/uploads/uploads_widget.dart' show UploadsWidget;
