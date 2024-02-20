@@ -6,11 +6,14 @@ import '/components/update_required/update_required_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'uploads_model.dart';
 export 'uploads_model.dart';
@@ -56,7 +59,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const UpdateRequiredWidget(),
+                child: UpdateRequiredWidget(),
               ),
             );
           },
@@ -65,7 +68,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
         return;
       }
 
-      if (currentUserDisplayName == '') {
+      if (currentUserDisplayName == null || currentUserDisplayName == '') {
         logFirebaseEvent('Uploads_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
@@ -79,7 +82,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const GiveNameWidget(),
+                child: GiveNameWidget(),
               ),
             );
           },
@@ -163,7 +166,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
               child: wrapWithModel(
                 model: _model.sidebarModel,
                 updateCallback: () => setState(() {}),
-                child: const SidebarWidget(
+                child: SidebarWidget(
                   index: 0,
                 ),
               ),
@@ -183,7 +186,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -206,20 +209,20 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                       ),
                       Expanded(
                         child: Container(
-                          decoration: const BoxDecoration(),
+                          decoration: BoxDecoration(),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 24.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 2.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => Text(
-                                      'Hey $currentUserDisplayName',
+                                      'Hey ${currentUserDisplayName}',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .titleMedium,
@@ -229,7 +232,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                 Container(
                                   width: 25.0,
                                   height: 25.0,
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     color: Color(0x00FFFFFF),
                                   ),
                                   child: ClipRRect(
@@ -249,7 +252,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                       ),
                     ],
                   ),
-                  actions: const [],
+                  actions: [],
                   flexibleSpace: FlexibleSpaceBar(
                     background: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
@@ -269,7 +272,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     top: false,
                     child: Container(
                       height: MediaQuery.sizeOf(context).height * 1.0,
-                      decoration: const BoxDecoration(),
+                      decoration: BoxDecoration(),
                       child: Builder(
                         builder: (context) {
                           final uploadedImage = _model.uploadedImages!.toList();
@@ -280,7 +283,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                               final uploadedImageItem =
                                   uploadedImage[uploadedImageIndex];
                               return Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 30.0, 0.0, 0.0),
                                 child: Container(
                                   width: MediaQuery.sizeOf(context).width * 1.0,

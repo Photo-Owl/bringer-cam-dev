@@ -5,7 +5,11 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'selectmorephotos_model.dart';
 export 'selectmorephotos_model.dart';
@@ -53,7 +57,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
     context.watch<FFAppState>();
 
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(20.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -69,7 +73,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                 Flexible(
                   child: Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Color(0xFF2A2F32),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(0.0),
@@ -79,7 +83,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,11 +101,11 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                                 ),
                           ),
                           FlutterFlowIconButton(
-                            borderColor: const Color(0xFF2A2F32),
+                            borderColor: Color(0xFF2A2F32),
                             borderRadius: 20.0,
                             borderWidth: 1.0,
                             buttonSize: 40.0,
-                            fillColor: const Color(0xFF2A2F32),
+                            fillColor: Color(0xFF2A2F32),
                             icon: Icon(
                               Icons.close,
                               color:
@@ -124,14 +128,14 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
               ],
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
               child: Text(
                 'Found more Photos you\'d like to buy ?',
                 style: FlutterFlowTheme.of(context).labelLarge,
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
               child: RichText(
                 textScaleFactor: MediaQuery.of(context).textScaleFactor,
                 text: TextSpan(
@@ -146,19 +150,19 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 10.0, 20.0),
+                        EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 10.0, 20.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
                             'SELECTMOREPHOTOS_COMP_BUY_NOW_BTN_ON_TAP');
-                        var shouldSetState = false;
+                        var _shouldSetState = false;
                         if (widget.albumsdoc!.premiumImageDiscountedCost <
                             10.0) {
                           logFirebaseEvent('Button_close_dialog,_drawer,_etc');
@@ -173,18 +177,18 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                                       FlutterFlowTheme.of(context).primaryText,
                                 ),
                               ),
-                              duration: const Duration(milliseconds: 4000),
+                              duration: Duration(milliseconds: 4000),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).secondary,
                             ),
                           );
-                          if (shouldSetState) setState(() {});
+                          if (_shouldSetState) setState(() {});
                           return;
                         }
                         logFirebaseEvent('Button_backend_call');
                         _model.apiResultm8a =
                             await InstamojoGroup.getAccessTokenCall.call();
-                        shouldSetState = true;
+                        _shouldSetState = true;
                         if ((_model.apiResultm8a?.succeeded ?? true)) {
                           logFirebaseEvent('Button_backend_call');
                           _model.apiResult545 = await InstamojoGroup
@@ -195,12 +199,12 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                               (_model.apiResultm8a?.jsonBody ?? ''),
                             ),
                             amount: widget.albumsdoc?.premiumImageDiscountedCost
-                                .toString(),
+                                ?.toString(),
                             purpose: 'PremiumPhoto ${widget.albumsdoc?.id}',
                             buyerName: currentUserDisplayName,
                             phoneNumber: currentPhoneNumber,
                           );
-                          shouldSetState = true;
+                          _shouldSetState = true;
                           if ((_model.apiResult545?.succeeded ?? true)) {
                             logFirebaseEvent('Button_backend_call');
 
@@ -237,22 +241,22 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                                       FlutterFlowTheme.of(context).primaryText,
                                 ),
                               ),
-                              duration: const Duration(milliseconds: 4000),
+                              duration: Duration(milliseconds: 4000),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).secondary,
                             ),
                           );
                         }
 
-                        if (shouldSetState) setState(() {});
+                        if (_shouldSetState) setState(() {});
                       },
                       text: 'Buy Now',
                       options: FFButtonOptions(
                         height: 40.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             40.0, 0.0, 40.0, 0.0),
                         iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).secondaryText,
                         textStyle: FlutterFlowTheme.of(context)
                             .titleSmall
@@ -261,7 +265,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                               color:
                                   FlutterFlowTheme.of(context).primaryBtnText,
                             ),
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),
@@ -271,7 +275,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 20.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 20.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
@@ -283,10 +287,10 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                       text: 'Select More',
                       options: FFButtonOptions(
                         height: 40.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).success,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -294,7 +298,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                                   color: Colors.white,
                                 ),
                         elevation: 3.0,
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),

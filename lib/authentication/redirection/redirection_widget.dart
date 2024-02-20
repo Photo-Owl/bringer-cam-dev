@@ -6,10 +6,12 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'redirection_model.dart';
@@ -43,8 +45,8 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: const Offset(0.0, 13.999999999999986),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 13.999999999999986),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -57,8 +59,8 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
           curve: Curves.easeOut,
           delay: 420.ms,
           duration: 1640.ms,
-          begin: const Offset(0.9, 0.95),
-          end: const Offset(1.0, 1.0),
+          begin: Offset(0.9, 0.95),
+          end: Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -73,8 +75,9 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('REDIRECTION_Redirection_ON_INIT_STATE');
-      if ((currentUserPhoto != '') &&
-          (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
+      if ((currentUserPhoto != null && currentUserPhoto != '') &&
+          (valueOrDefault(currentUserDocument?.faceId, '') != null &&
+              valueOrDefault(currentUserDocument?.faceId, '') != '')) {
         logFirebaseEvent('Redirection_wait__delay');
         await Future.delayed(const Duration(milliseconds: 500));
         logFirebaseEvent('Redirection_navigate_to');
@@ -123,7 +126,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-            body: const Center(
+            body: Center(
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
@@ -153,7 +156,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
                     height: MediaQuery.sizeOf(context).height * 1.0,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.white,
                     ),
                     child: StreamBuilder<List<ConstantsRecord>>(
@@ -163,7 +166,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
-                          return const Center(
+                          return Center(
                             child: SizedBox(
                               width: 50.0,
                               height: 50.0,
@@ -197,7 +200,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                 child: Image.asset(
                                   'assets/images/Image.png',
                                   fit: BoxFit.fitHeight,
-                                  alignment: const Alignment(0.0, -1.0),
+                                  alignment: Alignment(0.0, -1.0),
                                 ),
                               ),
                             ),
@@ -213,7 +216,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                     ))
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.0, 0.0),
                                         child: Container(
                                           width:
                                               MediaQuery.sizeOf(context).width *
@@ -221,15 +224,21 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                           height: MediaQuery.sizeOf(context)
                                                   .height *
                                               0.9,
-                                          decoration: const BoxDecoration(
+                                          decoration: BoxDecoration(
                                             color: Colors.white,
                                           ),
                                           child: Builder(
                                             builder: (context) {
                                               if ((redirectionUsersRecord
                                                               .photoUrl ==
+                                                          null ||
+                                                      redirectionUsersRecord
+                                                              .photoUrl ==
                                                           '') ||
                                                   (redirectionUsersRecord
+                                                              .faceId ==
+                                                          null ||
+                                                      redirectionUsersRecord
                                                               .faceId ==
                                                           '')) {
                                                 return Column(
@@ -245,7 +254,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
+                                                              EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       20.0,
                                                                       0.0,
@@ -258,9 +267,12 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                             children: [
                                                               if (redirectionUsersRecord
                                                                           .photoUrl ==
+                                                                      null ||
+                                                                  redirectionUsersRecord
+                                                                          .photoUrl ==
                                                                       '')
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           20.0,
@@ -291,7 +303,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
+                                                              EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       20.0,
                                                                       0.0,
@@ -299,7 +311,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                       0.0),
                                                           child: Container(
                                                             decoration:
-                                                                const BoxDecoration(),
+                                                                BoxDecoration(),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -307,11 +319,14 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                               children: [
                                                                 if (redirectionUsersRecord
                                                                             .photoUrl ==
+                                                                        null ||
+                                                                    redirectionUsersRecord
+                                                                            .photoUrl ==
                                                                         '')
                                                                   Flexible(
                                                                     child:
                                                                         Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                                           0.0,
                                                                           10.0,
                                                                           0.0,
@@ -339,10 +354,12 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                         ),
                                                       ],
                                                     ),
-                                                    if (currentUserPhoto != '')
+                                                    if (currentUserPhoto !=
+                                                            null &&
+                                                        currentUserPhoto != '')
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     30.0,
                                                                     45.0,
@@ -357,7 +374,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                             clipBehavior:
                                                                 Clip.antiAlias,
                                                             decoration:
-                                                                const BoxDecoration(
+                                                                BoxDecoration(
                                                               shape: BoxShape
                                                                   .circle,
                                                             ),
@@ -379,6 +396,9 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                       child: Visibility(
                                                         visible: redirectionUsersRecord
                                                                     .photoUrl ==
+                                                                null ||
+                                                            redirectionUsersRecord
+                                                                    .photoUrl ==
                                                                 '',
                                                         child: ClipRRect(
                                                           borderRadius:
@@ -395,8 +415,15 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                       ),
                                                     ),
                                                     if ((currentUserPhoto !=
+                                                                null &&
+                                                            currentUserPhoto !=
                                                                 '') &&
                                                         (valueOrDefault(
+                                                                    currentUserDocument
+                                                                        ?.faceId,
+                                                                    '') ==
+                                                                null ||
+                                                            valueOrDefault(
                                                                     currentUserDocument
                                                                         ?.faceId,
                                                                     '') ==
@@ -413,17 +440,20 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                       ),
                                                     Container(
                                                       decoration:
-                                                          const BoxDecoration(),
+                                                          BoxDecoration(),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
                                                           if (redirectionUsersRecord
                                                                       .photoUrl ==
+                                                                  null ||
+                                                              redirectionUsersRecord
+                                                                      .photoUrl ==
                                                                   '')
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsets
+                                                                  EdgeInsets
                                                                       .all(
                                                                           10.0),
                                                               child:
@@ -470,7 +500,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                             padding:
                                                                                 MediaQuery.viewInsetsOf(context),
                                                                             child:
-                                                                                const DosAndDontsWidget(),
+                                                                                DosAndDontsWidget(),
                                                                           ),
                                                                         );
                                                                       },
@@ -503,7 +533,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                             padding:
                                                                                 MediaQuery.viewInsetsOf(context),
                                                                             child:
-                                                                                const BlockNewRegistrationWidget(),
+                                                                                BlockNewRegistrationWidget(),
                                                                           ),
                                                                         );
                                                                       },
@@ -519,19 +549,19 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                   width: double
                                                                       .infinity,
                                                                   height: 56.0,
-                                                                  padding: const EdgeInsetsDirectional
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           0.0,
                                                                           0.0,
                                                                           0.0),
-                                                                  iconPadding: const EdgeInsetsDirectional
+                                                                  iconPadding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           0.0,
                                                                           0.0,
                                                                           0.0),
-                                                                  color: const Color(
+                                                                  color: Color(
                                                                       0xFF007EFC),
                                                                   textStyle: FlutterFlowTheme.of(
                                                                           context)
@@ -543,7 +573,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                             .primaryBackground,
                                                                       ),
                                                                   borderSide:
-                                                                      const BorderSide(
+                                                                      BorderSide(
                                                                     color: Colors
                                                                         .transparent,
                                                                     width: 1.0,
@@ -559,10 +589,13 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                             ),
                                                           if (redirectionUsersRecord
                                                                       .photoUrl ==
+                                                                  null ||
+                                                              redirectionUsersRecord
+                                                                      .photoUrl ==
                                                                   '')
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           10.0,
@@ -606,7 +639,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                     extra: <String,
                                                                         dynamic>{
                                                                       kTransitionInfoKey:
-                                                                          const TransitionInfo(
+                                                                          TransitionInfo(
                                                                         hasTransition:
                                                                             true,
                                                                         transitionType:
@@ -641,7 +674,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                     'columnOnPageLoadAnimation']!);
                                               } else {
                                                 return Padding(
-                                                  padding: const EdgeInsets.all(20.0),
+                                                  padding: EdgeInsets.all(20.0),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -654,7 +687,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     0.0,
                                                                     30.0,
@@ -683,7 +716,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           20.0,
@@ -696,7 +729,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                         Text(
                                                                   valueOrDefault<
                                                                       String>(
-                                                                    'Hey $currentUserDisplayName',
+                                                                    'Hey ${currentUserDisplayName}',
                                                                     'Hey ',
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
@@ -715,7 +748,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           5.0,
@@ -738,13 +771,19 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                             ),
                                                             if ((redirectionUsersRecord
                                                                             .photoUrl !=
+                                                                        null &&
+                                                                    redirectionUsersRecord
+                                                                            .photoUrl !=
                                                                         '') &&
                                                                 (redirectionUsersRecord
+                                                                            .faceId !=
+                                                                        null &&
+                                                                    redirectionUsersRecord
                                                                             .faceId !=
                                                                         ''))
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
+                                                                    EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
                                                                             20.0,
@@ -783,19 +822,19 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                         .infinity,
                                                                     height:
                                                                         56.0,
-                                                                    padding: const EdgeInsetsDirectional
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             24.0,
                                                                             0.0,
                                                                             24.0,
                                                                             0.0),
                                                                     iconPadding:
-                                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                                        EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             0.0,
                                                                             0.0),
-                                                                    color: const Color(
+                                                                    color: Color(
                                                                         0xFF007EFC),
                                                                     textStyle: FlutterFlowTheme.of(
                                                                             context)
@@ -811,7 +850,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                     elevation:
                                                                         3.0,
                                                                     borderSide:
-                                                                        const BorderSide(
+                                                                        BorderSide(
                                                                       color: Colors
                                                                           .transparent,
                                                                       width:
@@ -828,7 +867,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     0.0,
                                                                     20.0,
@@ -873,7 +912,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: const EdgeInsetsDirectional
+                                                                padding: EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                         25.0,
                                                                         0.0,
@@ -917,12 +956,12 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                     ))
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(0.0, -1.0),
+                                            AlignmentDirectional(0.0, -1.0),
                                         child: Container(
                                           width:
                                               MediaQuery.sizeOf(context).width *
                                                   1.0,
-                                          constraints: const BoxConstraints(
+                                          constraints: BoxConstraints(
                                             maxWidth: 700.0,
                                           ),
                                           decoration: BoxDecoration(
@@ -935,10 +974,10 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Align(
-                                                alignment: const AlignmentDirectional(
+                                                alignment: AlignmentDirectional(
                                                     0.0, 0.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 20.0, 0.0, 0.0),
                                                   child: Text(
@@ -955,10 +994,10 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                                 ),
                                               ),
                                               Align(
-                                                alignment: const AlignmentDirectional(
+                                                alignment: AlignmentDirectional(
                                                     0.0, 0.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 20.0, 0.0, 0.0),
                                                   child: Text(
@@ -979,7 +1018,7 @@ class _RedirectionWidgetState extends State<RedirectionWidget>
                                         ),
                                       ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           15.0, 150.0, 15.0, 15.0),
                                       child: Material(
                                         color: Colors.transparent,

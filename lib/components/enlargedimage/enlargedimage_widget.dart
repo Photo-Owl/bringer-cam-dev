@@ -3,6 +3,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 import 'enlargedimage_model.dart';
@@ -61,7 +63,7 @@ class _EnlargedimageWidgetState extends State<EnlargedimageWidget> {
         Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(10.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: OctoImage(
@@ -78,9 +80,9 @@ class _EnlargedimageWidgetState extends State<EnlargedimageWidget> {
               ),
             ),
             Align(
-              alignment: const AlignmentDirectional(1.0, 0.0),
+              alignment: AlignmentDirectional(1.0, 0.0),
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(20.0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,

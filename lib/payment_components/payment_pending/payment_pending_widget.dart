@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'payment_pending_model.dart';
@@ -49,7 +51,7 @@ class _PaymentPendingWidgetState extends State<PaymentPendingWidget> {
     return Container(
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
@@ -62,7 +64,7 @@ class _PaymentPendingWidgetState extends State<PaymentPendingWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Container(
               height: 80.0,
               decoration: BoxDecoration(
@@ -77,7 +79,7 @@ class _PaymentPendingWidgetState extends State<PaymentPendingWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
+            padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
             child: Text(
               'Verifying your payment',
               textAlign: TextAlign.center,
@@ -89,7 +91,7 @@ class _PaymentPendingWidgetState extends State<PaymentPendingWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
             child: Material(
               color: Colors.transparent,
               elevation: 3.0,
@@ -100,7 +102,7 @@ class _PaymentPendingWidgetState extends State<PaymentPendingWidget> {
                 width: 100.0,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
                       blurRadius: 4.0,
                       color: Color(0x33000000),
@@ -114,7 +116,7 @@ class _PaymentPendingWidgetState extends State<PaymentPendingWidget> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 5.0),
+                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 5.0),
                       child: Text(
                         'Please wait while we verify your payment',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -126,7 +128,7 @@ class _PaymentPendingWidgetState extends State<PaymentPendingWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 20.0),
+                          EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 20.0),
                       child: Text(
                         'Payment ID: ${widget.paymentReqId}',
                         textAlign: TextAlign.center,

@@ -6,10 +6,12 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'redirection_copy_model.dart';
@@ -43,8 +45,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: const Offset(0.0, 13.999999999999986),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 13.999999999999986),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -57,8 +59,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           curve: Curves.easeOut,
           delay: 420.ms,
           duration: 1640.ms,
-          begin: const Offset(0.9, 0.95),
-          end: const Offset(1.0, 1.0),
+          begin: Offset(0.9, 0.95),
+          end: Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -74,8 +76,9 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('REDIRECTION_COPY_RedirectionCopy_ON_INIT');
-      if ((currentUserPhoto != '') &&
-          (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
+      if ((currentUserPhoto != null && currentUserPhoto != '') &&
+          (valueOrDefault(currentUserDocument?.faceId, '') != null &&
+              valueOrDefault(currentUserDocument?.faceId, '') != '')) {
         logFirebaseEvent('RedirectionCopy_wait__delay');
         await Future.delayed(const Duration(milliseconds: 500));
         logFirebaseEvent('RedirectionCopy_navigate_to');
@@ -124,7 +127,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-            body: const Center(
+            body: Center(
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
@@ -154,7 +157,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 1.0,
                     height: MediaQuery.sizeOf(context).height * 1.0,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.white,
                     ),
                     child: StreamBuilder<List<ConstantsRecord>>(
@@ -164,7 +167,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
-                          return const Center(
+                          return Center(
                             child: SizedBox(
                               width: 50.0,
                               height: 50.0,
@@ -198,7 +201,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                 child: Image.asset(
                                   'assets/images/Image.png',
                                   fit: BoxFit.fitHeight,
-                                  alignment: const Alignment(0.0, -1.0),
+                                  alignment: Alignment(0.0, -1.0),
                                 ),
                               ),
                             ),
@@ -214,7 +217,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                     ))
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.0, 0.0),
                                         child: Container(
                                           width:
                                               MediaQuery.sizeOf(context).width *
@@ -222,15 +225,21 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                           height: MediaQuery.sizeOf(context)
                                                   .height *
                                               0.9,
-                                          decoration: const BoxDecoration(
+                                          decoration: BoxDecoration(
                                             color: Colors.white,
                                           ),
                                           child: Builder(
                                             builder: (context) {
                                               if ((redirectionCopyUsersRecord
                                                               .photoUrl ==
+                                                          null ||
+                                                      redirectionCopyUsersRecord
+                                                              .photoUrl ==
                                                           '') ||
                                                   (redirectionCopyUsersRecord
+                                                              .faceId ==
+                                                          null ||
+                                                      redirectionCopyUsersRecord
                                                               .faceId ==
                                                           '')) {
                                                 return Column(
@@ -246,7 +255,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
+                                                              EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       20.0,
                                                                       0.0,
@@ -259,9 +268,12 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                             children: [
                                                               if (redirectionCopyUsersRecord
                                                                           .photoUrl ==
+                                                                      null ||
+                                                                  redirectionCopyUsersRecord
+                                                                          .photoUrl ==
                                                                       '')
                                                                 Padding(
-                                                                  padding: const EdgeInsetsDirectional
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           20.0,
@@ -292,7 +304,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
+                                                              EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       20.0,
                                                                       0.0,
@@ -300,7 +312,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                       0.0),
                                                           child: Container(
                                                             decoration:
-                                                                const BoxDecoration(),
+                                                                BoxDecoration(),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -308,11 +320,14 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                               children: [
                                                                 if (redirectionCopyUsersRecord
                                                                             .photoUrl ==
+                                                                        null ||
+                                                                    redirectionCopyUsersRecord
+                                                                            .photoUrl ==
                                                                         '')
                                                                   Flexible(
                                                                     child:
                                                                         Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
                                                                           0.0,
                                                                           10.0,
                                                                           0.0,
@@ -340,10 +355,12 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                         ),
                                                       ],
                                                     ),
-                                                    if (currentUserPhoto != '')
+                                                    if (currentUserPhoto !=
+                                                            null &&
+                                                        currentUserPhoto != '')
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     30.0,
                                                                     45.0,
@@ -358,7 +375,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                             clipBehavior:
                                                                 Clip.antiAlias,
                                                             decoration:
-                                                                const BoxDecoration(
+                                                                BoxDecoration(
                                                               shape: BoxShape
                                                                   .circle,
                                                             ),
@@ -380,6 +397,9 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                       child: Visibility(
                                                         visible: redirectionCopyUsersRecord
                                                                     .photoUrl ==
+                                                                null ||
+                                                            redirectionCopyUsersRecord
+                                                                    .photoUrl ==
                                                                 '',
                                                         child: ClipRRect(
                                                           borderRadius:
@@ -396,8 +416,15 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                       ),
                                                     ),
                                                     if ((currentUserPhoto !=
+                                                                null &&
+                                                            currentUserPhoto !=
                                                                 '') &&
                                                         (valueOrDefault(
+                                                                    currentUserDocument
+                                                                        ?.faceId,
+                                                                    '') ==
+                                                                null ||
+                                                            valueOrDefault(
                                                                     currentUserDocument
                                                                         ?.faceId,
                                                                     '') ==
@@ -414,17 +441,20 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                       ),
                                                     Container(
                                                       decoration:
-                                                          const BoxDecoration(),
+                                                          BoxDecoration(),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
                                                           if (redirectionCopyUsersRecord
                                                                       .photoUrl ==
+                                                                  null ||
+                                                              redirectionCopyUsersRecord
+                                                                      .photoUrl ==
                                                                   '')
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsets
+                                                                  EdgeInsets
                                                                       .all(
                                                                           10.0),
                                                               child:
@@ -471,7 +501,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                             padding:
                                                                                 MediaQuery.viewInsetsOf(context),
                                                                             child:
-                                                                                const DosAndDontsCopyWidget(),
+                                                                                DosAndDontsCopyWidget(),
                                                                           ),
                                                                         );
                                                                       },
@@ -504,7 +534,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                             padding:
                                                                                 MediaQuery.viewInsetsOf(context),
                                                                             child:
-                                                                                const BlockNewRegistrationWidget(),
+                                                                                BlockNewRegistrationWidget(),
                                                                           ),
                                                                         );
                                                                       },
@@ -520,19 +550,19 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                   width: double
                                                                       .infinity,
                                                                   height: 56.0,
-                                                                  padding: const EdgeInsetsDirectional
+                                                                  padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           0.0,
                                                                           0.0,
                                                                           0.0),
-                                                                  iconPadding: const EdgeInsetsDirectional
+                                                                  iconPadding: EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           0.0,
                                                                           0.0,
                                                                           0.0),
-                                                                  color: const Color(
+                                                                  color: Color(
                                                                       0xFF007EFC),
                                                                   textStyle: FlutterFlowTheme.of(
                                                                           context)
@@ -544,7 +574,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                             .primaryBackground,
                                                                       ),
                                                                   borderSide:
-                                                                      const BorderSide(
+                                                                      BorderSide(
                                                                     color: Colors
                                                                         .transparent,
                                                                     width: 1.0,
@@ -560,10 +590,13 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                             ),
                                                           if (redirectionCopyUsersRecord
                                                                       .photoUrl ==
+                                                                  null ||
+                                                              redirectionCopyUsersRecord
+                                                                      .photoUrl ==
                                                                   '')
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           10.0,
@@ -607,7 +640,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                     extra: <String,
                                                                         dynamic>{
                                                                       kTransitionInfoKey:
-                                                                          const TransitionInfo(
+                                                                          TransitionInfo(
                                                                         hasTransition:
                                                                             true,
                                                                         transitionType:
@@ -642,7 +675,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                     'columnOnPageLoadAnimation']!);
                                               } else {
                                                 return Padding(
-                                                  padding: const EdgeInsets.all(20.0),
+                                                  padding: EdgeInsets.all(20.0),
                                                   child: Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -655,7 +688,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                     children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     0.0,
                                                                     30.0,
@@ -684,7 +717,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           20.0,
@@ -697,7 +730,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                         Text(
                                                                   valueOrDefault<
                                                                       String>(
-                                                                    'Hey $currentUserDisplayName',
+                                                                    'Hey ${currentUserDisplayName}',
                                                                     'Hey ',
                                                                   ),
                                                                   style: FlutterFlowTheme.of(
@@ -716,7 +749,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  const EdgeInsetsDirectional
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           5.0,
@@ -739,13 +772,19 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                             ),
                                                             if ((redirectionCopyUsersRecord
                                                                             .photoUrl !=
+                                                                        null &&
+                                                                    redirectionCopyUsersRecord
+                                                                            .photoUrl !=
                                                                         '') &&
                                                                 (redirectionCopyUsersRecord
+                                                                            .faceId !=
+                                                                        null &&
+                                                                    redirectionCopyUsersRecord
                                                                             .faceId !=
                                                                         ''))
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsetsDirectional
+                                                                    EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
                                                                             20.0,
@@ -784,19 +823,19 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                         .infinity,
                                                                     height:
                                                                         56.0,
-                                                                    padding: const EdgeInsetsDirectional
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             24.0,
                                                                             0.0,
                                                                             24.0,
                                                                             0.0),
                                                                     iconPadding:
-                                                                        const EdgeInsetsDirectional.fromSTEB(
+                                                                        EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
                                                                             0.0,
                                                                             0.0,
                                                                             0.0),
-                                                                    color: const Color(
+                                                                    color: Color(
                                                                         0xFF007EFC),
                                                                     textStyle: FlutterFlowTheme.of(
                                                                             context)
@@ -812,7 +851,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                     elevation:
                                                                         3.0,
                                                                     borderSide:
-                                                                        const BorderSide(
+                                                                        BorderSide(
                                                                       color: Colors
                                                                           .transparent,
                                                                       width:
@@ -829,7 +868,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsetsDirectional
+                                                            EdgeInsetsDirectional
                                                                 .fromSTEB(
                                                                     0.0,
                                                                     20.0,
@@ -874,7 +913,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: const EdgeInsetsDirectional
+                                                                padding: EdgeInsetsDirectional
                                                                     .fromSTEB(
                                                                         25.0,
                                                                         0.0,
@@ -918,12 +957,12 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                     ))
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(0.0, -1.0),
+                                            AlignmentDirectional(0.0, -1.0),
                                         child: Container(
                                           width:
                                               MediaQuery.sizeOf(context).width *
                                                   1.0,
-                                          constraints: const BoxConstraints(
+                                          constraints: BoxConstraints(
                                             maxWidth: 700.0,
                                           ),
                                           decoration: BoxDecoration(
@@ -936,10 +975,10 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Align(
-                                                alignment: const AlignmentDirectional(
+                                                alignment: AlignmentDirectional(
                                                     0.0, 0.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 20.0, 0.0, 0.0),
                                                   child: Text(
@@ -956,10 +995,10 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                 ),
                                               ),
                                               Align(
-                                                alignment: const AlignmentDirectional(
+                                                alignment: AlignmentDirectional(
                                                     0.0, 0.0),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 20.0, 0.0, 0.0),
                                                   child: Text(
@@ -980,7 +1019,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                         ),
                                       ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           15.0, 150.0, 15.0, 15.0),
                                       child: Material(
                                         color: Colors.transparent,
