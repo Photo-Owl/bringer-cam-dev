@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 
 import '/backend/sqlite/init.dart';
-import 'queries/read.dart';
 
 import 'package:sqflite/sqflite.dart';
 export 'queries/read.dart';
@@ -27,14 +26,6 @@ class SQLiteManager {
   }
 
   /// START READ QUERY CALLS
-
-  Future<List<ReadAllImagesRow>> readAllImages({
-    String? ownerId,
-  }) =>
-      performReadAllImages(
-        _database,
-        ownerId: ownerId,
-      );
 
   /// END READ QUERY CALLS
 

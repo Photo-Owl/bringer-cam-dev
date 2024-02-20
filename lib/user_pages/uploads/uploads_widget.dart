@@ -1,7 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/sqlite/sqlite_manager.dart';
-import '/components/fetching_photos_widget.dart';
 import '/components/give_name/give_name_widget.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/components/update_required/update_required_widget.dart';
@@ -324,91 +322,89 @@ class _UploadsWidgetState extends State<UploadsWidget>
                                 height:
                                     MediaQuery.sizeOf(context).height * 0.85,
                                 decoration: const BoxDecoration(),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: FutureBuilder<List<ReadAllImagesRow>>(
-                                    future:
-                                        SQLiteManager.instance.readAllImages(
-                                      ownerId: currentUserUid,
-                                    ),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return const FetchingPhotosWidget();
-                                      }
-                                      final columnReadAllImagesRowList =
-                                          snapshot.data!;
-                                      return SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: List.generate(
-                                              columnReadAllImagesRowList.length,
-                                              (columnIndex) {
-                                            final columnReadAllImagesRow =
-                                                columnReadAllImagesRowList[
-                                                    columnIndex];
-                                            return Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 30.0, 0.0, 0.0),
-                                              child: Container(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        1.0,
-                                                height: 300.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      valueOrDefault<String>(
-                                                        columnReadAllImagesRow
-                                                            .path,
-                                                        ' no path',
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium,
-                                                    ),
-                                                    Text(
-                                                      valueOrDefault<String>(
-                                                        columnReadAllImagesRow
-                                                            .owner,
-                                                        'no owner',
-                                                      ),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium,
-                                                    ),
-                                                    SizedBox(
+                                child: Builder(
+                                  builder: (context) {
+                                    final imageItem =
+                                        _model.uploadedImages!.toList();
+                                    return InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'UPLOADS_PAGE_Column_uq66dd36_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Column_custom_action');
+                                        _model.uploadedImages =
+                                            await actions.readAllImagesSqlite(
+                                          currentUserUid,
+                                        );
+
+                                        setState(() {});
+                                      },
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: List.generate(
+                                            imageItem.length, (imageItemIndex) {
+                                          final imageItemItem =
+                                              imageItem[imageItemIndex];
+                                          return Padding(
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 30.0, 0.0, 0.0),
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  1.0,
+                                              height: 300.0,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                              ),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    getJsonField(
+                                                      imageItemItem,
+                                                      r'''$["path"]''',
+                                                    ).toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium,
+                                                  ),
+                                                  Text(
+                                                    getJsonField(
+                                                      imageItemItem,
+                                                      r'''$["owner"]''',
+                                                    ).toString(),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 100.0,
+                                                    height: 100.0,
+                                                    child: custom_widgets
+                                                        .ShowLocalImage(
                                                       width: 100.0,
                                                       height: 100.0,
-                                                      child: custom_widgets
-                                                          .ShowLocalImage(
-                                                        width: 100.0,
-                                                        height: 100.0,
-                                                        path:
-                                                            columnReadAllImagesRow
-                                                                .path,
-                                                      ),
+                                                      path: getJsonField(
+                                                        imageItemItem,
+                                                        r'''$["path"]''',
+                                                      ).toString(),
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                            );
-                                          }),
-                                        ),
-                                      );
-                                    },
-                                  ),
+                                            ),
+                                          );
+                                        }),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                               StreamBuilder<UsersRecord>(
