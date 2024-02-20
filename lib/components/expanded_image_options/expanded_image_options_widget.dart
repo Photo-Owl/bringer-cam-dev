@@ -2,8 +2,6 @@ import '/components/report_options/report_options_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'expanded_image_options_model.dart';
 export 'expanded_image_options_model.dart';
@@ -51,12 +49,12 @@ class _ExpandedImageOptionsWidgetState
     context.watch<FFAppState>();
 
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Container(
         width: 300.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               blurRadius: 4.0,
               color: Color(0x33000000),
@@ -66,14 +64,14 @@ class _ExpandedImageOptionsWidgetState
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 0.0, 0.0),
                   child: Text(
                     'Options',
                     textAlign: TextAlign.start,
@@ -84,7 +82,7 @@ class _ExpandedImageOptionsWidgetState
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -103,7 +101,7 @@ class _ExpandedImageOptionsWidgetState
                         builder: (context) {
                           return Padding(
                             padding: MediaQuery.viewInsetsOf(context),
-                            child: Container(
+                            child: SizedBox(
                               height: MediaQuery.sizeOf(context).height * 0.5,
                               child: ReportOptionsWidget(
                                 imageKey: widget.imageKey!,
@@ -120,12 +118,12 @@ class _ExpandedImageOptionsWidgetState
                       ),
                       child: Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Icon(
                                 Icons.warning_rounded,
@@ -135,7 +133,7 @@ class _ExpandedImageOptionsWidgetState
                             ),
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     12.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Report Image',

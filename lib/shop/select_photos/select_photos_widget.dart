@@ -10,8 +10,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'select_photos_model.dart';
 export 'select_photos_model.dart';
@@ -87,7 +85,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                   context.pop();
                 },
               ),
-              actions: [],
+              actions: const [],
               centerTitle: true,
               elevation: 2.0,
             ),
@@ -103,27 +101,27 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(18.0),
+                      padding: const EdgeInsets.all(18.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Text(
                               'Selected Photos',
                               style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Text(
                               '${_model.selectedPhotos.length.toString()} Selected',
                               style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 5.0, 0.0, 0.0),
                             child: Builder(
                               builder: (context) {
@@ -140,7 +138,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                           selectedPhotoschild[
                                               selectedPhotoschildIndex];
                                       return Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 12.0, 0.0),
                                         child:
                                             StreamBuilder<List<UploadsRecord>>(
@@ -156,7 +154,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                           builder: (context, snapshot) {
                                             // Customize what your widget looks like when it's loading.
                                             if (!snapshot.hasData) {
-                                              return Center(
+                                              return const Center(
                                                 child: SizedBox(
                                                   width: 50.0,
                                                   height: 50.0,
@@ -215,9 +213,9 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 10.0, 9.0, 0.0, 0.0),
                             child: Text(
                               'Your Photo Owl Gallery',
@@ -231,7 +229,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               10.0, 0.0, 0.0, 10.0),
                           child: Text(
                             'Long press a photo to enlarge it.',
@@ -257,7 +255,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
                                 if (!snapshot.hasData) {
-                                  return Center(
+                                  return const Center(
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
@@ -281,7 +279,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                     return GridView.builder(
                                       padding: EdgeInsets.zero,
                                       gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 3,
                                         crossAxisSpacing: 5.0,
                                         mainAxisSpacing: 5.0,
@@ -326,7 +324,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                           child: Stack(
                                             children: [
                                               Padding(
-                                                padding: EdgeInsets.all(10.0),
+                                                padding: const EdgeInsets.all(10.0),
                                                 child: FutureBuilder<
                                                     List<UploadsRecord>>(
                                                   future:
@@ -344,7 +342,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                                   builder: (context, snapshot) {
                                                     // Customize what your widget looks like when it's loading.
                                                     if (!snapshot.hasData) {
-                                                      return Center(
+                                                      return const Center(
                                                         child: SizedBox(
                                                           width: 50.0,
                                                           height: 50.0,
@@ -424,8 +422,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                                               image:
                                                                   Image.network(
                                                                 functions.convertToImagePath(
-                                                                    imageUploadsRecord!
-                                                                        .resizedImage250),
+                                                                    imageUploadsRecord.resizedImage250),
                                                                 fit: BoxFit
                                                                     .contain,
                                                               ),
@@ -433,8 +430,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                                                   false,
                                                               tag: functions
                                                                   .convertToImagePath(
-                                                                      imageUploadsRecord!
-                                                                          .resizedImage250),
+                                                                      imageUploadsRecord.resizedImage250),
                                                               useHeroAnimation:
                                                                   true,
                                                             ),
@@ -455,8 +451,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                                                       8.0),
                                                           child: Image.network(
                                                             functions.convertToImagePath(
-                                                                imageUploadsRecord!
-                                                                    .resizedImage250),
+                                                                imageUploadsRecord.resizedImage250),
                                                             width: MediaQuery
                                                                         .sizeOf(
                                                                             context)
@@ -480,7 +475,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                                       purchasableimageschildItem
                                                           .toString()))
                                                 Padding(
-                                                  padding: EdgeInsets.all(10.0),
+                                                  padding: const EdgeInsets.all(10.0),
                                                   child: Container(
                                                     width: MediaQuery.sizeOf(
                                                                 context)
@@ -490,15 +485,15 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                                                 context)
                                                             .height *
                                                         1.0,
-                                                    decoration: BoxDecoration(
+                                                    decoration: const BoxDecoration(
                                                       color: Color(0x5D000000),
                                                     ),
                                                     child: Align(
                                                       alignment:
-                                                          AlignmentDirectional(
+                                                          const AlignmentDirectional(
                                                               -1.0, -1.0),
                                                       child: Padding(
-                                                        padding: EdgeInsets.all(
+                                                        padding: const EdgeInsets.all(
                                                             10.0),
                                                         child: Icon(
                                                           Icons
@@ -526,7 +521,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                       ],
                     ),
                   ),
-                  if (_model.selectedPhotos.length > 0)
+                  if (_model.selectedPhotos.isNotEmpty)
                     FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
@@ -571,9 +566,9 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 40.0,
-                        padding: EdgeInsets.all(0.0),
+                        padding: const EdgeInsets.all(0.0),
                         iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -581,7 +576,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                   color: Colors.white,
                                 ),
                         elevation: 3.0,
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),
