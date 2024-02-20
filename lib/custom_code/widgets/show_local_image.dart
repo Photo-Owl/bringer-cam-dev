@@ -34,6 +34,6 @@ class _ShowLocalImageState extends State<ShowLocalImage> {
   Widget build(BuildContext context) {
     var imageFile = File(
         '/storage/emulated/0/Android/data/com.smoose.photoowldev/files/Pictures/CAP4934072218017907159.jpg');
-    return Image.file(imageFile);
+    return Image.file(imageFile, fit: BoxFit.cover);
   }
 }

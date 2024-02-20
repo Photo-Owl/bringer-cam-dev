@@ -148,9 +148,8 @@ class _UploadsWidgetState extends State<UploadsWidget> {
             floatingActionButton: FloatingActionButton(
               onPressed: () async {
                 logFirebaseEvent('UPLOADS_FloatingActionButton_a3w0tgab_ON');
-                logFirebaseEvent('FloatingActionButton_navigate_to');
-
-                context.pushNamed('camera');
+                logFirebaseEvent('FloatingActionButton_navigate_back');
+                context.safePop();
               },
               backgroundColor: FlutterFlowTheme.of(context).warning,
               elevation: 8.0,
@@ -272,44 +271,41 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     child: Container(
                       height: MediaQuery.sizeOf(context).height * 1.0,
                       decoration: const BoxDecoration(),
-                      child: Builder(
-                        builder: (context) {
-                          final uploadedImage = _model.uploadedImages!.toList();
-                          if (uploadedImage.isEmpty) {
-                            return Center(
-                              child: SizedBox(
-                                width: MediaQuery.sizeOf(context).width * 0.5,
-                                child: const FetchingPhotosWidget(),
-                              ),
-                            );
-                          }
-                          return Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: List.generate(uploadedImage.length,
-                                (uploadedImageIndex) {
-                              final uploadedImageItem =
-                                  uploadedImage[uploadedImageIndex];
-                              return Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 30.0, 0.0, 0.0),
-                                child: Container(
-                                  width: MediaQuery.sizeOf(context).width * 1.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.vertical,
+                        children: [
+                          Builder(
+                            builder: (context) {
+                              final uploadedImage =
+                                  _model.uploadedImages!.toList();
+                              if (uploadedImage.isEmpty) {
+                                return Center(
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.5,
+                                    child: const FetchingPhotosWidget(),
                                   ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Text(
-                                        getJsonField(
-                                          uploadedImageItem,
-                                          r'''$["path"]''',
-                                        ).toString(),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium,
-                                      ),
-                                      SizedBox(
+                                );
+                              }
+                              return Wrap(
+                                spacing: 0.0,
+                                runSpacing: 0.0,
+                                alignment: WrapAlignment.start,
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                direction: Axis.horizontal,
+                                runAlignment: WrapAlignment.start,
+                                verticalDirection: VerticalDirection.down,
+                                clipBehavior: Clip.none,
+                                children: List.generate(uploadedImage.length,
+                                    (uploadedImageIndex) {
+                                  final uploadedImageItem =
+                                      uploadedImage[uploadedImageIndex];
+                                  return Align(
+                                    alignment: const AlignmentDirectional(-1.0, -1.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SizedBox(
                                         width: 100.0,
                                         height: 100.0,
                                         child: custom_widgets.ShowLocalImage(
@@ -321,13 +317,13 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                           ).toString(),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                ),
+                                    ),
+                                  );
+                                }),
                               );
-                            }),
-                          );
-                        },
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   );
