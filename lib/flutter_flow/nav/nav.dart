@@ -234,6 +234,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Uploads',
           path: '/uploads',
+          requireAuth: true,
           builder: (context, params) => const UploadsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
