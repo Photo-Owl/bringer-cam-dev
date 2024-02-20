@@ -44,7 +44,7 @@ Future uploadImagesFromSqlite(String userId) async {
         .ref('$userId/uploads/${basename(map['path'])}');
     await ref.putFile(
       File(map['path']),
-      SettableMetadata(contentType: 'image/jpg'), // Set the content type here
+      SettableMetadata(contentType: 'image/'), // Set the content type here
     );
 
     // Get the URL of the uploaded image
