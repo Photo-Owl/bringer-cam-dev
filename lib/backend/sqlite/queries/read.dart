@@ -14,7 +14,7 @@ Future<List<ReadAllImagesRow>> performReadAllImages(
   String? ownerId,
 }) {
   final query = '''
-SELECT * FROM Images WHERE owner = $ownerId ORDER BY unix_timestamp DESC
+SELECT * FROM Images WHERE owner = ? ORDER BY unix_timestamp DESC, [$ownerId]
 ''';
   return _readQuery(database, query, (d) => ReadAllImagesRow(d));
 }
