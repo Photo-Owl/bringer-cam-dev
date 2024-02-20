@@ -10,7 +10,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -388,18 +388,16 @@ class _UploadsWidgetState extends State<UploadsWidget>
                                                                   context)
                                                               .bodyMedium,
                                                     ),
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      child: Image.network(
-                                                        functions
-                                                            .convertToImagePath(
-                                                                columnReadAllImagesRow
-                                                                    .path!),
-                                                        width: 300.0,
-                                                        height: 200.0,
-                                                        fit: BoxFit.cover,
+                                                    SizedBox(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      child: custom_widgets
+                                                          .ShowLocalImage(
+                                                        width: 100.0,
+                                                        height: 100.0,
+                                                        path:
+                                                            columnReadAllImagesRow
+                                                                .path,
                                                       ),
                                                     ),
                                                   ],
