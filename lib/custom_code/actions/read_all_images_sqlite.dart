@@ -15,7 +15,7 @@ import 'package:path/path.dart';
 
 Future<List<dynamic>> readAllImagesSqlite(String ownerId) async {
   final database = openDatabase(
-    join(await getDatabasesPath(), 'databasename.db'),
+    join(await getDatabasesPath(), 'camera_media.db'),
   );
 
   final db = await database;
