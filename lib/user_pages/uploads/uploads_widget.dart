@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/fetching_photos_widget.dart';
 import '/components/give_name/give_name_widget.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/components/update_required/update_required_widget.dart';
@@ -280,15 +279,6 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                               builder: (context) {
                                 final uploadedImage =
                                     _model.uploadedImages!.toList();
-                                if (uploadedImage.isEmpty) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.5,
-                                      child: const FetchingPhotosWidget(),
-                                    ),
-                                  );
-                                }
                                 return Wrap(
                                   spacing: 0.0,
                                   runSpacing: 0.0,

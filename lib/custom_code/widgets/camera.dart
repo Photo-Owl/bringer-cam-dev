@@ -85,7 +85,8 @@ class _CameraState extends State<Camera> {
       return null;
     }
     try {
-      XFile file = await controller.takePicture();
+      final file = await controller.takePicture();
+      final image = await file.readAsBytes();
       print('Image captured and saved to ${file.path}');
       await processImage(file.path);
       // Get the local path
@@ -93,16 +94,13 @@ class _CameraState extends State<Camera> {
       final path = '${directory?.path}/Pictures';
 
       await Directory(path).create(recursive: true);
-      // Copy the file to a new path
-      final newPath = '$path/${p.basename(file.path)}';
-      await File(file.path).copy(newPath);
-
+      final newPath = '$path/${file.name}';
+      await File(newPath).writeAsBytes(image);
       print('Image captured and saved locally at $newPath');
-      MethodChannel('flutter/platform')
-          .invokeMethod('updateMediaStore', {'filePath': newPath});
       var ownerId = await getOwnerId();
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       insertImageToSqlite(newPath, ownerId, unixTimestamp);
+      return;
     } catch (e) {
       print(e);
     }
