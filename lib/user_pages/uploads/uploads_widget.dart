@@ -269,61 +269,111 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                   return SafeArea(
                     top: false,
                     child: Container(
+                      width: MediaQuery.sizeOf(context).width * 1.0,
                       height: MediaQuery.sizeOf(context).height * 1.0,
                       decoration: const BoxDecoration(),
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.vertical,
-                        children: [
-                          Builder(
-                            builder: (context) {
-                              final uploadedImage =
-                                  _model.uploadedImages!.toList();
-                              if (uploadedImage.isEmpty) {
-                                return Center(
-                                  child: SizedBox(
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.5,
-                                    child: const FetchingPhotosWidget(),
-                                  ),
-                                );
-                              }
-                              return Wrap(
-                                spacing: 0.0,
-                                runSpacing: 0.0,
-                                alignment: WrapAlignment.start,
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                direction: Axis.horizontal,
-                                runAlignment: WrapAlignment.start,
-                                verticalDirection: VerticalDirection.down,
-                                clipBehavior: Clip.none,
-                                children: List.generate(uploadedImage.length,
-                                    (uploadedImageIndex) {
-                                  final uploadedImageItem =
-                                      uploadedImage[uploadedImageIndex];
-                                  return Align(
-                                    alignment: const AlignmentDirectional(-1.0, -1.0),
-                                    child: Padding(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Builder(
+                              builder: (context) {
+                                final uploadedImage =
+                                    _model.uploadedImages!.toList();
+                                if (uploadedImage.isEmpty) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.5,
+                                      child: const FetchingPhotosWidget(),
+                                    ),
+                                  );
+                                }
+                                return Wrap(
+                                  spacing: 0.0,
+                                  runSpacing: 0.0,
+                                  alignment: WrapAlignment.start,
+                                  crossAxisAlignment: WrapCrossAlignment.start,
+                                  direction: Axis.horizontal,
+                                  runAlignment: WrapAlignment.start,
+                                  verticalDirection: VerticalDirection.down,
+                                  clipBehavior: Clip.none,
+                                  children: List.generate(uploadedImage.length,
+                                      (uploadedImageIndex) {
+                                    final uploadedImageItem =
+                                        uploadedImage[uploadedImageIndex];
+                                    return Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: SizedBox(
                                         width: 100.0,
                                         height: 100.0,
-                                        child: custom_widgets.ShowLocalImage(
-                                          width: 100.0,
-                                          height: 100.0,
-                                          path: getJsonField(
-                                            uploadedImageItem,
-                                            r'''$["path"]''',
-                                          ).toString(),
+                                        child: Stack(
+                                          children: [
+                                            Align(
+                                              alignment: const AlignmentDirectional(
+                                                  -1.0, -1.0),
+                                              child: SizedBox(
+                                                width: 100.0,
+                                                height: 100.0,
+                                                child: custom_widgets
+                                                    .ShowLocalImage(
+                                                  width: 100.0,
+                                                  height: 100.0,
+                                                  path: getJsonField(
+                                                    uploadedImageItem,
+                                                    r'''$["path"]''',
+                                                  ).toString(),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 100.0,
+                                              height: 100.0,
+                                              decoration: const BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0x69101213),
+                                                    Colors.transparent
+                                                  ],
+                                                  stops: [0.0, 0.3],
+                                                  begin: AlignmentDirectional(
+                                                      1.0, 1.0),
+                                                  end: AlignmentDirectional(
+                                                      -1.0, -1.0),
+                                                ),
+                                              ),
+                                              child: Align(
+                                                alignment: const AlignmentDirectional(
+                                                    1.0, 1.0),
+                                                child: Text(
+                                                  getJsonField(
+                                                    uploadedImageItem,
+                                                    r'''$["path"]''',
+                                                  ).toString(),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        fontSize: 8.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                  );
-                                }),
-                              );
-                            },
-                          ),
-                        ],
+                                    );
+                                  }),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
