@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -267,103 +266,52 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     child: Container(
                       height: MediaQuery.sizeOf(context).height * 1.0,
                       decoration: const BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                width: MediaQuery.sizeOf(context).width * 1.0,
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.85,
-                                decoration: const BoxDecoration(),
-                                child: Builder(
-                                  builder: (context) {
-                                    final imageItem =
-                                        _model.uploadedImages!.toList();
-                                    return InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        logFirebaseEvent(
-                                            'UPLOADS_PAGE_Column_uq66dd36_ON_TAP');
-                                        logFirebaseEvent(
-                                            'Column_custom_action');
-                                        _model.uploadedImages =
-                                            await actions.readAllImagesSqlite(
-                                          currentUserUid,
-                                        );
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          logFirebaseEvent(
+                              'UPLOADS_PAGE_Column_uq66dd36_ON_TAP');
+                          logFirebaseEvent('Column_custom_action');
+                          _model.uploadedImages =
+                              await actions.readAllImagesSqlite(
+                            currentUserUid,
+                          );
 
-                                        setState(() {});
-                                      },
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: List.generate(
-                                            imageItem.length, (imageItemIndex) {
-                                          final imageItemItem =
-                                              imageItem[imageItemIndex];
-                                          return Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 30.0, 0.0, 0.0),
-                                            child: Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  1.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Text(
-                                                    getJsonField(
-                                                      imageItemItem,
-                                                      r'''$["path"]''',
-                                                    ).toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium,
-                                                  ),
-                                                  Text(
-                                                    getJsonField(
-                                                      imageItemItem,
-                                                      r'''$["owner"]''',
-                                                    ).toString(),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 100.0,
-                                                    height: 100.0,
-                                                    child: custom_widgets
-                                                        .ShowLocalImage(
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      path: getJsonField(
-                                                        imageItemItem,
-                                                        r'''$["path"]''',
-                                                      ).toString(),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        }),
+                          setState(() {});
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 30.0, 0.0, 0.0),
+                              child: Container(
+                                width: MediaQuery.sizeOf(context).width * 1.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      valueOrDefault<String>(
+                                        _model.uploadedImages?.length
+                                            .toString(),
+                                        '0',
                                       ),
-                                    );
-                                  },
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
