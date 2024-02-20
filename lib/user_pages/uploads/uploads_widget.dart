@@ -3,7 +3,6 @@ import '/backend/backend.dart';
 import '/components/give_name/give_name_widget.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/components/update_required/update_required_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -12,7 +11,6 @@ import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'uploads_model.dart';
@@ -25,53 +23,10 @@ class UploadsWidget extends StatefulWidget {
   State<UploadsWidget> createState() => _UploadsWidgetState();
 }
 
-class _UploadsWidgetState extends State<UploadsWidget>
-    with TickerProviderStateMixin {
+class _UploadsWidgetState extends State<UploadsWidget> {
   late UploadsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final animationsMap = {
-    'containerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 350.ms,
-          begin: const Offset(0.0, -56.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 660.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-    'stackOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 350.ms,
-          begin: const Offset(0.0, -56.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 660.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-  };
 
   @override
   void initState() {
@@ -357,7 +312,6 @@ class _UploadsWidgetState extends State<UploadsWidget>
                                               width: MediaQuery.sizeOf(context)
                                                       .width *
                                                   1.0,
-                                              height: 300.0,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
@@ -406,159 +360,6 @@ class _UploadsWidgetState extends State<UploadsWidget>
                                     );
                                   },
                                 ),
-                              ),
-                              StreamBuilder<UsersRecord>(
-                                stream: UsersRecord.getDocument(
-                                    currentUserReference!),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return const Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            Color(0xFF5282E5),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  final containerUsersRecord = snapshot.data!;
-                                  return Container(
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    constraints: BoxConstraints(
-                                      maxHeight:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.09,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Colors.white,
-                                          Color(0x00FFFFFF)
-                                        ],
-                                        stops: [0.55, 1.0],
-                                        begin: AlignmentDirectional(0.0, -1.0),
-                                        end: AlignmentDirectional(0, 1.0),
-                                      ),
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        if (containerUsersRecord.progressLevel <
-                                            100.0)
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 10.0, 0.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                          blurRadius: 10.0,
-                                                          color:
-                                                              Color(0xFF2EB900),
-                                                          offset:
-                                                              Offset(-1.0, 0.0),
-                                                        )
-                                                      ],
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(10.0),
-                                                      child: Text(
-                                                        '${formatNumber(
-                                                          containerUsersRecord
-                                                              .progressLevel,
-                                                          formatType:
-                                                              FormatType.custom,
-                                                          format: '00',
-                                                          locale: '',
-                                                        )}%',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .success,
-                                                                  fontSize:
-                                                                      12.0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Finding your photos',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleSmall
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .success,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        if (containerUsersRecord
-                                                .progressLevel >=
-                                            100.0)
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          8.0, 0.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    'Your Uploads',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .titleMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          fontSize: 20.0,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                      ],
-                                    ).animateOnPageLoad(animationsMap[
-                                        'stackOnPageLoadAnimation']!),
-                                  ).animateOnPageLoad(animationsMap[
-                                      'containerOnPageLoadAnimation']!);
-                                },
                               ),
                             ],
                           ),
