@@ -17,6 +17,7 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image/image.dart' as img;
 
 class Camera extends StatefulWidget {
   const Camera({
@@ -66,6 +67,18 @@ class _CameraState extends State<Camera> {
     return userId;
   }
 
+  Future processImage(String path) async {
+    Uint8List imageBytes = await File(path).readAsBytes();
+    img.Image? image = img.decodeImage(imageBytes);
+    if (image != null) {
+      img.Image sharpenedImage =
+          img.adjustColor(image, amount: 1); // Increase sharpness
+      await File(path).writeAsBytes(
+          img.encodeJpg(sharpenedImage)); // Save the processed image.
+    }
+    return;
+  }
+
   void onCapturePressed(context) async {
     if (controller.value.isTakingPicture) {
       // A capture is already pending, do nothing.
@@ -74,6 +87,7 @@ class _CameraState extends State<Camera> {
     try {
       XFile file = await controller.takePicture();
       print('Image captured and saved to ${file.path}');
+      await processImage(file.path);
       // Get the local path
       final directory = await getExternalStorageDirectory();
       final path = '${directory?.path}/Pictures';
