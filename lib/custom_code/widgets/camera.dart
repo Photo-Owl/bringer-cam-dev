@@ -79,7 +79,7 @@ class _CameraState extends State<Camera> {
     return;
   }
 
-  void onCapturePressed(context) async {
+  Future onCapturePressed(context) async {
     if (controller.value.isTakingPicture) {
       // A capture is already pending, do nothing.
       return null;
@@ -94,6 +94,7 @@ class _CameraState extends State<Camera> {
       final path = '${directory?.path}/Pictures';
 
       await Directory(path).create(recursive: true);
+
       final newPath = '$path/${file.name}';
       await File(newPath).writeAsBytes(image);
       print('Image captured and saved locally at $newPath');
@@ -101,6 +102,7 @@ class _CameraState extends State<Camera> {
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       insertImageToSqlite(newPath, ownerId, unixTimestamp);
       return;
+
     } catch (e) {
       print(e);
     }
@@ -197,32 +199,35 @@ class _CameraState extends State<Camera> {
                               ),
                             ),
                           )),
-                      InkWell(
-                        onTap: () => onCapturePressed(context),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                          ),
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Container(
-                              width: 42,
-                              height: 42,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                shape: BoxShape.circle,
+                      controller.value.isTakingPicture
+                          ? CircularProgressIndicator()
+                          : InkWell(
+                              onTap: () => onCapturePressed(context),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                                ),
+                                alignment: AlignmentDirectional(0, 0),
+                                child: Padding(
+                                  padding: EdgeInsets.all(4),
+                                  child: Container(
+                                    width: 42,
+                                    height: 42,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
                         child: Container(
