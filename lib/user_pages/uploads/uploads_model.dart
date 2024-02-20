@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'uploads_widget.dart' show UploadsWidget;
@@ -10,8 +9,6 @@ class UploadsModel extends FlutterFlowModel<UploadsWidget> {
   final unfocusNode = FocusNode();
   // Stores action output result for [Custom Action - checkVersion] action in Uploads widget.
   bool? versionCheckResult;
-  // Stores action output result for [Backend Call - API (searchFacesUsingTIF)] action in Column widget.
-  ApiCallResponse? apiResultruf;
   // Model for sidebar component.
   late SidebarModel sidebarModel;
 
