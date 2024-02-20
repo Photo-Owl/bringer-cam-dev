@@ -9,7 +9,7 @@ class UploadsModel extends FlutterFlowModel<UploadsWidget> {
   final unfocusNode = FocusNode();
   // Stores action output result for [Custom Action - checkVersion] action in Uploads widget.
   bool? versionCheckResult;
-  // Stores action output result for [Custom Action - readAllImagesSqlite] action in Column widget.
+  // Stores action output result for [Custom Action - readAllImagesSqlite] action in Uploads widget.
   List<dynamic>? uploadedImages;
   // Model for sidebar component.
   late SidebarModel sidebarModel;
