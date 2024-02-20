@@ -3,8 +3,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'contactus_model.dart';
 export 'contactus_model.dart';
@@ -57,11 +55,11 @@ class _ContactusWidgetState extends State<ContactusWidget> {
             children: [
               Flexible(
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFF2A2F32),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,11 +77,11 @@ class _ContactusWidgetState extends State<ContactusWidget> {
                               ),
                         ),
                         FlutterFlowIconButton(
-                          borderColor: Color(0xFF2A2F32),
+                          borderColor: const Color(0xFF2A2F32),
                           borderRadius: 20.0,
                           borderWidth: 1.0,
                           buttonSize: 40.0,
-                          fillColor: Color(0xFF2A2F32),
+                          fillColor: const Color(0xFF2A2F32),
                           icon: Icon(
                             Icons.close,
                             color: FlutterFlowTheme.of(context).primaryText,
@@ -104,14 +102,14 @@ class _ContactusWidgetState extends State<ContactusWidget> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
                       'Reach Out to PhotoOwl!\nWe can\'t wait to hear from you.🤗',
                       textAlign: TextAlign.center,
@@ -126,7 +124,7 @@ class _ContactusWidgetState extends State<ContactusWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: FFButtonWidget(
               onPressed: () async {
                 logFirebaseEvent('CONTACTUS_CHAT_WITH_US_NOW!_BTN_ON_TAP');
@@ -136,15 +134,15 @@ class _ContactusWidgetState extends State<ContactusWidget> {
               text: 'Chat with us Now!',
               options: FFButtonOptions(
                 height: 40.0,
-                padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                color: Color(0xFF454242),
+                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                color: const Color(0xFF454242),
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Inter',
                       color: FlutterFlowTheme.of(context).primaryBtnText,
                     ),
                 elevation: 3.0,
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Colors.transparent,
                   width: 1.0,
                 ),

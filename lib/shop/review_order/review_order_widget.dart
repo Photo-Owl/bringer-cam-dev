@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -90,7 +89,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                   context.pop();
                 },
               ),
-              actions: [],
+              actions: const [],
               centerTitle: true,
               elevation: 2.0,
             ),
@@ -112,7 +111,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: Text(
                                   'Your Cart',
                                   style:
@@ -144,7 +143,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                   selectedPhotosIndex];
                                           return Container(
                                             width: 379.0,
-                                            decoration: BoxDecoration(),
+                                            decoration: const BoxDecoration(),
                                             child: ListView(
                                               padding: EdgeInsets.zero,
                                               shrinkWrap: true,
@@ -165,7 +164,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                   builder: (context, snapshot) {
                                                     // Customize what your widget looks like when it's loading.
                                                     if (!snapshot.hasData) {
-                                                      return Center(
+                                                      return const Center(
                                                         child: SizedBox(
                                                           width: 50.0,
                                                           height: 50.0,
@@ -200,7 +199,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              EdgeInsets.all(
+                                                              const EdgeInsets.all(
                                                                   10.0),
                                                           child: Container(
                                                             width: 100.0,
@@ -213,7 +212,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                             ),
                                                             child: Padding(
                                                               padding:
-                                                                  EdgeInsets
+                                                                  const EdgeInsets
                                                                       .all(5.0),
                                                               child: ClipRRect(
                                                                 borderRadius:
@@ -253,7 +252,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                                 'id',
                                                                 isEqualTo:
                                                                     rowUploadsRecord
-                                                                        ?.albumId,
+                                                                        .albumId,
                                                               ),
                                                               singleRecord:
                                                                   true,
@@ -263,7 +262,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                               // Customize what your widget looks like when it's loading.
                                                               if (!snapshot
                                                                   .hasData) {
-                                                                return Center(
+                                                                return const Center(
                                                                   child:
                                                                       SizedBox(
                                                                     width: 50.0,
@@ -348,12 +347,12 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                                       children: [
                                                                         TextSpan(
                                                                           text:
-                                                                              '₹‎${columnAlbumsRecord?.premiumImageDiscountedCost?.toString()}',
+                                                                              '₹‎${columnAlbumsRecord?.premiumImageDiscountedCost.toString()}',
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyMedium
                                                                               .override(
                                                                                 fontFamily: 'Inter',
-                                                                                color: Color(0xFF015C2F),
+                                                                                color: const Color(0xFF015C2F),
                                                                                 fontSize: 12.0,
                                                                                 fontWeight: FontWeight.w600,
                                                                               ),
@@ -374,7 +373,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                                         ),
                                                                         TextSpan(
                                                                           text:
-                                                                              '₹‎${columnAlbumsRecord?.premiumImageCost?.toString()}',
+                                                                              '₹‎${columnAlbumsRecord?.premiumImageCost.toString()}',
                                                                           style:
                                                                               GoogleFonts.getFont(
                                                                             'Inter',
@@ -419,7 +418,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 15.0, 0.0, 15.0, 0.0),
                             child: Container(
                               width: MediaQuery.sizeOf(context).width * 1.0,
@@ -432,14 +431,14 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 20.0, 20.0, 20.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 8.0, 0.0),
                                     child: TextFormField(
                                       controller: _model.textController,
@@ -494,7 +493,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
-                                        prefixIcon: Icon(
+                                        prefixIcon: const Icon(
                                           Icons.percent_rounded,
                                         ),
                                       ),
@@ -515,8 +514,8 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                   },
                                   text: 'Apply',
                                   options: FFButtonOptions(
-                                    padding: EdgeInsets.all(15.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsets.all(15.0),
+                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context).success,
                                     textStyle: FlutterFlowTheme.of(context)
@@ -526,7 +525,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                           color: Colors.white,
                                         ),
                                     elevation: 3.0,
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Colors.transparent,
                                       width: 1.0,
                                     ),
@@ -537,7 +536,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 15.0, 15.0, 15.0, 0.0),
                             child: Container(
                               width: MediaQuery.sizeOf(context).width * 1.0,
@@ -562,7 +561,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Text(
                                         'Pricing Details',
                                         style: FlutterFlowTheme.of(context)
@@ -572,7 +571,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 0.0, 20.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -609,7 +608,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                             ),
-                                            TextSpan(
+                                            const TextSpan(
                                               text: '100',
                                               style: TextStyle(),
                                             )
@@ -622,7 +621,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 0.0, 20.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -644,7 +643,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(1.0, 0.0),
+                                            const AlignmentDirectional(1.0, 0.0),
                                         child: RichText(
                                           textScaleFactor:
                                               MediaQuery.of(context)
@@ -665,7 +664,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                               FontWeight.bold,
                                                         ),
                                               ),
-                                              TextSpan(
+                                              const TextSpan(
                                                 text: '20',
                                                 style: TextStyle(),
                                               )
@@ -683,7 +682,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 0.0, 20.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -706,7 +705,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(1.0, 0.0),
+                                            const AlignmentDirectional(1.0, 0.0),
                                         child: RichText(
                                           textScaleFactor:
                                               MediaQuery.of(context)
@@ -748,7 +747,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 0.0, 20.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -770,7 +769,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(1.0, 0.0),
+                                            const AlignmentDirectional(1.0, 0.0),
                                         child: RichText(
                                           textScaleFactor:
                                               MediaQuery.of(context)
@@ -791,7 +790,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                               FontWeight.bold,
                                                         ),
                                               ),
-                                              TextSpan(
+                                              const TextSpan(
                                                 text: '20',
                                                 style: TextStyle(),
                                               )
@@ -809,7 +808,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 0.0, 20.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -832,7 +831,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(1.0, 0.0),
+                                            const AlignmentDirectional(1.0, 0.0),
                                         child: RichText(
                                           textScaleFactor:
                                               MediaQuery.of(context)
@@ -877,15 +876,15 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Container(
                               width: double.infinity,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Color(0x4704A24C),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: RichText(
                                   textScaleFactor:
                                       MediaQuery.of(context).textScaleFactor,
@@ -903,7 +902,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
-                                      TextSpan(
+                                      const TextSpan(
                                         text: '20',
                                         style: TextStyle(),
                                       ),
@@ -924,7 +923,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: FFButtonWidget(
                               onPressed: () {
                                 print('Button pressed ...');
@@ -932,9 +931,9 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                               text: 'Pay Now',
                               options: FFButtonOptions(
                                 height: 40.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     24.0, 0.0, 24.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
                                 color: FlutterFlowTheme.of(context).success,
                                 textStyle: FlutterFlowTheme.of(context)
@@ -944,7 +943,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                       color: Colors.white,
                                     ),
                                 elevation: 3.0,
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1.0,
                                 ),

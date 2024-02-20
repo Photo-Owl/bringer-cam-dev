@@ -4,9 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'review_orderpop_model.dart';
@@ -71,7 +69,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Row(
+                const Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -88,7 +86,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 7.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 7.0),
                   child: Text(
                     'Your Cart',
                     style: FlutterFlowTheme.of(context).titleMedium,
@@ -96,14 +94,14 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
+                      const EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 20.0, 0.0),
                         child: Container(
                           width: 240.0,
                           decoration: BoxDecoration(
@@ -115,13 +113,13 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 20.0, 10.0, 20.0, 10.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 10.0, 0.0),
                                   child: Icon(
                                     Icons.percent_rounded,
@@ -150,8 +148,8 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                         },
                         text: 'Apply',
                         options: FFButtonOptions(
-                          padding: EdgeInsets.all(15.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsets.all(15.0),
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primaryText,
                           textStyle:
@@ -161,7 +159,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                         .primaryBackground,
                                   ),
                           elevation: 3.0,
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
                             width: 1.0,
                           ),
@@ -176,7 +174,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Text(
                         'Pricing Details',
                         style: FlutterFlowTheme.of(context).titleMedium,
@@ -185,7 +183,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,7 +216,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                 widget.cartTotal?.toString(),
                                 '0',
                               ),
-                              style: TextStyle(),
+                              style: const TextStyle(),
                             )
                           ],
                           style: FlutterFlowTheme.of(context).bodyMedium,
@@ -228,7 +226,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -242,7 +240,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                             ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(1.0, 0.0),
+                        alignment: const AlignmentDirectional(1.0, 0.0),
                         child: RichText(
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor,
@@ -264,7 +262,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                   widget.discount?.toString(),
                                   '0',
                                 ),
-                                style: TextStyle(),
+                                style: const TextStyle(),
                               )
                             ],
                             style: FlutterFlowTheme.of(context)
@@ -280,7 +278,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -295,7 +293,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                             ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(1.0, 0.0),
+                        alignment: const AlignmentDirectional(1.0, 0.0),
                         child: RichText(
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor,
@@ -336,14 +334,14 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                   child: Container(
                     width: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0x6BFCDC0C),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: RichText(
                         textScaleFactor: MediaQuery.of(context).textScaleFactor,
                         text: TextSpan(
@@ -364,7 +362,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                 widget.discount?.toString(),
                                 '0',
                               ),
-                              style: TextStyle(),
+                              style: const TextStyle(),
                             ),
                             TextSpan(
                               text: ' in this Purchase',
@@ -382,33 +380,33 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent(
                           'REVIEW_ORDERPOP_COMP_PAY_NOW_BTN_ON_TAP');
-                      var _shouldSetState = false;
+                      var shouldSetState = false;
                       if (widget.total! < 10.0) {
                         logFirebaseEvent('Button_show_snack_bar');
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(
+                            content: const Text(
                               'Minimum cart value of Rs.10 required',
                               style: TextStyle(
                                 color: Colors.white,
                               ),
                             ),
-                            duration: Duration(milliseconds: 4000),
+                            duration: const Duration(milliseconds: 4000),
                             backgroundColor: FlutterFlowTheme.of(context).error,
                           ),
                         );
-                        if (_shouldSetState) setState(() {});
+                        if (shouldSetState) setState(() {});
                         return;
                       }
                       logFirebaseEvent('Button_backend_call');
                       _model.apiResultm8a =
                           await InstamojoGroup.getAccessTokenCall.call();
-                      _shouldSetState = true;
+                      shouldSetState = true;
                       if ((_model.apiResultm8a?.succeeded ?? true)) {
                         logFirebaseEvent('Button_backend_call');
                         _model.apiResult545 =
@@ -425,7 +423,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                           buyerName: currentUserDisplayName,
                           phoneNumber: currentPhoneNumber,
                         );
-                        _shouldSetState = true;
+                        shouldSetState = true;
                         if ((_model.apiResult545?.succeeded ?? true)) {
                           logFirebaseEvent('Button_custom_action');
                           await actions.createphotoPurchasedDocForMultipleKeys(
@@ -456,22 +454,22 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
                             ),
-                            duration: Duration(milliseconds: 4000),
+                            duration: const Duration(milliseconds: 4000),
                             backgroundColor:
                                 FlutterFlowTheme.of(context).secondary,
                           ),
                         );
                       }
 
-                      if (_shouldSetState) setState(() {});
+                      if (shouldSetState) setState(() {});
                     },
                     text: 'Pay Now',
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).success,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -479,7 +477,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                 color: Colors.white,
                               ),
                       elevation: 3.0,
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.transparent,
                         width: 1.0,
                       ),

@@ -7,13 +7,10 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'social_sign_in_model.dart';
 export 'social_sign_in_model.dart';
@@ -55,8 +52,8 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 13.999999999999986),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 13.999999999999986),
+          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -88,7 +85,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
           builder: (context) {
             return Padding(
               padding: MediaQuery.viewInsetsOf(context),
-              child: UpdateRequiredWidget(),
+              child: const UpdateRequiredWidget(),
             );
           },
         ).then((value) => safeSetState(() {}));
@@ -142,7 +139,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                     child: Image.asset(
                       'assets/images/Image.png',
                       fit: BoxFit.fitHeight,
-                      alignment: Alignment(0.0, -1.0),
+                      alignment: const Alignment(0.0, -1.0),
                     ),
                   ),
                 ),
@@ -162,7 +159,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsets.all(20.0),
+                              padding: const EdgeInsets.all(20.0),
                               child: Text(
                                 'Sign In to get started',
                                 style: FlutterFlowTheme.of(context)
@@ -176,9 +173,9 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                             ),
                             if (widget.email != null && widget.email != '')
                               Align(
-                                alignment: AlignmentDirectional(-1.0, 0.0),
+                                alignment: const AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       15.0, 10.0, 15.0, 0.0),
                                   child: Text(
                                     'This account is already associated with ${widget.email}',
@@ -193,7 +190,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                 ),
                               ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   15.0, 30.0, 15.0, 30.0),
                               child: Stack(
                                 children: [
@@ -201,7 +198,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                     onPressed: () async {
                                       logFirebaseEvent(
                                           'SOCIAL_SIGN_IN_SIGN_IN_WITH_GOOGLE_BTN_O');
-                                      var _shouldSetState = false;
+                                      var shouldSetState = false;
                                       if (!((String var1) {
                                         return var1.contains('+');
                                       }(widget.phoneNumber!))) {
@@ -210,7 +207,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                         context.goNamedAuth(
                                             'SignIn', context.mounted);
 
-                                        if (_shouldSetState) setState(() {});
+                                        if (shouldSetState) setState(() {});
                                         return;
                                       }
                                       logFirebaseEvent(
@@ -223,7 +220,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                           isEqualTo: widget.phoneNumber,
                                         ),
                                       );
-                                      _shouldSetState = true;
+                                      shouldSetState = true;
                                       logFirebaseEvent('Button_auth');
                                       GoRouter.of(context).prepareAuthEvent();
                                       final user = await authManager
@@ -231,8 +228,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                       if (user == null) {
                                         return;
                                       }
-                                      if (currentPhoneNumber == null ||
-                                          currentPhoneNumber == '') {
+                                      if (currentPhoneNumber == '') {
                                         if (valueOrDefault<bool>(
                                             currentUserDocument
                                                 ?.isBusinessAccount,
@@ -250,15 +246,15 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                             context: context,
                                             builder: (alertDialogContext) {
                                               return AlertDialog(
-                                                title: Text('Error'),
-                                                content: Text(
+                                                title: const Text('Error'),
+                                                content: const Text(
                                                     'This email is used for a business account. Try using a different email'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
                                                             alertDialogContext),
-                                                    child: Text('Ok'),
+                                                    child: const Text('Ok'),
                                                   ),
                                                 ],
                                               );
@@ -266,8 +262,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                           );
                                         } else {
                                           if (_model
-                                                  .userDocumentaction!.length >
-                                              0) {
+                                                  .userDocumentaction!.isNotEmpty) {
                                             logFirebaseEvent(
                                                 'Button_backend_call');
                                             await currentUserReference!
@@ -285,15 +280,15 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                               context: context,
                                               builder: (alertDialogContext) {
                                                 return AlertDialog(
-                                                  title: Text('Error'),
-                                                  content: Text(
+                                                  title: const Text('Error'),
+                                                  content: const Text(
                                                       'This phone number is already associated with another email id'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () =>
                                                           Navigator.pop(
                                                               alertDialogContext),
-                                                      child: Text('Ok'),
+                                                      child: const Text('Ok'),
                                                     ),
                                                   ],
                                                 );
@@ -335,15 +330,15 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                             context: context,
                                             builder: (alertDialogContext) {
                                               return AlertDialog(
-                                                title: Text('Error'),
-                                                content: Text(
+                                                title: const Text('Error'),
+                                                content: const Text(
                                                     'This email id is already registered with another phone number'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
                                                             alertDialogContext),
-                                                    child: Text('Ok'),
+                                                    child: const Text('Ok'),
                                                   ),
                                                 ],
                                               );
@@ -362,15 +357,15 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                           context: context,
                                           builder: (alertDialogContext) {
                                             return AlertDialog(
-                                              title: Text('Error'),
-                                              content: Text(
+                                              title: const Text('Error'),
+                                              content: const Text(
                                                   'This email id is already registered with another phone number'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(
                                                           alertDialogContext),
-                                                  child: Text('Ok'),
+                                                  child: const Text('Ok'),
                                                 ),
                                               ],
                                             );
@@ -378,18 +373,18 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                         );
                                       }
 
-                                      if (_shouldSetState) setState(() {});
+                                      if (shouldSetState) setState(() {});
                                     },
                                     text: 'Sign in with Google',
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 56.0,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           24.0, 0.0, 24.0, 0.0),
                                       iconPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
+                                          const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 10.0, 0.0),
-                                      color: Color(0xFF1589FC),
+                                      color: const Color(0xFF1589FC),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
@@ -398,7 +393,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                                 .primaryBtnText,
                                           ),
                                       elevation: 2.0,
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Color(0xFF5282E5),
                                         width: 0.0,
                                       ),
@@ -406,9 +401,9 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1.0, 0.0),
+                                    alignment: const AlignmentDirectional(-1.0, 0.0),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           8.0, 10.0, 0.0, 0.0),
                                       child: ClipRRect(
                                         borderRadius:
@@ -417,7 +412,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                           'assets/images/Google_logo.png',
                                           width: 36.0,
                                           fit: BoxFit.fitHeight,
-                                          alignment: Alignment(0.0, 0.0),
+                                          alignment: const Alignment(0.0, 0.0),
                                         ),
                                       ),
                                     ),
@@ -427,7 +422,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                             ),
                             if (widget.email == null || widget.email == '')
                               Padding(
-                                padding: EdgeInsets.all(20.0),
+                                padding: const EdgeInsets.all(20.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -461,7 +456,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Inter',
-                                          color: Color(0xFF1589FC),
+                                          color: const Color(0xFF1589FC),
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -469,7 +464,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                 ),
                               ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   20.0, 55.0, 20.0, 10.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
@@ -504,7 +499,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                             animationsMap['columnOnPageLoadAnimation']!),
                       Flexible(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 30.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -512,7 +507,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                             children: [
                               if (currentUserReference != null)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 30.0, 0.0, 15.0),
                                   child: Text(
                                     'Login Successful',
@@ -543,11 +538,11 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                           text: 'Continue',
                           options: FFButtonOptions(
                             height: 40.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: Color(0xFF1589FC),
+                            color: const Color(0xFF1589FC),
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
@@ -555,7 +550,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                   color: Colors.white,
                                 ),
                             elevation: 3.0,
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Colors.transparent,
                               width: 1.0,
                             ),

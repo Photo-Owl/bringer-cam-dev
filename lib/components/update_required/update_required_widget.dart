@@ -1,8 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'update_required_model.dart';
@@ -63,7 +61,7 @@ class _UpdateRequiredWidgetState extends State<UpdateRequiredWidget> {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 0.0),
+          padding: const EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 0.0),
           child: Text(
             'The website version is out of date,\n Simply refresh your browser for the latest version',
             textAlign: TextAlign.center,

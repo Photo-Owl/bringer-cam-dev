@@ -1,19 +1,18 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/fetching_photos_widget.dart';
 import '/components/give_name/give_name_widget.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/components/update_required/update_required_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'uploads_model.dart';
 export 'uploads_model.dart';
@@ -59,7 +58,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: UpdateRequiredWidget(),
+                child: const UpdateRequiredWidget(),
               ),
             );
           },
@@ -68,7 +67,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
         return;
       }
 
-      if (currentUserDisplayName == null || currentUserDisplayName == '') {
+      if (currentUserDisplayName == '') {
         logFirebaseEvent('Uploads_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
@@ -82,7 +81,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: GiveNameWidget(),
+                child: const GiveNameWidget(),
               ),
             );
           },
@@ -166,7 +165,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
               child: wrapWithModel(
                 model: _model.sidebarModel,
                 updateCallback: () => setState(() {}),
-                child: SidebarWidget(
+                child: const SidebarWidget(
                   index: 0,
                 ),
               ),
@@ -186,7 +185,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     children: [
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -209,20 +208,20 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                       ),
                       Expanded(
                         child: Container(
-                          decoration: BoxDecoration(),
+                          decoration: const BoxDecoration(),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 24.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 2.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => Text(
-                                      'Hey ${currentUserDisplayName}',
+                                      'Hey $currentUserDisplayName',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .titleMedium,
@@ -232,7 +231,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                 Container(
                                   width: 25.0,
                                   height: 25.0,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Color(0x00FFFFFF),
                                   ),
                                   child: ClipRRect(
@@ -252,7 +251,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                       ),
                     ],
                   ),
-                  actions: [],
+                  actions: const [],
                   flexibleSpace: FlexibleSpaceBar(
                     background: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
@@ -272,10 +271,18 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     top: false,
                     child: Container(
                       height: MediaQuery.sizeOf(context).height * 1.0,
-                      decoration: BoxDecoration(),
+                      decoration: const BoxDecoration(),
                       child: Builder(
                         builder: (context) {
                           final uploadedImage = _model.uploadedImages!.toList();
+                          if (uploadedImage.isEmpty) {
+                            return Center(
+                              child: SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.5,
+                                child: const FetchingPhotosWidget(),
+                              ),
+                            );
+                          }
                           return Column(
                             mainAxisSize: MainAxisSize.max,
                             children: List.generate(uploadedImage.length,
@@ -283,7 +290,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                               final uploadedImageItem =
                                   uploadedImage[uploadedImageIndex];
                               return Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 30.0, 0.0, 0.0),
                                 child: Container(
                                   width: MediaQuery.sizeOf(context).width * 1.0,
@@ -301,6 +308,18 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                         ).toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium,
+                                      ),
+                                      SizedBox(
+                                        width: 100.0,
+                                        height: 100.0,
+                                        child: custom_widgets.ShowLocalImage(
+                                          width: 100.0,
+                                          height: 100.0,
+                                          path: getJsonField(
+                                            uploadedImageItem,
+                                            r'''$["path"]''',
+                                          ).toString(),
+                                        ),
                                       ),
                                     ],
                                   ),
