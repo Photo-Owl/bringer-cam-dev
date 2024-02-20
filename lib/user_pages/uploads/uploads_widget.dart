@@ -6,6 +6,7 @@ import '/components/update_required/update_required_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
@@ -267,104 +268,229 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                 builder: (context) {
                   return SafeArea(
                     top: false,
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
-                      decoration: const BoxDecoration(),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Builder(
-                              builder: (context) {
-                                final uploadedImage =
-                                    _model.uploadedImages!.toList();
-                                return Wrap(
-                                  spacing: 0.0,
-                                  runSpacing: 0.0,
-                                  alignment: WrapAlignment.start,
-                                  crossAxisAlignment: WrapCrossAlignment.start,
-                                  direction: Axis.horizontal,
-                                  runAlignment: WrapAlignment.start,
-                                  verticalDirection: VerticalDirection.down,
-                                  clipBehavior: Clip.none,
-                                  children: List.generate(uploadedImage.length,
-                                      (uploadedImageIndex) {
-                                    final uploadedImageItem =
-                                        uploadedImage[uploadedImageIndex];
-                                    return Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: SizedBox(
-                                        width: 100.0,
-                                        height: 100.0,
-                                        child: Stack(
-                                          children: [
-                                            Align(
-                                              alignment: const AlignmentDirectional(
-                                                  -1.0, -1.0),
-                                              child: SizedBox(
-                                                width: 100.0,
-                                                height: 100.0,
-                                                child: custom_widgets
-                                                    .ShowLocalImage(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 3.0,
+                                  color: Color(0x33000000),
+                                  offset: Offset(0.0, 1.0),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(5.0),
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    'Upload Offline Files',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                  ),
+                                  FFButtonWidget(
+                                    onPressed: () async {
+                                      logFirebaseEvent(
+                                          'UPLOADS_PAGE_START_UPLOAD_BTN_ON_TAP');
+                                      logFirebaseEvent('Button_custom_action');
+                                      await actions.uploadImagesFromSqlite(
+                                        currentUserUid,
+                                      );
+                                    },
+                                    text: 'Start Upload',
+                                    options: FFButtonOptions(
+                                      height: 40.0,
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 0.0, 24.0, 0.0),
+                                      iconPadding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: const Color(0xFF3987EF),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            color: Colors.white,
+                                          ),
+                                      elevation: 3.0,
+                                      borderSide: const BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          height: MediaQuery.sizeOf(context).height * 1.0,
+                          decoration: const BoxDecoration(),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Builder(
+                                  builder: (context) {
+                                    final uploadedImage =
+                                        _model.uploadedImages!.toList();
+                                    return Wrap(
+                                      spacing: 0.0,
+                                      runSpacing: 0.0,
+                                      alignment: WrapAlignment.start,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.start,
+                                      direction: Axis.horizontal,
+                                      runAlignment: WrapAlignment.start,
+                                      verticalDirection: VerticalDirection.down,
+                                      clipBehavior: Clip.none,
+                                      children:
+                                          List.generate(uploadedImage.length,
+                                              (uploadedImageIndex) {
+                                        final uploadedImageItem =
+                                            uploadedImage[uploadedImageIndex];
+                                        return Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: SizedBox(
+                                            width: 100.0,
+                                            height: 100.0,
+                                            child: Stack(
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          -1.0, -1.0),
+                                                  child: SizedBox(
+                                                    width: 100.0,
+                                                    height: 100.0,
+                                                    child: custom_widgets
+                                                        .ShowLocalImage(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      path: getJsonField(
+                                                        uploadedImageItem,
+                                                        r'''$["path"]''',
+                                                      ).toString(),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
                                                   width: 100.0,
                                                   height: 100.0,
-                                                  path: getJsonField(
-                                                    uploadedImageItem,
-                                                    r'''$["path"]''',
-                                                  ).toString(),
+                                                  decoration: const BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Color(0x99101213),
+                                                        Colors.transparent
+                                                      ],
+                                                      stops: [0.0, 0.4],
+                                                      begin:
+                                                          AlignmentDirectional(
+                                                              1.0, 1.0),
+                                                      end: AlignmentDirectional(
+                                                          -1.0, -1.0),
+                                                    ),
+                                                  ),
+                                                  child: Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            1.0, 1.0),
+                                                    child: Builder(
+                                                      builder: (context) {
+                                                        if (getJsonField(
+                                                              uploadedImageItem,
+                                                              r'''$["is_uploaded"]''',
+                                                            ) !=
+                                                            0) {
+                                                          return Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        5.0,
+                                                                        5.0),
+                                                            child: FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .check,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              size: 14.0,
+                                                            ),
+                                                          );
+                                                        } else if (getJsonField(
+                                                              uploadedImageItem,
+                                                              r'''$["is_uploading"]''',
+                                                            ) !=
+                                                            0) {
+                                                          return Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        5.0,
+                                                                        5.0),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .cloud_upload_outlined,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              size: 14.0,
+                                                            ),
+                                                          );
+                                                        } else {
+                                                          return Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        5.0,
+                                                                        5.0),
+                                                            child: FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .clock,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              size: 14.0,
+                                                            ),
+                                                          );
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                            Container(
-                                              width: 100.0,
-                                              height: 100.0,
-                                              decoration: const BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color(0x69101213),
-                                                    Colors.transparent
-                                                  ],
-                                                  stops: [0.0, 0.3],
-                                                  begin: AlignmentDirectional(
-                                                      1.0, 1.0),
-                                                  end: AlignmentDirectional(
-                                                      -1.0, -1.0),
-                                                ),
-                                              ),
-                                              child: Align(
-                                                alignment: const AlignmentDirectional(
-                                                    1.0, 1.0),
-                                                child: Text(
-                                                  getJsonField(
-                                                    uploadedImageItem,
-                                                    r'''$["path"]''',
-                                                  ).toString(),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        fontSize: 8.0,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                          ),
+                                        );
+                                      }),
                                     );
-                                  }),
-                                );
-                              },
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   );
                 },
