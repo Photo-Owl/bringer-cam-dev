@@ -104,6 +104,10 @@ class _UploadsWidgetState extends State<UploadsWidget> {
             uid: currentUserUid,
             timestamp: getCurrentTimestamp,
           ));
+      logFirebaseEvent('Uploads_custom_action');
+      _model.uploadedImages = await actions.readAllImagesSqlite(
+        currentUserUid,
+      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -266,52 +270,42 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     child: Container(
                       height: MediaQuery.sizeOf(context).height * 1.0,
                       decoration: const BoxDecoration(),
-                      child: InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          logFirebaseEvent(
-                              'UPLOADS_PAGE_Column_uq66dd36_ON_TAP');
-                          logFirebaseEvent('Column_custom_action');
-                          _model.uploadedImages =
-                              await actions.readAllImagesSqlite(
-                            currentUserUid,
-                          );
-
-                          setState(() {});
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 30.0, 0.0, 0.0),
-                              child: Container(
-                                width: MediaQuery.sizeOf(context).width * 1.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                      valueOrDefault<String>(
-                                        _model.uploadedImages?.length
-                                            .toString(),
-                                        '0',
+                      child: Builder(
+                        builder: (context) {
+                          final uploadedImage = _model.uploadedImages!.toList();
+                          return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: List.generate(uploadedImage.length,
+                                (uploadedImageIndex) {
+                              final uploadedImageItem =
+                                  uploadedImage[uploadedImageIndex];
+                              return Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 30.0, 0.0, 0.0),
+                                child: Container(
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        getJsonField(
+                                          uploadedImageItem,
+                                          r'''$["path"]''',
+                                        ).toString(),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium,
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
+                              );
+                            }),
+                          );
+                        },
                       ),
                     ),
                   );
