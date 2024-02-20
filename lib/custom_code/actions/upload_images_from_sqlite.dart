@@ -26,7 +26,7 @@ Future uploadImagesFromSqlite(String userId) async {
 
   // Get the images
   final List<Map<String, dynamic>> maps = await database.rawQuery(
-    'SELECT * FROM Images WHERE is_uploaded != 0 AND owner = ? ORDER BY unix_timestamp ASC',
+    'SELECT * FROM Images WHERE is_uploaded == 0 AND owner = ? ORDER BY unix_timestamp ASC',
     [userId],
   );
 
@@ -42,7 +42,10 @@ Future uploadImagesFromSqlite(String userId) async {
     // Upload the image to Firebase Storage
     final ref = FirebaseStorage.instance
         .ref('$userId/uploads/${basename(map['path'])}');
-    await ref.putFile(File(map['path']));
+    await ref.putFile(
+      File(map['path']),
+      SettableMetadata(contentType: 'image/jpg'), // Set the content type here
+    );
 
     // Get the URL of the uploaded image
     final url = await ref.getDownloadURL();
