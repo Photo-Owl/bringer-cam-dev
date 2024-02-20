@@ -279,7 +279,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                             Builder(
                               builder: (context) {
                                 final uploadedImage =
-                                    _model.uploadedImages!.toList();
+                                    (_model.uploadedImages?.toList()) ?? const [];
                                 if (uploadedImage.isEmpty) {
                                   return Center(
                                     child: SizedBox(

@@ -18,12 +18,12 @@ class ShowLocalImage extends StatefulWidget {
     super.key,
     this.width,
     this.height,
-    this.path,
+    required this.path,
   });
 
   final double? width;
   final double? height;
-  final String? path;
+  final String path;
 
   @override
   State<ShowLocalImage> createState() => _ShowLocalImageState();
@@ -32,8 +32,7 @@ class ShowLocalImage extends StatefulWidget {
 class _ShowLocalImageState extends State<ShowLocalImage> {
   @override
   Widget build(BuildContext context) {
-    var imageFile = File(
-        '/storage/emulated/0/Android/data/com.smoose.photoowldev/files/Pictures/CAP4934072218017907159.jpg');
+    var imageFile = File(widget.path);
     return Image.file(imageFile, fit: BoxFit.cover);
   }
 }
