@@ -15,6 +15,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+import 'package:mime_type/mime_type.dart';
 
 Future uploadImagesFromSqlite(String userId) async {
   // Add your function code here!
@@ -40,11 +41,13 @@ Future uploadImagesFromSqlite(String userId) async {
     );
 
     // Upload the image to Firebase Storage
+    final fileName = basename(map['path']);
     final ref = FirebaseStorage.instance
-        .ref('$userId/uploads/${basename(map['path'])}');
+        .ref('users/$userId/uploads/$fileName');
+    final file = File(map['path']);
     await ref.putFile(
-      File(map['path']),
-      SettableMetadata(contentType: 'image/'), // Set the content type here
+      file,
+      SettableMetadata(contentType: mime(fileName)),
     );
 
     // Get the URL of the uploaded image
