@@ -75,13 +75,16 @@ Future uploadImagesFromSqlite(String userId) async {
     if (albumId == null) {
       // Create a new album document
       final albumDoc =
-          await FirebaseFirestore.instance.collection('albums').add({
+          await FirebaseFirestore.instance.collection('albums').add({});
+
+      await albumDoc.update({
         'album_name':
             DateTime.fromMillisecondsSinceEpoch(map['unix_timestamp'] * 1000)
                 .toIso8601String(),
         'created_at':
             Timestamp.fromMillisecondsSinceEpoch(map['unix_timestamp'] * 1000),
         'owner_id': userId,
+        'id': albumDoc.id,
       });
 
       albumId = albumDoc.id;
