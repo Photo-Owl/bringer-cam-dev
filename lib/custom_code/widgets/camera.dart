@@ -19,6 +19,31 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image/image.dart' as img;
 
+class _ShutterButton extends StatelessWidget {
+  final bool isTakingPicture;
+  const _ShutterButton(this.isTakingPicture);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(5),
+      decoration: const ShapeDecoration(
+        shape: CircleBorder(
+          side: BorderSide(color: Colors.white, width: 2),
+        ),
+      ),
+      child: Container(
+        height: 37,
+        width: 37,
+        decoration: ShapeDecoration(
+          shape: const CircleBorder(),
+          color: isTakingPicture ? Colors.white70 : Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
 class Camera extends StatefulWidget {
   const Camera({
     super.key,
@@ -33,41 +58,79 @@ class Camera extends StatefulWidget {
   State<Camera> createState() => _CameraState();
 }
 
-class _CameraState extends State<Camera> {
-  late CameraController controller;
+class _CameraState extends State<Camera> with WidgetsBindingObserver {
+  CameraController? controller;
+  late final List<CameraDescription> cameras;
   int selectedCameraIndex = 0;
-  late List<CameraDescription> cameras;
+  bool hidSystemUI = false;
 
   @override
   void initState() {
     super.initState();
-    initCamera();
-  }
-
-  Future<void> initCamera() async {
-    cameras = await availableCameras();
-    controller = CameraController(cameras[0], ResolutionPreset.veryHigh);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
+    _fetchCameras();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky).then((s) {
+      setState(() {
+        hidSystemUI = true;
+      });
     });
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    controller?.dispose();
     super.dispose();
+
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    );
   }
 
-  Future<String?> getOwnerId() async {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (controller?.value.isInitialized ?? false) {
+      if (state == AppLifecycleState.paused) {
+        controller?.pausePreview();
+      } else {
+        controller?.resumePreview();
+      }
+    }
+  }
+
+  Future<CameraController> _initializeCam(int i) async {
+    final controller = CameraController(
+      cameras[i],
+      ResolutionPreset.veryHigh,
+    );
+
+    await controller.initialize();
+
+    return controller;
+  }
+
+  Future<void> _fetchCameras() async {
+    cameras = await availableCameras();
+    controller = await _initializeCam(0);
+    setState(() {});
+  }
+
+  Future<void> _onSwitchCamera() async {
+    final nextCam = (selectedCameraIndex + 1) % cameras.length;
+    final controller = await _initializeCam(nextCam);
+    setState(() {
+      this.controller = controller;
+      selectedCameraIndex = nextCam;
+    });
+  }
+
+  Future<String?> _getOwnerId() async {
     final user = FirebaseAuth.instance.currentUser;
     final userId = user?.uid;
     return userId;
   }
 
-  Future processImage(String path) async {
+  Future _processImage(String path) async {
     Uint8List imageBytes = await File(path).readAsBytes();
     img.Image? image = img.decodeImage(imageBytes);
     if (image != null) {
@@ -79,16 +142,16 @@ class _CameraState extends State<Camera> {
     return;
   }
 
-  void onCapturePressed(context) async {
-    if (controller.value.isTakingPicture) {
+  void _onCapturePressed(context) async {
+    if (controller == null || controller!.value.isTakingPicture) {
       // A capture is already pending, do nothing.
       return null;
     }
     try {
-      final file = await controller.takePicture();
+      final file = await controller!.takePicture();
       final image = await file.readAsBytes();
       print('Image captured and saved to ${file.path}');
-      await processImage(file.path);
+      await _processImage(file.path);
       // Get the local path
       final directory = await getExternalStorageDirectory();
       final path = '${directory?.path}/Pictures';
@@ -97,7 +160,7 @@ class _CameraState extends State<Camera> {
       final newPath = '$path/${file.name}';
       await File(newPath).writeAsBytes(image);
       print('Image captured and saved locally at $newPath');
-      var ownerId = await getOwnerId();
+      var ownerId = await _getOwnerId();
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       insertImageToSqlite(newPath, ownerId, unixTimestamp);
       return;
@@ -106,151 +169,98 @@ class _CameraState extends State<Camera> {
     }
   }
 
-  void onSwitchCamera() {
-    selectedCameraIndex =
-        selectedCameraIndex < cameras.length - 1 ? selectedCameraIndex + 1 : 0;
-    CameraController _newController = CameraController(
-      cameras[selectedCameraIndex],
-      ResolutionPreset.veryHigh,
-    );
-
-    _newController.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        controller = _newController;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return Container();
-    }
-    return Stack(
-      children: [
-        CameraPreview(controller),
-        Container(
-          width: MediaQuery.sizeOf(context).width,
-          height: MediaQuery.sizeOf(context).height * 1,
-          decoration: BoxDecoration(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Align(
-                alignment: AlignmentDirectional(-1, -1),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                  child: Container(
-                    decoration: BoxDecoration(),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        context.safePop();
-                      },
-                      child: Icon(
-                        Icons.close,
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        size: 24,
-                      ),
+    if (!hidSystemUI) return Container();
+    return SafeArea(
+      child: Column(
+        children: [
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.only(top: 16, bottom: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Material(
+                    color: Colors.transparent,
+                    shape: const CircleBorder(),
+                    clipBehavior: Clip.hardEdge,
+                    child: IconButton(
+                      onPressed: () => context.safePop(),
+                      icon: const Icon(Icons.home_rounded),
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      tooltip: 'Home',
+                      iconSize: 24,
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 35),
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  decoration: BoxDecoration(),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                          child: InkWell(
-                            onTap: () async {
-                              logFirebaseEvent(
-                                  'CAMERA_TEMP_Container_kwyzkp5i_ON_TAP');
-                              logFirebaseEvent('Container_navigate_to');
-                              context.pushNamed('uploads');
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Color(0x85000000),
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(12),
-                                child: Icon(
-                                  Icons.photo_library,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
-                          )),
-                      InkWell(
-                        onTap: () => onCapturePressed(context),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                          ),
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Container(
-                              width: 42,
-                              height: 42,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                        child: Container(
-                            decoration: BoxDecoration(
-                              color: Color(0x85000000),
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            child: InkWell(
-                              onTap: onSwitchCamera,
-                              child: Padding(
-                                padding: EdgeInsets.all(12),
-                                child: Icon(
-                                  Icons.cameraswitch_outlined,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  size: 20,
-                                ),
-                              ),
-                            )),
-                      ),
-                    ],
+                const Expanded(child: SizedBox.shrink()),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: controller == null || !controller!.value.isInitialized
+                  ? const Icon(Icons.camera_rounded)
+                  : CameraPreview(controller!),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15, bottom: 45),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Material(
+                  color: Colors.transparent,
+                  shape: const CircleBorder(),
+                  clipBehavior: Clip.hardEdge,
+                  child: IconButton(
+                    onPressed: () => context.pushNamed('uploads'),
+                    icon: const Icon(Icons.photo_library_rounded),
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    tooltip: 'Gallery',
+                    iconSize: 24,
                   ),
                 ),
-              ),
-            ],
+                InkWell(
+                  onTap: Feedback.wrapForLongPress(
+                    () => _onCapturePressed(context),
+                    context,
+                  ),
+                  child: Semantics(
+                    button: true,
+                    label: 'Capture photo',
+                    child: controller != null
+                        ? ValueListenableBuilder(
+                            valueListenable: controller!,
+                            builder: (context, val, child) =>
+                                _ShutterButton(val.isTakingPicture),
+                          )
+                        : const _ShutterButton(false),
+                  ),
+                ),
+                Material(
+                  color: Colors.transparent,
+                  shape: const CircleBorder(),
+                  clipBehavior: Clip.hardEdge,
+                  child: IconButton(
+                    onPressed:
+                        Feedback.wrapForLongPress(_onSwitchCamera, context),
+                    icon: const Icon(
+                      Icons.cameraswitch_outlined,
+                    ),
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    tooltip: 'Switch camera',
+                    iconSize: 24,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
