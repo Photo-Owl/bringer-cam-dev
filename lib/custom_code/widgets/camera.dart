@@ -188,7 +188,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     shape: const CircleBorder(),
                     clipBehavior: Clip.hardEdge,
                     child: IconButton(
-                      onPressed: () => context.safePop(),
+                      onPressed: () => context.goNamed('homeCopy'),
                       icon: const Icon(Icons.home_rounded),
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                       tooltip: 'Home',

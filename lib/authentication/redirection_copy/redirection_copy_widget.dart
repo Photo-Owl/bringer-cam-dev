@@ -723,7 +723,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                           0.0,
                                                                           0.0),
                                                               child: Text(
-                                                                'We have found photos of you take a look at them now!',
+                                                                'Take photos and share them with all your friends instantly!',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -761,7 +761,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                         'Button_navigate_to');
 
                                                                     context.goNamed(
-                                                                        'HomeCopy');
+                                                                        'camera');
 
                                                                     logFirebaseEvent(
                                                                         'Button_backend_call');
@@ -777,7 +777,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                     });
                                                                   },
                                                                   text:
-                                                                      'See My Photos',
+                                                                      'Take a photo',
                                                                   options:
                                                                       FFButtonOptions(
                                                                     width: double
