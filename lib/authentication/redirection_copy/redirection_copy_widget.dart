@@ -80,7 +80,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
         await Future.delayed(const Duration(milliseconds: 500));
         logFirebaseEvent('RedirectionCopy_navigate_to');
 
-        context.goNamed('HomeCopy');
+        context.goNamed('camera');
 
         logFirebaseEvent('RedirectionCopy_backend_call');
 
