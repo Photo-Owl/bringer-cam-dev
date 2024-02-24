@@ -212,8 +212,8 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 10.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -334,14 +334,22 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                           'UPLOADS_PAGE_START_UPLOAD_BTN_ON_TAP');
                                       logFirebaseEvent('Button_custom_action');
                                       await actions.uploadImagesFromSqlite(
-                                        currentUserUid,
-                                      );
+                                          currentUserUid, () async {
+                                        final uploadedImages =
+                                            await actions.readAllImagesSqlite(
+                                                currentUserUid);
+                                        setState(() {
+                                          _model.uploadedImages =
+                                              uploadedImages;
+                                        });
+                                      });
                                     },
                                     text: 'Start Upload',
                                     options: FFButtonOptions(
                                       height: 40.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 0.0, 24.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              24.0, 0.0, 24.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
@@ -366,154 +374,117 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                           ),
                         ),
                         Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Builder(
-                                  builder: (context) {
-                                    final uploadedImage =
-                                        _model.uploadedImages!.toList();
-                                    return Wrap(
-                                      spacing: 0.0,
-                                      runSpacing: 0.0,
-                                      alignment: WrapAlignment.start,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.start,
-                                      direction: Axis.horizontal,
-                                      runAlignment: WrapAlignment.start,
-                                      verticalDirection: VerticalDirection.down,
-                                      clipBehavior: Clip.none,
-                                      children:
-                                          List.generate(uploadedImage.length,
-                                              (uploadedImageIndex) {
-                                        final uploadedImageItem =
-                                            uploadedImage[uploadedImageIndex];
-                                        return Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: SizedBox(
+                          child: Builder(
+                            builder: (context) {
+                              final uploadedImage =
+                                  (_model.uploadedImages?.toList()) ?? [];
+                              return GridView.builder(
+                                gridDelegate:
+                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 125),
+                                itemCount: uploadedImage.length,
+                                itemBuilder: (context, index) {
+                                  final uploadedImageItem =
+                                      uploadedImage[index];
+                                  return Stack(
+                                    children: [
+                                      Align(
+                                        alignment: const AlignmentDirectional(
+                                            -1.0, -1.0),
+                                        child: SizedBox(
+                                          width: 100.0,
+                                          height: 100.0,
+                                          child: custom_widgets.ShowLocalImage(
                                             width: 100.0,
                                             height: 100.0,
-                                            child: Stack(
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          -1.0, -1.0),
-                                                  child: SizedBox(
-                                                    width: 100.0,
-                                                    height: 100.0,
-                                                    child: custom_widgets
-                                                        .ShowLocalImage(
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      path: getJsonField(
-                                                        uploadedImageItem,
-                                                        r'''$["path"]''',
-                                                      ).toString(),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: 100.0,
-                                                  height: 100.0,
-                                                  decoration: const BoxDecoration(
-                                                    gradient: LinearGradient(
-                                                      colors: [
-                                                        Color(0x99101213),
-                                                        Colors.transparent
-                                                      ],
-                                                      stops: [0.0, 0.4],
-                                                      begin:
-                                                          AlignmentDirectional(
-                                                              1.0, 1.0),
-                                                      end: AlignmentDirectional(
-                                                          -1.0, -1.0),
-                                                    ),
-                                                  ),
-                                                  child: Align(
-                                                    alignment:
-                                                        const AlignmentDirectional(
-                                                            1.0, 1.0),
-                                                    child: Builder(
-                                                      builder: (context) {
-                                                        if (getJsonField(
-                                                              uploadedImageItem,
-                                                              r'''$["is_uploaded"]''',
-                                                            ) !=
-                                                            0) {
-                                                          return Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        5.0,
-                                                                        5.0),
-                                                            child: FaIcon(
-                                                              FontAwesomeIcons
-                                                                  .check,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                              size: 14.0,
-                                                            ),
-                                                          );
-                                                        } else if (getJsonField(
-                                                              uploadedImageItem,
-                                                              r'''$["is_uploading"]''',
-                                                            ) !=
-                                                            0) {
-                                                          return Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        5.0,
-                                                                        5.0),
-                                                            child: Icon(
-                                                              Icons
-                                                                  .cloud_upload_outlined,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                              size: 14.0,
-                                                            ),
-                                                          );
-                                                        } else {
-                                                          return Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        0.0,
-                                                                        5.0,
-                                                                        5.0),
-                                                            child: FaIcon(
-                                                              FontAwesomeIcons
-                                                                  .clock,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                              size: 14.0,
-                                                            ),
-                                                          );
-                                                        }
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                            path: getJsonField(
+                                              uploadedImageItem,
+                                              r'''$["path"]''',
+                                            ).toString(),
                                           ),
-                                        );
-                                      }),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 100.0,
+                                        height: 100.0,
+                                        decoration: const BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color(0x99101213),
+                                              Colors.transparent
+                                            ],
+                                            stops: [0.0, 0.4],
+                                            begin:
+                                                AlignmentDirectional(1.0, 1.0),
+                                            end: AlignmentDirectional(
+                                                -1.0, -1.0),
+                                          ),
+                                        ),
+                                        child: Align(
+                                          alignment: const AlignmentDirectional(
+                                              1.0, 1.0),
+                                          child: Builder(
+                                            builder: (context) {
+                                              if (getJsonField(
+                                                    uploadedImageItem,
+                                                    r'''$["is_uploaded"]''',
+                                                  ) !=
+                                                  0) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0.0, 0.0, 5.0, 5.0),
+                                                  child: FaIcon(
+                                                    FontAwesomeIcons.check,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    size: 14.0,
+                                                  ),
+                                                );
+                                              } else if (getJsonField(
+                                                    uploadedImageItem,
+                                                    r'''$["is_uploading"]''',
+                                                  ) !=
+                                                  0) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0.0, 0.0, 5.0, 5.0),
+                                                  child: Icon(
+                                                    Icons.cloud_upload_outlined,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    size: 14.0,
+                                                  ),
+                                                );
+                                              } else {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                          0.0, 0.0, 5.0, 5.0),
+                                                  child: FaIcon(
+                                                    FontAwesomeIcons.clock,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    size: 14.0,
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ),
                       ],

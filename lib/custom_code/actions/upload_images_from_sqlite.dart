@@ -17,7 +17,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:mime_type/mime_type.dart';
 
-Future uploadImagesFromSqlite(String userId) async {
+Future uploadImagesFromSqlite(
+  String userId,
+  Future<void> Function() changeUI,
+) async {
   // Add your function code here!
   // Open the database
   final db = openDatabase(
@@ -40,10 +43,11 @@ Future uploadImagesFromSqlite(String userId) async {
       whereArgs: [map['path']],
     );
 
+    await changeUI();
+
     // Upload the image to Firebase Storage
     final fileName = basename(map['path']);
-    final ref = FirebaseStorage.instance
-        .ref('users/$userId/uploads/$fileName');
+    final ref = FirebaseStorage.instance.ref('users/$userId/uploads/$fileName');
     final file = File(map['path']);
     await ref.putFile(
       file,
@@ -106,5 +110,7 @@ Future uploadImagesFromSqlite(String userId) async {
       where: "path = ?",
       whereArgs: [map['path']],
     );
+
+    await changeUI();
   }
 }
