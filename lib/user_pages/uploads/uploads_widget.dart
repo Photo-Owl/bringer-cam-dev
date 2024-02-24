@@ -336,10 +336,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: MediaQuery.sizeOf(context).width * 1.0,
-                          height: MediaQuery.sizeOf(context).height * 1.0,
-                          decoration: const BoxDecoration(),
+                        Expanded(
                           child: SingleChildScrollView(
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
