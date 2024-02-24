@@ -1,3 +1,5 @@
+import 'package:bringer_cam_dev/custom_code/widgets/nav_button.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -235,12 +237,39 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
 
                 context.pushNamed('camera');
               },
-              backgroundColor: FlutterFlowTheme.of(context).warning,
+              backgroundColor: const Color(0xFF1589FC),
               elevation: 8.0,
               child: FaIcon(
                 FontAwesomeIcons.camera,
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 size: 24.0,
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endContained,
+            bottomNavigationBar: Material(
+              elevation: 8,
+              color: Colors.white,
+              child: BottomAppBar(
+                color: Colors.transparent,
+                elevation: 0,
+                child: Wrap(
+                  spacing: 10,
+                  children: [
+                    NavButton(
+                      isSelected: true,
+                      icon: Icons.portrait_rounded,
+                      label: 'Your Photos',
+                      onPressed: () {},
+                    ),
+                    NavButton(
+                      isSelected: false,
+                      icon: Icons.photo_library_rounded,
+                      label: 'All Photos',
+                      onPressed: () => context.pushReplacementNamed('uploads'),
+                    ),
+                  ],
+                ),
               ),
             ),
             drawer: Drawer(

@@ -1,3 +1,4 @@
+import '../../custom_code/widgets/nav_button.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/give_name/give_name_widget.dart';
@@ -147,16 +148,44 @@ class _UploadsWidgetState extends State<UploadsWidget> {
             backgroundColor: Colors.white,
             floatingActionButton: FloatingActionButton(
               onPressed: () async {
-                logFirebaseEvent('UPLOADS_FloatingActionButton_a3w0tgab_ON');
-                logFirebaseEvent('FloatingActionButton_navigate_back');
-                context.safePop();
+                logFirebaseEvent('HOME_COPY_FloatingActionButton_nasjbr31_');
+                logFirebaseEvent('FloatingActionButton_navigate_to');
+
+                context.pushNamed('camera');
               },
-              backgroundColor: FlutterFlowTheme.of(context).warning,
+              backgroundColor: const Color(0xFF1589FC),
               elevation: 8.0,
               child: FaIcon(
                 FontAwesomeIcons.camera,
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 size: 24.0,
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.endContained,
+            bottomNavigationBar: Material(
+              elevation: 8,
+              color: Colors.white,
+              child: BottomAppBar(
+                color: Colors.transparent,
+                elevation: 0,
+                child: Wrap(
+                  spacing: 10,
+                  children: [
+                    NavButton(
+                      isSelected: false,
+                      icon: Icons.portrait_rounded,
+                      label: 'Your Photos',
+                      onPressed: () => context.pushReplacementNamed('homeCopy'),
+                    ),
+                    NavButton(
+                      isSelected: true,
+                      icon: Icons.photo_library_rounded,
+                      label: 'All Photos',
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
             ),
             drawer: Drawer(
