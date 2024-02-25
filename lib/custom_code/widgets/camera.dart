@@ -33,8 +33,8 @@ class _ShutterButton extends StatelessWidget {
         ),
       ),
       child: Container(
-        height: 37,
-        width: 37,
+        height: 60,
+        width: 60,
         decoration: ShapeDecoration(
           shape: const CircleBorder(),
           color: isTakingPicture ? Colors.white70 : Colors.white,
@@ -98,28 +98,17 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     }
   }
 
-  Future<CameraController> _initializeCam(int i) async {
-    final controller = CameraController(
-      cameras[i],
-      ResolutionPreset.veryHigh,
-    );
-
-    await controller.initialize();
-
-    return controller;
-  }
-
   Future<void> _fetchCameras() async {
     cameras = await availableCameras();
-    controller = await _initializeCam(0);
+    controller = CameraController(cameras[0], ResolutionPreset.max);
+    await controller!.initialize();
     setState(() {});
   }
 
   Future<void> _onSwitchCamera() async {
     final nextCam = (selectedCameraIndex + 1) % cameras.length;
-    final controller = await _initializeCam(nextCam);
+    controller?.setDescription(cameras[nextCam]);
     setState(() {
-      this.controller = controller;
       selectedCameraIndex = nextCam;
     });
   }
@@ -173,42 +162,17 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     if (!hidSystemUI) return Container();
     return SafeArea(
-      child: Column(
+      child: Stack(
         children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: controller == null || !controller!.value.isInitialized
+              ? const Icon(Icons.camera_rounded)
+              : CameraPreview(controller!),
+          ),
           Container(
-            color: Colors.black,
-            padding: const EdgeInsets.only(top: 16, bottom: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Material(
-                    color: Colors.transparent,
-                    shape: const CircleBorder(),
-                    clipBehavior: Clip.hardEdge,
-                    child: IconButton(
-                      onPressed: () => context.goNamed('homeCopy'),
-                      icon: const Icon(Icons.home_rounded),
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      tooltip: 'Home',
-                      iconSize: 24,
-                    ),
-                  ),
-                ),
-                const Expanded(child: SizedBox.shrink()),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: controller == null || !controller!.value.isInitialized
-                  ? const Icon(Icons.camera_rounded)
-                  : CameraPreview(controller!),
-            ),
-          ),
-          Padding(
             padding: const EdgeInsets.only(top: 15, bottom: 45),
+            alignment: Alignment.bottomCenter,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -238,7 +202,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                             builder: (context, val, child) =>
                                 _ShutterButton(val.isTakingPicture),
                           )
-                        : const _ShutterButton(false),
+                        : const _ShutterButton(true),
                   ),
                 ),
                 Material(
