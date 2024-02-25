@@ -18,6 +18,9 @@ import 'package:path/path.dart' as p;
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image/image.dart' as img;
+import 'package:flutter/foundation.dart';
+import 'package:media_scanner/media_scanner.dart';
+import 'package:media_store_plus/media_store_plus.dart';
 
 class _ShutterButton extends StatelessWidget {
   final bool isTakingPicture;
@@ -79,6 +82,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   @override
   void dispose() {
     controller?.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
 
     SystemChrome.setEnabledSystemUIMode(
@@ -141,13 +145,35 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
       final image = await file.readAsBytes();
       print('Image captured and saved to ${file.path}');
       await _processImage(file.path);
-      // Get the local path
-      final directory = await getExternalStorageDirectory();
-      final path = '${directory?.path}/Pictures';
+      var newPath = '';
+      if (defaultTargetPlatform == TargetPlatform.android) {
+        final mediaStore = MediaStore();
+        MediaStore.appFolder = 'Bringer';
+        final isFileSaved = await mediaStore.saveFile(
+          tempFilePath: file.path,
+          dirType: DirType.photo,
+          dirName: DirName.pictures,
+        );
+        if (isFileSaved) {
+          // newPath = (await mediaStore.getFileUri(
+          //   fileName: file.name,
+          //   dirType: DirType.photo,
+          //   dirName: DirName.pictures,
+          // ))!
+          //     .toString();
 
-      await Directory(path).create(recursive: true);
-      final newPath = '$path/${file.name}';
-      await File(newPath).writeAsBytes(image);
+          newPath = '/sdcard/Pictures/Bringer/${file.name}';
+          await MediaScanner.loadMedia(path: newPath);
+        }
+      }
+      
+      if (newPath.isEmpty) {
+        final path = '${await getExternalStorageDirectory()}/Pictures';
+        await Directory(path).create(recursive: true);
+        newPath = '$path/${file.name}';
+        await File(newPath).writeAsBytes(image);
+      }
+
       print('Image captured and saved locally at $newPath');
       var ownerId = await _getOwnerId();
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -167,8 +193,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
           Align(
             alignment: Alignment.topCenter,
             child: controller == null || !controller!.value.isInitialized
-              ? const Icon(Icons.camera_rounded)
-              : CameraPreview(controller!),
+                ? const Icon(Icons.camera_rounded)
+                : CameraPreview(controller!),
           ),
           Container(
             padding: const EdgeInsets.only(top: 15, bottom: 45),
