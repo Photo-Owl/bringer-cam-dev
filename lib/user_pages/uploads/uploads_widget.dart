@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
@@ -151,7 +152,19 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                 logFirebaseEvent('HOME_COPY_FloatingActionButton_nasjbr31_');
                 logFirebaseEvent('FloatingActionButton_navigate_to');
 
-                context.pushNamed('camera');
+                final selectedMedia = await selectMedia(
+                  imageQuality: 100,
+                  multiImage: false,
+                );
+                if (selectedMedia != null &&
+                    selectedMedia.every(
+                        (m) => validateFileFormat(m.storagePath, context))) {
+                  actions.saveFileToGallery(selectedMedia.first.filePath!);
+                  final images = await actions.readAllImagesSqlite(currentUserUid);
+                  setState(() {
+                    _model.uploadedImages = images;
+                  });
+                }
               },
               backgroundColor: const Color(0xFF1589FC),
               elevation: 8.0,

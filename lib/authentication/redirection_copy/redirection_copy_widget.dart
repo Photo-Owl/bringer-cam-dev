@@ -80,7 +80,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
         await Future.delayed(const Duration(milliseconds: 500));
         logFirebaseEvent('RedirectionCopy_navigate_to');
 
-        context.goNamed('camera');
+        context.goNamed('homeCopy');
 
         logFirebaseEvent('RedirectionCopy_backend_call');
 
@@ -723,7 +723,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                           0.0,
                                                                           0.0),
                                                               child: Text(
-                                                                'Take photos and share them with all your friends instantly!',
+                                                                'We have found photos of you take a look at them now!',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -761,7 +761,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                         'Button_navigate_to');
 
                                                                     context.goNamed(
-                                                                        'camera');
+                                                                        'homeCopy');
 
                                                                     logFirebaseEvent(
                                                                         'Button_backend_call');
@@ -777,7 +777,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                     });
                                                                   },
                                                                   text:
-                                                                      'Take a photo',
+                                                                      'See My Photos',
                                                                   options:
                                                                       FFButtonOptions(
                                                                     width: double

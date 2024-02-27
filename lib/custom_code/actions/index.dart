@@ -9,3 +9,4 @@ export 'insert_image_to_sqlite.dart' show insertImageToSqlite;
 export 'check_if_table_exsists_sqlite.dart' show checkIfTableExsistsSqlite;
 export 'read_all_images_sqlite.dart' show readAllImagesSqlite;
 export 'upload_images_from_sqlite.dart' show uploadImagesFromSqlite;
+export 'save_file_to_gallery.dart' show saveFileToGallery;

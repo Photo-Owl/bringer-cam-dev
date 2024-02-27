@@ -1,5 +1,3 @@
-import 'package:bringer_cam_dev/custom_code/widgets/nav_button.dart';
-
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -12,9 +10,11 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/custom_code/widgets/nav_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -235,7 +235,15 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                 logFirebaseEvent('HOME_COPY_FloatingActionButton_nasjbr31_');
                 logFirebaseEvent('FloatingActionButton_navigate_to');
 
-                context.pushNamed('camera');
+                final selectedMedia = await selectMedia(
+                  imageQuality: 100,
+                  multiImage: false,
+                );
+                if (selectedMedia != null &&
+                    selectedMedia.every(
+                        (m) => validateFileFormat(m.storagePath, context))) {
+                  actions.saveFileToGallery(selectedMedia.first.filePath!);
+                }
               },
               backgroundColor: const Color(0xFF1589FC),
               elevation: 8.0,
