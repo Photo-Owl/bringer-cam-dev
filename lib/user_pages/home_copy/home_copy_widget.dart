@@ -242,7 +242,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                 if (selectedMedia != null &&
                     selectedMedia.every(
                         (m) => validateFileFormat(m.storagePath, context))) {
-                  actions.saveFileToGallery(selectedMedia.first.filePath!);
+                  await actions.saveFileToGallery(selectedMedia.first.filePath!);
                 }
               },
               backgroundColor: const Color(0xFF1589FC),

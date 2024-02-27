@@ -159,7 +159,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                 if (selectedMedia != null &&
                     selectedMedia.every(
                         (m) => validateFileFormat(m.storagePath, context))) {
-                  actions.saveFileToGallery(selectedMedia.first.filePath!);
+                  await actions.saveFileToGallery(selectedMedia.first.filePath!);
                   final images = await actions.readAllImagesSqlite(currentUserUid);
                   setState(() {
                     _model.uploadedImages = images;

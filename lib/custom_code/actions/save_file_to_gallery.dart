@@ -73,5 +73,5 @@ Future saveFileToGallery(String path) async {
 
   print('Image captured and saved locally at $newPath');
   final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-  actions.insertImageToSqlite(newPath, currentUserUid, unixTimestamp);
+  await actions.insertImageToSqlite(newPath, currentUserUid, unixTimestamp);
 }
