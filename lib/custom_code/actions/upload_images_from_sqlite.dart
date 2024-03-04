@@ -15,6 +15,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+import 'package:mime_type/mime_type.dart';
 
 Future uploadImagesFromSqlite(String userId) async {
   // Add your function code here!
@@ -40,11 +41,12 @@ Future uploadImagesFromSqlite(String userId) async {
     );
 
     // Upload the image to Firebase Storage
-    final ref = FirebaseStorage.instance
-        .ref('$userId/uploads/${basename(map['path'])}');
+    final fileName = basename(map['path']);
+    final ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
     await ref.putFile(
       File(map['path']),
-      SettableMetadata(contentType: 'image/'), // Set the content type here
+      SettableMetadata(
+          contentType: mime(fileName)), // Set the content type here
     );
 
     // Get the URL of the uploaded image
@@ -72,7 +74,8 @@ Future uploadImagesFromSqlite(String userId) async {
     if (albumId == null) {
       // Create a new album document
       final albumDoc =
-          await FirebaseFirestore.instance.collection('albums').add({
+          await FirebaseFirestore.instance.collection('albums').add({});
+      await albumDoc.update({
         'album_name':
             DateTime.fromMillisecondsSinceEpoch(map['unix_timestamp'] * 1000)
                 .toIso8601String(),
