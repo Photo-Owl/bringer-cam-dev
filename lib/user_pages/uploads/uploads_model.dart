@@ -1,3 +1,4 @@
+import '/components/home_page_tab_bar/home_page_tab_bar_widget.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'uploads_widget.dart' show UploadsWidget;
@@ -9,8 +10,8 @@ class UploadsModel extends FlutterFlowModel<UploadsWidget> {
   final unfocusNode = FocusNode();
   // Stores action output result for [Custom Action - checkVersion] action in Uploads widget.
   bool? versionCheckResult;
-  // Stores action output result for [Custom Action - readAllImagesSqlite] action in Uploads widget.
-  List<dynamic>? uploadedImages;
+  // Model for HomePageTabBar component.
+  late HomePageTabBarModel homePageTabBarModel;
   // Model for sidebar component.
   late SidebarModel sidebarModel;
 
@@ -18,12 +19,14 @@ class UploadsModel extends FlutterFlowModel<UploadsWidget> {
 
   @override
   void initState(BuildContext context) {
+    homePageTabBarModel = createModel(context, () => HomePageTabBarModel());
     sidebarModel = createModel(context, () => SidebarModel());
   }
 
   @override
   void dispose() {
     unfocusNode.dispose();
+    homePageTabBarModel.dispose();
     sidebarModel.dispose();
   }
 

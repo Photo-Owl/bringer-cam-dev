@@ -11,7 +11,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -153,15 +152,6 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Title(
@@ -1013,7 +1003,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                         'SIGN_IN_COPY_PAGE_CONTINUE_BTN_ON_TAP');
                                     logFirebaseEvent('Button_navigate_to');
 
-                                    context.goNamed('Redirection');
+                                    context.goNamed('RedirectionCopy');
                                   },
                                   text: 'Continue',
                                   options: FFButtonOptions(

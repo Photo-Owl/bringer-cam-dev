@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'skip_selfie_model.dart';
@@ -85,15 +84,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Title(
@@ -325,7 +315,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                           'Button_navigate_to');
 
                                                       context.goNamed(
-                                                          'Redirection');
+                                                          'RedirectionCopy');
                                                     },
                                                     text: '1 Hour',
                                                     options: FFButtonOptions(
@@ -431,7 +421,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                           'Button_navigate_to');
 
                                                       context.goNamed(
-                                                          'Redirection');
+                                                          'RedirectionCopy');
                                                     },
                                                     text: 'Today Evening',
                                                     options: FFButtonOptions(
@@ -537,7 +527,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                           'Button_navigate_to');
 
                                                       context.goNamed(
-                                                          'Redirection');
+                                                          'RedirectionCopy');
                                                     },
                                                     text: 'Tommorow Evening',
                                                     options: FFButtonOptions(
@@ -619,7 +609,8 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                 logFirebaseEvent(
                                                     'Button_navigate_to');
 
-                                                context.goNamed('Redirection');
+                                                context
+                                                    .goNamed('RedirectionCopy');
                                               },
                                               text: 'Take Selfie',
                                               options: FFButtonOptions(

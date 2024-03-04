@@ -9,7 +9,6 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'social_sign_in_model.dart';
@@ -106,15 +105,6 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Title(
@@ -533,7 +523,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                 'SOCIAL_SIGN_IN_PAGE_CONTINUE_BTN_ON_TAP');
                             logFirebaseEvent('Button_navigate_to');
 
-                            context.goNamed('Redirection');
+                            context.goNamed('RedirectionCopy');
                           },
                           text: 'Continue',
                           options: FFButtonOptions(

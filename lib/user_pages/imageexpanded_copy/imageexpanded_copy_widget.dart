@@ -14,7 +14,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -102,15 +101,6 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Title(
@@ -355,8 +345,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                   logFirebaseEvent(
                                                       'Button_navigate_to');
 
-                                                  context
-                                                      .pushNamed('Redirection');
+                                                  context.pushNamed(
+                                                      'RedirectionCopy');
                                                 },
                                                 text: 'Take Selfie',
                                                 options: FFButtonOptions(

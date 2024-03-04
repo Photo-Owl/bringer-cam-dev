@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'social_sign_in_copy_model.dart';
@@ -81,15 +80,6 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Title(
@@ -498,7 +488,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                 'SOCIAL_SIGN_IN_COPY_CONTINUE_BTN_ON_TAP');
                             logFirebaseEvent('Button_navigate_to');
 
-                            context.goNamed('Redirection');
+                            context.goNamed('RedirectionCopy');
                           },
                           text: 'Continue',
                           options: FFButtonOptions(
