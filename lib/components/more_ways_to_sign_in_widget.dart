@@ -3,7 +3,10 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'more_ways_to_sign_in_model.dart';
 export 'more_ways_to_sign_in_model.dart';
@@ -54,7 +57,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
     return Container(
       width: MediaQuery.sizeOf(context).width * 1.0,
       height: 300.0,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(0.0),
@@ -64,13 +67,13 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(15.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
               child: Text(
                 'Other ways to sign in',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -89,7 +92,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
               desktop: false,
             ))
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                 child: Stack(
                   children: [
                     if (responsiveVisibility(
@@ -103,7 +106,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                         onPressed: () async {
                           logFirebaseEvent(
                               'MORE_WAYS_TO_SIGN_IN_SIGN_IN_WITH_GOOGLE');
-                          Function() navigate = () {};
+                          Function() _navigate = () {};
                           logFirebaseEvent('Button_firestore_query');
                           _model.userDocumentaction =
                               await queryUsersRecordOnce(
@@ -119,9 +122,10 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                           if (user == null) {
                             return;
                           }
-                          navigate = () => context.goNamedAuth(
+                          _navigate = () => context.goNamedAuth(
                               'RedirectionCopy', context.mounted);
-                          if (currentPhoneNumber == '') {
+                          if (currentPhoneNumber == null ||
+                              currentPhoneNumber == '') {
                             if (valueOrDefault<bool>(
                                 currentUserDocument?.isBusinessAccount,
                                 false)) {
@@ -130,28 +134,28 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                               await authManager.signOut();
                               GoRouter.of(context).clearRedirectLocation();
 
-                              navigate = () => context.goNamedAuth(
+                              _navigate = () => context.goNamedAuth(
                                   'SignInCopy', context.mounted);
                               logFirebaseEvent('Button_alert_dialog');
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
-                                    title: const Text('Error'),
-                                    content: const Text(
+                                    title: Text('Error'),
+                                    content: Text(
                                         'This email is used for a business account. Try using a different email'),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>
                                             Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
+                                        child: Text('Ok'),
                                       ),
                                     ],
                                   );
                                 },
                               );
                             } else {
-                              if (_model.userDocumentaction!.isNotEmpty) {
+                              if (_model.userDocumentaction!.length > 0) {
                                 logFirebaseEvent('Button_backend_call');
                                 await currentUserReference!.delete();
                                 logFirebaseEvent('Button_auth');
@@ -159,21 +163,21 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                                 await authManager.signOut();
                                 GoRouter.of(context).clearRedirectLocation();
 
-                                navigate = () => context.goNamedAuth(
+                                _navigate = () => context.goNamedAuth(
                                     'SignInCopy', context.mounted);
                                 logFirebaseEvent('Button_alert_dialog');
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
                                     return AlertDialog(
-                                      title: const Text('Error'),
-                                      content: const Text(
+                                      title: Text('Error'),
+                                      content: Text(
                                           'This phone number is already associated with another email id'),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(alertDialogContext),
-                                          child: const Text('Ok'),
+                                          child: Text('Ok'),
                                         ),
                                       ],
                                     );
@@ -196,32 +200,32 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                               }
                             }
                           } else if (_model
-                                      .userDocumentaction?.first.phoneNumber !=
+                                      .userDocumentaction?.first?.phoneNumber !=
                                   null &&
-                              _model.userDocumentaction?.first.phoneNumber !=
+                              _model.userDocumentaction?.first?.phoneNumber !=
                                   '') {
                             if (currentPhoneNumber !=
-                                _model.userDocumentaction?.first.phoneNumber) {
+                                _model.userDocumentaction?.first?.phoneNumber) {
                               logFirebaseEvent('Button_auth');
                               GoRouter.of(context).prepareAuthEvent();
                               await authManager.signOut();
                               GoRouter.of(context).clearRedirectLocation();
 
-                              navigate = () => context.goNamedAuth(
+                              _navigate = () => context.goNamedAuth(
                                   'SignInCopy', context.mounted);
                               logFirebaseEvent('Button_alert_dialog');
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
-                                    title: const Text('Error'),
-                                    content: const Text(
+                                    title: Text('Error'),
+                                    content: Text(
                                         'This email id is already registered with another phone number'),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>
                                             Navigator.pop(alertDialogContext),
-                                        child: const Text('Ok'),
+                                        child: Text('Ok'),
                                       ),
                                     ],
                                   );
@@ -234,21 +238,21 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                             await authManager.signOut();
                             GoRouter.of(context).clearRedirectLocation();
 
-                            navigate = () => context.goNamedAuth(
+                            _navigate = () => context.goNamedAuth(
                                 'SignInCopy', context.mounted);
                             logFirebaseEvent('Button_alert_dialog');
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {
                                 return AlertDialog(
-                                  title: const Text('Error'),
-                                  content: const Text(
+                                  title: Text('Error'),
+                                  content: Text(
                                       'This email id is already registered with another phone number'),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.pop(alertDialogContext),
-                                      child: const Text('Ok'),
+                                      child: Text('Ok'),
                                     ),
                                   ],
                                 );
@@ -256,7 +260,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                             );
                           }
 
-                          navigate();
+                          _navigate();
 
                           setState(() {});
                         },
@@ -264,9 +268,9 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 24.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 10.0, 0.0),
                           color: Colors.white,
                           textStyle:
@@ -283,9 +287,9 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                         ),
                       ),
                     Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             15.0, 10.0, 0.0, 0.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
@@ -300,7 +304,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                 ),
               ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
                   logFirebaseEvent('MORE_WAYS_TO_SIGN_IN_SIGN_IN_WITH_O_T_P_');
@@ -310,7 +314,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                       phoneNumberVal.isEmpty ||
                       !phoneNumberVal.startsWith('+')) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                         content: Text(
                             'Phone Number is required and has to start with +.'),
                       ),
@@ -339,15 +343,15 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                 options: FFButtonOptions(
                   width: double.infinity,
                   height: 56.0,
-                  padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   iconPadding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: const Color(0xFF1589FC),
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: Color(0xFF1589FC),
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Inter',
                         color: FlutterFlowTheme.of(context).primaryBtnText,
                       ),
-                  borderSide: const BorderSide(
+                  borderSide: BorderSide(
                     color: Colors.transparent,
                     width: 1.0,
                   ),

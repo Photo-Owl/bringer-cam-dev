@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'payment_processing_model.dart';
@@ -50,7 +51,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
     return Container(
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
@@ -63,7 +64,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Container(
               width: 100.0,
               height: 60.0,
@@ -71,7 +72,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                 color: FlutterFlowTheme.of(context).primaryBackground,
               ),
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(20.0),
                 child: Lottie.asset(
                   'assets/lottie_animations/Animation_-_1690187314332.json',
                   height: 100.0,
@@ -82,7 +83,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
+            padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
             child: Text(
               'Processing...',
               textAlign: TextAlign.center,
@@ -94,7 +95,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
             child: Material(
               color: Colors.transparent,
               elevation: 3.0,
@@ -105,7 +106,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                 width: 100.0,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
                       blurRadius: 4.0,
                       color: Color(0x33000000),
@@ -119,7 +120,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 5.0),
+                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 5.0),
                       child: Text(
                         'Do not go back or close the page',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -130,7 +131,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 20.0),
+                          EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 5.0, 20.0),
                       child: Text(
                         'You will be redirected to payment gateway',
                         textAlign: TextAlign.center,
@@ -142,7 +143,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,

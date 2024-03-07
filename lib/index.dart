@@ -1,6 +1,4 @@
 // Export pages
-export '/authentication/redirection/redirection_widget.dart'
-    show RedirectionWidget;
 export '/authentication/otp_verification/otp_verification_widget.dart'
     show OtpVerificationWidget;
 export '/authentication/sign_in/sign_in_widget.dart' show SignInWidget;

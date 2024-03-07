@@ -8,8 +8,10 @@ import '/components/update_required/update_required_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -59,7 +61,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const UpdateRequiredWidget(),
+                child: UpdateRequiredWidget(),
               ),
             );
           },
@@ -68,7 +70,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
         return;
       }
 
-      if (currentUserDisplayName == '') {
+      if (currentUserDisplayName == null || currentUserDisplayName == '') {
         logFirebaseEvent('Uploads_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
@@ -82,7 +84,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const GiveNameWidget(),
+                child: GiveNameWidget(),
               ),
             );
           },
@@ -142,7 +144,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
               },
               backgroundColor: Colors.black,
               elevation: 8.0,
-              child: const SizedBox(
+              child: Container(
                 width: 36.0,
                 height: 36.0,
                 child: Stack(
@@ -172,31 +174,31 @@ class _UploadsWidgetState extends State<UploadsWidget> {
               child: wrapWithModel(
                 model: _model.sidebarModel,
                 updateCallback: () => setState(() {}),
-                child: const SidebarWidget(
+                child: SidebarWidget(
                   index: 0,
                 ),
               ),
             ),
             appBar: AppBar(
               backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-              iconTheme: const IconThemeData(color: Colors.black),
+              iconTheme: IconThemeData(color: Colors.black),
               automaticallyImplyLeading: true,
               title: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
                     child: Align(
-                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      alignment: AlignmentDirectional(0.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 2.0, 0.0),
                             child: AuthUserStreamWidget(
                               builder: (context) => Text(
-                                'Hey $currentUserDisplayName',
+                                'Hey ${currentUserDisplayName}',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context).titleMedium,
                               ),
@@ -221,7 +223,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                     borderWidth: 1.0,
                     buttonSize: 40.0,
                     fillColor: Colors.transparent,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.upload_rounded,
                       color: Colors.black,
                       size: 24.0,
@@ -233,12 +235,18 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                       logFirebaseEvent('IconButton_custom_action');
                       await actions.uploadImagesFromSqlite(
                         currentUserUid,
+                        () async {
+                          logFirebaseEvent('_backend_call');
+                          await SQLiteManager.instance.fetchImagesToUpload(
+                            ownerId: currentUserUid,
+                          );
+                        },
                       );
                     },
                   ),
                 ],
               ),
-              actions: const [],
+              actions: [],
               flexibleSpace: FlexibleSpaceBar(
                 background: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
@@ -255,18 +263,18 @@ class _UploadsWidgetState extends State<UploadsWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: wrapWithModel(
                     model: _model.homePageTabBarModel,
                     updateCallback: () => setState(() {}),
-                    child: const HomePageTabBarWidget(
+                    child: HomePageTabBarWidget(
                       selected: 'Gallery',
                     ),
                   ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(16.0),
                     child: ListView(
                       padding: EdgeInsets.zero,
                       scrollDirection: Axis.vertical,
@@ -279,8 +287,8 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                             fontSize: 18.0,
                           ),
                         ),
-                        FutureBuilder<List<ReadImagesToUploadRow>>(
-                          future: SQLiteManager.instance.readImagesToUpload(
+                        FutureBuilder<List<FetchImagesToUploadRow>>(
+                          future: SQLiteManager.instance.fetchImagesToUpload(
                             ownerId: currentUserUid,
                           ),
                           builder: (context, snapshot) {
@@ -295,7 +303,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                 ),
                               );
                             }
-                            final gridViewReadImagesToUploadRowList =
+                            final gridViewFetchImagesToUploadRowList =
                                 snapshot.data!;
                             return GridView.builder(
                               padding: EdgeInsets.zero,
@@ -312,31 +320,31 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount:
-                                  gridViewReadImagesToUploadRowList.length,
+                                  gridViewFetchImagesToUploadRowList.length,
                               itemBuilder: (context, gridViewIndex) {
-                                final gridViewReadImagesToUploadRow =
-                                    gridViewReadImagesToUploadRowList[
+                                final gridViewFetchImagesToUploadRow =
+                                    gridViewFetchImagesToUploadRowList[
                                         gridViewIndex];
                                 return Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                  padding: EdgeInsets.all(10.0),
                                   child: Stack(
                                     children: [
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
-                                        child: SizedBox(
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Container(
                                           width: 100.0,
                                           height: 100.0,
                                           child: custom_widgets.ShowLocalImage(
                                             width: 100.0,
                                             height: 100.0,
-                                            path: gridViewReadImagesToUploadRow
+                                            path: gridViewFetchImagesToUploadRow
                                                 .path,
                                           ),
                                         ),
                                       ),
                                       Container(
-                                        decoration: const BoxDecoration(
+                                        decoration: BoxDecoration(
                                           gradient: LinearGradient(
                                             colors: [
                                               Color(0x99101213),
@@ -351,25 +359,14 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(1.0, 1.0),
+                                              AlignmentDirectional(1.0, 1.0),
                                           child: Builder(
                                             builder: (context) {
-                                              if (true) {
+                                              if (gridViewFetchImagesToUploadRow
+                                                      .isUploading ??
+                                                  false) {
                                                 return Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 5.0, 5.0),
-                                                  child: FaIcon(
-                                                    FontAwesomeIcons.check,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    size: 14.0,
-                                                  ),
-                                                );
-                                              } else if (true) {
-                                                return Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 0.0, 5.0, 5.0),
                                                   child: Icon(
@@ -382,7 +379,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                                 );
                                               } else {
                                                 return Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 0.0, 5.0, 5.0),
                                                   child: FaIcon(
@@ -452,13 +449,13 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                     gridViewReadUploadedImagesRowList[
                                         gridViewIndex];
                                 return Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                  padding: EdgeInsets.all(10.0),
                                   child: Stack(
                                     children: [
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
-                                        child: SizedBox(
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Container(
                                           width: 100.0,
                                           height: 100.0,
                                           child: custom_widgets.ShowLocalImage(
@@ -470,7 +467,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                         ),
                                       ),
                                       Container(
-                                        decoration: const BoxDecoration(
+                                        decoration: BoxDecoration(
                                           gradient: LinearGradient(
                                             colors: [
                                               Color(0x99101213),
@@ -485,50 +482,18 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                         ),
                                         child: Align(
                                           alignment:
-                                              const AlignmentDirectional(1.0, 1.0),
-                                          child: Builder(
-                                            builder: (context) {
-                                              if (true) {
-                                                return Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 5.0, 5.0),
-                                                  child: FaIcon(
-                                                    FontAwesomeIcons.check,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    size: 14.0,
-                                                  ),
-                                                );
-                                              } else if (true) {
-                                                return Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 5.0, 5.0),
-                                                  child: Icon(
-                                                    Icons.cloud_upload_outlined,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    size: 14.0,
-                                                  ),
-                                                );
-                                              } else {
-                                                return Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 5.0, 5.0),
-                                                  child: FaIcon(
-                                                    FontAwesomeIcons.clock,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    size: 14.0,
-                                                  ),
-                                                );
-                                              }
-                                            },
+                                              AlignmentDirectional(1.0, 1.0),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 5.0, 5.0),
+                                            child: FaIcon(
+                                              FontAwesomeIcons.check,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              size: 14.0,
+                                            ),
                                           ),
                                         ),
                                       ),

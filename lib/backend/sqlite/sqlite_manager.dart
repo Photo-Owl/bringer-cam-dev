@@ -29,14 +29,6 @@ class SQLiteManager {
 
   /// START READ QUERY CALLS
 
-  Future<List<ReadImagesToUploadRow>> readImagesToUpload({
-    String? ownerId,
-  }) =>
-      performReadImagesToUpload(
-        _database,
-        ownerId: ownerId,
-      );
-
   Future<List<FetchImagesToUploadRow>> fetchImagesToUpload({
     String? ownerId,
   }) =>
@@ -49,6 +41,14 @@ class SQLiteManager {
     String? ownerId,
   }) =>
       performReadUploadedImages(
+        _database,
+        ownerId: ownerId,
+      );
+
+  Future<List<ReadImagesToUploadRow>> readImagesToUpload({
+    String? ownerId,
+  }) =>
+      performReadImagesToUpload(
         _database,
         ownerId: ownerId,
       );

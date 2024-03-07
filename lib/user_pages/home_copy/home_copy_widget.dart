@@ -10,15 +10,18 @@ import '/components/update_required/update_required_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 import 'home_copy_model.dart';
@@ -46,8 +49,8 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 250.ms,
-          begin: const Offset(0.0, 15.0),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 15.0),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -106,7 +109,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const UpdateRequiredWidget(),
+                child: UpdateRequiredWidget(),
               ),
             );
           },
@@ -115,7 +118,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
         return;
       }
 
-      if (currentUserDisplayName == '') {
+      if (currentUserDisplayName == null || currentUserDisplayName == '') {
         logFirebaseEvent('HomeCopy_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
@@ -129,7 +132,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const GiveNameWidget(),
+                child: GiveNameWidget(),
               ),
             );
           },
@@ -189,7 +192,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
               },
               backgroundColor: Colors.black,
               elevation: 8.0,
-              child: const SizedBox(
+              child: Container(
                 width: 36.0,
                 height: 36.0,
                 child: Stack(
@@ -219,24 +222,24 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
               child: wrapWithModel(
                 model: _model.sidebarModel,
                 updateCallback: () => setState(() {}),
-                child: const SidebarWidget(
+                child: SidebarWidget(
                   index: 0,
                 ),
               ),
             ),
             appBar: AppBar(
               backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-              iconTheme: const IconThemeData(color: Colors.black),
+              iconTheme: IconThemeData(color: Colors.black),
               automaticallyImplyLeading: true,
               title: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 2.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 2.0, 0.0),
                     child: AuthUserStreamWidget(
                       builder: (context) => Text(
-                        'Hey $currentUserDisplayName',
+                        'Hey ${currentUserDisplayName}',
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).titleMedium,
                       ),
@@ -253,7 +256,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                   ),
                 ],
               ),
-              actions: const [],
+              actions: [],
               flexibleSpace: FlexibleSpaceBar(
                 background: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
@@ -270,11 +273,11 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
               mainAxisSize: MainAxisSize.max,
               children: [
                 Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: wrapWithModel(
                     model: _model.homePageTabBarModel,
                     updateCallback: () => setState(() {}),
-                    child: const HomePageTabBarWidget(
+                    child: HomePageTabBarWidget(
                       selected: 'Shared',
                     ),
                   ),
@@ -284,7 +287,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
-                      return const Center(
+                      return Center(
                         child: SizedBox(
                           width: 50.0,
                           height: 50.0,
@@ -302,19 +305,19 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                         if (conditionalBuilderUsersRecord.progressLevel <
                             100.0) {
                           return Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 10.0, 0.0),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
-                                      boxShadow: const [
+                                      boxShadow: [
                                         BoxShadow(
                                           blurRadius: 10.0,
                                           color: Color(0xFF2EB900),
@@ -324,7 +327,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                       shape: BoxShape.circle,
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
+                                      padding: EdgeInsets.all(10.0),
                                       child: Text(
                                         (double prog) {
                                           return '${prog.truncate()}%';
@@ -360,7 +363,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                           return Container(
                             width: 0.0,
                             height: 0.0,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               color: Colors.transparent,
                             ),
                           );
@@ -372,7 +375,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                 Expanded(
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                     child: FutureBuilder<ApiCallResponse>(
                       future: GetMatchesCall.call(
                         uid: currentUserUid,
@@ -380,7 +383,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
-                          return const FetchingPhotosWidget();
+                          return FetchingPhotosWidget();
                         }
                         final listViewGetMatchesResponse = snapshot.data!;
                         return Builder(
@@ -390,7 +393,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                 )?.toList() ??
                                 [];
                             if (album.isEmpty) {
-                              return const Center(
+                              return Center(
                                 child: NoPhotosWidget(),
                               );
                             }
@@ -421,7 +424,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                 );
                               },
                               child: ListView.separated(
-                                padding: const EdgeInsets.fromLTRB(
+                                padding: EdgeInsets.fromLTRB(
                                   0,
                                   0,
                                   0,
@@ -430,11 +433,11 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                 scrollDirection: Axis.vertical,
                                 itemCount: album.length,
                                 separatorBuilder: (_, __) =>
-                                    const SizedBox(height: 10.0),
+                                    SizedBox(height: 10.0),
                                 itemBuilder: (context, albumIndex) {
                                   final albumItem = album[albumIndex];
                                   return Padding(
-                                    padding: const EdgeInsets.all(5.0),
+                                    padding: EdgeInsets.all(5.0),
                                     child: Material(
                                       color: Colors.transparent,
                                       elevation: 2.0,
@@ -454,7 +457,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                           ),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: EdgeInsets.all(10.0),
                                           child:
                                               StreamBuilder<List<AlbumsRecord>>(
                                             stream: _model.albumInfo(
@@ -474,7 +477,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
-                                                return const Center(
+                                                return Center(
                                                   child: SizedBox(
                                                     width: 50.0,
                                                     height: 50.0,
@@ -540,7 +543,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                       children: [
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
+                                                              EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       0.0,
                                                                       0.0,
@@ -558,29 +561,29 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                   if (albumIndex %
                                                                           4 ==
                                                                       0) {
-                                                                    return const Color(
+                                                                    return Color(
                                                                         0xFFBD7AFF);
                                                                   } else if (albumIndex %
                                                                           4 ==
                                                                       1) {
-                                                                    return const Color(
+                                                                    return Color(
                                                                         0xFF79C4B2);
                                                                   } else if (albumIndex %
                                                                           4 ==
                                                                       2) {
-                                                                    return const Color(
+                                                                    return Color(
                                                                         0xFFF9AD54);
                                                                   } else if (albumIndex %
                                                                           4 ==
                                                                       3) {
-                                                                    return const Color(
+                                                                    return Color(
                                                                         0xFFF183FB);
                                                                   } else {
-                                                                    return const Color(
+                                                                    return Color(
                                                                         0xFFF183FB);
                                                                   }
                                                                 }(),
-                                                                const Color(
+                                                                Color(
                                                                     0xFFF183FB),
                                                               ),
                                                               shape: BoxShape
@@ -588,7 +591,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                             ),
                                                             child: Align(
                                                               alignment:
-                                                                  const AlignmentDirectional(
+                                                                  AlignmentDirectional(
                                                                       0.0, 0.0),
                                                               child: Text(
                                                                 (String
@@ -618,7 +621,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                         ),
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
+                                                              EdgeInsetsDirectional
                                                                   .fromSTEB(
                                                                       10.0,
                                                                       0.0,
@@ -638,7 +641,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                         .max,
                                                                 children: [
                                                                   Padding(
-                                                                    padding: const EdgeInsetsDirectional
+                                                                    padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
                                                                             0.0,
@@ -648,7 +651,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                       valueOrDefault<
                                                                           String>(
                                                                         columnAlbumsRecord
-                                                                            .albumName,
+                                                                            ?.albumName,
                                                                         'Album',
                                                                       ),
                                                                       style: FlutterFlowTheme.of(
@@ -664,7 +667,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                           ),
                                                                     ),
                                                                   ),
-                                                                  const Padding(
+                                                                  Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             5.0,
@@ -685,7 +688,8 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                               Text(
                                                                 dateTimeFormat(
                                                                     'yMMMd',
-                                                                    columnAlbumsRecord.createdAt!),
+                                                                    columnAlbumsRecord!
+                                                                        .createdAt!),
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -709,14 +713,14 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                   ),
                                                   Align(
                                                     alignment:
-                                                        const AlignmentDirectional(
+                                                        AlignmentDirectional(
                                                             -1.0, 0.0),
                                                     child: StreamBuilder<
                                                         List<UploadsRecord>>(
                                                       stream:
                                                           _model.albumPreview(
                                                         uniqueQueryKey:
-                                                            'albumPreview_${columnAlbumsRecord.id}',
+                                                            'albumPreview_${columnAlbumsRecord?.id}',
                                                         requestFn: () =>
                                                             queryUploadsRecord(
                                                           queryBuilder: (uploadsRecord) =>
@@ -730,7 +734,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                   .where(
                                                                     'faces',
                                                                     arrayContains:
-                                                                        'users/$currentUserUid',
+                                                                        'users/${currentUserUid}',
                                                                   )
                                                                   .orderBy(
                                                                       'uploaded_at',
@@ -743,7 +747,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                           (context, snapshot) {
                                                         // Customize what your widget looks like when it's loading.
                                                         if (!snapshot.hasData) {
-                                                          return const Center(
+                                                          return Center(
                                                             child: SizedBox(
                                                               width: 50.0,
                                                               height: 50.0,
@@ -790,7 +794,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                     wrapIndex];
                                                             return Padding(
                                                               padding:
-                                                                  const EdgeInsets
+                                                                  EdgeInsets
                                                                       .all(3.0),
                                                               child: Stack(
                                                                 children: [
@@ -801,12 +805,12 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                     height:
                                                                         92.0,
                                                                     constraints:
-                                                                        const BoxConstraints(
+                                                                        BoxConstraints(
                                                                       maxWidth:
                                                                           107.0,
                                                                     ),
                                                                     decoration:
-                                                                        const BoxDecoration(),
+                                                                        BoxDecoration(),
                                                                     child:
                                                                         InkWell(
                                                                       splashColor:
@@ -862,7 +866,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                             'albumDoc':
                                                                                 columnAlbumsRecord,
                                                                             kTransitionInfoKey:
-                                                                                const TransitionInfo(
+                                                                                TransitionInfo(
                                                                               hasTransition: true,
                                                                               transitionType: PageTransitionType.scale,
                                                                               alignment: Alignment.bottomCenter,
@@ -916,14 +920,14 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                           height:
                                                                               92.0,
                                                                           constraints:
-                                                                              const BoxConstraints(
+                                                                              BoxConstraints(
                                                                             maxWidth:
                                                                                 107.0,
                                                                           ),
                                                                           decoration:
                                                                               BoxDecoration(
                                                                             color:
-                                                                                const Color(0x9C000000),
+                                                                                Color(0x9C000000),
                                                                             borderRadius:
                                                                                 BorderRadius.circular(8.0),
                                                                           ),
@@ -972,7 +976,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                         height:
                                                                             92.0,
                                                                         constraints:
-                                                                            const BoxConstraints(
+                                                                            BoxConstraints(
                                                                           maxWidth:
                                                                               107.0,
                                                                         ),
@@ -985,7 +989,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                         ),
                                                                         child:
                                                                             Align(
-                                                                          alignment: const AlignmentDirectional(
+                                                                          alignment: AlignmentDirectional(
                                                                               0.0,
                                                                               0.0),
                                                                           child:
@@ -1008,7 +1012,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                                 (context, snapshot) {
                                                                               // Customize what your widget looks like when it's loading.
                                                                               if (!snapshot.hasData) {
-                                                                                return const Center(
+                                                                                return Center(
                                                                                   child: SizedBox(
                                                                                     width: 50.0,
                                                                                     height: 50.0,

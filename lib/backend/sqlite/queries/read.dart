@@ -8,48 +8,26 @@ Future<List<T>> _readQuery<T>(
 ) =>
     database.rawQuery(query).then((r) => r.map((e) => create(e)).toList());
 
-/// BEGIN READIMAGESTOUPLOAD
-Future<List<ReadImagesToUploadRow>> performReadImagesToUpload(
-  Database database, {
-  String? ownerId,
-}) {
-  final query = '''
-SELECT "path", "is_uploading" FROM Images
-  WHERE owner = '$ownerId'
-  AND is_uploaded = 0
-  ORDER BY unix_timestamp DESC;
-''';
-  return _readQuery(database, query, (d) => ReadImagesToUploadRow(d));
-}
-
-class ReadImagesToUploadRow extends SqliteRow {
-  ReadImagesToUploadRow(super.data);
-
-  String get path => data['path'] as String;
-  bool get isUploading => data['isUploading'] as bool;
-}
-
-/// END READIMAGESTOUPLOAD
-
 /// BEGIN FETCHIMAGESTOUPLOAD
 Future<List<FetchImagesToUploadRow>> performFetchImagesToUpload(
   Database database, {
   String? ownerId,
 }) {
   final query = '''
-SELECT "path", "unix_timestamp" FROM Images
-  WHERE is_uploaded == 0
-  AND owner = '$ownerId'
+SELECT "path", "unix_timestamp", "is_uploading" FROM Images
+  WHERE is_uploaded = 0
+  AND owner = '${ownerId}'
   ORDER BY unix_timestamp ASC;
 ''';
   return _readQuery(database, query, (d) => FetchImagesToUploadRow(d));
 }
 
 class FetchImagesToUploadRow extends SqliteRow {
-  FetchImagesToUploadRow(super.data);
+  FetchImagesToUploadRow(Map<String, dynamic> data) : super(data);
 
   String get path => data['path'] as String;
   int? get unixTimestamp => data['unixTimestamp'] as int?;
+  bool? get isUploading => data['isUploading'] as bool?;
 }
 
 /// END FETCHIMAGESTOUPLOAD
@@ -61,7 +39,7 @@ Future<List<ReadUploadedImagesRow>> performReadUploadedImages(
 }) {
   final query = '''
 SELECT "path" FROM Images
-  WHERE owner = '$ownerId'
+  WHERE owner = '${ownerId}'
   AND is_uploaded = 1
   ORDER BY unix_timestamp DESC;
 ''';
@@ -69,9 +47,33 @@ SELECT "path" FROM Images
 }
 
 class ReadUploadedImagesRow extends SqliteRow {
-  ReadUploadedImagesRow(super.data);
+  ReadUploadedImagesRow(Map<String, dynamic> data) : super(data);
 
   String get path => data['path'] as String;
 }
 
 /// END READUPLOADEDIMAGES
+
+/// BEGIN READIMAGESTOUPLOAD
+Future<List<ReadImagesToUploadRow>> performReadImagesToUpload(
+  Database database, {
+  String? ownerId,
+}) {
+  final query = '''
+SELECT "path", "unix_timestamp", "is_uploading" FROM Images
+  WHERE is_uploaded = 0
+  AND owner = '${ownerId}'
+  ORDER BY unix_timestamp ASC;
+''';
+  return _readQuery(database, query, (d) => ReadImagesToUploadRow(d));
+}
+
+class ReadImagesToUploadRow extends SqliteRow {
+  ReadImagesToUploadRow(Map<String, dynamic> data) : super(data);
+
+  String get path => data['path'] as String;
+  int? get unixTimestamp => data['unixTimestamp'] as int?;
+  bool? get isUploading => data['isUploading'] as bool?;
+}
+
+/// END READIMAGESTOUPLOAD

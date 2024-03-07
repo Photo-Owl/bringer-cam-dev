@@ -5,8 +5,11 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'skip_selfie_model.dart';
 export 'skip_selfie_model.dart';
@@ -39,8 +42,8 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: const Offset(0.0, 13.999999999999986),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 13.999999999999986),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -58,8 +61,8 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: const Offset(0.0, 13.999999999999986),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 13.999999999999986),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -100,7 +103,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
               top: true,
               child: Container(
                 width: MediaQuery.sizeOf(context).width * 1.0,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
                 ),
                 child: StreamBuilder<List<ConstantsRecord>>(
@@ -110,7 +113,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
-                      return const Center(
+                      return Center(
                         child: SizedBox(
                           width: 50.0,
                           height: 50.0,
@@ -148,7 +151,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                             child: Image.asset(
                               'assets/images/Image.png',
                               fit: BoxFit.fitHeight,
-                              alignment: const Alignment(0.0, -1.0),
+                              alignment: Alignment(0.0, -1.0),
                             ),
                           ),
                         ),
@@ -179,9 +182,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                         children: [
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(-1.0, 0.0),
+                                                AlignmentDirectional(-1.0, 0.0),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       20.0, 20.0, 20.0, 10.0),
                                               child: Text(
@@ -204,9 +207,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                           ),
                                           Align(
                                             alignment:
-                                                const AlignmentDirectional(0.0, 0.0),
+                                                AlignmentDirectional(0.0, 0.0),
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       20.0, 10.0, 20.0, 20.0),
                                               child: Text(
@@ -224,7 +227,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                           ),
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 30.0, 0.0, 0.0),
                                             child: Text(
                                               'Remind me by',
@@ -241,7 +244,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                           ),
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     20.0, 10.0, 20.0, 20.0),
                                             child: Wrap(
                                               spacing: 0.0,
@@ -257,7 +260,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                               clipBehavior: Clip.none,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(10.0, 10.0,
                                                           10.0, 0.0),
                                                   child: FFButtonWidget(
@@ -295,9 +298,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                         builder:
                                                             (alertDialogContext) {
                                                           return AlertDialog(
-                                                            title: const Text(
+                                                            title: Text(
                                                                 'Reminder set'),
-                                                            content: const Text(
+                                                            content: Text(
                                                                 'We\'ll remind you in an Hour'),
                                                             actions: [
                                                               TextButton(
@@ -305,7 +308,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
                                                                 child:
-                                                                    const Text('Ok'),
+                                                                    Text('Ok'),
                                                               ),
                                                             ],
                                                           );
@@ -321,14 +324,14 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                     options: FFButtonOptions(
                                                       height: 40.0,
                                                       padding:
-                                                          const EdgeInsetsDirectional
+                                                          EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   24.0,
                                                                   0.0,
                                                                   24.0,
                                                                   0.0),
                                                       iconPadding:
-                                                          const EdgeInsetsDirectional
+                                                          EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0.0,
                                                                   0.0,
@@ -363,7 +366,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(10.0, 10.0,
                                                           10.0, 0.0),
                                                   child: FFButtonWidget(
@@ -401,9 +404,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                         builder:
                                                             (alertDialogContext) {
                                                           return AlertDialog(
-                                                            title: const Text(
+                                                            title: Text(
                                                                 'Reminder set'),
-                                                            content: const Text(
+                                                            content: Text(
                                                                 'We\'ll remind you by evening'),
                                                             actions: [
                                                               TextButton(
@@ -411,7 +414,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
                                                                 child:
-                                                                    const Text('Ok'),
+                                                                    Text('Ok'),
                                                               ),
                                                             ],
                                                           );
@@ -427,14 +430,14 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                     options: FFButtonOptions(
                                                       height: 40.0,
                                                       padding:
-                                                          const EdgeInsetsDirectional
+                                                          EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   24.0,
                                                                   0.0,
                                                                   24.0,
                                                                   0.0),
                                                       iconPadding:
-                                                          const EdgeInsetsDirectional
+                                                          EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0.0,
                                                                   0.0,
@@ -469,7 +472,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           0.0, 10.0, 0.0, 10.0),
                                                   child: FFButtonWidget(
@@ -507,9 +510,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                         builder:
                                                             (alertDialogContext) {
                                                           return AlertDialog(
-                                                            title: const Text(
+                                                            title: Text(
                                                                 'Reminder set'),
-                                                            content: const Text(
+                                                            content: Text(
                                                                 'We\'ll remind you tommorow'),
                                                             actions: [
                                                               TextButton(
@@ -517,7 +520,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                                     Navigator.pop(
                                                                         alertDialogContext),
                                                                 child:
-                                                                    const Text('Ok'),
+                                                                    Text('Ok'),
                                                               ),
                                                             ],
                                                           );
@@ -533,14 +536,14 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                     options: FFButtonOptions(
                                                       height: 40.0,
                                                       padding:
-                                                          const EdgeInsetsDirectional
+                                                          EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   24.0,
                                                                   0.0,
                                                                   24.0,
                                                                   0.0),
                                                       iconPadding:
-                                                          const EdgeInsetsDirectional
+                                                          EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0.0,
                                                                   0.0,
@@ -585,7 +588,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                         children: [
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 10.0, 0.0, 10.0),
                                             child: Text(
                                               'Changed your mind?',
@@ -600,7 +603,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                           ),
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 5.0, 0.0, 20.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
@@ -615,14 +618,14 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                               text: 'Take Selfie',
                                               options: FFButtonOptions(
                                                 height: 56.0,
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         24.0, 0.0, 24.0, 0.0),
                                                 iconPadding:
-                                                    const EdgeInsetsDirectional
+                                                    EdgeInsetsDirectional
                                                         .fromSTEB(
                                                             0.0, 0.0, 0.0, 0.0),
-                                                color: const Color(0xFF007EFC),
+                                                color: Color(0xFF007EFC),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .titleSmall
@@ -631,7 +634,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                           color: Colors.white,
                                                         ),
                                                 elevation: 3.0,
-                                                borderSide: const BorderSide(
+                                                borderSide: BorderSide(
                                                   color: Colors.transparent,
                                                   width: 1.0,
                                                 ),
@@ -654,7 +657,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                             ))
                               Container(
                                 width: MediaQuery.sizeOf(context).width * 1.0,
-                                constraints: const BoxConstraints(
+                                constraints: BoxConstraints(
                                   maxWidth: 700.0,
                                 ),
                                 decoration: BoxDecoration(
@@ -666,9 +669,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
+                                      alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 20.0, 0.0, 0.0),
                                         child: Text(
                                           'By taking a selfie, you\'ll help us \nfinding your photos!',
@@ -683,9 +686,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                       ),
                                     ),
                                     Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
+                                      alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 20.0, 0.0, 0.0),
                                         child: Text(
                                           'Looks like you are using PhotoOwl on desktop.\n\nUse a Mobile phone to register yourself.\n',

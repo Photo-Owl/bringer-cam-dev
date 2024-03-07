@@ -11,12 +11,13 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'dart:io';
+import 'dart:isolate';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:flutter/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '/auth/firebase_auth/auth_util.dart' show currentUserUid;
 import 'package:image/image.dart' as img;
 import 'package:flutter/foundation.dart';
 import 'package:media_scanner/media_scanner.dart';
@@ -24,22 +25,34 @@ import 'package:media_store_plus/media_store_plus.dart';
 
 class _ShutterButton extends StatelessWidget {
   final bool isTakingPicture;
-  const _ShutterButton(this.isTakingPicture);
+  final void Function()? onPressed;
+  const _ShutterButton({
+    required this.isTakingPicture,
+    this.onPressed,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(5),
       decoration: const ShapeDecoration(
         shape: CircleBorder(
           side: BorderSide(color: Colors.white, width: 2),
         ),
       ),
-      child: Container(
-        height: 60,
-        width: 60,
-        decoration: ShapeDecoration(
-          shape: const CircleBorder(),
-          color: isTakingPicture ? Colors.white70 : Colors.white,
+      child: Material(
+        color: Colors.transparent,
+        shape: const CircleBorder(),
+        clipBehavior: Clip.hardEdge,
+        child: InkWell(
+          onTap: onPressed,
+          child: Container(
+            margin: const EdgeInsets.all(5),
+            height: 60,
+            width: 60,
+            decoration: ShapeDecoration(
+              shape: const CircleBorder(),
+              color: isTakingPicture ? Colors.white70 : Colors.white,
+            ),
+          ),
         ),
       ),
     );
@@ -60,11 +73,12 @@ class Camera extends StatefulWidget {
   State<Camera> createState() => _CameraState();
 }
 
-class _CameraState extends State<Camera> with WidgetsBindingObserver {
+class _CameraState extends State<Camera> {
   CameraController? controller;
   late final List<CameraDescription> cameras;
   int selectedCameraIndex = 0;
   bool hidSystemUI = false;
+  // final receivePort = ReceivePort();
 
   @override
   void initState() {
@@ -75,30 +89,17 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         hidSystemUI = true;
       });
     });
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     controller?.dispose();
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
 
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: SystemUiOverlay.values,
     );
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (controller?.value.isInitialized ?? false) {
-      if (state == AppLifecycleState.paused) {
-        controller?.pausePreview();
-      } else {
-        controller?.resumePreview();
-      }
-    }
   }
 
   Future<void> _fetchCameras() async {
@@ -114,12 +115,6 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     setState(() {
       selectedCameraIndex = nextCam;
     });
-  }
-
-  Future<String?> _getOwnerId() async {
-    final user = FirebaseAuth.instance.currentUser;
-    final userId = user?.uid;
-    return userId;
   }
 
   Future _processImage(String path) async {
@@ -142,7 +137,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     try {
       final file = await controller!.takePicture();
       final image = await file.readAsBytes();
-      print('Image captured and saved to ${file.path}');
+      debugPrint('Image captured and saved to ${file.path}');
       await _processImage(file.path);
       var newPath = '';
       if (defaultTargetPlatform == TargetPlatform.android) {
@@ -154,13 +149,6 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
           dirName: DirName.pictures,
         );
         if (isFileSaved) {
-          // newPath = (await mediaStore.getFileUri(
-          //   fileName: file.name,
-          //   dirType: DirType.photo,
-          //   dirName: DirName.pictures,
-          // ))!
-          //     .toString();
-
           newPath = '/sdcard/Pictures/Bringer/${file.name}';
           await MediaScanner.loadMedia(path: newPath);
         }
@@ -173,17 +161,18 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         await File(newPath).writeAsBytes(image);
       }
 
-      print('Image captured and saved locally at $newPath');
-      var ownerId = await _getOwnerId();
+      debugPrint('Image captured and saved locally at $newPath');
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       await SQLiteManager.instance.insertImage(
         path: newPath,
-        ownerId: ownerId,
+        ownerId: currentUserUid,
         unixTimestamp: unixTimestamp,
       );
       return;
     } catch (e) {
-      print(e);
+      if (e is Error) {
+        debugPrintStack(stackTrace: e.stackTrace);
+      }
     }
   }
 
@@ -194,7 +183,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
       child: Stack(
         children: [
           Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.center,
             child: controller == null || !controller!.value.isInitialized
                 ? const Icon(Icons.camera_rounded)
                 : CameraPreview(controller!),
@@ -217,22 +206,21 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     iconSize: 24,
                   ),
                 ),
-                InkWell(
-                  onTap: Feedback.wrapForLongPress(
-                    () => _onCapturePressed(context),
-                    context,
-                  ),
-                  child: Semantics(
-                    button: true,
-                    label: 'Capture photo',
-                    child: controller != null
-                        ? ValueListenableBuilder(
-                            valueListenable: controller!,
-                            builder: (context, val, child) =>
-                                _ShutterButton(val.isTakingPicture),
-                          )
-                        : const _ShutterButton(true),
-                  ),
+                Semantics(
+                  button: true,
+                  label: 'Capture photo',
+                  child: controller != null
+                      ? ValueListenableBuilder(
+                          valueListenable: controller!,
+                          builder: (context, val, child) => _ShutterButton(
+                            isTakingPicture: val.isTakingPicture,
+                            onPressed: Feedback.wrapForLongPress(
+                              () => _onCapturePressed(context),
+                              context,
+                            ),
+                          ),
+                        )
+                      : const _ShutterButton(isTakingPicture: true),
                 ),
                 Material(
                   color: Colors.transparent,

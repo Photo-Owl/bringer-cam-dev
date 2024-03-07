@@ -54,8 +54,8 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: const Offset(0.0, 13.999999999999986),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 13.999999999999986),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -86,7 +86,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
           builder: (context) {
             return Padding(
               padding: MediaQuery.viewInsetsOf(context),
-              child: const UpdateRequiredWidget(),
+              child: UpdateRequiredWidget(),
             );
           },
         ).then((value) => safeSetState(() {}));
@@ -102,7 +102,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
             phoneNumberVal.isEmpty ||
             !phoneNumberVal.startsWith('+')) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content:
                   Text('Phone Number is required and has to start with +.'),
             ),
@@ -176,7 +176,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                     child: Image.asset(
                       'assets/images/Image.png',
                       fit: BoxFit.fitHeight,
-                      alignment: const Alignment(0.0, -1.0),
+                      alignment: Alignment(0.0, -1.0),
                     ),
                   ),
                 ),
@@ -200,7 +200,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                 builder: (context) {
                                   if (widget.qr == null || widget.qr == '') {
                                     return Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 10.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -209,7 +209,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                         children: [
                                           Padding(
                                             padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
+                                                EdgeInsetsDirectional.fromSTEB(
                                                     20.0, 25.0, 25.0, 0.0),
                                             child: Text(
                                               'Let\'s get you\nRegistered',
@@ -229,7 +229,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                     );
                                   } else {
                                     return Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           20.0, 0.0, 20.0, 0.0),
                                       child: FutureBuilder<List<QrCodesRecord>>(
                                         future: queryQrCodesRecordOnce(
@@ -243,7 +243,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                         builder: (context, snapshot) {
                                           // Customize what your widget looks like when it's loading.
                                           if (!snapshot.hasData) {
-                                            return const Center(
+                                            return Center(
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
@@ -299,7 +299,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                           '',
                                                   child: Align(
                                                     alignment:
-                                                        const AlignmentDirectional(
+                                                        AlignmentDirectional(
                                                             -1.0, 0.0),
                                                     child: ClipRRect(
                                                       borderRadius:
@@ -315,7 +315,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                 ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 15.0, 0.0, 10.0),
                                                 child: Row(
@@ -327,17 +327,18 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                       height: 36.0,
                                                       clipBehavior:
                                                           Clip.antiAlias,
-                                                      decoration: const BoxDecoration(
+                                                      decoration: BoxDecoration(
                                                         shape: BoxShape.circle,
                                                       ),
                                                       child: Image.network(
-                                                        columnQrCodesRecord.logoUrl,
+                                                        columnQrCodesRecord!
+                                                            .logoUrl,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsetsDirectional
+                                                          EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   10.0,
                                                                   0.0,
@@ -354,7 +355,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                             'uid',
                                                             isEqualTo:
                                                                 columnQrCodesRecord
-                                                                    .uid,
+                                                                    ?.uid,
                                                           ),
                                                           singleRecord: true,
                                                         ),
@@ -363,7 +364,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                           // Customize what your widget looks like when it's loading.
                                                           if (!snapshot
                                                               .hasData) {
-                                                            return const Center(
+                                                            return Center(
                                                               child: SizedBox(
                                                                 width: 50.0,
                                                                 height: 50.0,
@@ -412,7 +413,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                         },
                                                       ),
                                                     ),
-                                                    const Padding(
+                                                    Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
@@ -439,9 +440,9 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                 },
                               ),
                               Align(
-                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       20.0, 20.0, 40.0, 0.0),
                                   child: Text(
                                     widget.qr != null && widget.qr != ''
@@ -451,7 +452,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                         .labelSmall
                                         .override(
                                           fontFamily: 'Inter',
-                                          color: const Color(0xFF423F34),
+                                          color: Color(0xFF423F34),
                                           fontSize: 13.0,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -462,12 +463,12 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         20.0, 20.0, 20.0, 0.0),
                                     child: Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFFEEEEEA),
+                                        color: Color(0xFFEEEEEA),
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
@@ -478,7 +479,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       16.0, 0.0, 0.0, 0.0),
                                               child: TextFormField(
@@ -536,7 +537,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                               autovalidateMode:
                                                   AutovalidateMode.disabled,
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 0.0, 8.0, 0.0),
                                                 child: TextFormField(
@@ -557,8 +558,8 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                         .labelLarge
                                                         .override(
                                                           fontFamily: 'Inter',
-                                                          color: const Color(
-                                                              0xbacd8c9fad),
+                                                          color: Color(
+                                                              0xBACD8C9FAD),
                                                         ),
                                                     enabledBorder:
                                                         InputBorder.none,
@@ -590,18 +591,18 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         20.0, 20.0, 20.0, 0.0),
                                     child: Container(
                                       width: MediaQuery.sizeOf(context).width *
                                           1.0,
                                       decoration: BoxDecoration(
-                                        color: const Color(0xFFE0EFFF),
+                                        color: Color(0xFFE0EFFF),
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
+                                        padding: EdgeInsets.all(15.0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -614,14 +615,14 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                 'assets/images/Whatsapp_logo.png',
                                                 width: 38.0,
                                                 fit: BoxFit.contain,
-                                                alignment: const Alignment(0.0, 0.0),
+                                                alignment: Alignment(0.0, 0.0),
                                               ),
                                             ),
                                             Container(
                                               width: MediaQuery.sizeOf(context)
                                                       .width *
                                                   0.6,
-                                              decoration: const BoxDecoration(),
+                                              decoration: BoxDecoration(),
                                               child: Text(
                                                 'Please make sure that its your Whatsapp number',
                                                 style:
@@ -633,7 +634,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                         ),
                                               ),
                                             ),
-                                          ].divide(const SizedBox(width: 12.0)),
+                                          ].divide(SizedBox(width: 12.0)),
                                         ),
                                       ),
                                     ),
@@ -644,13 +645,13 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                       widget.phoneNumber != '') &&
                                   (widget.name != null && widget.name != '')))
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       20.0, 15.0, 20.0, 0.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       logFirebaseEvent(
                                           'SIGN_IN_COPY_PAGE_Button-Login_ON_TAP');
-                                      var shouldSetState = false;
+                                      var _shouldSetState = false;
                                       logFirebaseEvent(
                                           'Button-Login_google_analytics_event');
                                       logFirebaseEvent(
@@ -673,8 +674,8 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                               '${_model.textController1.text}${_model.textController2.text}',
                                         ),
                                       );
-                                      shouldSetState = true;
-                                      if (_model.userDocument!.isEmpty) {
+                                      _shouldSetState = true;
+                                      if (_model.userDocument!.length <= 0) {
                                         logFirebaseEvent(
                                             'Button-Login_navigate_to');
 
@@ -687,7 +688,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                             ),
                                           }.withoutNulls,
                                           extra: <String, dynamic>{
-                                            kTransitionInfoKey: const TransitionInfo(
+                                            kTransitionInfoKey: TransitionInfo(
                                               hasTransition: true,
                                               transitionType:
                                                   PageTransitionType.fade,
@@ -695,12 +696,12 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                           },
                                         );
 
-                                        if (shouldSetState) setState(() {});
+                                        if (_shouldSetState) setState(() {});
                                         return;
                                       } else if (_model.userDocument!.first
                                           .hasIsGoogleLogin()) {
                                         if (_model.userDocument?.first
-                                                .isGoogleLogin ==
+                                                ?.isGoogleLogin ==
                                             true) {
                                           logFirebaseEvent(
                                               'Button-Login_navigate_to');
@@ -718,7 +719,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                               ),
                                               'email': serializeParam(
                                                 _model
-                                                    .userDocument?.first.email,
+                                                    .userDocument?.first?.email,
                                                 ParamType.String,
                                               ),
                                             }.withoutNulls,
@@ -726,7 +727,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                               'userDocument':
                                                   _model.userDocument?.first,
                                               kTransitionInfoKey:
-                                                  const TransitionInfo(
+                                                  TransitionInfo(
                                                 hasTransition: true,
                                                 transitionType:
                                                     PageTransitionType.fade,
@@ -734,7 +735,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                             },
                                           );
 
-                                          if (shouldSetState) setState(() {});
+                                          if (_shouldSetState) setState(() {});
                                           return;
                                         }
                                       }
@@ -742,11 +743,12 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                       logFirebaseEvent('Button-Login_auth');
                                       final phoneNumberVal =
                                           '${_model.textController1.text}${_model.textController2.text}';
-                                      if (phoneNumberVal.isEmpty ||
+                                      if (phoneNumberVal == null ||
+                                          phoneNumberVal.isEmpty ||
                                           !phoneNumberVal.startsWith('+')) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          const SnackBar(
+                                          SnackBar(
                                             content: Text(
                                                 'Phone Number is required and has to start with +.'),
                                           ),
@@ -771,17 +773,17 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                         },
                                       );
 
-                                      if (shouldSetState) setState(() {});
+                                      if (_shouldSetState) setState(() {});
                                     },
                                     text: 'Continue',
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 56.0,
-                                      padding: const EdgeInsets.all(0.0),
+                                      padding: EdgeInsets.all(0.0),
                                       iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
-                                      color: const Color(0xFF007EFC),
+                                      color: Color(0xFF007EFC),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
@@ -789,7 +791,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBackground,
                                           ),
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1.0,
                                       ),
@@ -801,7 +803,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                       widget.phoneNumber != '') &&
                                   (widget.name != null && widget.name != ''))
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 15.0, 0.0, 0.0),
                                   child: Text(
                                     'Signing you in',
@@ -815,7 +817,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                   ),
                                 ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     20.0, 25.0, 20.0, 35.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
@@ -846,7 +848,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 20.0, 0.0, 0.0),
                                 child: Container(
                                   width: MediaQuery.sizeOf(context).width * 1.0,
@@ -872,7 +874,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             25.0, 0.0, 25.0, 0.0),
                                         child: ClipRRect(
                                           borderRadius:
@@ -897,7 +899,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                             animationsMap['columnOnPageLoadAnimation']!);
                       } else {
                         return Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: EdgeInsets.all(20.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -914,7 +916,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.
                                   if (!snapshot.hasData) {
-                                    return const Center(
+                                    return Center(
                                       child: SizedBox(
                                         width: 50.0,
                                         height: 50.0,
@@ -970,11 +972,11 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                 },
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 15.0, 0.0, 5.0),
                                 child: AuthUserStreamWidget(
                                   builder: (context) => Text(
-                                    'Hello $currentUserDisplayName,',
+                                    'Hello ${currentUserDisplayName},',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -995,7 +997,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                     ),
                               ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 15.0, 0.0, 0.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
@@ -1009,11 +1011,11 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                   options: FFButtonOptions(
                                     width: double.infinity,
                                     height: 56.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         24.0, 0.0, 24.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
-                                    color: const Color(0xFF007EFC),
+                                    color: Color(0xFF007EFC),
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
@@ -1021,7 +1023,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                           color: Colors.white,
                                         ),
                                     elevation: 3.0,
-                                    borderSide: const BorderSide(
+                                    borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1.0,
                                     ),

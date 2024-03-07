@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
       width: MediaQuery.sizeOf(context).width * 1.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
-        borderRadius: const BorderRadius.only(
+        borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(0.0),
           bottomRight: Radius.circular(3.0),
           topLeft: Radius.circular(30.0),
@@ -68,7 +69,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          const Row(
+          Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -85,7 +86,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Text(
               'Download Options',
               textAlign: TextAlign.center,
@@ -103,7 +104,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
               Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Container(
                       height: 100.0,
                       decoration: BoxDecoration(
@@ -121,7 +122,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                     ),
                   ),
                   Align(
-                    alignment: const AlignmentDirectional(-2.0, 1.07),
+                    alignment: AlignmentDirectional(-2.0, 1.07),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
@@ -149,7 +150,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                     ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                 child: Text(
                   'Your little contribution means a lot and greatly \nmotivates the photographer. 🤗',
                   textAlign: TextAlign.center,
@@ -162,7 +163,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
             ],
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 15.0, 20.0),
+            padding: EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 15.0, 20.0),
             child: Material(
               color: Colors.transparent,
               elevation: 5.0,
@@ -174,7 +175,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                   color: FlutterFlowTheme.of(context).secondaryBackground,
                   borderRadius: BorderRadius.circular(12.0),
                   border: Border.all(
-                    color: const Color(0xFFEAB200),
+                    color: Color(0xFFEAB200),
                     width: 2.0,
                   ),
                 ),
@@ -189,9 +190,9 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                   clipBehavior: Clip.none,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: EdgeInsets.all(5.0),
                       child: Container(
-                        decoration: const BoxDecoration(),
+                        decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -204,7 +205,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           10.0, 10.0, 5.0, 10.0),
                                       child: Container(
                                         height: 25.0,
@@ -223,7 +224,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 10.0, 10.0, 10.0),
                                       child: RichText(
                                         textScaleFactor: MediaQuery.of(context)
@@ -237,7 +238,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Inter',
-                                                    color: const Color(0xFFEAB200),
+                                                    color: Color(0xFFEAB200),
                                                     fontSize: 18.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
@@ -263,7 +264,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 10.0, 10.0, 10.0),
                                   child: RichText(
                                     textScaleFactor:
@@ -287,7 +288,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                           text: valueOrDefault<String>(
                                             widget
                                                 .albumDocument?.premiumImageCost
-                                                .toString(),
+                                                ?.toString(),
                                             '35',
                                           ),
                                           style: GoogleFonts.getFont(
@@ -299,7 +300,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                 TextDecoration.lineThrough,
                                           ),
                                         ),
-                                        const TextSpan(
+                                        TextSpan(
                                           text: '    ',
                                           style: TextStyle(),
                                         ),
@@ -316,7 +317,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                           text: valueOrDefault<String>(
                                             widget.albumDocument
                                                 ?.premiumImageDiscountedCost
-                                                .toString(),
+                                                ?.toString(),
                                             '30',
                                           ),
                                           style: GoogleFonts.getFont(
@@ -369,12 +370,12 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Inter',
-                                                  color: const Color(0xFFEAB200),
+                                                  color: Color(0xFFEAB200),
                                                   fontSize: 10.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),
-                                          const TextSpan(
+                                          TextSpan(
                                             text: ' Remove watermarks',
                                             style: TextStyle(),
                                           )
@@ -426,12 +427,12 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Inter',
-                                                  color: const Color(0xFFEAB200),
+                                                  color: Color(0xFFEAB200),
                                                   fontSize: 10.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),
-                                          const TextSpan(
+                                          TextSpan(
                                             text: ' Full resolution ',
                                             style: TextStyle(),
                                           )
@@ -483,16 +484,16 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Inter',
-                                                  color: const Color(0xFFEAB200),
+                                                  color: Color(0xFFEAB200),
                                                   fontSize: 10.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),
-                                          const TextSpan(
+                                          TextSpan(
                                             text: ' Lifetime access',
                                             style: TextStyle(),
                                           ),
-                                          const TextSpan(
+                                          TextSpan(
                                             text: '',
                                             style: TextStyle(),
                                           )
@@ -530,7 +531,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                             ),
                             Builder(
                               builder: (context) => Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                padding: EdgeInsets.all(10.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     logFirebaseEvent(
@@ -543,11 +544,11 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                           elevation: 0,
                                           insetPadding: EdgeInsets.zero,
                                           backgroundColor: Colors.transparent,
-                                          alignment: const AlignmentDirectional(
+                                          alignment: AlignmentDirectional(
                                                   0.0, 0.0)
                                               .resolve(
                                                   Directionality.of(context)),
-                                          child: SizedBox(
+                                          child: Container(
                                             height: 250.0,
                                             width: 450.0,
                                             child: SelectmorephotosWidget(
@@ -560,15 +561,15 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                     ).then((value) => setState(() {}));
                                   },
                                   text: 'Buy Now',
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.shopping_cart_rounded,
                                     size: 15.0,
                                   ),
                                   options: FFButtonOptions(
                                     height: 40.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         24.0, 0.0, 24.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context).success,
                                     textStyle: FlutterFlowTheme.of(context)
@@ -578,7 +579,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                           color: Colors.white,
                                         ),
                                     elevation: 3.0,
-                                    borderSide: const BorderSide(
+                                    borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1.0,
                                     ),
@@ -598,7 +599,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
           ),
           if (false)
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -628,12 +629,12 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                       ),
                       TextSpan(
                         text: widget.imageDocument!.watermarkedImageResolution,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12.0,
                           decoration: TextDecoration.underline,
                         ),
                       ),
-                      const TextSpan(
+                      TextSpan(
                         text: ') for FREE 🙂',
                         style: TextStyle(
                           fontSize: 12.0,

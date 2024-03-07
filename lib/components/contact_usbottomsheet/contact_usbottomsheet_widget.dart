@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'contact_usbottomsheet_model.dart';
 export 'contact_usbottomsheet_model.dart';
@@ -50,20 +51,20 @@ class _ContactUsbottomsheetWidgetState
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 24.0),
+        padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 24.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
               child: Text(
                 'Contact Us',
                 style: FlutterFlowTheme.of(context).headlineSmall,
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 8.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 8.0),
               child: Text(
                 'Need help with anything?',
                 style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -86,9 +87,9 @@ class _ContactUsbottomsheetWidgetState
               child: Container(
                 width: double.infinity,
                 height: 60.0,
-                decoration: const BoxDecoration(),
+                decoration: BoxDecoration(),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -112,7 +113,7 @@ class _ContactUsbottomsheetWidgetState
                             borderRadius: BorderRadius.circular(40.0),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: FaIcon(
                               FontAwesomeIcons.question,
                               color: FlutterFlowTheme.of(context).secondaryText,
@@ -122,7 +123,7 @@ class _ContactUsbottomsheetWidgetState
                         ),
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 0.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -156,9 +157,9 @@ class _ContactUsbottomsheetWidgetState
               child: Container(
                 width: double.infinity,
                 height: 60.0,
-                decoration: const BoxDecoration(),
+                decoration: BoxDecoration(),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -170,7 +171,7 @@ class _ContactUsbottomsheetWidgetState
                           borderRadius: BorderRadius.circular(40.0),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.report_problem_outlined,
                             color: FlutterFlowTheme.of(context).secondaryText,
@@ -180,7 +181,7 @@ class _ContactUsbottomsheetWidgetState
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -213,9 +214,9 @@ class _ContactUsbottomsheetWidgetState
               child: Container(
                 width: double.infinity,
                 height: 60.0,
-                decoration: const BoxDecoration(),
+                decoration: BoxDecoration(),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -227,7 +228,7 @@ class _ContactUsbottomsheetWidgetState
                           borderRadius: BorderRadius.circular(40.0),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.photo_camera,
                             color: FlutterFlowTheme.of(context).secondaryText,
@@ -237,7 +238,7 @@ class _ContactUsbottomsheetWidgetState
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
