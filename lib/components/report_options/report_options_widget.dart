@@ -2,7 +2,9 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'report_options_model.dart';
 export 'report_options_model.dart';
@@ -55,7 +57,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +75,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
               style: FlutterFlowTheme.of(context).bodyMedium,
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -95,13 +97,13 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                     context: context,
                     builder: (alertDialogContext) {
                       return AlertDialog(
-                        title: const Text('Information'),
-                        content: const Text(
+                        title: Text('Information'),
+                        content: Text(
                             'The image has been reported, Our team will verify and take down the image soon.'),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(alertDialogContext),
-                            child: const Text('Ok'),
+                            child: Text('Ok'),
                           ),
                         ],
                       );
@@ -119,7 +121,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                   ),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 16.0),
+                        EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 16.0),
                     child: Text(
                       'I\'m not in this image',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -133,7 +135,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -155,13 +157,13 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                     context: context,
                     builder: (alertDialogContext) {
                       return AlertDialog(
-                        title: const Text('Information'),
-                        content: const Text(
+                        title: Text('Information'),
+                        content: Text(
                             'The image has been reported, Our team will verify and take down the image soon.'),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(alertDialogContext),
-                            child: const Text('Ok'),
+                            child: Text('Ok'),
                           ),
                         ],
                       );
@@ -179,7 +181,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                   ),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 16.0),
+                        EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 16.0),
                     child: Text(
                       'This Image is spam',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -193,7 +195,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -215,13 +217,13 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                     context: context,
                     builder: (alertDialogContext) {
                       return AlertDialog(
-                        title: const Text('Information'),
-                        content: const Text(
+                        title: Text('Information'),
+                        content: Text(
                             'The image has been reported, Our team will verify and take down the image soon.'),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(alertDialogContext),
-                            child: const Text('Ok'),
+                            child: Text('Ok'),
                           ),
                         ],
                       );
@@ -239,7 +241,7 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                   ),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 16.0),
+                        EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 12.0, 16.0),
                     child: Text(
                       'Image is uploaded by unknown user',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(

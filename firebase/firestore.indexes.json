@@ -29,6 +29,10 @@
         {
           "fieldPath": "faces",
           "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "uploaded_at",
+          "order": "DESCENDING"
         }
       ]
     },
@@ -43,10 +47,6 @@
         {
           "fieldPath": "faces",
           "arrayConfig": "CONTAINS"
-        },
-        {
-          "fieldPath": "uploaded_at",
-          "order": "DESCENDING"
         }
       ]
     }

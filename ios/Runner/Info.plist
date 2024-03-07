@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Bringer-cam-dev</string>
+	<string>Bringer</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -37,10 +37,10 @@
         <key>CFBundleTypeRole</key>
         <string>Editor</string>
         <key>CFBundleURLName</key>
-        <string>bringercamdev.com</string>
+        <string>bringerapp.com</string>
         <key>CFBundleURLSchemes</key>
         <array>
-        <string>bringercamdev</string>
+        <string>bringer</string>
         </array>
         </dict>
     </array>
@@ -57,7 +57,8 @@
     <string>In order to take a picture or video, this app requires permission to access the camera.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
     <string>In order to upload data, this app requires permission to access the photo library.</string>
-
+	<key>PermissionGroupNotification</key>
+    <string>In order to  receive photo share notifications and other messages, tihs app requires  notification permission.</string>
 
 
 	<key>UILaunchStoryboardName</key>

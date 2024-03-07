@@ -10,18 +10,16 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
-Future checkIfTableExsistsSqlite(String? tableName) async {
-  final database = openDatabase(
-    join(await getDatabasesPath(), 'camera_media.db'),
+Future initializeNotifs() async {
+  FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    carPlay: true,
+    criticalAlert: true,
+    sound: true,
+    announcement: true,
+    provisional: true,
+    badge: true,
   );
-
-  final db = await database;
-  var tableExists = await db.rawQuery(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name=?",
-      [tableName]);
-
-  return tableExists.isNotEmpty;
 }
