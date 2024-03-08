@@ -1007,6 +1007,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                   onTap: () async {
                                                     logFirebaseEvent(
                                                         'IMAGEEXPANDED_COPY_Container_gsli0oq2_ON');
+                                                    var shouldSetState = false;
                                                     logFirebaseEvent(
                                                         'Container_backend_call');
 
@@ -1085,13 +1086,28 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                         ).then((value) =>
                                                             safeSetState(
                                                                 () {}));
+
+                                                        if (shouldSetState) {
+                                                          setState(() {});
+                                                        }
+                                                        return;
                                                       } else {
                                                         logFirebaseEvent(
                                                             'Container_custom_action');
-                                                        await actions
-                                                            .getDownloadUrl(
+                                                        _model.downloadUrl1 =
+                                                            await actions
+                                                                .getDownloadUrl(
                                                           widget.albumDoc!
                                                               .ownerId,
+                                                          carouselUploadsRecord
+                                                              .key,
+                                                        );
+                                                        shouldSetState = true;
+                                                        logFirebaseEvent(
+                                                            'Container_custom_action');
+                                                        await actions
+                                                            .downloadImage(
+                                                          _model.downloadUrl1!,
                                                           carouselUploadsRecord
                                                               .key,
                                                         );
@@ -1099,13 +1115,27 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                     } else {
                                                       logFirebaseEvent(
                                                           'Container_custom_action');
-                                                      await actions
-                                                          .getDownloadUrl(
+                                                      _model.downloadUrl =
+                                                          await actions
+                                                              .getDownloadUrl(
                                                         widget
                                                             .albumDoc!.ownerId,
                                                         carouselUploadsRecord
                                                             .key,
                                                       );
+                                                      shouldSetState = true;
+                                                      logFirebaseEvent(
+                                                          'Container_custom_action');
+                                                      await actions
+                                                          .downloadImage(
+                                                        _model.downloadUrl!,
+                                                        carouselUploadsRecord
+                                                            .key,
+                                                      );
+                                                    }
+
+                                                    if (shouldSetState) {
+                                                      setState(() {});
                                                     }
                                                   },
                                                   child: Container(
