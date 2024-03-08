@@ -17,24 +17,21 @@ import 'dart:io';
 import 'package:mime_type/mime_type.dart';
 
 Future uploadImagesFromSqlite(String userId, Future Function() onUpload) async {
-  // Add your function code here!
   // Open the database
-  final maps = await SQLiteManager.instance.database.rawQuery(
-    'SELECT * FROM Images WHERE is_uploaded = 0 AND owner = ? ORDER BY unix_timestamp ASC',
-    [userId],
-  );
+  final rows =
+      await SQLiteManager.instance.fetchImagesToUpload(ownerId: userId);
 
-  for (var map in maps) {
+  for (var row in rows) {
     // Update the SQLite row
     await SQLiteManager.instance.database.update(
       'Images',
       {'is_uploading': 1},
       where: "path = ?",
-      whereArgs: [map['path']],
+      whereArgs: [row.path],
     );
 
     // Upload the image to Firebase Storage
-    final filePath = map['path'] as String;
+    final filePath = row.path;
     final fileName = basename(filePath);
     final ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
     await ref.putFile(
@@ -57,16 +54,16 @@ Future uploadImagesFromSqlite(String userId, Future Function() onUpload) async {
     String? albumId;
     if (snapshot.docs.isNotEmpty) {
       final doc = snapshot.docs.first;
-      final timestamp = DateTime.fromMillisecondsSinceEpoch(
-          (map['unix_timestamp'] as int) * 1000);
+      final timestamp =
+          DateTime.fromMillisecondsSinceEpoch((row.unixTimestamp ?? 0) * 1000);
       final diff = timestamp.difference(doc['uploaded_at'].toDate());
       if (diff.inMinutes < 15) {
         albumId = doc['album_id'];
       }
     }
 
-    final timestamp = DateTime.fromMillisecondsSinceEpoch(
-        (map['unix_timestamp'] as int) * 1000);
+    final timestamp =
+        DateTime.fromMillisecondsSinceEpoch((row.unixTimestamp ?? 0) * 1000);
 
     if (albumId == null) {
       // Create a new album document
@@ -94,7 +91,7 @@ Future uploadImagesFromSqlite(String userId, Future Function() onUpload) async {
       'Images',
       {'is_uploading': 0, 'is_uploaded': 1},
       where: "path = ?",
-      whereArgs: [map['path']],
+      whereArgs: [row.path],
     );
 
     onUpload();

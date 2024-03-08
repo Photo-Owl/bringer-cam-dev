@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:io';
-import 'dart:isolate';
 import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
@@ -73,12 +72,11 @@ class Camera extends StatefulWidget {
   State<Camera> createState() => _CameraState();
 }
 
-class _CameraState extends State<Camera> {
+class _CameraState extends State<Camera> with WidgetsBindingObserver {
   CameraController? controller;
   late final List<CameraDescription> cameras;
   int selectedCameraIndex = 0;
   bool hidSystemUI = false;
-  // final receivePort = ReceivePort();
 
   @override
   void initState() {
@@ -89,17 +87,30 @@ class _CameraState extends State<Camera> {
         hidSystemUI = true;
       });
     });
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     controller?.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
 
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: SystemUiOverlay.values,
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (controller?.value.isInitialized ?? false) {
+      if (state == AppLifecycleState.paused) {
+        controller?.pausePreview();
+      } else {
+        controller?.resumePreview();
+      }
+    }
   }
 
   Future<void> _fetchCameras() async {
@@ -117,7 +128,7 @@ class _CameraState extends State<Camera> {
     });
   }
 
-  Future _processImage(String path) async {
+  static Future _processImage(String path) async {
     Uint8List imageBytes = await File(path).readAsBytes();
     img.Image? image = img.decodeImage(imageBytes);
     if (image != null) {
@@ -129,39 +140,57 @@ class _CameraState extends State<Camera> {
     return;
   }
 
-  void _onCapturePressed(context) async {
+  static Future<String> _onSaveImage(
+    String filePath,
+    RootIsolateToken token,
+  ) async {
+    BackgroundIsolateBinaryMessenger.ensureInitialized(token);
+    debugPrint('Image captured and saved to $filePath');
+    await _processImage(filePath);
+
+    final image = await File(filePath).readAsBytes();
+
+    final fileName = p.basename(filePath);
+    var newPath = '';
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      final mediaStore = MediaStore();
+      MediaStore.appFolder = 'Bringer';
+      final isFileSaved = await mediaStore.saveFile(
+        tempFilePath: filePath,
+        dirType: DirType.photo,
+        dirName: DirName.pictures,
+      );
+      if (isFileSaved) {
+        newPath = '/sdcard/Pictures/Bringer/$fileName';
+        await MediaScanner.loadMedia(path: newPath);
+      }
+    }
+
+    if (newPath.isEmpty) {
+      final path = '${await getExternalStorageDirectory()}/Pictures';
+      await Directory(path).create(recursive: true);
+      newPath = '$path/$fileName';
+      await File(newPath).writeAsBytes(image);
+    }
+
+    debugPrint('Image captured and saved locally at $newPath');
+    return newPath;
+  }
+
+  Future<void> _onCapturePressed() async {
     if (controller == null || controller!.value.isTakingPicture) {
       // A capture is already pending, do nothing.
-      return null;
+      return;
     }
     try {
       final file = await controller!.takePicture();
-      final image = await file.readAsBytes();
-      debugPrint('Image captured and saved to ${file.path}');
-      await _processImage(file.path);
-      var newPath = '';
-      if (defaultTargetPlatform == TargetPlatform.android) {
-        final mediaStore = MediaStore();
-        MediaStore.appFolder = 'Bringer';
-        final isFileSaved = await mediaStore.saveFile(
-          tempFilePath: file.path,
-          dirType: DirType.photo,
-          dirName: DirName.pictures,
-        );
-        if (isFileSaved) {
-          newPath = '/sdcard/Pictures/Bringer/${file.name}';
-          await MediaScanner.loadMedia(path: newPath);
-        }
-      }
-
-      if (newPath.isEmpty) {
-        final path = '${await getExternalStorageDirectory()}/Pictures';
-        await Directory(path).create(recursive: true);
-        newPath = '$path/${file.name}';
-        await File(newPath).writeAsBytes(image);
-      }
-
-      debugPrint('Image captured and saved locally at $newPath');
+      final filePath = file.path;
+      final rootIsolateToken = RootIsolateToken.instance!;
+      final newPath = await compute(
+        (message) async => await _onSaveImage(filePath, rootIsolateToken),
+        null,
+        debugLabel: 'SaveImageIsolate',
+      );
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       await SQLiteManager.instance.insertImage(
         path: newPath,
@@ -183,11 +212,10 @@ class _CameraState extends State<Camera> {
       child: Stack(
         children: [
           Align(
-            alignment: Alignment.center,
-            child: controller == null || !controller!.value.isInitialized
-                ? const Icon(Icons.camera_rounded)
-                : CameraPreview(controller!),
-          ),
+              alignment: Alignment.topCenter,
+              child: controller == null || !controller!.value.isInitialized
+                  ? const Icon(Icons.camera_rounded)
+                  : CameraPreview(controller!)),
           Container(
             padding: const EdgeInsets.only(top: 15, bottom: 45),
             alignment: Alignment.bottomCenter,
@@ -215,7 +243,7 @@ class _CameraState extends State<Camera> {
                           builder: (context, val, child) => _ShutterButton(
                             isTakingPicture: val.isTakingPicture,
                             onPressed: Feedback.wrapForLongPress(
-                              () => _onCapturePressed(context),
+                              _onCapturePressed,
                               context,
                             ),
                           ),

@@ -1,12 +1,8 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'confirm_event_name_model.dart';
 export 'confirm_event_name_model.dart';
 
@@ -56,8 +52,6 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<List<AlbumsRecord>>(
       stream: queryAlbumsRecord(
         queryBuilder: (albumsRecord) => albumsRecord.where(
@@ -69,7 +63,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(
+          return const Center(
             child: SizedBox(
               width: 50.0,
               height: 50.0,
@@ -100,7 +94,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(24.0, 20.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 20.0, 0.0, 0.0),
                 child: Text(
                   'Confirm Event Name :',
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -111,13 +105,13 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -170,7 +164,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                 filled: true,
                                 fillColor: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                contentPadding: const EdgeInsetsDirectional.fromSTEB(
                                     20.0, 24.0, 20.0, 24.0),
                               ),
                               style: FlutterFlowTheme.of(context).bodyMedium,
@@ -184,21 +178,20 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   30.0, 0.0, 30.0, 0.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'CONFIRM_EVENT_NAME_UploadPhotos_ON_TAP');
-                                  if (_model.yourNameController.text != null &&
-                                      _model.yourNameController.text != '') {
+                                  if (_model.yourNameController.text != '') {
                                     logFirebaseEvent(
                                         'UploadPhotos_backend_call');
 
@@ -224,7 +217,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                                 color: Colors.white,
                                               ),
                                         ),
-                                        duration: Duration(milliseconds: 4000),
+                                        duration: const Duration(milliseconds: 4000),
                                         backgroundColor:
                                             FlutterFlowTheme.of(context).error,
                                       ),
@@ -236,8 +229,8 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                 options: FFButtonOptions(
                                   width: double.infinity,
                                   height: 40.0,
-                                  padding: EdgeInsets.all(0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsets.all(0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
@@ -248,7 +241,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                         color: FlutterFlowTheme.of(context)
                                             .primaryBackground,
                                       ),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),

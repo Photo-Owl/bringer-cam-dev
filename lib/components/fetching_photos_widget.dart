@@ -2,10 +2,8 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'fetching_photos_model.dart';
 export 'fetching_photos_model.dart';
 
@@ -60,14 +58,12 @@ class _FetchingPhotosWidgetState extends State<FetchingPhotosWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Align(
-      alignment: AlignmentDirectional(0.0, 0.0),
+      alignment: const AlignmentDirectional(0.0, 0.0),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,
         height: MediaQuery.sizeOf(context).height * 1.0,
-        constraints: BoxConstraints(
+        constraints: const BoxConstraints(
           maxWidth: 250.0,
           maxHeight: 250.0,
         ),

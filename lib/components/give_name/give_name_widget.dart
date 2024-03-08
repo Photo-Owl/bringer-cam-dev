@@ -3,10 +3,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'give_name_model.dart';
 export 'give_name_model.dart';
 
@@ -46,16 +43,14 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 60.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 60.0, 0.0, 60.0),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,
         height: 400.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(0.0),
             bottomRight: Radius.circular(0.0),
             topLeft: Radius.circular(16.0),
@@ -63,13 +58,13 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(4.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 8.0, 20.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 8.0, 20.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -88,7 +83,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 16.0, 0.0),
                                 child: Text(
                                   'One Last step',
@@ -108,7 +103,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 8.0, 0.0, 0.0),
                                 child: Text(
                                   'How should we call you?',
@@ -124,14 +119,14 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 5.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 8.0, 0.0),
                                   child: TextFormField(
                                     controller: _model.textController,
@@ -203,7 +198,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 24.0, 0.0, 44.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -213,8 +208,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'GIVE_NAME_COMP_SAVE_CHANGES_BTN_ON_TAP');
-                                  if (_model.textController.text != null &&
-                                      _model.textController.text != '') {
+                                  if (_model.textController.text != '') {
                                     logFirebaseEvent('Button_backend_call');
 
                                     await currentUserReference!
@@ -240,7 +234,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                                         .primaryText,
                                               ),
                                         ),
-                                        duration: Duration(milliseconds: 4000),
+                                        duration: const Duration(milliseconds: 4000),
                                         backgroundColor:
                                             FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
@@ -253,11 +247,11 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                 options: FFButtonOptions(
                                   width: 150.0,
                                   height: 56.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: Color(0xFF007EFC),
+                                  color: const Color(0xFF007EFC),
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
@@ -267,7 +261,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                         fontWeight: FontWeight.normal,
                                       ),
                                   elevation: 2.0,
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),

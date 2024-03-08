@@ -2,8 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'payment_failed_model.dart';
 export 'payment_failed_model.dart';
 
@@ -40,12 +38,10 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
@@ -62,7 +58,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
               color: FlutterFlowTheme.of(context).primaryBackground,
             ),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 10.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 10.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
@@ -75,7 +71,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
             child: Text(
               'Payment Failed ',
               textAlign: TextAlign.center,
@@ -88,7 +84,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 20.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 20.0),
             child: Material(
               color: Colors.transparent,
               elevation: 3.0,
@@ -98,7 +94,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
               child: Container(
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       blurRadius: 4.0,
                       color: Color(0x33000000),
@@ -112,7 +108,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
                   children: [
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
                       child: Text(
                         'Don\'t worry your money is safe. ',
                         textAlign: TextAlign.center,
@@ -125,7 +121,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 5.0, 20.0, 20.0),
+                          const EdgeInsetsDirectional.fromSTEB(20.0, 5.0, 20.0, 20.0),
                       child: Text(
                         'If your money was debited, we will refund it to you in 5-6 working days !',
                         textAlign: TextAlign.center,
@@ -142,7 +138,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
             child: FFButtonWidget(
               onPressed: () async {
                 logFirebaseEvent('PAYMENT_FAILED_GO_BACK_TO_HOME_BTN_ON_TA');
@@ -153,15 +149,15 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
               text: 'Go back to Home',
               options: FFButtonOptions(
                 height: 40.0,
-                padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: FlutterFlowTheme.of(context).primary,
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Inter',
                       color: Colors.white,
                     ),
                 elevation: 3.0,
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: Colors.transparent,
                   width: 1.0,
                 ),

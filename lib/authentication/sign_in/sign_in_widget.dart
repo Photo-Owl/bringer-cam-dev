@@ -54,8 +54,8 @@ class _SignInWidgetState extends State<SignInWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 13.999999999999986),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 13.999999999999986),
+          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -86,7 +86,7 @@ class _SignInWidgetState extends State<SignInWidget>
           builder: (context) {
             return Padding(
               padding: MediaQuery.viewInsetsOf(context),
-              child: UpdateRequiredWidget(),
+              child: const UpdateRequiredWidget(),
             );
           },
         ).then((value) => safeSetState(() {}));
@@ -102,7 +102,7 @@ class _SignInWidgetState extends State<SignInWidget>
             phoneNumberVal.isEmpty ||
             !phoneNumberVal.startsWith('+')) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content:
                   Text('Phone Number is required and has to start with +.'),
             ),
@@ -152,8 +152,6 @@ class _SignInWidgetState extends State<SignInWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Title(
         title: 'SignIn',
         color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
@@ -176,7 +174,7 @@ class _SignInWidgetState extends State<SignInWidget>
                     child: Image.asset(
                       'assets/images/Image.png',
                       fit: BoxFit.fitHeight,
-                      alignment: Alignment(0.0, -1.0),
+                      alignment: const Alignment(0.0, -1.0),
                     ),
                   ),
                 ),
@@ -200,7 +198,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                 builder: (context) {
                                   if (widget.qr == null || widget.qr == '') {
                                     return Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 10.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -209,7 +207,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                         children: [
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     20.0, 25.0, 25.0, 0.0),
                                             child: Text(
                                               'Let\'s get you\nRegistered',
@@ -229,7 +227,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                     );
                                   } else {
                                     return Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           20.0, 0.0, 20.0, 0.0),
                                       child: FutureBuilder<List<QrCodesRecord>>(
                                         future: queryQrCodesRecordOnce(
@@ -243,7 +241,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                         builder: (context, snapshot) {
                                           // Customize what your widget looks like when it's loading.
                                           if (!snapshot.hasData) {
-                                            return Center(
+                                            return const Center(
                                               child: SizedBox(
                                                 width: 50.0,
                                                 height: 50.0,
@@ -299,7 +297,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                           '',
                                                   child: Align(
                                                     alignment:
-                                                        AlignmentDirectional(
+                                                        const AlignmentDirectional(
                                                             -1.0, 0.0),
                                                     child: ClipRRect(
                                                       borderRadius:
@@ -315,7 +313,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 15.0, 0.0, 10.0),
                                                 child: Row(
@@ -327,18 +325,18 @@ class _SignInWidgetState extends State<SignInWidget>
                                                       height: 36.0,
                                                       clipBehavior:
                                                           Clip.antiAlias,
-                                                      decoration: BoxDecoration(
+                                                      decoration: const BoxDecoration(
                                                         shape: BoxShape.circle,
                                                       ),
                                                       child: Image.network(
-                                                        columnQrCodesRecord!
+                                                        columnQrCodesRecord
                                                             .logoUrl,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   10.0,
                                                                   0.0,
@@ -355,7 +353,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                             'uid',
                                                             isEqualTo:
                                                                 columnQrCodesRecord
-                                                                    ?.uid,
+                                                                    .uid,
                                                           ),
                                                           singleRecord: true,
                                                         ),
@@ -364,7 +362,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                           // Customize what your widget looks like when it's loading.
                                                           if (!snapshot
                                                               .hasData) {
-                                                            return Center(
+                                                            return const Center(
                                                               child: SizedBox(
                                                                 width: 50.0,
                                                                 height: 50.0,
@@ -413,7 +411,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                         },
                                                       ),
                                                     ),
-                                                    Padding(
+                                                    const Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
@@ -440,9 +438,9 @@ class _SignInWidgetState extends State<SignInWidget>
                                 },
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1.0, 0.0),
+                                alignment: const AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 20.0, 40.0, 0.0),
                                   child: Text(
                                     widget.qr != null && widget.qr != ''
@@ -452,7 +450,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                         .labelSmall
                                         .override(
                                           fontFamily: 'Inter',
-                                          color: Color(0xFF423F34),
+                                          color: const Color(0xFF423F34),
                                           fontSize: 13.0,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -463,12 +461,12 @@ class _SignInWidgetState extends State<SignInWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         20.0, 20.0, 20.0, 0.0),
                                     child: Container(
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFEEEEEA),
+                                        color: const Color(0xFFEEEEEA),
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
@@ -479,7 +477,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                         children: [
                                           Expanded(
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       16.0, 0.0, 0.0, 0.0),
                                               child: TextFormField(
@@ -537,7 +535,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                               autovalidateMode:
                                                   AutovalidateMode.disabled,
                                               child: Padding(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 0.0, 8.0, 0.0),
                                                 child: TextFormField(
@@ -558,8 +556,8 @@ class _SignInWidgetState extends State<SignInWidget>
                                                         .labelLarge
                                                         .override(
                                                           fontFamily: 'Inter',
-                                                          color: Color(
-                                                              0xBACD8C9FAD),
+                                                          color: const Color(
+                                                              0xbacd8c9fad),
                                                         ),
                                                     enabledBorder:
                                                         InputBorder.none,
@@ -591,18 +589,18 @@ class _SignInWidgetState extends State<SignInWidget>
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         20.0, 20.0, 20.0, 0.0),
                                     child: Container(
                                       width: MediaQuery.sizeOf(context).width *
                                           1.0,
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFE0EFFF),
+                                        color: const Color(0xFFE0EFFF),
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsets.all(15.0),
+                                        padding: const EdgeInsets.all(15.0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -615,14 +613,14 @@ class _SignInWidgetState extends State<SignInWidget>
                                                 'assets/images/Whatsapp_logo.png',
                                                 width: 38.0,
                                                 fit: BoxFit.contain,
-                                                alignment: Alignment(0.0, 0.0),
+                                                alignment: const Alignment(0.0, 0.0),
                                               ),
                                             ),
                                             Container(
                                               width: MediaQuery.sizeOf(context)
                                                       .width *
                                                   0.6,
-                                              decoration: BoxDecoration(),
+                                              decoration: const BoxDecoration(),
                                               child: Text(
                                                 'Please make sure that its your Whatsapp number',
                                                 style:
@@ -634,7 +632,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                         ),
                                               ),
                                             ),
-                                          ].divide(SizedBox(width: 12.0)),
+                                          ].divide(const SizedBox(width: 12.0)),
                                         ),
                                       ),
                                     ),
@@ -645,13 +643,13 @@ class _SignInWidgetState extends State<SignInWidget>
                                       widget.phoneNumber != '') &&
                                   (widget.name != null && widget.name != '')))
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       20.0, 15.0, 20.0, 0.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
                                       logFirebaseEvent(
                                           'SIGN_IN_PAGE_Button-Login_ON_TAP');
-                                      var _shouldSetState = false;
+                                      var shouldSetState = false;
                                       logFirebaseEvent(
                                           'Button-Login_google_analytics_event');
                                       logFirebaseEvent(
@@ -674,8 +672,8 @@ class _SignInWidgetState extends State<SignInWidget>
                                               '${_model.textController1.text}${_model.textController2.text}',
                                         ),
                                       );
-                                      _shouldSetState = true;
-                                      if (_model.userDocument!.length <= 0) {
+                                      shouldSetState = true;
+                                      if (_model.userDocument!.isEmpty) {
                                         logFirebaseEvent(
                                             'Button-Login_navigate_to');
 
@@ -688,7 +686,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                             ),
                                           }.withoutNulls,
                                           extra: <String, dynamic>{
-                                            kTransitionInfoKey: TransitionInfo(
+                                            kTransitionInfoKey: const TransitionInfo(
                                               hasTransition: true,
                                               transitionType:
                                                   PageTransitionType.fade,
@@ -696,12 +694,12 @@ class _SignInWidgetState extends State<SignInWidget>
                                           },
                                         );
 
-                                        if (_shouldSetState) setState(() {});
+                                        if (shouldSetState) setState(() {});
                                         return;
                                       } else if (_model.userDocument!.first
                                           .hasIsGoogleLogin()) {
                                         if (_model.userDocument?.first
-                                                ?.isGoogleLogin ==
+                                                .isGoogleLogin ==
                                             true) {
                                           logFirebaseEvent(
                                               'Button-Login_navigate_to');
@@ -715,13 +713,13 @@ class _SignInWidgetState extends State<SignInWidget>
                                               ),
                                               'email': serializeParam(
                                                 _model
-                                                    .userDocument?.first?.email,
+                                                    .userDocument?.first.email,
                                                 ParamType.String,
                                               ),
                                             }.withoutNulls,
                                             extra: <String, dynamic>{
                                               kTransitionInfoKey:
-                                                  TransitionInfo(
+                                                  const TransitionInfo(
                                                 hasTransition: true,
                                                 transitionType:
                                                     PageTransitionType.fade,
@@ -729,7 +727,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                             },
                                           );
 
-                                          if (_shouldSetState) setState(() {});
+                                          if (shouldSetState) setState(() {});
                                           return;
                                         }
                                       }
@@ -737,12 +735,11 @@ class _SignInWidgetState extends State<SignInWidget>
                                       logFirebaseEvent('Button-Login_auth');
                                       final phoneNumberVal =
                                           '${_model.textController1.text}${_model.textController2.text}';
-                                      if (phoneNumberVal == null ||
-                                          phoneNumberVal.isEmpty ||
+                                      if (phoneNumberVal.isEmpty ||
                                           !phoneNumberVal.startsWith('+')) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          SnackBar(
+                                          const SnackBar(
                                             content: Text(
                                                 'Phone Number is required and has to start with +.'),
                                           ),
@@ -767,17 +764,17 @@ class _SignInWidgetState extends State<SignInWidget>
                                         },
                                       );
 
-                                      if (_shouldSetState) setState(() {});
+                                      if (shouldSetState) setState(() {});
                                     },
                                     text: 'Continue',
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 56.0,
-                                      padding: EdgeInsets.all(0.0),
+                                      padding: const EdgeInsets.all(0.0),
                                       iconPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
+                                          const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
-                                      color: Color(0xFF007EFC),
+                                      color: const Color(0xFF007EFC),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
@@ -785,7 +782,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBackground,
                                           ),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.transparent,
                                         width: 1.0,
                                       ),
@@ -797,7 +794,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                       widget.phoneNumber != '') &&
                                   (widget.name != null && widget.name != ''))
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 15.0, 0.0, 0.0),
                                   child: Text(
                                     'Signing you in',
@@ -811,7 +808,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                   ),
                                 ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     20.0, 25.0, 20.0, 35.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
@@ -842,7 +839,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 20.0, 0.0, 0.0),
                                 child: Container(
                                   width: MediaQuery.sizeOf(context).width * 1.0,
@@ -868,7 +865,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             25.0, 0.0, 25.0, 0.0),
                                         child: ClipRRect(
                                           borderRadius:
@@ -893,7 +890,7 @@ class _SignInWidgetState extends State<SignInWidget>
                             animationsMap['columnOnPageLoadAnimation']!);
                       } else {
                         return Padding(
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -910,7 +907,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.
                                   if (!snapshot.hasData) {
-                                    return Center(
+                                    return const Center(
                                       child: SizedBox(
                                         width: 50.0,
                                         height: 50.0,
@@ -966,11 +963,11 @@ class _SignInWidgetState extends State<SignInWidget>
                                 },
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 15.0, 0.0, 5.0),
                                 child: AuthUserStreamWidget(
                                   builder: (context) => Text(
-                                    'Hello ${currentUserDisplayName},',
+                                    'Hello $currentUserDisplayName,',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -991,7 +988,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                     ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 15.0, 0.0, 0.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
@@ -1005,11 +1002,11 @@ class _SignInWidgetState extends State<SignInWidget>
                                   options: FFButtonOptions(
                                     width: double.infinity,
                                     height: 56.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         24.0, 0.0, 24.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
-                                    color: Color(0xFF007EFC),
+                                    color: const Color(0xFF007EFC),
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
@@ -1017,7 +1014,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                           color: Colors.white,
                                         ),
                                     elevation: 3.0,
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       color: Colors.transparent,
                                       width: 1.0,
                                     ),

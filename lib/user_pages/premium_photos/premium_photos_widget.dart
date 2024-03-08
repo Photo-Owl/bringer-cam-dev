@@ -8,17 +8,14 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:octo_image/octo_image.dart';
-import 'package:provider/provider.dart';
 import 'premium_photos_model.dart';
 export 'premium_photos_model.dart';
 
@@ -43,8 +40,8 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 0.ms,
-          begin: Offset(0.0, 0.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 0.0),
+          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -80,7 +77,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: UpdateRequiredWidget(),
+                child: const UpdateRequiredWidget(),
               ),
             );
           },
@@ -89,7 +86,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
         return;
       }
 
-      if (currentUserDisplayName == null || currentUserDisplayName == '') {
+      if (currentUserDisplayName == '') {
         logFirebaseEvent('PremiumPhotos_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
@@ -103,7 +100,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: GiveNameWidget(),
+                child: const GiveNameWidget(),
               ),
             );
           },
@@ -141,8 +138,6 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return StreamBuilder<List<ConstantsRecord>>(
       stream: queryConstantsRecord(
         singleRecord: true,
@@ -152,7 +147,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            body: Center(
+            body: const Center(
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
@@ -195,7 +190,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                     child: wrapWithModel(
                       model: _model.sidebarModel,
                       updateCallback: () => setState(() {}),
-                      child: SidebarWidget(
+                      child: const SidebarWidget(
                         index: 1,
                       ),
                     ),
@@ -210,7 +205,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                     children: [
                       Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -238,7 +233,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                       ),
                     ],
                   ),
-                  actions: [],
+                  actions: const [],
                   centerTitle: false,
                   elevation: 0.0,
                 ),
@@ -252,14 +247,14 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.all(5.0),
                           child: StreamBuilder<UsersRecord>(
                             stream:
                                 UsersRecord.getDocument(currentUserReference!),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
                               if (!snapshot.hasData) {
-                                return Center(
+                                return const Center(
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
@@ -284,7 +279,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(15.0),
+                                  padding: const EdgeInsets.all(15.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -314,7 +309,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                                 .secondaryBackground,
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: StreamBuilder<
                                 List<PremiumPhotoPurchasesRecord>>(
                               stream: queryPremiumPhotoPurchasesRecord(
@@ -334,7 +329,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
                                 if (!snapshot.hasData) {
-                                  return Center(
+                                  return const Center(
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
@@ -352,16 +347,16 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                                     snapshot.data!;
                                 if (gridViewPremiumPhotoPurchasesRecordList
                                     .isEmpty) {
-                                  return Container(
+                                  return SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
-                                    child: NoPhotosWidget(),
+                                    child: const NoPhotosWidget(),
                                   );
                                 }
                                 return GridView.builder(
                                   padding: EdgeInsets.zero,
                                   gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 3,
                                     crossAxisSpacing: 10.0,
                                     mainAxisSpacing: 10.0,
@@ -377,7 +372,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                                             gridViewIndex];
                                     return Align(
                                       alignment:
-                                          AlignmentDirectional(-1.0, -1.0),
+                                          const AlignmentDirectional(-1.0, -1.0),
                                       child: Stack(
                                         children: [
                                           StreamBuilder<List<UploadsRecord>>(
@@ -394,7 +389,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
-                                                return Center(
+                                                return const Center(
                                                   child: SizedBox(
                                                     width: 50.0,
                                                     height: 50.0,
@@ -436,22 +431,23 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                                                             .imageUrl),
                                                 transitionOnUserGestures: true,
                                                 child: OctoImage(
-                                                  placeholderBuilder:
-                                                      OctoPlaceholder.blurHash(
-                                                    'BEN]Rv-WPn}SQ[VF',
+                                                  placeholderBuilder: (_) =>
+                                                      const SizedBox.expand(
+                                                    child: Image(
+                                                      image: BlurHashImage(
+                                                          'BEN]Rv-WPn}SQ[VF'),
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                   image:
                                                       CachedNetworkImageProvider(
                                                     functions.convertToImagePath(
                                                         imageUploadsRecord
-                                                                        ?.resizedImage250 !=
-                                                                    null &&
-                                                                imageUploadsRecord
-                                                                        ?.resizedImage250 !=
+                                                                        .resizedImage250 !=
                                                                     ''
-                                                            ? imageUploadsRecord!
+                                                            ? imageUploadsRecord
                                                                 .resizedImage250
-                                                            : imageUploadsRecord!
+                                                            : imageUploadsRecord
                                                                 .imageUrl),
                                                   ),
                                                   width:
