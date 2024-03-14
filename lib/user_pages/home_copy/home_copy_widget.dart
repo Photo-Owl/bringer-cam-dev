@@ -435,7 +435,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                     padding: const EdgeInsets.all(5.0),
                                     child: Material(
                                       color: Colors.transparent,
-                                      elevation: 2.0,
+                                      elevation: 3.0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(8.0),
@@ -447,8 +447,9 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           border: Border.all(
-                                            color: Colors.transparent,
-                                            width: 1.0,
+                                            color: FlutterFlowTheme.of(context)
+                                                .accent3,
+                                            width: 0.0,
                                           ),
                                         ),
                                         child: Padding(

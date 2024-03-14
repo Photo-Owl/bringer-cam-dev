@@ -322,75 +322,101 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                         gridViewIndex];
                                 return Padding(
                                   padding: const EdgeInsets.all(10.0),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
-                                        child: SizedBox(
-                                          width: 100.0,
-                                          height: 100.0,
-                                          child: custom_widgets.ShowLocalImage(
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      logFirebaseEvent(
+                                          'UPLOADS_PAGE_Stack_86h1x78m_ON_TAP');
+                                      logFirebaseEvent('Stack_navigate_to');
+
+                                      context.pushNamed(
+                                        'LocalImage',
+                                        queryParameters: {
+                                          'path': serializeParam(
+                                            gridViewReadImagesToUploadRow.path,
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(0.0, 0.0),
+                                          child: SizedBox(
                                             width: 100.0,
                                             height: 100.0,
-                                            path: gridViewReadImagesToUploadRow
-                                                .path,
+                                            child:
+                                                custom_widgets.ShowLocalImage(
+                                              width: 100.0,
+                                              height: 100.0,
+                                              path:
+                                                  gridViewReadImagesToUploadRow
+                                                      .path,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        decoration: const BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color(0x99101213),
-                                              Colors.transparent
-                                            ],
-                                            stops: [0.0, 0.4],
-                                            begin:
-                                                AlignmentDirectional(1.0, 1.0),
-                                            end: AlignmentDirectional(
-                                                -1.0, -1.0),
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color(0x99101213),
+                                                Colors.transparent
+                                              ],
+                                              stops: [0.0, 0.4],
+                                              begin: AlignmentDirectional(
+                                                  1.0, 1.0),
+                                              end: AlignmentDirectional(
+                                                  -1.0, -1.0),
+                                            ),
+                                          ),
+                                          child: Align(
+                                            alignment:
+                                                const AlignmentDirectional(1.0, 1.0),
+                                            child: Builder(
+                                              builder: (context) {
+                                                if (gridViewReadImagesToUploadRow
+                                                        .isUploading ??
+                                                    false) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                5.0, 5.0),
+                                                    child: Icon(
+                                                      Icons
+                                                          .cloud_upload_outlined,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      size: 14.0,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                5.0, 5.0),
+                                                    child: FaIcon(
+                                                      FontAwesomeIcons.clock,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                      size: 14.0,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            ),
                                           ),
                                         ),
-                                        child: Align(
-                                          alignment:
-                                              const AlignmentDirectional(1.0, 1.0),
-                                          child: Builder(
-                                            builder: (context) {
-                                              if (gridViewReadImagesToUploadRow
-                                                      .isUploading ??
-                                                  false) {
-                                                return Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 5.0, 5.0),
-                                                  child: Icon(
-                                                    Icons.cloud_upload_outlined,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    size: 14.0,
-                                                  ),
-                                                );
-                                              } else {
-                                                return Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 5.0, 5.0),
-                                                  child: FaIcon(
-                                                    FontAwesomeIcons.clock,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    size: 14.0,
-                                                  ),
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
@@ -398,7 +424,7 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                           },
                         ),
                         Text(
-                          'Uploaded',
+                          'Upload Complete',
                           style: GoogleFonts.getFont(
                             'Figtree',
                             fontWeight: FontWeight.w500,
@@ -445,54 +471,76 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                         gridViewIndex];
                                 return Padding(
                                   padding: const EdgeInsets.all(10.0),
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
-                                        child: SizedBox(
-                                          width: 100.0,
-                                          height: 100.0,
-                                          child: custom_widgets.ShowLocalImage(
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      logFirebaseEvent(
+                                          'UPLOADS_PAGE_Stack_lupdyahj_ON_TAP');
+                                      logFirebaseEvent('Stack_navigate_to');
+
+                                      context.pushNamed(
+                                        'LocalImage',
+                                        queryParameters: {
+                                          'path': serializeParam(
+                                            gridViewReadUploadedImagesRow.path,
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(0.0, 0.0),
+                                          child: SizedBox(
                                             width: 100.0,
                                             height: 100.0,
-                                            path: gridViewReadUploadedImagesRow
-                                                .path,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: const BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color(0x99101213),
-                                              Colors.transparent
-                                            ],
-                                            stops: [0.0, 0.4],
-                                            begin:
-                                                AlignmentDirectional(1.0, 1.0),
-                                            end: AlignmentDirectional(
-                                                -1.0, -1.0),
-                                          ),
-                                        ),
-                                        child: Align(
-                                          alignment:
-                                              const AlignmentDirectional(1.0, 1.0),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 5.0, 5.0),
-                                            child: FaIcon(
-                                              FontAwesomeIcons.check,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              size: 14.0,
+                                            child:
+                                                custom_widgets.ShowLocalImage(
+                                              width: 100.0,
+                                              height: 100.0,
+                                              path:
+                                                  gridViewReadUploadedImagesRow
+                                                      .path,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                Color(0x99101213),
+                                                Colors.transparent
+                                              ],
+                                              stops: [0.0, 0.4],
+                                              begin: AlignmentDirectional(
+                                                  1.0, 1.0),
+                                              end: AlignmentDirectional(
+                                                  -1.0, -1.0),
+                                            ),
+                                          ),
+                                          child: Align(
+                                            alignment:
+                                                const AlignmentDirectional(1.0, 1.0),
+                                            child: Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                              child: FaIcon(
+                                                FontAwesomeIcons.check,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                size: 14.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
