@@ -10,12 +10,16 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:path/path.dart' show basename;
+import 'package:media_store_plus/media_store_plus.dart';
 
-Future autoUploadImages() async {
-  final userId = FirebaseAuth.instance.currentUser?.uid;
-  if (userId != null) {
-    unawaited(uploadImagesFromSqlite(userId, () async {}));
-  }
+Future deleteImage(String path) async {
+  MediaStore.appFolder = 'Bringer';
+  final mediaStore = MediaStore();
+  await SQLiteManager.instance.deleteImage(path: path);
+  await mediaStore.deleteFile(
+    fileName: basename(path),
+    dirType: DirType.photo,
+    dirName: DirName.pictures,
+  );
 }

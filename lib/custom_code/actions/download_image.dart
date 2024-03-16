@@ -10,16 +10,23 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:file_saver/file_saver.dart';
+import 'package:flutter/foundation.dart';
 
-Future<String> downloadImage(
+import 'package:android_download_manager/android_download_manager.dart';
+
+Future<void> downloadImage(
   String url,
   String key,
 ) async {
-  await FileSaver.instance
-      .saveFile(name: key + ".jpeg", link: LinkDetails(link: url));
-  return url;
+  if (defaultTargetPlatform != TargetPlatform.android) {
+    await FileSaver.instance.saveFile(name: key, link: LinkDetails(link: url));
+    return;
+  }
+
+  AndroidDownloadManager.enqueue(
+    downloadUrl: url,
+    downloadPath: '/sdcard/Pictures/Bringer/',
+    fileName: key,
+  );
 }

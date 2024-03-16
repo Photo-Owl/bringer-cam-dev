@@ -233,10 +233,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'LocalImage',
-          path: '/ImageexpandedCopyCopy',
+          path: '/LocalImage',
           requireAuth: true,
           builder: (context, params) => LocalImageWidget(
             path: params.getParam('path', ParamType.String),
+            isUploaded: params.getParam('isUploaded', ParamType.bool),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

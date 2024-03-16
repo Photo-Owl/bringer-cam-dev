@@ -713,7 +713,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              'We have found photos of you take a look at them now!',
+                                                              'Take photos and share them with all your friends instantly!',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
@@ -746,12 +746,12 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                 onPressed:
                                                                     () async {
                                                                   logFirebaseEvent(
-                                                                      'REDIRECTION_COPY_SEE_MY_PHOTOS_BTN_ON_TA');
+                                                                      'REDIRECTION_COPY_TAKE_PHOTOS_BTN_ON_TAP');
                                                                   logFirebaseEvent(
                                                                       'Button_navigate_to');
 
                                                                   context.goNamed(
-                                                                      'HomeCopy');
+                                                                      'camera');
 
                                                                   logFirebaseEvent(
                                                                       'Button_backend_call');
@@ -767,7 +767,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                   });
                                                                 },
                                                                 text:
-                                                                    'See My Photos',
+                                                                    'Take photos',
                                                                 options:
                                                                     FFButtonOptions(
                                                                   width: double

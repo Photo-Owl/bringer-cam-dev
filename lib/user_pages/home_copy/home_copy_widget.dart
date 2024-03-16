@@ -406,8 +406,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                 logFirebaseEvent('ListView_backend_call');
                                 unawaited(
                                   () async {
-                                    _model.apiResultruf =
-                                        await SearchFacesUsingTIFCall.call(
+                                    await SearchFacesUsingTIFCall.call(
                                       uid: currentUserUid,
                                       sourceKey: valueOrDefault(
                                           currentUserDocument?.refrencePhotoKey,
@@ -473,16 +472,18 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
-                                                return const Center(
+                                                return Center(
                                                   child: SizedBox(
-                                                    width: 50.0,
-                                                    height: 50.0,
+                                                    width: 40.0,
+                                                    height: 40.0,
                                                     child:
                                                         CircularProgressIndicator(
                                                       valueColor:
                                                           AlwaysStoppedAnimation<
                                                               Color>(
-                                                        Color(0xFF5282E5),
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
                                                       ),
                                                     ),
                                                   ),

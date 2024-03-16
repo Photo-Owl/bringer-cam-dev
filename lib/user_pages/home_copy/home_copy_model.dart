@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/home_page_tab_bar/home_page_tab_bar_widget.dart';
 import '/components/sidebar/sidebar_widget.dart';
@@ -19,8 +18,6 @@ class HomeCopyModel extends FlutterFlowModel<HomeCopyWidget> {
   late SidebarModel sidebarModel;
   // Model for HomePageTabBar component.
   late HomePageTabBarModel homePageTabBarModel;
-  // Stores action output result for [Backend Call - API (searchFacesUsingTIF)] action in ListView widget.
-  ApiCallResponse? apiResultruf;
 
   /// Query cache managers for this widget.
 

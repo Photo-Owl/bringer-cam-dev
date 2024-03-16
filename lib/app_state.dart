@@ -25,4 +25,10 @@ class FFAppState extends ChangeNotifier {
   set websitebuildnumber(int value) {
     _websitebuildnumber = value;
   }
+
+  bool _isUploading = false;
+  bool get isUploading => _isUploading;
+  set isUploading(bool value) {
+    _isUploading = value;
+  }
 }

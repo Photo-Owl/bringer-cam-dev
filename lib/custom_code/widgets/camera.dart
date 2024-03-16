@@ -197,6 +197,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         ownerId: currentUserUid,
         unixTimestamp: unixTimestamp,
       );
+      await autoUploadImages();
       return;
     } catch (e) {
       if (e is Error) {

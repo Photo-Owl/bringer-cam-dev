@@ -15,3 +15,16 @@ INSERT INTO Images ("path", "owner", "unix_timestamp", "is_uploaded", "is_upload
 }
 
 /// END INSERTIMAGE
+
+/// BEGIN DELETEIMAGE
+Future performDeleteImage(
+  Database database, {
+  String? path,
+}) {
+  final query = '''
+DELETE FROM Images WHERE "path" = '$path';
+''';
+  return database.rawQuery(query);
+}
+
+/// END DELETEIMAGE

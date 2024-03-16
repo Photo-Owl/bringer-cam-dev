@@ -69,5 +69,13 @@ class SQLiteManager {
         unixTimestamp: unixTimestamp,
       );
 
+  Future deleteImage({
+    String? path,
+  }) =>
+      performDeleteImage(
+        _database,
+        path: path,
+      );
+
   /// END UPDATE QUERY CALLS
 }
