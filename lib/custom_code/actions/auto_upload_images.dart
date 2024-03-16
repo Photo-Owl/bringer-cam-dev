@@ -16,6 +16,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 Future autoUploadImages() async {
   final userId = FirebaseAuth.instance.currentUser?.uid;
   if (userId != null) {
-    unawaited(uploadImagesFromSqlite(userId, () async {}));
+    unawaited(uploadImagesFromSqlite(userId, () async {}, () async {}));
   }
 }
