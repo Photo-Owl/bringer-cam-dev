@@ -238,6 +238,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LocalImageWidget(
             path: params.getParam('path', ParamType.String),
             isUploaded: params.getParam('isUploaded', ParamType.bool),
+            index: params.getParam('index', ParamType.int),
           ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

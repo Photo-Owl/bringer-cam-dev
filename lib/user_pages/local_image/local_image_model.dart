@@ -12,14 +12,14 @@ class LocalImageModel extends FlutterFlowModel<LocalImageWidget> {
 
   final unfocusNode = FocusNode();
   // State field(s) for uploaded widget.
-  CarouselController? uploadedController1;
+  CarouselController? uploadedController;
 
-  int uploadedCurrentIndex1 = 1;
+  int uploadedCurrentIndex = 1;
 
-  // State field(s) for uploaded widget.
-  CarouselController? uploadedController2;
+  // State field(s) for notuploaded widget.
+  CarouselController? notuploadedController;
 
-  int uploadedCurrentIndex2 = 1;
+  int notuploadedCurrentIndex = 1;
 
   /// Initialization and disposal methods.
 

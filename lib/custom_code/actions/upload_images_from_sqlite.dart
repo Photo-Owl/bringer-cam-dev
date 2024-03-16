@@ -87,6 +87,7 @@ Future uploadImagesFromSqlite(
           'album_name': timestamp.toIso8601String(),
           'created_at': timestamp,
           'owner_id': userId,
+          'id': albumDoc.id,
         });
 
         albumId = albumDoc.id;

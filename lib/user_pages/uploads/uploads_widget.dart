@@ -384,6 +384,10 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                                 false,
                                                 ParamType.bool,
                                               ),
+                                              'index': serializeParam(
+                                                gridViewIndex,
+                                                ParamType.int,
+                                              ),
                                             }.withoutNulls,
                                           );
                                         },
@@ -545,6 +549,10 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                                             'isUploaded': serializeParam(
                                               true,
                                               ParamType.bool,
+                                            ),
+                                            'index': serializeParam(
+                                              gridViewIndex,
+                                              ParamType.int,
                                             ),
                                           }.withoutNulls,
                                         );

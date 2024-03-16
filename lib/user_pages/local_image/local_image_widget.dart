@@ -17,10 +17,12 @@ class LocalImageWidget extends StatefulWidget {
     super.key,
     required this.path,
     required this.isUploaded,
+    required this.index,
   });
 
   final String? path;
   final bool? isUploaded;
+  final int? index;
 
   @override
   State<LocalImageWidget> createState() => _LocalImageWidgetState();
@@ -180,7 +182,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                               );
                                               logFirebaseEvent(
                                                   'IconButton_carousel');
-                                              await _model.uploadedController1
+                                              await _model.uploadedController
                                                   ?.previousPage(
                                                 duration:
                                                     const Duration(milliseconds: 300),
@@ -207,10 +209,14 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                 ],
                               );
                             },
-                            carouselController: _model.uploadedController1 ??=
+                            carouselController: _model.uploadedController ??=
                                 CarouselController(),
                             options: CarouselOptions(
-                              initialPage: min(1,
+                              initialPage: min(
+                                  valueOrDefault<int>(
+                                    widget.index,
+                                    0,
+                                  ),
                                   uploadedReadUploadedImagesRowList.length - 1),
                               viewportFraction: 1.0,
                               disableCenter: true,
@@ -220,7 +226,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                               scrollDirection: Axis.horizontal,
                               autoPlay: false,
                               onPageChanged: (index, _) =>
-                                  _model.uploadedCurrentIndex1 = index,
+                                  _model.uploadedCurrentIndex = index,
                             ),
                           ),
                         );
@@ -246,17 +252,18 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                             ),
                           );
                         }
-                        final uploadedReadImagesToUploadRowList =
+                        final notuploadedReadImagesToUploadRowList =
                             snapshot.data!;
                         return SizedBox(
                           width: double.infinity,
                           height: double.infinity,
                           child: CarouselSlider.builder(
-                            itemCount: uploadedReadImagesToUploadRowList.length,
-                            itemBuilder: (context, uploadedIndex, _) {
-                              final uploadedReadImagesToUploadRow =
-                                  uploadedReadImagesToUploadRowList[
-                                      uploadedIndex];
+                            itemCount:
+                                notuploadedReadImagesToUploadRowList.length,
+                            itemBuilder: (context, notuploadedIndex, _) {
+                              final notuploadedReadImagesToUploadRow =
+                                  notuploadedReadImagesToUploadRowList[
+                                      notuploadedIndex];
                               return Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -309,12 +316,12 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                               logFirebaseEvent(
                                                   'IconButton_custom_action');
                                               await actions.deleteImage(
-                                                uploadedReadImagesToUploadRow
+                                                notuploadedReadImagesToUploadRow
                                                     .path,
                                               );
                                               logFirebaseEvent(
                                                   'IconButton_carousel');
-                                              await _model.uploadedController2
+                                              await _model.notuploadedController
                                                   ?.previousPage(
                                                 duration:
                                                     const Duration(milliseconds: 300),
@@ -333,19 +340,24 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                       child: custom_widgets.ShowLocalImage(
                                         width: double.infinity,
                                         height: double.infinity,
-                                        path:
-                                            uploadedReadImagesToUploadRow.path,
+                                        path: notuploadedReadImagesToUploadRow
+                                            .path,
                                       ),
                                     ),
                                   ),
                                 ],
                               );
                             },
-                            carouselController: _model.uploadedController2 ??=
+                            carouselController: _model.notuploadedController ??=
                                 CarouselController(),
                             options: CarouselOptions(
-                              initialPage: min(1,
-                                  uploadedReadImagesToUploadRowList.length - 1),
+                              initialPage: min(
+                                  valueOrDefault<int>(
+                                    widget.index,
+                                    0,
+                                  ),
+                                  notuploadedReadImagesToUploadRowList.length -
+                                      1),
                               viewportFraction: 1.0,
                               disableCenter: true,
                               enlargeCenterPage: true,
@@ -354,7 +366,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                               scrollDirection: Axis.horizontal,
                               autoPlay: false,
                               onPageChanged: (index, _) =>
-                                  _model.uploadedCurrentIndex2 = index,
+                                  _model.notuploadedCurrentIndex = index,
                             ),
                           ),
                         );
