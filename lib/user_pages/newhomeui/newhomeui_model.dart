@@ -1,21 +1,14 @@
 import '/components/sidebar/sidebar_widget.dart';
-import '/components/uploads_page_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'uploads_widget.dart' show UploadsWidget;
+import 'newhomeui_widget.dart' show NewhomeuiWidget;
 import 'package:flutter/material.dart';
 
-class UploadsModel extends FlutterFlowModel<UploadsWidget> {
-  ///  Local state fields for this page.
-
-  int? uploadCount = 0;
-
+class NewhomeuiModel extends FlutterFlowModel<NewhomeuiWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // Stores action output result for [Custom Action - checkVersion] action in Uploads widget.
+  // Stores action output result for [Custom Action - checkVersion] action in newhomeui widget.
   bool? versionCheckResult;
-  // Model for uploadsPage component.
-  late UploadsPageModel uploadsPageModel;
   // Model for sidebar component.
   late SidebarModel sidebarModel;
 
@@ -23,14 +16,12 @@ class UploadsModel extends FlutterFlowModel<UploadsWidget> {
 
   @override
   void initState(BuildContext context) {
-    uploadsPageModel = createModel(context, () => UploadsPageModel());
     sidebarModel = createModel(context, () => SidebarModel());
   }
 
   @override
   void dispose() {
     unfocusNode.dispose();
-    uploadsPageModel.dispose();
     sidebarModel.dispose();
   }
 

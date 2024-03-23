@@ -240,6 +240,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             isUploaded: params.getParam('isUploaded', ParamType.bool),
             index: params.getParam('index', ParamType.int),
           ),
+        ),
+        FFRoute(
+          name: 'newhomeui',
+          path: '/newhomeui',
+          builder: (context, params) => const NewhomeuiWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

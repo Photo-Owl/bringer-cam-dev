@@ -9,3 +9,4 @@ export 'upload_images_from_sqlite.dart' show uploadImagesFromSqlite;
 export 'initialize_notifs.dart' show initializeNotifs;
 export 'auto_upload_images.dart' show autoUploadImages;
 export 'delete_image.dart' show deleteImage;
+export 'uploader.dart' show uploader;

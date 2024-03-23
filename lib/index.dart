@@ -31,3 +31,4 @@ export '/authentication/redirection_copy/redirection_copy_widget.dart'
 export '/camera/camera_widget.dart' show CameraWidget;
 export '/user_pages/uploads/uploads_widget.dart' show UploadsWidget;
 export '/user_pages/local_image/local_image_widget.dart' show LocalImageWidget;
+export '/user_pages/newhomeui/newhomeui_widget.dart' show NewhomeuiWidget;

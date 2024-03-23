@@ -14,7 +14,7 @@ Future<List<FetchImagesToUploadRow>> performFetchImagesToUpload(
   String? ownerId,
 }) {
   final query = '''
-SELECT "path", "unix_timestamp", "is_uploading" FROM Images
+SELECT "path", "unix_timestamp" AS "unixTimestamp", "is_uploading" AS "isUploading"  FROM Images
   WHERE is_uploaded = 0
   AND owner = '$ownerId'
   ORDER BY unix_timestamp ASC;
