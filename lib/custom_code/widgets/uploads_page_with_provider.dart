@@ -34,14 +34,9 @@ class UploadsPageWithProvider extends StatefulWidget {
 class _UploadsPageWithProviderState extends State<UploadsPageWithProvider> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) =>
-          UploaderNotifier(userId: FirebaseAuth.instance.currentUser!.uid),
-      child: Consumer<UploaderNotifier>(
-        builder: (context, uploader, _) {
-          return UploadsPageWidget();
-        },
-      ),
-    );
+    final appState = context.read<FFAppState>();
+    final uploader = Uploader();
+    uploader.appState = appState;
+    return UploadsPageWidget(uploadProgress: appState.uploadProgress);
   }
 }

@@ -18,10 +18,10 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint --max-warnings=0 .",
-    "serve": "firebase -P your-photos-dev emulators:start --only functions",
-    "shell": "firebase -P your-photos-dev functions:shell",
+    "serve": "firebase -P bringer-cam-dev emulators:start --only functions",
+    "shell": "firebase -P bringer-cam-dev functions:shell",
     "start": "npm run shell",
-    "logs": "firebase -P your-photos-dev functions:log",
+    "logs": "firebase -P bringer-cam-dev functions:log",
     "compile": "cp ../../tsconfig.template.json ./tsconfig-compile.json && tsc --project tsconfig-compile.json"
   },
   "engines": {

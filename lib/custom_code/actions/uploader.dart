@@ -13,49 +13,107 @@ import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'dart:io';
 import 'package:path/path.dart' show basename;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mime_type/mime_type.dart';
 
-class UploaderNotifier extends ChangeNotifier {
+class UploadItem {
+  final String path;
+  final int? unixTimestamp;
+  final bool? isUploading;
+
+  const UploadItem({
+    required this.path,
+    required this.unixTimestamp,
+    required this.isUploading,
+  });
+}
+
+class Uploader {
+  static Uploader? _instance;
+  static FFAppState? _appState;
   final String userId;
-  final _uploadQueue = ListQueue<FetchImagesToUploadRow>();
+  final _uploadQueue = ListQueue<UploadItem>();
   var _uploadedCount = 0;
   var _totalcount = double.infinity;
   var _isUploading = false;
 
-  bool get isUploading => _isUploading;
-  FetchImagesToUploadRow? get currentlyUploading =>
-      _isUploading ? _uploadQueue.first : null;
-  double get progress => _uploadedCount / _totalcount;
-
-  UploaderNotifier({required this.userId}) {
+  // Can be initialized only once
+  Uploader._() : userId = FirebaseAuth.instance.currentUser!.uid {
     SQLiteManager.instance.fetchImagesToUpload(ownerId: userId).then((rows) {
-      _uploadQueue.addAll(rows);
+      _uploadQueue.addAll(rows.map(
+        (row) => UploadItem(
+          path: row.path,
+          unixTimestamp: row.unixTimestamp,
+          isUploading: row.isUploading,
+        ),
+      ));
     });
   }
 
-  void addToUploadQueue(FetchImagesToUploadRow row, String uid) async {
-    await SQLiteManager.instance.insertImage(
-      path: row.path,
-      ownerId: uid,
-      unixTimestamp: row.unixTimestamp,
-    );
-    _uploadQueue.add(row);
-    notifyListeners();
+  // Returns the same instance every instance, a singleton
+  factory Uploader() {
+    _instance ??= Uploader._();
+    return _instance!;
   }
 
-  void removeFromUploadQueue(String path) async {
-    _uploadQueue.removeWhere((row) => row.path == path);
-    notifyListeners();
+  // Singleton is created before Flutter app starts, this is used to
+  // hook into the app state to update progress in UI
+  set appState(FFAppState state) {
+    _appState ??= state;
+  }
+
+  bool get isUploading => _isUploading;
+  UploadItem? get currentlyUploading =>
+      _isUploading ? _uploadQueue.first : null;
+  double get progress => _uploadedCount / _totalcount;
+
+  Future<void> addToUploadQueue(String path, int timestamp) async {
+    await SQLiteManager.instance.insertImage(
+      path: path,
+      ownerId: userId,
+      unixTimestamp: timestamp,
+    );
+    _uploadQueue.add(
+      UploadItem(
+        path: path,
+        unixTimestamp: timestamp,
+        isUploading: false,
+      ),
+    );
+    uploadImages();
+    if (_appState != null) {
+      _appState!.update(() {
+        _appState!.isUploading = _isUploading;
+        _appState!.uploadProgress = progress;
+      });
+    }
+  }
+
+  Future<void> removeFromUploadQueue(String path) async {
+    _uploadQueue.removeWhere((item) => item.path == path);
+    if (_appState != null) {
+      _appState!.update(() {
+        _appState!.isUploading = _isUploading;
+        _appState!.uploadProgress = progress;
+      });
+    }
     await SQLiteManager.instance.deleteImage(path: path);
   }
 
-  void uploadImages() async {
+  Future<void> uploadImages() async {
+    if (_isUploading) return;
+
     if (_uploadQueue.isNotEmpty) {
       _isUploading = true;
       _uploadedCount = 0;
       _totalcount = _uploadQueue.length.toDouble();
-      notifyListeners();
+      if (_appState != null) {
+        _appState!.update(() {
+          _appState!.isUploading = _isUploading;
+          _appState!.uploadProgress = progress;
+        });
+      }
     }
     while (_uploadQueue.isNotEmpty) {
       final row = _uploadQueue.first;
@@ -148,11 +206,17 @@ class UploaderNotifier extends ChangeNotifier {
         );
       } finally {
         _uploadQueue.removeFirst();
-        notifyListeners();
+        _appState!.update(() {
+          _appState!.isUploading = _isUploading;
+          _appState!.uploadProgress = progress;
+        });
       }
     }
     _isUploading = false;
-    notifyListeners();
+    _appState!.update(() {
+      _appState!.isUploading = _isUploading;
+      _appState!.uploadProgress = progress;
+    });
   }
 }
 

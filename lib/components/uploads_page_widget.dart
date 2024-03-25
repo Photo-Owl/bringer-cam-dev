@@ -11,7 +11,12 @@ import 'uploads_page_model.dart';
 export 'uploads_page_model.dart';
 
 class UploadsPageWidget extends StatefulWidget {
-  const UploadsPageWidget({super.key});
+  const UploadsPageWidget({
+    super.key,
+    double? uploadProgress,
+  }) : uploadProgress = uploadProgress ?? 0.0;
+
+  final double uploadProgress;
 
   @override
   State<UploadsPageWidget> createState() => _UploadsPageWidgetState();
@@ -81,6 +86,41 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
                 children: [
+                  if (widget.uploadProgress > 0.0)
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Photo Upload Progress',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Figtree',
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                          ),
+                          Text(
+                            (double prog) {
+                              return '${prog * 100}%';
+                            }(widget.uploadProgress),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Figtree',
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
                   Text(
                     'Not yet uploaded',
                     style: GoogleFonts.getFont(

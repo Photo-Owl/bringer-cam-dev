@@ -16,11 +16,12 @@ import 'package:camera/camera.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:flutter/services.dart';
-import '/auth/firebase_auth/auth_util.dart' show currentUserUid;
 import 'package:image/image.dart' as img;
 import 'package:flutter/foundation.dart';
 import 'package:media_scanner/media_scanner.dart';
 import 'package:media_store_plus/media_store_plus.dart';
+import 'package:provider/provider.dart';
+import '/custom_code/actions/uploader.dart';
 
 class _ShutterButton extends StatelessWidget {
   final bool isTakingPicture;
@@ -192,12 +193,9 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         debugLabel: 'SaveImageIsolate',
       );
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-      await SQLiteManager.instance.insertImage(
-        path: newPath,
-        ownerId: currentUserUid,
-        unixTimestamp: unixTimestamp,
-      );
-      await autoUploadImages();
+      final uploader = Uploader();
+      uploader.appState = context.read<FFAppState>();
+      await uploader.addToUploadQueue(newPath, unixTimestamp);
       return;
     } catch (e) {
       if (e is Error) {
@@ -228,7 +226,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                   shape: const CircleBorder(),
                   clipBehavior: Clip.hardEdge,
                   child: IconButton(
-                    onPressed: () => context.goNamed('uploads'),
+                    onPressed: () => context.goNamed('homeCopy'),
                     icon: const Icon(Icons.photo_library_rounded),
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     tooltip: 'Gallery',

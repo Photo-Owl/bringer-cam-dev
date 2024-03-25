@@ -5,12 +5,13 @@ Future initFirebase() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-            apiKey: "AIzaSyC1OmQvD5i94MRT3jueigjooGZt83M3Yi0",
-            authDomain: "your-photos-dev.firebaseapp.com",
-            projectId: "your-photos-dev",
-            storageBucket: "your-photos-dev.appspot.com",
-            messagingSenderId: "451341218107",
-            appId: "1:451341218107:web:85d2ba3a6e73d01798c71e"));
+            apiKey: "AIzaSyBlzTW6aaY4kp7l47Pzz1MXtiqFKJF34vU",
+            authDomain: "bringer-cam-dev.firebaseapp.com",
+            projectId: "bringer-cam-dev",
+            storageBucket: "bringer-cam-dev.appspot.com",
+            messagingSenderId: "374889583246",
+            appId: "1:374889583246:web:0c8e3e9d2093a8a71aefdf",
+            measurementId: "G-DP9FF2YCE5"));
   } else {
     await Firebase.initializeApp();
   }

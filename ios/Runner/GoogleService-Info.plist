@@ -2,18 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>374889583246-ruv2safrmkvicge3pbog7i0599u1ctj2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.374889583246-ruv2safrmkvicge3pbog7i0599u1ctj2</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDBrQJGgKfglIy27f47mhZvroakEtHfdNY</string>
+	<string>AIzaSyAnoS-TCmGHq-kb5Ljq5lr79-vyEDCDh0E</string>
 	<key>GCM_SENDER_ID</key>
-	<string>451341218107</string>
+	<string>374889583246</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.smoose.photoowldev</string>
 	<key>PROJECT_ID</key>
-	<string>your-photos-dev</string>
+	<string>bringer-cam-dev</string>
 	<key>STORAGE_BUCKET</key>
-	<string>your-photos-dev.appspot.com</string>
+	<string>bringer-cam-dev.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:451341218107:ios:293e75b66d60d82c98c71e</string>
+	<string>1:374889583246:ios:8dd5da015a152d661aefdf</string>
 </dict>
 </plist>
