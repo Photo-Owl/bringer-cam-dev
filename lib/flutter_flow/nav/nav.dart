@@ -242,11 +242,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'newhomeui',
-          path: '/newhomeui',
-          builder: (context, params) => const NewhomeuiWidget(),
-        ),
-        FFRoute(
           name: 'HomeCopyCopy',
           path: '/homeCopyCopy',
           builder: (context, params) => const HomeCopyCopyWidget(),

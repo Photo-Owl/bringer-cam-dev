@@ -73,7 +73,31 @@ class ReadImagesToUploadRow extends SqliteRow {
 
   String get path => data['path'] as String;
   int? get unixTimestamp => data['unixTimestamp'] as int?;
-  bool? get isUploading => data['isUploading'] as bool?;
+  int? get isUploading => data['isUploading'] as int?;
 }
 
 /// END READIMAGESTOUPLOAD
+
+/// BEGIN SHOWLOCALIMAGES
+Future<List<ShowLocalImagesRow>> performShowLocalImages(
+  Database database, {
+  String? ownerId,
+}) {
+  final query = '''
+SELECT "path", "unix_timestamp" AS "timestamp","is_uploading" AS "isUploading" FROM Images
+  WHERE is_uploaded = 0
+  AND owner = '$ownerId'
+  ORDER BY unix_timestamp ASC;
+''';
+  return _readQuery(database, query, (d) => ShowLocalImagesRow(d));
+}
+
+class ShowLocalImagesRow extends SqliteRow {
+  ShowLocalImagesRow(super.data);
+
+  String get path => data['path'] as String;
+  int? get timestamp => data['timestamp'] as int?;
+  bool get isUploading => data['isUploading'] as bool;
+}
+
+/// END SHOWLOCALIMAGES

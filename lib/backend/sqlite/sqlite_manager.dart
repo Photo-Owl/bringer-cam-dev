@@ -53,6 +53,14 @@ class SQLiteManager {
         ownerId: ownerId,
       );
 
+  Future<List<ShowLocalImagesRow>> showLocalImages({
+    String? ownerId,
+  }) =>
+      performShowLocalImages(
+        _database,
+        ownerId: ownerId,
+      );
+
   /// END READ QUERY CALLS
 
   /// START UPDATE QUERY CALLS

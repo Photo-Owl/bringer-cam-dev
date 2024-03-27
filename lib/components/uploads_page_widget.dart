@@ -226,43 +226,6 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                                           end: AlignmentDirectional(-1.0, -1.0),
                                         ),
                                       ),
-                                      child: Align(
-                                        alignment:
-                                            const AlignmentDirectional(1.0, 1.0),
-                                        child: Builder(
-                                          builder: (context) {
-                                            if (gridViewReadImagesToUploadRow
-                                                    .isUploading ??
-                                                false) {
-                                              return Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 5.0, 5.0),
-                                                child: Icon(
-                                                  Icons.cloud_upload_outlined,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                  size: 14.0,
-                                                ),
-                                              );
-                                            } else {
-                                              return Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 5.0, 5.0),
-                                                child: FaIcon(
-                                                  FontAwesomeIcons.clock,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                  size: 14.0,
-                                                ),
-                                              );
-                                            }
-                                          },
-                                        ),
-                                      ),
                                     ),
                                   ],
                                 ),

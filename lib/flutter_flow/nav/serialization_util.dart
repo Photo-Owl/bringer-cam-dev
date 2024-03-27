@@ -260,6 +260,8 @@ dynamic deserializeParam<T>(
             return ReadUploadedImagesRow(data);
           case ReadImagesToUploadRow:
             return ReadImagesToUploadRow(data);
+          case ShowLocalImagesRow:
+            return ShowLocalImagesRow(data);
           default:
             return null;
         }

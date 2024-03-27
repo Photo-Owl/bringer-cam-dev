@@ -1,7 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/backend/sqlite/sqlite_manager.dart';
 import '/components/fetching_photos_widget.dart';
 import '/components/give_name/give_name_widget.dart';
 import '/components/no_photos/no_photos_widget.dart';
@@ -12,15 +11,12 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
-import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 import 'home_copy_model.dart';
@@ -421,157 +417,6 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                       ],
                     ),
                   ),
-                Align(
-                  alignment: const AlignmentDirectional(-1.0, 0.0),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 8.0),
-                    child: Text(
-                      'Not yet uploaded',
-                      style: GoogleFonts.getFont(
-                        'Figtree',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
-                  child: FutureBuilder<List<ReadImagesToUploadRow>>(
-                    future: SQLiteManager.instance.readImagesToUpload(
-                      ownerId: currentUserUid,
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: Image.asset(
-                            'assets/images/ezgif.com-gif-maker.gif',
-                            width: 64.0,
-                            height: 64.0,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      }
-                      final gridViewReadImagesToUploadRowList = snapshot.data!;
-                      return GridView.builder(
-                        padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount:
-                              (MediaQuery.sizeOf(context).width / 100).floor(),
-                          crossAxisSpacing: 4.0,
-                          mainAxisSpacing: 4.0,
-                          childAspectRatio: 1.0,
-                        ),
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: gridViewReadImagesToUploadRowList.length,
-                        itemBuilder: (context, gridViewIndex) {
-                          final gridViewReadImagesToUploadRow =
-                              gridViewReadImagesToUploadRowList[gridViewIndex];
-                          return Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                logFirebaseEvent(
-                                    'HOME_COPY_PAGE_Stack_g6i9dzv5_ON_TAP');
-                                logFirebaseEvent('Stack_navigate_to');
-
-                                context.pushNamed(
-                                  'LocalImage',
-                                  queryParameters: {
-                                    'path': serializeParam(
-                                      gridViewReadImagesToUploadRow.path,
-                                      ParamType.String,
-                                    ),
-                                    'isUploaded': serializeParam(
-                                      false,
-                                      ParamType.bool,
-                                    ),
-                                    'index': serializeParam(
-                                      gridViewIndex,
-                                      ParamType.int,
-                                    ),
-                                  }.withoutNulls,
-                                );
-                              },
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: const AlignmentDirectional(0.0, 0.0),
-                                    child: SizedBox(
-                                      width: 100.0,
-                                      height: 100.0,
-                                      child: custom_widgets.ShowLocalImage(
-                                        width: 100.0,
-                                        height: 100.0,
-                                        path:
-                                            gridViewReadImagesToUploadRow.path,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: const BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(0x99101213),
-                                          Colors.transparent
-                                        ],
-                                        stops: [0.0, 0.4],
-                                        begin: AlignmentDirectional(1.0, 1.0),
-                                        end: AlignmentDirectional(-1.0, -1.0),
-                                      ),
-                                    ),
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(1.0, 1.0),
-                                      child: Builder(
-                                        builder: (context) {
-                                          if (gridViewReadImagesToUploadRow
-                                                  .isUploading ??
-                                              false) {
-                                            return Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 5.0, 5.0),
-                                              child: Icon(
-                                                Icons.cloud_upload_outlined,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                size: 14.0,
-                                              ),
-                                            );
-                                          } else {
-                                            return Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 5.0, 5.0),
-                                              child: FaIcon(
-                                                FontAwesomeIcons.clock,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                size: 14.0,
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
                 Expanded(
                   child: Padding(
                     padding:
