@@ -106,7 +106,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 logFirebaseEvent('SIDEBAR_COMP_Hom_ON_TAP');
                 logFirebaseEvent('Hom_navigate_to');
 
-                context.pushNamed('HomeCopy');
+                context.pushNamed('HomeCopyCopy');
               },
               child: Container(
                 width: double.infinity,
@@ -125,6 +125,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             fontSize: 16.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
@@ -163,6 +164,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             fontSize: 16.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
@@ -217,6 +219,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               fontSize: 16.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
                             ),
                       ),
@@ -254,6 +257,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             fontSize: 16.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
@@ -290,6 +294,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             fontSize: 16.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),

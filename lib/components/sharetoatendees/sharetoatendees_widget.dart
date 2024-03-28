@@ -102,6 +102,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                         style: FlutterFlowTheme.of(context).titleLarge.override(
                               fontFamily: 'Inter',
                               fontSize: 18.0,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -123,7 +124,10 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                     child: Text(
                       'Share it with your attendees by inviting them to PhotoOwl ',
                       textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ),
                 ),
@@ -174,6 +178,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                                   fontFamily: 'Inter',
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
+                                  letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
                         borderSide: const BorderSide(
@@ -199,7 +204,10 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                   child: Text(
                     'or',
                     textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyMedium,
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Inter',
+                          letterSpacing: 0.0,
+                        ),
                   ),
                 ),
               ],
@@ -234,6 +242,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                                   fontFamily: 'Inter',
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
+                                  letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
                         borderSide: const BorderSide(

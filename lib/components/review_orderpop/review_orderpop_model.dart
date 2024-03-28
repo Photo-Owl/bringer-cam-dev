@@ -11,15 +11,9 @@ class ReviewOrderpopModel extends FlutterFlowModel<ReviewOrderpopWidget> {
   // Stores action output result for [Backend Call - API (Create Payment Request)] action in Button widget.
   ApiCallResponse? apiResult545;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {}
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

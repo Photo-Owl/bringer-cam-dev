@@ -95,6 +95,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Inter',
                           fontSize: 18.0,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ),
@@ -111,7 +112,10 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                     child: Text(
                       'Invite them to Bringer and we will get this to them 🤗',
                       textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ),
                 ),
@@ -162,6 +166,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                                   fontFamily: 'Inter',
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
+                                  letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
                         borderSide: const BorderSide(

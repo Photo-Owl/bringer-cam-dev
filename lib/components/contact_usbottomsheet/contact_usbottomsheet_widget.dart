@@ -56,7 +56,10 @@ class _ContactUsbottomsheetWidgetState
               padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
               child: Text(
                 'Contact Us',
-                style: FlutterFlowTheme.of(context).headlineSmall,
+                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
               ),
             ),
             Padding(
@@ -66,6 +69,7 @@ class _ContactUsbottomsheetWidgetState
                 style: FlutterFlowTheme.of(context).labelMedium.override(
                       fontFamily: 'Inter',
                       fontSize: 14.0,
+                      letterSpacing: 0.0,
                     ),
               ),
             ),
@@ -127,7 +131,12 @@ class _ContactUsbottomsheetWidgetState
                               children: [
                                 Text(
                                   'Can\'t find my photos',
-                                  style: FlutterFlowTheme.of(context).bodyLarge,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
                               ],
                             ),
@@ -185,7 +194,12 @@ class _ContactUsbottomsheetWidgetState
                             children: [
                               Text(
                                 'Report Technical Issue',
-                                style: FlutterFlowTheme.of(context).bodyLarge,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                               ),
                             ],
                           ),
@@ -242,7 +256,12 @@ class _ContactUsbottomsheetWidgetState
                             children: [
                               Text(
                                 'Start your commercial plan',
-                                style: FlutterFlowTheme.of(context).bodyLarge,
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyLarge
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                               ),
                             ],
                           ),

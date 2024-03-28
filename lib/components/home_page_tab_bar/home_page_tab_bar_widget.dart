@@ -122,6 +122,7 @@ class _HomePageTabBarWidgetState extends State<HomePageTabBarWidget> {
                           color: widget.selected == 'Gallery'
                               ? const Color(0xFF006AD4)
                               : const Color(0xFF44474F),
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
                   ),

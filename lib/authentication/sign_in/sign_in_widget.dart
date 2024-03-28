@@ -217,6 +217,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                       .override(
                                                         fontFamily: 'Inter',
                                                         fontSize: 34.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w500,
                                                       ),
@@ -403,6 +404,8 @@ class _SignInWidgetState extends State<SignInWidget>
                                                                       'Inter',
                                                                   fontSize:
                                                                       16.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
@@ -452,6 +455,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                           fontFamily: 'Inter',
                                           color: const Color(0xFF423F34),
                                           fontSize: 13.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                         ),
                                   ),
@@ -498,11 +502,16 @@ class _SignInWidgetState extends State<SignInWidget>
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .accent2,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                   hintStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .labelMedium,
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            letterSpacing: 0.0,
+                                                          ),
                                                   enabledBorder:
                                                       InputBorder.none,
                                                   focusedBorder:
@@ -520,8 +529,10 @@ class _SignInWidgetState extends State<SignInWidget>
                                                                   .of(context)
                                                               .secondaryText,
                                                           fontSize: 18.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                 textAlign: TextAlign.center,
+                                                minLines: null,
                                                 validator: _model
                                                     .textController1Validator
                                                     .asValidator(context),
@@ -546,10 +557,13 @@ class _SignInWidgetState extends State<SignInWidget>
                                                   autofocus: true,
                                                   obscureText: false,
                                                   decoration: InputDecoration(
-                                                    labelStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelLarge,
+                                                    labelStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
                                                     hintText: 'Mobile Number',
                                                     hintStyle: FlutterFlowTheme
                                                             .of(context)
@@ -558,6 +572,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                           fontFamily: 'Inter',
                                                           color: const Color(
                                                               0xbacd8c9fad),
+                                                          letterSpacing: 0.0,
                                                         ),
                                                     enabledBorder:
                                                         InputBorder.none,
@@ -574,7 +589,9 @@ class _SignInWidgetState extends State<SignInWidget>
                                                       .override(
                                                         fontFamily: 'Inter',
                                                         fontSize: 15.0,
+                                                        letterSpacing: 0.0,
                                                       ),
+                                                  minLines: null,
                                                   keyboardType:
                                                       TextInputType.number,
                                                   validator: _model
@@ -628,6 +645,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
                                                           lineHeight: 1.4,
                                                         ),
                                               ),
@@ -781,6 +799,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                             fontFamily: 'Inter',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBackground,
+                                            letterSpacing: 0.0,
                                           ),
                                       borderSide: const BorderSide(
                                         color: Colors.transparent,
@@ -804,6 +823,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                           fontFamily: 'Inter',
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ),
@@ -832,6 +852,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
                                           fontSize: 13.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                           decoration: TextDecoration.underline,
                                         ),
@@ -973,6 +994,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                         .override(
                                           fontFamily: 'Inter',
                                           fontSize: 24.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                         ),
                                   ),
@@ -985,6 +1007,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                     .override(
                                       fontFamily: 'Inter',
                                       fontSize: 20.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                               Padding(
@@ -1012,6 +1035,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                         .override(
                                           fontFamily: 'Inter',
                                           color: Colors.white,
+                                          letterSpacing: 0.0,
                                         ),
                                     elevation: 3.0,
                                     borderSide: const BorderSide(

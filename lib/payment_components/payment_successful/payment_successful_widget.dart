@@ -58,7 +58,10 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
-            offset: Offset(0.0, 2.0),
+            offset: Offset(
+              0.0,
+              2.0,
+            ),
           )
         ],
       ),
@@ -94,6 +97,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                     fontFamily: 'Inter',
                     color: FlutterFlowTheme.of(context).success,
                     fontSize: 20.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w500,
                   ),
             ),
@@ -113,7 +117,10 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                     BoxShadow(
                       blurRadius: 4.0,
                       color: Color(0x33000000),
-                      offset: Offset(0.0, 2.0),
+                      offset: Offset(
+                        0.0,
+                        2.0,
+                      ),
                     )
                   ],
                   borderRadius: BorderRadius.circular(5.0),
@@ -130,6 +137,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).accent1,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -142,6 +150,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -212,6 +221,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                           fontFamily: 'Inter',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryBackground,
+                                          letterSpacing: 0.0,
                                         ),
                                     elevation: 5.0,
                                     borderSide: const BorderSide(
@@ -248,6 +258,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                               .override(
                                 fontFamily: 'Inter',
                                 color: FlutterFlowTheme.of(context).primaryText,
+                                letterSpacing: 0.0,
                               ),
                           elevation: 3.0,
                           borderSide: BorderSide(
@@ -279,6 +290,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context).accent1,
+                                    letterSpacing: 0.0,
                                     decoration: TextDecoration.underline,
                                   ),
                         ),

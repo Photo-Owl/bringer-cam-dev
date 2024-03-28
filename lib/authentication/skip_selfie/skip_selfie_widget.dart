@@ -193,6 +193,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                                   .of(context)
                                                               .primaryText,
                                                           fontSize: 34.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w500,
                                                         ),
@@ -215,6 +216,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                         .override(
                                                           fontFamily: 'Inter',
                                                           fontSize: 14.0,
+                                                          letterSpacing: 0.0,
                                                         ),
                                               ),
                                             ),
@@ -231,6 +233,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                       .override(
                                                         fontFamily: 'Inter',
                                                         fontSize: 12.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w300,
                                                       ),
@@ -344,6 +347,8 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                       elevation: 3.0,
                                                       borderSide: BorderSide(
@@ -450,6 +455,8 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                       elevation: 3.0,
                                                       borderSide: BorderSide(
@@ -556,6 +563,8 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                       elevation: 3.0,
                                                       borderSide: BorderSide(
@@ -592,6 +601,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                       .override(
                                                         fontFamily: 'Inter',
                                                         fontSize: 12.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                           ),
@@ -626,6 +636,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                         .override(
                                                           fontFamily: 'Inter',
                                                           color: Colors.white,
+                                                          letterSpacing: 0.0,
                                                         ),
                                                 elevation: 3.0,
                                                 borderSide: const BorderSide(
@@ -675,6 +686,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                               .override(
                                                 fontFamily: 'Inter',
                                                 fontSize: 16.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -692,6 +704,7 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                               .override(
                                                 fontFamily: 'Inter',
                                                 fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),

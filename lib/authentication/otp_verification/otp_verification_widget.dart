@@ -130,6 +130,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                       .override(
                                         fontFamily: 'Inter',
                                         fontSize: 32.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
                                       ),
                                 ),
@@ -145,6 +146,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                       .override(
                                         fontFamily: 'Inter',
                                         fontSize: 14.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ),
@@ -160,6 +162,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                       .override(
                                         fontFamily: 'Inter',
                                         color: Colors.black,
+                                        letterSpacing: 0.0,
                                       ),
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -273,6 +276,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
+                                    letterSpacing: 0.0,
                                   ),
                               elevation: 2.0,
                               borderSide: const BorderSide(

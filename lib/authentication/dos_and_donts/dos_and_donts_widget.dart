@@ -82,6 +82,7 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             fontSize: 16.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
@@ -102,7 +103,12 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               '1. Find a well-lit area to ensure clear visibility.',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -113,7 +119,12 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               '2. Remove any obstructions like hats or sunglasses.',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -124,7 +135,12 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               '3. Clean the camera lens for a high-quality photo.',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -135,7 +151,12 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               '4. Frame yourself properly, centered and fully visible.',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -245,6 +266,7 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                                   fontFamily: 'Inter',
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
+                                  letterSpacing: 0.0,
                                 ),
                         borderSide: const BorderSide(
                           color: Colors.transparent,

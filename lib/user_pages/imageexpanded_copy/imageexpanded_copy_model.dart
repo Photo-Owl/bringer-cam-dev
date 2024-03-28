@@ -21,8 +21,6 @@ class ImageexpandedCopyModel extends FlutterFlowModel<ImageexpandedCopyWidget> {
   // Stores action output result for [Custom Action - getDownloadUrl] action in Container widget.
   String? downloadUrl;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
@@ -30,8 +28,4 @@ class ImageexpandedCopyModel extends FlutterFlowModel<ImageexpandedCopyWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

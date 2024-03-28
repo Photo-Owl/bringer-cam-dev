@@ -1,11 +1,16 @@
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/fetching_photos_widget.dart';
 import '/components/sidebar/sidebar_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'home_copy_copy_widget.dart' show HomeCopyCopyWidget;
 import 'package:flutter/material.dart';
 
 class HomeCopyCopyModel extends FlutterFlowModel<HomeCopyCopyWidget> {
+  ///  Local state fields for this page.
+
+  bool loaded = false;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
@@ -15,21 +20,19 @@ class HomeCopyCopyModel extends FlutterFlowModel<HomeCopyCopyWidget> {
   List<TimelineItemStruct>? images;
   // Model for sidebar component.
   late SidebarModel sidebarModel;
-
-  /// Initialization and disposal methods.
+  // Model for FetchingPhotos component.
+  late FetchingPhotosModel fetchingPhotosModel;
 
   @override
   void initState(BuildContext context) {
     sidebarModel = createModel(context, () => SidebarModel());
+    fetchingPhotosModel = createModel(context, () => FetchingPhotosModel());
   }
 
   @override
   void dispose() {
     unfocusNode.dispose();
     sidebarModel.dispose();
+    fetchingPhotosModel.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

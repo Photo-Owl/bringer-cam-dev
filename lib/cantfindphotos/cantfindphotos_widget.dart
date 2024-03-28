@@ -124,7 +124,10 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                                 BoxShadow(
                                   blurRadius: 3.0,
                                   color: Color(0x33000000),
-                                  offset: Offset(0.0, 1.0),
+                                  offset: Offset(
+                                    0.0,
+                                    1.0,
+                                  ),
                                 )
                               ],
                               borderRadius: BorderRadius.circular(20.0),
@@ -147,6 +150,7 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 20.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ),
@@ -176,6 +180,7 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                                           .override(
                                             fontFamily: 'Inter',
                                             fontSize: 14.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),

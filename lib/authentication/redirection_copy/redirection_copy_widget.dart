@@ -265,6 +265,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                             .primaryText,
                                                                         fontSize:
                                                                             34.0,
+                                                                        letterSpacing:
+                                                                            0.0,
                                                                         fontWeight:
                                                                             FontWeight.w500,
                                                                       ),
@@ -316,6 +318,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                                 FlutterFlowTheme.of(context).primaryText,
                                                                             fontSize:
                                                                                 16.0,
+                                                                            letterSpacing:
+                                                                                0.0,
                                                                             fontWeight:
                                                                                 FontWeight.normal,
                                                                             lineHeight:
@@ -530,6 +534,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
                                                                           .primaryBackground,
+                                                                      letterSpacing:
+                                                                          0.0,
                                                                     ),
                                                                 borderSide:
                                                                     const BorderSide(
@@ -617,6 +623,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                           'Inter',
                                                                       fontSize:
                                                                           13.0,
+                                                                      letterSpacing:
+                                                                          0.0,
                                                                       decoration:
                                                                           TextDecoration
                                                                               .underline,
@@ -697,6 +705,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                           'Inter',
                                                                       fontSize:
                                                                           28.0,
+                                                                      letterSpacing:
+                                                                          0.0,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w500,
@@ -722,6 +732,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                         'Inter',
                                                                     fontSize:
                                                                         16.0,
+                                                                    letterSpacing:
+                                                                        0.0,
                                                                     lineHeight:
                                                                         1.4,
                                                                   ),
@@ -797,6 +809,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                             .primaryBackground,
                                                                         fontSize:
                                                                             14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
                                                                       ),
                                                                   elevation:
                                                                       3.0,
@@ -939,6 +953,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                       .override(
                                                         fontFamily: 'Inter',
                                                         fontSize: 16.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               ),
@@ -959,6 +974,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                       .override(
                                                         fontFamily: 'Inter',
                                                         fontSize: 14.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               ),

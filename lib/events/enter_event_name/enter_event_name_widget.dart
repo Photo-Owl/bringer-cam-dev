@@ -58,6 +58,7 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Inter',
                     fontSize: 20.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w800,
                   ),
             ),
@@ -80,14 +81,19 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelStyle:
-                                FlutterFlowTheme.of(context).labelMedium,
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                             hintText: 'Eg : John\'s birthday party ',
                             hintStyle: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
                                   fontFamily: 'Inter',
                                   color: FlutterFlowTheme.of(context).accent2,
+                                  letterSpacing: 0.0,
                                 ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -123,7 +129,12 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                             contentPadding: const EdgeInsetsDirectional.fromSTEB(
                                 20.0, 24.0, 20.0, 24.0),
                           ),
-                          style: FlutterFlowTheme.of(context).bodyMedium,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
+                          minLines: null,
                           cursorColor: FlutterFlowTheme.of(context).primary,
                           validator: _model.yourNameControllerValidator
                               .asValidator(context),
@@ -161,6 +172,7 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
+                                    letterSpacing: 0.0,
                                   ),
                               borderSide: const BorderSide(
                                 color: Colors.transparent,

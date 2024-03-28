@@ -32,8 +32,6 @@ class SignInModel extends FlutterFlowModel<SignInWidget> {
   // Stores action output result for [Firestore Query - Query a collection] action in Button-Login widget.
   List<UsersRecord>? userDocument;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     textController2Validator = _textController2Validator;
@@ -47,8 +45,4 @@ class SignInModel extends FlutterFlowModel<SignInWidget> {
     textFieldFocusNode2?.dispose();
     textController2?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

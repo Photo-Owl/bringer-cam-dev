@@ -10,8 +10,6 @@ class EnterEventNameModel extends FlutterFlowModel<EnterEventNameWidget> {
   TextEditingController? yourNameController;
   String? Function(BuildContext, String?)? yourNameControllerValidator;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
@@ -20,8 +18,4 @@ class EnterEventNameModel extends FlutterFlowModel<EnterEventNameWidget> {
     yourNameFocusNode?.dispose();
     yourNameController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

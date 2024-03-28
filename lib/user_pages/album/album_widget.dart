@@ -331,6 +331,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                         fontFamily: 'Inter',
                                                         color: Colors.white,
                                                         fontSize: 20.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
@@ -352,6 +353,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                         fontFamily: 'Inter',
                                                         color: Colors.white,
                                                         fontSize: 11.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               ),
@@ -456,6 +458,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                   fontFamily: 'Inter',
                                                   color: Colors.white,
                                                   fontSize: 12.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),
@@ -479,6 +482,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                     fontFamily: 'Inter',
                                                     color: const Color(0xFF79767D),
                                                     fontSize: 12.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ),
@@ -492,7 +496,11 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                             )
                                           ],
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyMedium,
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
                                         ),
                                       ),
                                     ),

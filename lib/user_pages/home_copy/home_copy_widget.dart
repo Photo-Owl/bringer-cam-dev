@@ -257,7 +257,11 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                       builder: (context) => Text(
                         'Hey $currentUserDisplayName',
                         textAlign: TextAlign.center,
-                        style: FlutterFlowTheme.of(context).titleMedium,
+                        style:
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                       ),
                     ),
                   ),
@@ -338,6 +342,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                   FlutterFlowTheme.of(context)
                                                       .success,
                                               fontSize: 12.0,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ),
@@ -351,6 +356,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                         fontFamily: 'Inter',
                                         color: FlutterFlowTheme.of(context)
                                             .success,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ],
@@ -379,6 +385,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             fontSize: 20.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
@@ -399,6 +406,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                     fontFamily: 'Figtree',
                                     color: Colors.black,
                                     fontSize: 18.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                         ),
@@ -411,6 +419,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                     fontFamily: 'Figtree',
                                     color: Colors.black,
                                     fontSize: 18.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                         ),
@@ -538,7 +547,11 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                             .createdAt!),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyMedium,
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
                                                   ),
                                                 ),
                                               ),
@@ -714,6 +727,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                                             fontFamily: 'Inter',
                                                                                             color: const Color(0xFF5D5AFF),
                                                                                             fontSize: 15.0,
+                                                                                            letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.bold,
                                                                                           ),
                                                                                     ),
@@ -741,6 +755,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Inter',
                                                                                             fontSize: 12.0,
+                                                                                            letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.w300,
                                                                                           ),
                                                                                     ),
@@ -760,6 +775,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                             fontFamily: 'Inter',
                                                                                             fontSize: 12.0,
+                                                                                            letterSpacing: 0.0,
                                                                                             fontWeight: FontWeight.w300,
                                                                                           ),
                                                                                     ),
@@ -1141,6 +1157,7 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                                                   fontFamily: 'Inter',
                                                                                                   color: Colors.white,
                                                                                                   fontSize: 20.0,
+                                                                                                  letterSpacing: 0.0,
                                                                                                 ),
                                                                                           );
                                                                                         },

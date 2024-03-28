@@ -12,8 +12,6 @@ class PremiumPhotosModel extends FlutterFlowModel<PremiumPhotosWidget> {
   // Model for sidebar component.
   late SidebarModel sidebarModel;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     sidebarModel = createModel(context, () => SidebarModel());
@@ -24,8 +22,4 @@ class PremiumPhotosModel extends FlutterFlowModel<PremiumPhotosWidget> {
     unfocusNode.dispose();
     sidebarModel.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

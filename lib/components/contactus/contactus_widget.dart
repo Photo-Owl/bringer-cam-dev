@@ -70,6 +70,7 @@ class _ContactusWidgetState extends State<ContactusWidget> {
                                 color:
                                     FlutterFlowTheme.of(context).primaryBtnText,
                                 fontSize: 20.0,
+                                letterSpacing: 0.0,
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
@@ -113,6 +114,7 @@ class _ContactusWidgetState extends State<ContactusWidget> {
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                             fontFamily: 'Inter',
                             fontSize: 15.0,
+                            letterSpacing: 0.0,
                           ),
                     ),
                   ),
@@ -137,6 +139,7 @@ class _ContactusWidgetState extends State<ContactusWidget> {
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Inter',
                       color: FlutterFlowTheme.of(context).primaryBtnText,
+                      letterSpacing: 0.0,
                     ),
                 elevation: 3.0,
                 borderSide: const BorderSide(

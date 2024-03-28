@@ -9,15 +9,9 @@ class MoreWaysToSignInModel extends FlutterFlowModel<MoreWaysToSignInWidget> {
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
   List<UsersRecord>? userDocumentaction;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {}
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

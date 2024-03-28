@@ -207,7 +207,11 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                       AuthUserStreamWidget(
                         builder: (context) => Text(
                           'Hey $currentUserDisplayName',
-                          style: FlutterFlowTheme.of(context).titleMedium,
+                          style:
+                              FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                         ),
                       ),
                     ],
@@ -224,7 +228,11 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                         alignment: const Alignment(0.0, 0),
                         child: FlutterFlowButtonTabBar(
                           useToggleButtonStyle: false,
-                          labelStyle: FlutterFlowTheme.of(context).labelLarge,
+                          labelStyle:
+                              FlutterFlowTheme.of(context).labelLarge.override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                           unselectedLabelStyle: const TextStyle(),
                           labelColor: FlutterFlowTheme.of(context).primaryText,
                           unselectedLabelColor:
@@ -342,6 +350,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                                           .override(
                                                             fontFamily: 'Inter',
                                                             color: Colors.white,
+                                                            letterSpacing: 0.0,
                                                           ),
                                                   elevation: 3.0,
                                                   borderSide: const BorderSide(
@@ -379,6 +388,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                                                     context)
                                                                 .secondaryText,
                                                         fontSize: 12.0,
+                                                        letterSpacing: 0.0,
                                                       ),
                                                 ),
                                               ),
@@ -409,6 +419,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .accent2,
+                                                        letterSpacing: 0.0,
                                                       ),
                                             ),
                                             InkWell(
@@ -435,6 +446,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .accent2,
+                                                          letterSpacing: 0.0,
                                                           decoration:
                                                               TextDecoration
                                                                   .underline,

@@ -97,7 +97,7 @@ class ShowLocalImagesRow extends SqliteRow {
 
   String get path => data['path'] as String;
   int? get timestamp => data['timestamp'] as int?;
-  bool get isUploading => data['isUploading'] as bool;
+  int get isUploading => data['isUploading'] as int;
 }
 
 /// END SHOWLOCALIMAGES

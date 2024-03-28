@@ -100,6 +100,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
                         fontFamily: 'Inter',
                         fontSize: 20.0,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w800,
                       ),
                 ),
@@ -122,8 +123,12 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                               autofocus: true,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                                 hintText: 'Eg : John\'s birthday party ',
                                 hintStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
@@ -131,6 +136,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                       fontFamily: 'Inter',
                                       color:
                                           FlutterFlowTheme.of(context).accent2,
+                                      letterSpacing: 0.0,
                                     ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -167,7 +173,13 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                 contentPadding: const EdgeInsetsDirectional.fromSTEB(
                                     20.0, 24.0, 20.0, 24.0),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
+                              minLines: null,
                               cursorColor: FlutterFlowTheme.of(context).primary,
                               validator: _model.yourNameControllerValidator
                                   .asValidator(context),
@@ -215,6 +227,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                               .override(
                                                 fontFamily: 'Inter',
                                                 color: Colors.white,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                         duration: const Duration(milliseconds: 4000),
@@ -240,6 +253,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                         fontFamily: 'Inter',
                                         color: FlutterFlowTheme.of(context)
                                             .primaryBackground,
+                                        letterSpacing: 0.0,
                                       ),
                                   borderSide: const BorderSide(
                                     color: Colors.transparent,

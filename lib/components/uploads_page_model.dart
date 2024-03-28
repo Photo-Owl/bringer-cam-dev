@@ -9,8 +9,6 @@ class UploadsPageModel extends FlutterFlowModel<UploadsPageWidget> {
   // Model for HomePageTabBar component.
   late HomePageTabBarModel homePageTabBarModel;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     homePageTabBarModel = createModel(context, () => HomePageTabBarModel());
@@ -20,8 +18,4 @@ class UploadsPageModel extends FlutterFlowModel<UploadsPageWidget> {
   void dispose() {
     homePageTabBarModel.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

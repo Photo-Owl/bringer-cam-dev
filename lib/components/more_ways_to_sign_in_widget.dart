@@ -74,6 +74,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                       fontFamily: 'Inter',
                       color: Colors.black,
                       fontSize: 18.0,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.w500,
                     ),
               ),
@@ -270,6 +271,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                               FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Inter',
                                     color: Colors.black,
+                                    letterSpacing: 0.0,
                                   ),
                           elevation: 2.0,
                           borderSide: BorderSide(
@@ -343,6 +345,7 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Inter',
                         color: FlutterFlowTheme.of(context).primaryBtnText,
+                        letterSpacing: 0.0,
                       ),
                   borderSide: const BorderSide(
                     color: Colors.transparent,

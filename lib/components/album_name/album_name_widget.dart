@@ -99,6 +99,7 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                             fontFamily: 'Open Sans',
                             color: Colors.black,
                             fontSize: 16.0,
+                            letterSpacing: 0.0,
                             fontWeight: FontWeight.w500,
                           ),
                     ),
@@ -115,8 +116,13 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                           FlutterFlowTheme.of(context).labelMedium.override(
                                 fontFamily: 'Inter',
                                 fontSize: 18.0,
+                                letterSpacing: 0.0,
                               ),
-                      hintStyle: FlutterFlowTheme.of(context).labelMedium,
+                      hintStyle:
+                          FlutterFlowTheme.of(context).labelMedium.override(
+                                fontFamily: 'Inter',
+                                letterSpacing: 0.0,
+                              ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -150,7 +156,9 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                           fontFamily: 'Inter',
                           color: Colors.black,
                           fontSize: 16.0,
+                          letterSpacing: 0.0,
                         ),
+                    minLines: null,
                     validator:
                         _model.textControllerValidator.asValidator(context),
                   ),
@@ -181,6 +189,7 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                                     .override(
                                       fontFamily: 'Inter',
                                       color: Colors.white,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                               duration: const Duration(milliseconds: 4000),
@@ -203,6 +212,7 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Inter',
                                   color: Colors.white,
+                                  letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
                         borderSide: const BorderSide(

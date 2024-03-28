@@ -97,14 +97,24 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                             alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Text(
                               'Selected Photos',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                           Align(
                             alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Text(
                               '${_model.selectedPhotos.length.toString()} Selected',
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                           Padding(
@@ -210,6 +220,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
@@ -225,6 +236,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                       fontFamily: 'Inter',
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryText,
+                                      letterSpacing: 0.0,
                                     ),
                           ),
                         ),
@@ -564,6 +576,7 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Inter',
                                   color: Colors.white,
+                                  letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
                         borderSide: const BorderSide(

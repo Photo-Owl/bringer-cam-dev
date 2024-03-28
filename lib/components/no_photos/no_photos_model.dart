@@ -9,15 +9,9 @@ class NoPhotosModel extends FlutterFlowModel<NoPhotosWidget> {
   // Stores action output result for [Backend Call - API (searchFacesUsingTIF)] action in Button widget.
   ApiCallResponse? apiResult;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {}
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

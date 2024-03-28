@@ -51,7 +51,10 @@ class _NoUploadsWidgetState extends State<NoUploadsWidget> {
               Text(
                 'Seems like you don’t have any Events',
                 textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).titleMedium,
+                style: FlutterFlowTheme.of(context).titleMedium.override(
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
               ),
             ],
           ),
@@ -76,6 +79,7 @@ class _NoUploadsWidgetState extends State<NoUploadsWidget> {
                     fontFamily: 'Lexend Deca',
                     color: Colors.white,
                     fontSize: 14.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.normal,
                   ),
               elevation: 2.0,

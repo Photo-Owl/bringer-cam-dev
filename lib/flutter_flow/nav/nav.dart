@@ -86,16 +86,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'OtpVerification',
           path: '/otpVerification',
           builder: (context, params) => OtpVerificationWidget(
-            name: params.getParam('name', ParamType.String),
+            name: params.getParam(
+              'name',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
           name: 'SignIn',
           path: '/signIn',
           builder: (context, params) => SignInWidget(
-            phoneNumber: params.getParam('phoneNumber', ParamType.String),
-            name: params.getParam('name', ParamType.String),
-            qr: params.getParam('qr', ParamType.String),
+            phoneNumber: params.getParam(
+              'phoneNumber',
+              ParamType.String,
+            ),
+            name: params.getParam(
+              'name',
+              ParamType.String,
+            ),
+            qr: params.getParam(
+              'qr',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -118,7 +130,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/address',
           builder: (context, params) => AddressWidget(
             selectedPhotos: params.getParam<String>(
-                'selectedPhotos', ParamType.String, true),
+              'selectedPhotos',
+              ParamType.String,
+              true,
+            ),
           ),
         ),
         FFRoute(
@@ -126,7 +141,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/reviewOrder',
           builder: (context, params) => ReviewOrderWidget(
             selectedphotos: params.getParam<String>(
-                'selectedphotos', ParamType.String, true),
+              'selectedphotos',
+              ParamType.String,
+              true,
+            ),
           ),
         ),
         FFRoute(
@@ -143,7 +161,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ReadQr',
           path: '/readQr',
           builder: (context, params) => ReadQrWidget(
-            qrId: params.getParam('qrId', ParamType.String),
+            qrId: params.getParam(
+              'qrId',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -163,9 +184,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'userDocument': getDoc(['users'], UsersRecord.fromSnapshot),
           },
           builder: (context, params) => SocialSignInWidget(
-            phoneNumber: params.getParam('phoneNumber', ParamType.String),
-            userDocument: params.getParam('userDocument', ParamType.Document),
-            email: params.getParam('email', ParamType.String),
+            phoneNumber: params.getParam(
+              'phoneNumber',
+              ParamType.String,
+            ),
+            userDocument: params.getParam(
+              'userDocument',
+              ParamType.Document,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -178,7 +208,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/album',
           requireAuth: true,
           builder: (context, params) => AlbumWidget(
-            albumId: params.getParam('albumId', ParamType.String),
+            albumId: params.getParam(
+              'albumId',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -189,17 +222,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'albumDoc': getDoc(['albums'], AlbumsRecord.fromSnapshot),
           },
           builder: (context, params) => ImageexpandedCopyWidget(
-            albumDoc: params.getParam('albumDoc', ParamType.Document),
-            index: params.getParam('index', ParamType.int),
+            albumDoc: params.getParam(
+              'albumDoc',
+              ParamType.Document,
+            ),
+            index: params.getParam(
+              'index',
+              ParamType.int,
+            ),
           ),
         ),
         FFRoute(
           name: 'SignInCopy',
           path: '/signInCopy',
           builder: (context, params) => SignInCopyWidget(
-            phoneNumber: params.getParam('phoneNumber', ParamType.String),
-            name: params.getParam('name', ParamType.String),
-            qr: params.getParam('qr', ParamType.String),
+            phoneNumber: params.getParam(
+              'phoneNumber',
+              ParamType.String,
+            ),
+            name: params.getParam(
+              'name',
+              ParamType.String,
+            ),
+            qr: params.getParam(
+              'qr',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -209,9 +257,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             'userDocument': getDoc(['users'], UsersRecord.fromSnapshot),
           },
           builder: (context, params) => SocialSignInCopyWidget(
-            phoneNumber: params.getParam('phoneNumber', ParamType.String),
-            userDocument: params.getParam('userDocument', ParamType.Document),
-            email: params.getParam('email', ParamType.String),
+            phoneNumber: params.getParam(
+              'phoneNumber',
+              ParamType.String,
+            ),
+            userDocument: params.getParam(
+              'userDocument',
+              ParamType.Document,
+            ),
+            email: params.getParam(
+              'email',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -236,9 +293,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/LocalImage',
           requireAuth: true,
           builder: (context, params) => LocalImageWidget(
-            path: params.getParam('path', ParamType.String),
-            isUploaded: params.getParam('isUploaded', ParamType.bool),
-            index: params.getParam('index', ParamType.int),
+            path: params.getParam(
+              'path',
+              ParamType.String,
+            ),
+            isUploaded: params.getParam(
+              'isUploaded',
+              ParamType.bool,
+            ),
+            index: params.getParam(
+              'index',
+              ParamType.int,
+            ),
           ),
         ),
         FFRoute(
@@ -364,6 +430,7 @@ class FFParameters {
     ParamType type, [
     bool isList = false,
     List<String>? collectionNamePath,
+    StructBuilder<T>? structBuilder,
   ]) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -377,8 +444,13 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList,
-        collectionNamePath: collectionNamePath);
+    return deserializeParam<T>(
+      param,
+      type,
+      isList,
+      collectionNamePath: collectionNamePath,
+      structBuilder: structBuilder,
+    );
   }
 }
 

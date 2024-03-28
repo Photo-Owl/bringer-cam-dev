@@ -86,7 +86,10 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 7.0),
                   child: Text(
                     'Your Cart',
-                    style: FlutterFlowTheme.of(context).titleMedium,
+                    style: FlutterFlowTheme.of(context).titleMedium.override(
+                          fontFamily: 'Inter',
+                          letterSpacing: 0.0,
+                        ),
                   ),
                 ),
                 Padding(
@@ -132,6 +135,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                         fontFamily: 'Inter',
                                         color: FlutterFlowTheme.of(context)
                                             .accent2,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ],
@@ -154,6 +158,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
+                                    letterSpacing: 0.0,
                                   ),
                           elevation: 3.0,
                           borderSide: const BorderSide(
@@ -174,7 +179,11 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
                         'Pricing Details',
-                        style: FlutterFlowTheme.of(context).titleMedium,
+                        style:
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                       ),
                     ),
                   ],
@@ -191,6 +200,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
                             ),
                       ),
                       RichText(
@@ -205,6 +215,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -216,7 +227,11 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                               style: const TextStyle(),
                             )
                           ],
-                          style: FlutterFlowTheme.of(context).bodyMedium,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                         ),
                       ),
                     ],
@@ -234,6 +249,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
                             ),
                       ),
                       Align(
@@ -250,6 +266,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                       fontFamily: 'Inter',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
@@ -265,6 +282,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w300,
                                 ),
                           ),
@@ -285,6 +303,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),
@@ -302,6 +321,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                       fontFamily: 'Inter',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                               ),
@@ -320,6 +340,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w300,
                                 ),
                           ),
@@ -349,6 +370,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w500,
                                   ),
                             ),
@@ -367,7 +389,11 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                               ),
                             )
                           ],
-                          style: FlutterFlowTheme.of(context).bodyMedium,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -470,6 +496,7 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Inter',
                                 color: Colors.white,
+                                letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
                       borderSide: const BorderSide(

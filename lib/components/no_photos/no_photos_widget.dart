@@ -65,7 +65,10 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
               Text(
                 'Seems like you don’t have any photos',
                 textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).titleMedium,
+                style: FlutterFlowTheme.of(context).titleMedium.override(
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
               ),
             ],
           ),
@@ -94,6 +97,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
                       style: FlutterFlowTheme.of(context).titleLarge.override(
                             fontFamily: 'Inter',
                             color: FlutterFlowTheme.of(context).primaryText,
+                            letterSpacing: 0.0,
                           ),
                     ),
                     duration: const Duration(milliseconds: 5850),
@@ -111,6 +115,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
                       style: FlutterFlowTheme.of(context).titleLarge.override(
                             fontFamily: 'Inter',
                             color: FlutterFlowTheme.of(context).primaryText,
+                            letterSpacing: 0.0,
                           ),
                     ),
                     duration: const Duration(milliseconds: 5850),
@@ -133,6 +138,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
                     fontFamily: 'Lexend Deca',
                     color: Colors.white,
                     fontSize: 14.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.normal,
                   ),
               elevation: 2.0,

@@ -101,8 +101,12 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
                                   'Your Cart',
-                                  style:
-                                      FlutterFlowTheme.of(context).titleMedium,
+                                  style: FlutterFlowTheme.of(context)
+                                      .titleMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
                               ),
                             ],
@@ -302,6 +306,8 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                                               FlutterFlowTheme.of(context).primaryText,
                                                                           fontSize:
                                                                               15.0,
+                                                                          letterSpacing:
+                                                                              0.0,
                                                                           fontWeight:
                                                                               FontWeight.w500,
                                                                         ),
@@ -323,6 +329,8 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                                               FlutterFlowTheme.of(context).secondaryText,
                                                                           fontSize:
                                                                               14.0,
+                                                                          letterSpacing:
+                                                                              0.0,
                                                                         ),
                                                                   ),
                                                                   RichText(
@@ -341,6 +349,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                                                 fontFamily: 'Inter',
                                                                                 color: const Color(0xFF015C2F),
                                                                                 fontSize: 12.0,
+                                                                                letterSpacing: 0.0,
                                                                                 fontWeight: FontWeight.w600,
                                                                               ),
                                                                         ),
@@ -379,6 +388,8 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                                                 'Inter',
                                                                             fontSize:
                                                                                 12.0,
+                                                                            letterSpacing:
+                                                                                0.0,
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                           ),
@@ -441,9 +452,14 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .accent2,
+                                              letterSpacing: 0.0,
                                             ),
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium,
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: FlutterFlowTheme.of(context)
@@ -489,7 +505,9 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                           .override(
                                             fontFamily: 'Inter',
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                           ),
+                                      minLines: null,
                                       validator: _model.textControllerValidator
                                           .asValidator(context),
                                     ),
@@ -510,6 +528,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                         .override(
                                           fontFamily: 'Inter',
                                           color: Colors.white,
+                                          letterSpacing: 0.0,
                                         ),
                                     elevation: 3.0,
                                     borderSide: const BorderSide(
@@ -552,7 +571,11 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                       child: Text(
                                         'Pricing Details',
                                         style: FlutterFlowTheme.of(context)
-                                            .titleMedium,
+                                            .titleMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -575,6 +598,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                       RichText(
@@ -592,6 +616,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .primaryText,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                             ),
@@ -601,7 +626,11 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                             )
                                           ],
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyMedium,
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
                                         ),
                                       ),
                                     ],
@@ -626,6 +655,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                       Align(
@@ -646,6 +676,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -659,6 +690,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                           ),
@@ -686,6 +718,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -707,6 +740,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -723,6 +757,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                           ),
@@ -750,6 +785,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                       Align(
@@ -770,6 +806,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -783,6 +820,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                           ),
@@ -810,6 +848,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
@@ -831,6 +870,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
@@ -847,6 +887,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.w300,
                                                 ),
                                           ),
@@ -881,6 +922,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
@@ -896,8 +938,12 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                         ),
                                       )
                                     ],
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -923,6 +969,7 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                     .override(
                                       fontFamily: 'Inter',
                                       color: Colors.white,
+                                      letterSpacing: 0.0,
                                     ),
                                 elevation: 3.0,
                                 borderSide: const BorderSide(

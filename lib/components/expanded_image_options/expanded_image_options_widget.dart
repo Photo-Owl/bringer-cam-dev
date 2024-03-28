@@ -55,7 +55,10 @@ class _ExpandedImageOptionsWidgetState
             BoxShadow(
               blurRadius: 4.0,
               color: Color(0x33000000),
-              offset: Offset(0.0, 2.0),
+              offset: Offset(
+                0.0,
+                2.0,
+              ),
             )
           ],
           borderRadius: BorderRadius.circular(12.0),
@@ -75,6 +78,7 @@ class _ExpandedImageOptionsWidgetState
                     style: FlutterFlowTheme.of(context).labelMedium.override(
                           fontFamily: 'Inter',
                           fontSize: 14.0,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ),
@@ -140,6 +144,7 @@ class _ExpandedImageOptionsWidgetState
                                         fontFamily: 'Inter',
                                         color:
                                             FlutterFlowTheme.of(context).error,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ),

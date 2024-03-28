@@ -191,7 +191,12 @@ class _UploadsWidgetState extends State<UploadsWidget> {
                               builder: (context) => Text(
                                 'Hey $currentUserDisplayName',
                                 textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context).titleMedium,
+                                style: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                               ),
                             ),
                           ),

@@ -229,7 +229,11 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                       ),
                       Text(
                         'Your Premium Photos',
-                        style: FlutterFlowTheme.of(context).titleMedium,
+                        style:
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                       ),
                     ],
                   ),
@@ -292,6 +296,7 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryText,
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                     ],

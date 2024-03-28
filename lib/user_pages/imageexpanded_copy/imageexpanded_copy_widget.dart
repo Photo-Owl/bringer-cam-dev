@@ -132,6 +132,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                     fontFamily: 'Inter',
                                     color: Colors.white,
                                     fontSize: 13.0,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                       ),
@@ -185,6 +186,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                       fontFamily: 'Inter',
                                       color: Colors.white,
                                       fontSize: 10.0,
+                                      letterSpacing: 0.0,
                                     ),
                               ),
                             ),
@@ -331,6 +333,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                           fontFamily: 'Inter',
                                                           color: Colors.white,
                                                           fontSize: 12.0,
+                                                          letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w300,
                                                         ),
@@ -362,6 +365,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                         fontFamily: 'Inter',
                                                         color: Colors.white,
                                                         fontSize: 12.0,
+                                                        letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
@@ -506,6 +510,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 color: Colors
                                                                     .white,
                                                                 fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
@@ -531,6 +537,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                       .white,
                                                                   fontSize:
                                                                       12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w300,
@@ -581,6 +589,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 color: Colors
                                                                     .white,
                                                                 fontSize: 12.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .normal,
@@ -820,6 +830,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                               Colors.white,
                                                                           fontSize:
                                                                               13.0,
+                                                                          letterSpacing:
+                                                                              0.0,
                                                                           fontWeight:
                                                                               FontWeight.bold,
                                                                         ),
@@ -983,6 +995,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                       .white,
                                                                   fontSize:
                                                                       12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                           ),
                                                         ),
@@ -1180,6 +1194,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                       .white,
                                                                   fontSize:
                                                                       12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
                                                                 ),
                                                           ),
                                                         ),
@@ -1282,6 +1298,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 color: Colors
                                                                     .white,
                                                                 fontSize: 12.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                               ),
                                                         ),
                                                       ),

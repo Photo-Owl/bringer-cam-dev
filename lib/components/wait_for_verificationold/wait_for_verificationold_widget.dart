@@ -71,7 +71,10 @@ class _WaitForVerificationoldWidgetState
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x33000000),
-                          offset: Offset(0.0, 2.0),
+                          offset: Offset(
+                            0.0,
+                            2.0,
+                          ),
                         )
                       ],
                       borderRadius: BorderRadius.only(
@@ -96,6 +99,7 @@ class _WaitForVerificationoldWidgetState
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBtnText,
                                   fontSize: 20.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
@@ -128,6 +132,7 @@ class _WaitForVerificationoldWidgetState
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   fontFamily: 'Inter',
                                   fontSize: 15.0,
+                                  letterSpacing: 0.0,
                                 ),
                       ),
                     ),
@@ -144,7 +149,10 @@ class _WaitForVerificationoldWidgetState
             child: Text(
               'We\'ll text you right away when your \naccount is ready. ',
               textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyMedium,
+              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    fontFamily: 'Inter',
+                    letterSpacing: 0.0,
+                  ),
             ),
           ),
         ],

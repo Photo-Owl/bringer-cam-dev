@@ -45,7 +45,10 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
-            offset: Offset(0.0, 2.0),
+            offset: Offset(
+              0.0,
+              2.0,
+            ),
           )
         ],
       ),
@@ -79,6 +82,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
                     fontFamily: 'Inter',
                     color: FlutterFlowTheme.of(context).alternate,
                     fontSize: 20.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w500,
                   ),
             ),
@@ -98,7 +102,10 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
                     BoxShadow(
                       blurRadius: 4.0,
                       color: Color(0x33000000),
-                      offset: Offset(0.0, 2.0),
+                      offset: Offset(
+                        0.0,
+                        2.0,
+                      ),
                     )
                   ],
                   borderRadius: BorderRadius.circular(5.0),
@@ -115,6 +122,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w500,
                             ),
                       ),
@@ -128,6 +136,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
@@ -155,6 +164,7 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Inter',
                       color: Colors.white,
+                      letterSpacing: 0.0,
                     ),
                 elevation: 3.0,
                 borderSide: const BorderSide(

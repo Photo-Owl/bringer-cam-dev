@@ -90,6 +90,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBtnText,
                                   fontSize: 20.0,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
@@ -124,7 +125,10 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
               child: Text(
                 'Found more Photos you\'d like to buy ?',
-                style: FlutterFlowTheme.of(context).labelLarge,
+                style: FlutterFlowTheme.of(context).labelLarge.override(
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
               ),
             ),
             Padding(
@@ -135,10 +139,16 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                   children: [
                     TextSpan(
                       text: 'Buy them all and avail AWESOME discounts',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                     )
                   ],
-                  style: FlutterFlowTheme.of(context).bodyMedium,
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                 ),
               ),
             ),
@@ -257,6 +267,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                               fontFamily: 'Inter',
                               color:
                                   FlutterFlowTheme.of(context).primaryBtnText,
+                              letterSpacing: 0.0,
                             ),
                         borderSide: const BorderSide(
                           color: Colors.transparent,
@@ -289,6 +300,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Inter',
                                   color: Colors.white,
+                                  letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
                         borderSide: const BorderSide(

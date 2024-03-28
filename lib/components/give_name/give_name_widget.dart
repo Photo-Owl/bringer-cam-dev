@@ -92,6 +92,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                       .override(
                                         fontFamily: 'Inter',
                                         fontSize: 24.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ),
@@ -112,6 +113,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                       .override(
                                         fontFamily: 'Inter',
                                         fontSize: 14.0,
+                                        letterSpacing: 0.0,
                                       ),
                                 ),
                               ),
@@ -140,6 +142,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                           .override(
                                             fontFamily: 'Inter',
                                             fontSize: 18.0,
+                                            letterSpacing: 0.0,
                                           ),
                                       hintText: 'Abishek ',
                                       hintStyle: FlutterFlowTheme.of(context)
@@ -148,6 +151,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                             fontFamily: 'Inter',
                                             color: FlutterFlowTheme.of(context)
                                                 .accent3,
+                                            letterSpacing: 0.0,
                                           ),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -186,9 +190,14 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                             BorderRadius.circular(8.0),
                                       ),
                                     ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
                                     textAlign: TextAlign.start,
+                                    minLines: null,
                                     validator: _model.textControllerValidator
                                         .asValidator(context),
                                   ),
@@ -232,6 +241,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                         duration: const Duration(milliseconds: 4000),
@@ -258,6 +268,7 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                         fontFamily: 'Lexend Deca',
                                         color: Colors.white,
                                         fontSize: 16.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                   elevation: 2.0,

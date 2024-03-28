@@ -110,7 +110,12 @@ class _ReadQrWidgetState extends State<ReadQrWidget> {
                               0.0, 30.0, 0.0, 0.0),
                           child: Text(
                             'Follow to get your photos',
-                            style: FlutterFlowTheme.of(context).bodyMedium,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                           ),
                         ),
                         Padding(
@@ -136,6 +141,7 @@ class _ReadQrWidgetState extends State<ReadQrWidget> {
                                   .override(
                                     fontFamily: 'Inter',
                                     color: const Color(0xFF333333),
+                                    letterSpacing: 0.0,
                                   ),
                               elevation: 0.0,
                               borderSide: const BorderSide(

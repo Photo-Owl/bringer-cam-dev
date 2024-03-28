@@ -146,6 +146,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
                                               fontSize: 34.0,
+                                              letterSpacing: 0.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
@@ -163,6 +164,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                               .override(
                                                 fontFamily: 'Inter',
                                                 fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                                 lineHeight: 1.4,
                                               ),
                                         ),
@@ -202,6 +204,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                               .override(
                                                 fontFamily: 'Inter',
                                                 fontSize: 16.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -219,6 +222,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                               .override(
                                                 fontFamily: 'Inter',
                                                 fontSize: 14.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),

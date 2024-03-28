@@ -93,7 +93,12 @@ class _ProductWidgetState extends State<ProductWidget> {
                                 24.0, 20.0, 24.0, 0.0),
                             child: Text(
                               'Photo Album',
-                              style: FlutterFlowTheme.of(context).titleLarge,
+                              style: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -105,7 +110,12 @@ class _ProductWidgetState extends State<ProductWidget> {
                             child: Text(
                               'Preserve cherished moments in our A4 Photo Owl Gallery Album. Hand-pick photos from our app, printed on high-quality paper.',
                               textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context).labelMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                             ),
                           ),
                         ),
@@ -122,6 +132,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                                   .override(
                                     fontFamily: 'Inter',
                                     fontSize: 13.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                             ),
@@ -159,7 +170,10 @@ class _ProductWidgetState extends State<ProductWidget> {
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x2AFDFDFD),
-                          offset: Offset(0.0, 2.0),
+                          offset: Offset(
+                            0.0,
+                            2.0,
+                          ),
                         )
                       ],
                       borderRadius: BorderRadius.circular(0.0),
@@ -174,6 +188,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                               FlutterFlowTheme.of(context).titleMedium.override(
                                     fontFamily: 'Inter',
                                     color: Colors.white,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                       ],

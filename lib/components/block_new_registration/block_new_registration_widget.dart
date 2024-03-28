@@ -54,6 +54,7 @@ class _BlockNewRegistrationWidgetState
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Inter',
                     fontSize: 18.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w600,
                   ),
             ),
@@ -65,6 +66,7 @@ class _BlockNewRegistrationWidgetState
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Inter',
                     fontSize: 16.0,
+                    letterSpacing: 0.0,
                   ),
             ),
           ),

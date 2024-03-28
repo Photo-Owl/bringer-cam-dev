@@ -18,13 +18,13 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
   QuerySnapshot firestoreSnapshot = await FirebaseFirestore.instance
       .collection('uploads')
       .where('faces', arrayContains: 'users/$uid')
-      .orderBy('created_at', descending: true)
+      .orderBy('uploaded_at', descending: true)
       .get();
 
   QuerySnapshot ownerSnapshot = await FirebaseFirestore.instance
       .collection('uploads')
       .where('owner_id', isEqualTo: uid)
-      .orderBy('created_at', descending: true)
+      .orderBy('uploaded_at', descending: true)
       .get();
 
   // Combine the results of both queries and remove duplicates
@@ -96,13 +96,19 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
   }
 
   //return groupedImagesWithOwners;
-  return groupedImagesWithOwners.entries.map((entry) {
-    return TimelineItemStruct(
-      date: entry.key,
-      images: entry.value['images'],
-      owners: entry.value['owners'],
+  final result = <TimelineItemStruct>[];
+  for (final entry in groupedImagesWithOwners.entries) {
+    final ownerDetails =
+        await getOwnerDetails((entry.value['owners'] as Set<String>).toList());
+    result.add(
+      TimelineItemStruct(
+        date: entry.key,
+        images: List.castFrom<dynamic, ImageModelStruct>(entry.value['images']),
+        owners: ownerDetails.map((owner) => owner.name).toList(),
+      ),
     );
-  }).toList();
+  }
+  return result;
 }
 
 Future<List<ImageModelStruct>> fetchImagesFromSQLite(String uid) async {
@@ -119,7 +125,7 @@ Future<List<ImageModelStruct>> fetchImagesFromSQLite(String uid) async {
           .path
           .toString(), // Assuming 'id' is a unique identifier for each image
       imageUrl: maps[i].path, // Assuming 'path' is the URL or path to the image
-      isUploading: maps[i].isUploading, // Convert unixTimestamp to boolean
+      isUploading: maps[i].isUploading == 1,
       isLocal: true,
       timestamp: DateTime.fromMillisecondsSinceEpoch(
           maps[i].timestamp ?? 0 * 1000), // Convert unixTimestamp to DateTime

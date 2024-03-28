@@ -16,8 +16,6 @@ class UploadsModel extends FlutterFlowModel<UploadsWidget> {
   // Model for sidebar component.
   late SidebarModel sidebarModel;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     sidebarModel = createModel(context, () => SidebarModel());
@@ -28,8 +26,4 @@ class UploadsModel extends FlutterFlowModel<UploadsWidget> {
     unfocusNode.dispose();
     sidebarModel.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

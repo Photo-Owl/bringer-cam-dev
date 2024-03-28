@@ -93,8 +93,6 @@ class AddressModel extends FlutterFlowModel<AddressWidget> {
   // Stores action output result for [Backend Call - Create Document] action in Button widget.
   OrdersRecord? orderDocument;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     textController1Validator = _textController1Validator;
@@ -129,8 +127,4 @@ class AddressModel extends FlutterFlowModel<AddressWidget> {
     textFieldFocusNode7?.dispose();
     textController7?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

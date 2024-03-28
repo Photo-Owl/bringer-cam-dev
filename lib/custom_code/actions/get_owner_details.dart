@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 
 import 'package:collection/collection.dart';
 
-Future<List<String>> getOwnerImages(List<String> owners) async {
+Future<List<OwnerDetailsStruct>> getOwnerDetails(List<String> owners) async {
   var splitOwners = owners;
   if (owners.length > 4) {
     splitOwners = owners.slice(0, 4).toList();
@@ -22,7 +22,11 @@ Future<List<String>> getOwnerImages(List<String> owners) async {
       .where('uid', arrayContainsAny: splitOwners)
       .get();
   // TODO: decide on a field for photo urls
-  return ownerDetails.docs
-      .map((doc) => (doc.data()[''] as String?) ?? '')
-      .toList();
+  return ownerDetails.docs.map((doc) {
+    final data = doc.data();
+    return OwnerDetailsStruct(
+      name: (data['display_name'] as String? ?? '').split(' ')[0],
+      photoURL: data['photo_url'] as String? ?? '',
+    );
+  }).toList();
 }

@@ -9,4 +9,4 @@ export 'delete_image.dart' show deleteImage;
 export 'uploader.dart' show uploader;
 export 'start_auto_upload.dart' show startAutoUpload;
 export 'get_all_images.dart' show getAllImages;
-export 'get_owner_images.dart' show getOwnerImages;
+export 'get_owner_details.dart' show getOwnerDetails;

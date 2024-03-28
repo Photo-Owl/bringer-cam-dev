@@ -7,8 +7,6 @@ class RedirectionCopyModel extends FlutterFlowModel<RedirectionCopyWidget> {
 
   final unfocusNode = FocusNode();
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {}
 
@@ -16,8 +14,4 @@ class RedirectionCopyModel extends FlutterFlowModel<RedirectionCopyWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

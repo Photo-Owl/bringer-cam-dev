@@ -89,6 +89,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Inter',
                     fontSize: 16.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w500,
                   ),
             ),
@@ -142,6 +143,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Inter',
                       fontSize: 14.0,
+                      letterSpacing: 0.0,
                       fontWeight: FontWeight.w600,
                     ),
               ),
@@ -153,6 +155,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
                         fontSize: 12.0,
+                        letterSpacing: 0.0,
                       ),
                 ),
               ),
@@ -236,6 +239,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                     fontFamily: 'Inter',
                                                     color: const Color(0xFFEAB200),
                                                     fontSize: 18.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
@@ -253,6 +257,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                               .override(
                                                 fontFamily: 'Inter',
                                                 fontSize: 16.0,
+                                                letterSpacing: 0.0,
                                               ),
                                         ),
                                       ),
@@ -277,6 +282,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .accent2,
                                                 fontSize: 12.0,
+                                                letterSpacing: 0.0,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                         ),
@@ -327,6 +333,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                           .override(
                                             fontFamily: 'Inter',
                                             fontSize: 12.0,
+                                            letterSpacing: 0.0,
                                           ),
                                     ),
                                   ),
@@ -368,6 +375,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                   fontFamily: 'Inter',
                                                   color: const Color(0xFFEAB200),
                                                   fontSize: 10.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),
@@ -399,6 +407,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                   return 15.0;
                                                 }
                                               }(),
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                       textAlign: TextAlign.start,
@@ -425,6 +434,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                   fontFamily: 'Inter',
                                                   color: const Color(0xFFEAB200),
                                                   fontSize: 10.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),
@@ -456,6 +466,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                   return 15.0;
                                                 }
                                               }(),
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                       textAlign: TextAlign.start,
@@ -482,6 +493,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                   fontFamily: 'Inter',
                                                   color: const Color(0xFFEAB200),
                                                   fontSize: 10.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                           ),
@@ -517,6 +529,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                                   return 15.0;
                                                 }
                                               }(),
+                                              letterSpacing: 0.0,
                                             ),
                                       ),
                                       textAlign: TextAlign.start,
@@ -573,6 +586,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                         .override(
                                           fontFamily: 'Inter',
                                           color: Colors.white,
+                                          letterSpacing: 0.0,
                                         ),
                                     elevation: 3.0,
                                     borderSide: const BorderSide(
@@ -619,6 +633,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).info,
                               fontSize: 12.0,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
                               decoration: TextDecoration.underline,
                             ),
@@ -641,6 +656,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Inter',
                           color: FlutterFlowTheme.of(context).info,
+                          letterSpacing: 0.0,
                         ),
                   ),
                   textAlign: TextAlign.center,

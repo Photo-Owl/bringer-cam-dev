@@ -129,6 +129,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                     .override(
                                       fontFamily: 'Inter',
                                       fontSize: 36.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w500,
                                     ),
                               ),
@@ -147,6 +148,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                         .override(
                                           fontFamily: 'Inter',
                                           fontSize: 14.0,
+                                          letterSpacing: 0.0,
                                         ),
                                   ),
                                 ),
@@ -343,6 +345,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                             fontFamily: 'Inter',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBtnText,
+                                            letterSpacing: 0.0,
                                           ),
                                       elevation: 2.0,
                                       borderSide: const BorderSide(
@@ -410,6 +413,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                           fontFamily: 'Inter',
                                           color: const Color(0xFF1589FC),
                                           fontSize: 15.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -440,6 +444,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryText,
                                         fontSize: 13.0,
+                                        letterSpacing: 0.0,
                                         fontWeight: FontWeight.w500,
                                         decoration: TextDecoration.underline,
                                       ),
@@ -470,6 +475,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
                                           fontSize: 18.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                         ),
                                   ),
@@ -500,6 +506,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                 .override(
                                   fontFamily: 'Inter',
                                   color: Colors.white,
+                                  letterSpacing: 0.0,
                                 ),
                             elevation: 3.0,
                             borderSide: const BorderSide(

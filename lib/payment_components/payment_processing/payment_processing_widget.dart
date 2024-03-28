@@ -51,7 +51,10 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
-            offset: Offset(0.0, 2.0),
+            offset: Offset(
+              0.0,
+              2.0,
+            ),
           )
         ],
       ),
@@ -86,6 +89,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     fontFamily: 'Inter',
                     fontSize: 20.0,
+                    letterSpacing: 0.0,
                     fontWeight: FontWeight.w500,
                   ),
             ),
@@ -106,7 +110,10 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                     BoxShadow(
                       blurRadius: 4.0,
                       color: Color(0x33000000),
-                      offset: Offset(0.0, 2.0),
+                      offset: Offset(
+                        0.0,
+                        2.0,
+                      ),
                     )
                   ],
                   borderRadius: BorderRadius.circular(5.0),
@@ -122,6 +129,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).error,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -134,6 +142,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primaryText,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -157,6 +166,7 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Inter',
                                     fontSize: 12.0,
+                                    letterSpacing: 0.0,
                                     fontWeight: FontWeight.w300,
                                     decoration: TextDecoration.underline,
                                   ),
