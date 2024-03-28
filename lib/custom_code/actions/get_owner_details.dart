@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
 Future<List<OwnerDetailsStruct>> getOwnerDetails(List<String> owners) async {
+  if (owners.isEmpty) return [];
   var splitOwners = owners;
   if (owners.length > 4) {
     splitOwners = owners.slice(0, 4).toList();
