@@ -45,7 +45,7 @@ class Uploader {
         (row) => UploadItem(
           path: row.path,
           unixTimestamp: row.unixTimestamp,
-          isUploading: row.isUploading,
+          isUploading: row.isUploading == 1,
         ),
       ));
     });

@@ -27,7 +27,7 @@ class FetchImagesToUploadRow extends SqliteRow {
 
   String get path => data['path'] as String;
   int? get unixTimestamp => data['unixTimestamp'] as int?;
-  bool? get isUploading => data['isUploading'] as bool?;
+  int? get isUploading => data['isUploading'] as int?;
 }
 
 /// END FETCHIMAGESTOUPLOAD
