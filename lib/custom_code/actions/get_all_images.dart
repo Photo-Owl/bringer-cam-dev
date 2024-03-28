@@ -102,7 +102,7 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
       images: entry.value['images'],
       owners: entry.value['owners'],
     );
-  });
+  }).toList();
 }
 
 Future<List<ImageModelStruct>> fetchImagesFromSQLite(String uid) async {

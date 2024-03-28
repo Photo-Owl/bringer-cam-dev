@@ -19,7 +19,7 @@ String convertToImagePath(String url) {
   if (url.startsWith('http')) {
     return url;
   } else {
-    return 'https://firebasestorage.googleapis.com/v0/b/flutter-firebase-tutorial-f7d8a.appspot.com/o/' +
+    return 'https://firebasestorage.googleapis.com/v0/b/bringer-cam-dev.appspot.com/o/' +
         url +
         '?alt=media';
   }
