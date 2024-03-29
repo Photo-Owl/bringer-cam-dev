@@ -426,6 +426,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 onRefresh: () async {
                                   logFirebaseEvent(
                                       'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
+                                  logFirebaseEvent(
+                                      'ListView_update_page_state');
+                                  setState(() {
+                                    _model.loaded = false;
+                                  });
                                   logFirebaseEvent('ListView_custom_action');
                                   _model.imagesCopy =
                                       await actions.getAllImages(

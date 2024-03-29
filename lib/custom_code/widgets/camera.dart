@@ -184,6 +184,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
       return;
     }
     try {
+      final uploader = Uploader();
+      uploader.appState = context.read<FFAppState>();
       final file = await controller!.takePicture();
       final filePath = file.path;
       final rootIsolateToken = RootIsolateToken.instance!;
@@ -193,8 +195,6 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         debugLabel: 'SaveImageIsolate',
       );
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch;
-      final uploader = Uploader();
-      uploader.appState = context.read<FFAppState>();
       await uploader.addToUploadQueue(newPath, unixTimestamp);
       return;
     } catch (e) {
