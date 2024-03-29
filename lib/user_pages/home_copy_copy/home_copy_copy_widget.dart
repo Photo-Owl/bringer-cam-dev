@@ -659,36 +659,76 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                             builder: (context) {
                                                               if (!imagesListItem
                                                                   .isLocal) {
-                                                                return ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              8.0),
+                                                                return InkWell(
+                                                                  splashColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  focusColor: Colors
+                                                                      .transparent,
+                                                                  hoverColor: Colors
+                                                                      .transparent,
+                                                                  highlightColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  onTap:
+                                                                      () async {
+                                                                    logFirebaseEvent(
+                                                                        'HOME_COPY_COPY_Image_203iliga_ON_TAP');
+                                                                    logFirebaseEvent(
+                                                                        'Image_navigate_to');
+
+                                                                    context
+                                                                        .pushNamed(
+                                                                      'ImageexpandedCopy',
+                                                                      queryParameters:
+                                                                          {
+                                                                        'albumDoc':
+                                                                            serializeParam(
+                                                                          albumItem
+                                                                              .images,
+                                                                          ParamType
+                                                                              .DataStruct,
+                                                                          true,
+                                                                        ),
+                                                                        'index':
+                                                                            serializeParam(
+                                                                          albumIndex,
+                                                                          ParamType
+                                                                              .int,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+                                                                  },
                                                                   child:
-                                                                      OctoImage(
-                                                                    placeholderBuilder: (_) =>
-                                                                        const SizedBox
-                                                                            .expand(
-                                                                      child:
-                                                                          Image(
-                                                                        image: BlurHashImage(
-                                                                            'LAKBRFxu9FWB-;M{~qRj00xu00j['),
-                                                                        fit: BoxFit
-                                                                            .cover,
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                    child:
+                                                                        OctoImage(
+                                                                      placeholderBuilder:
+                                                                          (_) =>
+                                                                              const SizedBox.expand(
+                                                                        child:
+                                                                            Image(
+                                                                          image:
+                                                                              BlurHashImage('LAKBRFxu9FWB-;M{~qRj00xu00j['),
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
                                                                       ),
+                                                                      image:
+                                                                          CachedNetworkImageProvider(
+                                                                        functions
+                                                                            .convertToImagePath(imagesListItem.imageUrl),
+                                                                      ),
+                                                                      width:
+                                                                          100.0,
+                                                                      height:
+                                                                          100.0,
+                                                                      fit: BoxFit
+                                                                          .cover,
                                                                     ),
-                                                                    image:
-                                                                        CachedNetworkImageProvider(
-                                                                      functions.convertToImagePath(
-                                                                          imagesListItem
-                                                                              .imageUrl),
-                                                                    ),
-                                                                    width:
-                                                                        100.0,
-                                                                    height:
-                                                                        100.0,
-                                                                    fit: BoxFit
-                                                                        .cover,
                                                                   ),
                                                                 );
                                                               } else {
@@ -724,22 +764,18 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
 
                                                                       context
                                                                           .pushNamed(
-                                                                        'LocalImage',
+                                                                        'ImageexpandedCopy',
                                                                         queryParameters:
                                                                             {
-                                                                          'path':
+                                                                          'albumDoc':
                                                                               serializeParam(
-                                                                            imagesListItem.imageUrl,
-                                                                            ParamType.String,
-                                                                          ),
-                                                                          'isUploaded':
-                                                                              serializeParam(
-                                                                            false,
-                                                                            ParamType.bool,
+                                                                            albumItem.images,
+                                                                            ParamType.DataStruct,
+                                                                            true,
                                                                           ),
                                                                           'index':
                                                                               serializeParam(
-                                                                            imagesListIndex,
+                                                                            albumIndex,
                                                                             ParamType.int,
                                                                           ),
                                                                         }.withoutNulls,

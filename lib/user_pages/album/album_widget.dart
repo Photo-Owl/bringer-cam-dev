@@ -594,25 +594,6 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                             onTap: () async {
                                               logFirebaseEvent(
                                                   'ALBUM_PAGE_Image_jcrrry3c_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Image_navigate_to');
-
-                                              context.pushNamed(
-                                                'ImageexpandedCopy',
-                                                queryParameters: {
-                                                  'albumDoc': serializeParam(
-                                                    albumAlbumsRecord,
-                                                    ParamType.Document,
-                                                  ),
-                                                  'index': serializeParam(
-                                                    wrapIndex,
-                                                    ParamType.int,
-                                                  ),
-                                                }.withoutNulls,
-                                                extra: <String, dynamic>{
-                                                  'albumDoc': albumAlbumsRecord,
-                                                },
-                                              );
                                             },
                                             child: ClipRRect(
                                               borderRadius:

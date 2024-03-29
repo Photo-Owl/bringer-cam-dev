@@ -218,13 +218,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ImageexpandedCopy',
           path: '/imageexpandedCopy',
           requireAuth: true,
-          asyncParams: {
-            'albumDoc': getDoc(['albums'], AlbumsRecord.fromSnapshot),
-          },
           builder: (context, params) => ImageexpandedCopyWidget(
-            albumDoc: params.getParam(
+            albumDoc: params.getParam<ImageModelStruct>(
               'albumDoc',
-              ParamType.Document,
+              ParamType.DataStruct,
+              true,
+              ImageModelStruct.fromSerializableMap,
             ),
             index: params.getParam(
               'index',

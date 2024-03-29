@@ -884,16 +884,16 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                                       'ImageexpandedCopy',
                                                                                       queryParameters: {
                                                                                         'albumDoc': serializeParam(
-                                                                                          containerAlbumsRecord,
-                                                                                          ParamType.Document,
+                                                                                          (albumItem.toList().map<ImageModelStruct?>(ImageModelStruct.maybeFromMap).toList() as Iterable<ImageModelStruct?>).withoutNulls,
+                                                                                          ParamType.DataStruct,
+                                                                                          true,
                                                                                         ),
                                                                                         'index': serializeParam(
-                                                                                          wrapIndex,
+                                                                                          albumIndex,
                                                                                           ParamType.int,
                                                                                         ),
                                                                                       }.withoutNulls,
                                                                                       extra: <String, dynamic>{
-                                                                                        'albumDoc': containerAlbumsRecord,
                                                                                         kTransitionInfoKey: const TransitionInfo(
                                                                                           hasTransition: true,
                                                                                           transitionType: PageTransitionType.scale,
@@ -1041,16 +1041,16 @@ class _HomeCopyWidgetState extends State<HomeCopyWidget>
                                                                               'ImageexpandedCopy',
                                                                               queryParameters: {
                                                                                 'albumDoc': serializeParam(
-                                                                                  containerAlbumsRecord,
-                                                                                  ParamType.Document,
+                                                                                  (albumItem.toList().map<ImageModelStruct?>(ImageModelStruct.maybeFromMap).toList() as Iterable<ImageModelStruct?>).withoutNulls,
+                                                                                  ParamType.DataStruct,
+                                                                                  true,
                                                                                 ),
                                                                                 'index': serializeParam(
-                                                                                  wrapIndex,
+                                                                                  albumIndex,
                                                                                   ParamType.int,
                                                                                 ),
                                                                               }.withoutNulls,
                                                                               extra: <String, dynamic>{
-                                                                                'albumDoc': containerAlbumsRecord,
                                                                                 kTransitionInfoKey: const TransitionInfo(
                                                                                   hasTransition: true,
                                                                                   transitionType: PageTransitionType.scale,

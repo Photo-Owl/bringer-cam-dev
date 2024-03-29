@@ -17,8 +17,6 @@ class ImageexpandedCopyModel extends FlutterFlowModel<ImageexpandedCopyWidget> {
   int carouselCurrentIndex = 1;
 
   // Stores action output result for [Custom Action - getDownloadUrl] action in Container widget.
-  String? downloadUrl1;
-  // Stores action output result for [Custom Action - getDownloadUrl] action in Container widget.
   String? downloadUrl;
 
   @override
