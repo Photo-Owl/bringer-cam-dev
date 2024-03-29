@@ -12,13 +12,12 @@ import 'package:flutter/material.dart';
 
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart';
 
 import 'package:android_download_manager/android_download_manager.dart';
 
-Future<void> downloadImage(
-  String url,
-  String key,
-) async {
+Future<void> downloadImage(String url) async {
+  final key = Uri.parse(url).pathSegments.last;
   if (defaultTargetPlatform != TargetPlatform.android) {
     await FileSaver.instance.saveFile(name: key, link: LinkDetails(link: url));
     return;
