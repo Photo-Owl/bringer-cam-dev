@@ -15,21 +15,21 @@ import 'package:sqflite/sqflite.dart';
 
 Future<List<TimelineItemStruct>> getAllImages(String uid) async {
   // Fetch images from Firestore with the specified filters
-  QuerySnapshot firestoreSnapshot = await FirebaseFirestore.instance
+  final firestoreSnapshot = await FirebaseFirestore.instance
       .collection('uploads')
       .where('faces', arrayContains: 'users/$uid')
       .orderBy('uploaded_at', descending: true)
       .get();
 
-  QuerySnapshot ownerSnapshot = await FirebaseFirestore.instance
+  final ownerSnapshot = await FirebaseFirestore.instance
       .collection('uploads')
       .where('owner_id', isEqualTo: uid)
       .orderBy('uploaded_at', descending: true)
       .get();
 
   // Combine the results of both queries and remove duplicates
-  Set<String> uniqueDocIds = {};
-  List<QueryDocumentSnapshot> combinedDocs = [];
+  final uniqueDocIds = <String>{};
+  final combinedDocs = <QueryDocumentSnapshot<Map<String, dynamic>>>[];
   for (var doc in [...firestoreSnapshot.docs, ...ownerSnapshot.docs]) {
     if (!uniqueDocIds.contains(doc.id)) {
       uniqueDocIds.add(doc.id);
@@ -50,19 +50,22 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
         'owners': Set<String>(),
       };
     }
+    print(doc);
+    if (doc.data().containsKey('key') &&
+        doc.data().containsKey('resized_image_250')) {
+      groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
+        id: doc['key'],
+        imageUrl: doc['resized_image_250'],
+        isUploading: null, // This is Firestore data, so isUploading is null
+        isLocal: false,
+        timestamp: doc['uploaded_at']?.toDate() ??
+            DateTime.fromMillisecondsSinceEpoch(0), // Timestamp from Firestore
+      ));
+      // Add image to the group
 
-    // Add image to the group
-    groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
-      id: doc['key'] ?? '',
-      imageUrl: doc['resized_image_250'] ?? '',
-      isUploading: null, // This is Firestore data, so isUploading is null
-      isLocal: false,
-      timestamp: doc['uploaded_at']?.toDate() ??
-          DateTime.fromMillisecondsSinceEpoch(0), // Timestamp from Firestore
-    ));
-
-    // Add owner to the set of unique owners for this date
-    groupedImagesWithOwners[date]!['owners'].add(ownerId);
+      // Add owner to the set of unique owners for this date
+      groupedImagesWithOwners[date]!['owners'].add(ownerId);
+    }
   }
 
   // Fetch images from SQLite and merge them with Firestore images
@@ -70,19 +73,27 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
       await fetchImagesFromSQLite(uid); // Assuming you have this method
 
   // Merge and sort images by date
-  List<ImageModelStruct> combinedImages = [
-    ...firestoreSnapshot.docs.map((doc) => ImageModelStruct(
-          id: doc['key'] ?? '',
-          imageUrl: doc['resized_image_250'] ?? '',
+  List<ImageModelStruct> combinedImages = [...sqliteImages];
+  for (final doc in firestoreSnapshot.docs) {
+    final data = doc.data();
+    if ([data['key'], data['resized_image_250'], data['uploaded_at']]
+        .every((element) => element != null)) {
+      combinedImages.add(
+        ImageModelStruct(
+          id: doc['key'],
+          imageUrl: doc['resized_image_250'],
           isUploading: null, // This is Firestore data, so isUploading is null
           isLocal: false,
-          timestamp: doc['uploaded_at']?.toDate() ??
-              DateTime.fromMillisecondsSinceEpoch(
-                  0), // Timestamp from Firestore
-        )),
-    ...sqliteImages
-  ]..sort((a, b) => (b.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0))
-      .compareTo(a.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0)));
+          timestamp: doc['uploaded_at']?.toDate(), // Timestamp from Firestore
+        ),
+      );
+    }
+  }
+  combinedImages.sort(
+    (a, b) => (b.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0)).compareTo(
+      a.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0),
+    ),
+  );
 
   // Group SQLite images by date and add them to the existing groups
   for (var image in combinedImages) {
