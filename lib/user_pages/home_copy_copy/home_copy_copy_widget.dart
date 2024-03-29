@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/fetching_photos_widget.dart';
 import '/components/give_name/give_name_widget.dart';
@@ -9,7 +8,6 @@ import '/components/update_required/update_required_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -18,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 import 'home_copy_copy_model.dart';
@@ -427,27 +426,16 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 onRefresh: () async {
                                   logFirebaseEvent(
                                       'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
-                                  if (valueOrDefault(
-                                          currentUserDocument?.progressLevel,
-                                          0.0) <
-                                      99.0) {
-                                    return;
-                                  }
-
-                                  logFirebaseEvent('ListView_backend_call');
-                                  unawaited(
-                                    () async {
-                                      await SearchFacesUsingTIFCall.call(
-                                        uid: currentUserUid,
-                                        sourceKey: valueOrDefault(
-                                            currentUserDocument
-                                                ?.refrencePhotoKey,
-                                            ''),
-                                        faceid: valueOrDefault(
-                                            currentUserDocument?.faceId, ''),
-                                      );
-                                    }(),
+                                  logFirebaseEvent('ListView_custom_action');
+                                  _model.imagesCopy =
+                                      await actions.getAllImages(
+                                    currentUserUid,
                                   );
+                                  logFirebaseEvent(
+                                      'ListView_update_page_state');
+                                  setState(() {
+                                    _model.loaded = true;
+                                  });
                                 },
                                 child: ListView.separated(
                                   padding: const EdgeInsets.fromLTRB(
@@ -822,6 +810,33 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                                 ],
                                                                                 begin: AlignmentDirectional(1.0, 1.0),
                                                                                 end: AlignmentDirectional(-1.0, -1.0),
+                                                                              ),
+                                                                            ),
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: const AlignmentDirectional(1.0, 1.0),
+                                                                              child: Builder(
+                                                                                builder: (context) {
+                                                                                  if (imagesListItem.isUploading) {
+                                                                                    return Padding(
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                      child: Icon(
+                                                                                        Icons.cloud_upload_outlined,
+                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                        size: 14.0,
+                                                                                      ),
+                                                                                    );
+                                                                                  } else {
+                                                                                    return Padding(
+                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                      child: FaIcon(
+                                                                                        FontAwesomeIcons.clock,
+                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                        size: 14.0,
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                },
                                                                               ),
                                                                             ),
                                                                           ),

@@ -20,6 +20,8 @@ class HomeCopyCopyModel extends FlutterFlowModel<HomeCopyCopyWidget> {
   List<TimelineItemStruct>? images;
   // Model for sidebar component.
   late SidebarModel sidebarModel;
+  // Stores action output result for [Custom Action - getAllImages] action in ListView widget.
+  List<TimelineItemStruct>? imagesCopy;
   // Model for FetchingPhotos component.
   late FetchingPhotosModel fetchingPhotosModel;
 
