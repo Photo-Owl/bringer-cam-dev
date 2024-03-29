@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/foundation.dart';
 import '/backend/firebase/firebase_config.dart';
 import '/custom_code/actions/uploader.dart';
@@ -35,6 +37,8 @@ Future startAutoUpload() async {
     'com.smoose.photoowldev.uploadTask',
     frequency: const Duration(minutes: 15),
   );
-  final uploader = Uploader();
-  uploader.uploadImages();
+  if (FirebaseAuth.instance.currentUser != null) {
+    final uploader = Uploader();
+    uploader.uploadImages();
+  }
 }

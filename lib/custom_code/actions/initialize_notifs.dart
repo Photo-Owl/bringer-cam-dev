@@ -27,15 +27,18 @@ Future<void> initializeNotifs() async {
     provisional: true,
     badge: true,
   );
-  final uid = FirebaseAuth.instance.currentUser!.uid;
-  if (notificationSettings.authorizationStatus ==
-      AuthorizationStatus.authorized) {
-    final fcmToken = await FirebaseMessaging.instance.getToken();
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .update({'fcmToken': fcmToken});
+  if (FirebaseAuth.instance.currentUser != null) {
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    if (notificationSettings.authorizationStatus ==
+        AuthorizationStatus.authorized) {
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .update({'fcmToken': fcmToken});
+    }
   }
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   _firebaseMessaging.getInitialMessage();
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
