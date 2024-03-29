@@ -53,7 +53,7 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
 
     // Add image to the group
     groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
-      id: doc.id,
+      id: doc['key'],
       imageUrl: doc['resized_image_250'],
       isUploading: null, // This is Firestore data, so isUploading is null
       isLocal: false,
@@ -71,7 +71,7 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
   // Merge and sort images by date
   List<ImageModelStruct> combinedImages = [
     ...firestoreSnapshot.docs.map((doc) => ImageModelStruct(
-          id: doc.id,
+          id: doc['key'],
           imageUrl: doc['resized_image_250'],
           isUploading: null, // This is Firestore data, so isUploading is null
           isLocal: false,

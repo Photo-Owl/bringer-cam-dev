@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/expanded_image_options/expanded_image_options_widget.dart';
 import '/components/invitelink/invitelink_widget.dart';
@@ -8,7 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -40,19 +39,6 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
-    'containerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 100.ms),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 100.ms,
-          duration: 400.ms,
-          begin: const Offset(0.0, 20.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
     'columnOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
@@ -139,11 +125,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 5.0, 0.0, 2.0),
                               child: Text(
-                                (widget.albumDoc![
-                                        (widget.albumDoc![widget.index!])
-                                            .timestamp!
-                                            .secondsSinceEpoch])
-                                    .id,
+                                'Text',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -244,240 +226,62 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                   decoration: const BoxDecoration(
                     color: Colors.black,
                   ),
-                  child: StreamBuilder<List<UploadsRecord>>(
-                    stream: queryUploadsRecord(
-                      queryBuilder: (uploadsRecord) => uploadsRecord
-                          .where(
-                            'faces',
-                            arrayContains: 'users/$currentUserUid',
-                          )
-                          .where(
-                            'album_id',
-                            isEqualTo: (widget.albumDoc?[widget.index!])?.id,
-                          )
-                          .orderBy('uploaded_at', descending: true),
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Color(0xFF5282E5),
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                      List<UploadsRecord> carouselUploadsRecordList =
-                          snapshot.data!;
-                      return SizedBox(
-                        width: double.infinity,
-                        height: MediaQuery.sizeOf(context).height * 1.0,
-                        child: CarouselSlider.builder(
-                          itemCount: carouselUploadsRecordList.length,
-                          itemBuilder: (context, carouselIndex, _) {
-                            final carouselUploadsRecord =
-                                carouselUploadsRecordList[carouselIndex];
-                            return Visibility(
-                              visible:
-                                  (widget.albumDoc?[widget.index!])?.isLocal ??
-                                      true,
-                              child: Column(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: MediaQuery.sizeOf(context).height * 1.0,
+                    child: CarouselSlider(
+                      items: [
+                        Stack(
+                          children: [
+                            if ((widget.albumDoc?[widget.index!])?.isLocal ??
+                                true)
+                              Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    constraints: BoxConstraints(
-                                      minHeight:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.3,
-                                      maxWidth:
-                                          MediaQuery.sizeOf(context).width *
-                                              1.0,
-                                      maxHeight:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.5,
-                                    ),
-                                    decoration: const BoxDecoration(
-                                      color: Colors.black,
-                                    ),
-                                    child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        child: CachedNetworkImage(
-                                          fadeInDuration:
-                                              const Duration(milliseconds: 0),
-                                          fadeOutDuration:
-                                              const Duration(milliseconds: 0),
-                                          imageUrl: (widget.albumDoc?[
-                                                          widget.index!])
-                                                      ?.isLocal ==
-                                                  true
-                                              ? functions.convertToImagePath(
-                                                  carouselUploadsRecord
-                                                      .resizedImage600)
-                                              : functions.convertToImagePath(
-                                                  carouselUploadsRecord
-                                                      .resizedImage600),
-                                          fit: BoxFit.scaleDown,
-                                          alignment: const Alignment(0.0, 0.0),
-                                        ),
+                                  StreamBuilder<List<UploadsRecord>>(
+                                    stream: queryUploadsRecord(
+                                      queryBuilder: (uploadsRecord) =>
+                                          uploadsRecord.where(
+                                        'key',
+                                        isEqualTo:
+                                            (widget.albumDoc?[widget.index!])
+                                                ?.id,
                                       ),
+                                      singleRecord: true,
                                     ),
-                                  ),
-                                  if (currentUserPhoto == '')
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          15.0, 10.0, 15.0, 10.0),
-                                      child: AuthUserStreamWidget(
-                                        builder: (context) => Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width *
-                                                  1.0,
-                                          constraints: const BoxConstraints(
-                                            maxWidth: 750.0,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Colors.black,
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Want to see all your photos?',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color: Colors.white,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
-                                                ),
-                                                FFButtonWidget(
-                                                  onPressed: () async {
-                                                    logFirebaseEvent(
-                                                        'IMAGEEXPANDED_COPY_TAKE_SELFIE_BTN_ON_TA');
-                                                    logFirebaseEvent(
-                                                        'Button_navigate_to');
-
-                                                    context.pushNamed(
-                                                        'RedirectionCopy');
-                                                  },
-                                                  text: 'Take Selfie',
-                                                  options: FFButtonOptions(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(24.0, 0.0,
-                                                                24.0, 0.0),
-                                                    iconPadding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 0.0),
-                                                    color: const Color(0xFF007EFC),
-                                                    textStyle: FlutterFlowTheme
-                                                            .of(context)
-                                                        .titleSmall
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color: Colors.white,
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                    elevation: 0.0,
-                                                    borderSide: const BorderSide(
-                                                      color: Colors.transparent,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                ),
-                                              ],
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return const Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                Color(0xFF5282E5),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      FutureBuilder<
-                                          List<PremiumPhotoPurchasesRecord>>(
-                                        future:
-                                            queryPremiumPhotoPurchasesRecordOnce(
-                                          queryBuilder:
-                                              (premiumPhotoPurchasesRecord) =>
-                                                  premiumPhotoPurchasesRecord
-                                                      .where(
-                                                        'uid',
-                                                        isEqualTo:
-                                                            currentUserUid,
-                                                      )
-                                                      .where(
-                                                        'key',
-                                                        isEqualTo:
-                                                            carouselUploadsRecord
-                                                                .key,
-                                                      )
-                                                      .where(
-                                                        'status',
-                                                        isEqualTo: 'Purchased',
-                                                      ),
-                                          singleRecord: true,
-                                        ),
-                                        builder: (context, snapshot) {
-                                          // Customize what your widget looks like when it's loading.
-                                          if (!snapshot.hasData) {
-                                            return const Center(
-                                              child: SizedBox(
-                                                width: 10.0,
-                                                height: 10.0,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(
-                                                    Colors.transparent,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                          List<PremiumPhotoPurchasesRecord>
-                                              photopurchasedPremiumPhotoPurchasesRecordList =
-                                              snapshot.data!;
-                                          // Return an empty Container when the item does not exist.
-                                          if (snapshot.data!.isEmpty) {
-                                            return Container();
-                                          }
-                                          final photopurchasedPremiumPhotoPurchasesRecord =
-                                              photopurchasedPremiumPhotoPurchasesRecordList
-                                                      .isNotEmpty
-                                                  ? photopurchasedPremiumPhotoPurchasesRecordList
-                                                      .first
-                                                  : null;
-                                          return Container(
+                                        );
+                                      }
+                                      List<UploadsRecord>
+                                          columnUploadsRecordList =
+                                          snapshot.data!;
+                                      // Return an empty Container when the item does not exist.
+                                      if (snapshot.data!.isEmpty) {
+                                        return Container();
+                                      }
+                                      final columnUploadsRecord =
+                                          columnUploadsRecordList.isNotEmpty
+                                              ? columnUploadsRecordList.first
+                                              : null;
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
                                             constraints: const BoxConstraints(
                                               maxWidth: 750.0,
                                             ),
@@ -499,8 +303,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                       'Container_custom_action');
                                                   await actions.getDownloadUrl(
                                                     currentUserUid,
-                                                    photopurchasedPremiumPhotoPurchasesRecord!
-                                                        .key,
+                                                    columnUploadsRecord!.key,
                                                   );
                                                 },
                                                 child: Container(
@@ -609,7 +412,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                             await actions
                                                                 .getDownloadUrl(
                                                               currentUserUid,
-                                                              photopurchasedPremiumPhotoPurchasesRecord!
+                                                              columnUploadsRecord!
                                                                   .key,
                                                             );
                                                           },
@@ -665,429 +468,259 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                 ),
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          FutureBuilder<ApiCallResponse>(
-                                            future: GetBannerDetailsCall.call(
-                                              uid: currentUserUid,
-                                              key: carouselUploadsRecord.key,
-                                            ),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return const Center(
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(10.0),
-                                                    child: SizedBox(
-                                                      width: 10.0,
-                                                      height: 10.0,
-                                                      child: SpinKitThreeBounce(
-                                                        color:
-                                                            Colors.transparent,
-                                                        size: 10.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              final bannerGetBannerDetailsResponse =
-                                                  snapshot.data!;
-                                              return Container(
+                                          ),
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Container(
                                                 width:
                                                     MediaQuery.sizeOf(context)
                                                             .width *
                                                         1.0,
-                                                decoration: const BoxDecoration(
-                                                  color: Colors.black,
-                                                ),
-                                                child: Visibility(
-                                                  visible: valueOrDefault<bool>(
-                                                    bannerGetBannerDetailsResponse
-                                                        .succeeded,
-                                                    false,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(10.0),
-                                                    child: StreamBuilder<
-                                                        List<BannersRecord>>(
-                                                      stream:
-                                                          queryBannersRecord(
-                                                        queryBuilder:
-                                                            (bannersRecord) =>
-                                                                bannersRecord
-                                                                    .where(
-                                                          'banner_id',
-                                                          isEqualTo:
-                                                              GetBannerDetailsCall
-                                                                  .bannerId(
-                                                            bannerGetBannerDetailsResponse
-                                                                .jsonBody,
-                                                          ).toString(),
-                                                        ),
-                                                        singleRecord: true,
-                                                      ),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        // Customize what your widget looks like when it's loading.
-                                                        if (!snapshot.hasData) {
-                                                          return Center(
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(
-                                                                          20.0),
-                                                              child: SizedBox(
-                                                                width: 15.0,
-                                                                height: 15.0,
-                                                                child:
-                                                                    SpinKitWanderingCubes(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  size: 15.0,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }
-                                                        List<BannersRecord>
-                                                            containerBannersRecordList =
-                                                            snapshot.data!;
-                                                        // Return an empty Container when the item does not exist.
-                                                        if (snapshot
-                                                            .data!.isEmpty) {
-                                                          return Container();
-                                                        }
-                                                        final containerBannersRecord =
-                                                            containerBannersRecordList
-                                                                    .isNotEmpty
-                                                                ? containerBannersRecordList
-                                                                    .first
-                                                                : null;
-                                                        return InkWell(
-                                                          splashColor: Colors
-                                                              .transparent,
-                                                          focusColor: Colors
-                                                              .transparent,
-                                                          hoverColor: Colors
-                                                              .transparent,
-                                                          highlightColor: Colors
-                                                              .transparent,
-                                                          onTap: () async {
-                                                            logFirebaseEvent(
-                                                                'IMAGEEXPANDED_COPY_Container_vg2lblik_ON');
-                                                            logFirebaseEvent(
-                                                                'Container_backend_call');
-
-                                                            await UserEventsRecord
-                                                                .collection
-                                                                .doc()
-                                                                .set(
-                                                                    createUserEventsRecordData(
-                                                                  eventName:
-                                                                      'Banner Click',
-                                                                  uid:
-                                                                      currentUserUid,
-                                                                  timestamp:
-                                                                      getCurrentTimestamp,
-                                                                  albumId: (widget
-                                                                              .albumDoc?[
-                                                                          widget
-                                                                              .index!])
-                                                                      ?.id,
-                                                                  key:
-                                                                      carouselUploadsRecord
-                                                                          .key,
-                                                                  bannerId:
-                                                                      containerBannersRecord
-                                                                          .bannerId,
-                                                                ));
-                                                            logFirebaseEvent(
-                                                                'Container_backend_call');
-
-                                                            await containerBannersRecord
-                                                                .reference
-                                                                .update({
-                                                              ...mapToFirestore(
-                                                                {
-                                                                  'click_count':
-                                                                      FieldValue
-                                                                          .increment(
-                                                                              1),
+                                                decoration: const BoxDecoration(),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(10.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Builder(
+                                                          builder: (context) =>
+                                                              InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              logFirebaseEvent(
+                                                                  'IMAGEEXPANDED_COPY_Container_a0r0ue0n_ON');
+                                                              logFirebaseEvent(
+                                                                  'Container_alert_dialog');
+                                                              await showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (dialogContext) {
+                                                                  return Dialog(
+                                                                    elevation:
+                                                                        0,
+                                                                    insetPadding:
+                                                                        EdgeInsets
+                                                                            .zero,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    alignment: const AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0)
+                                                                        .resolve(
+                                                                            Directionality.of(context)),
+                                                                    child:
+                                                                        GestureDetector(
+                                                                      onTap: () => _model
+                                                                              .unfocusNode
+                                                                              .canRequestFocus
+                                                                          ? FocusScope.of(context).requestFocus(_model
+                                                                              .unfocusNode)
+                                                                          : FocusScope.of(context)
+                                                                              .unfocus(),
+                                                                      child:
+                                                                          const InvitelinkWidget(),
+                                                                    ),
+                                                                  );
                                                                 },
-                                                              ),
-                                                            });
-                                                            logFirebaseEvent(
-                                                                'Container_launch_u_r_l');
-                                                            await launchURL(
-                                                                GetBannerDetailsCall
-                                                                    .redirectUrl(
-                                                              bannerGetBannerDetailsResponse
-                                                                  .jsonBody,
-                                                            ).toString());
-                                                          },
-                                                          child: Container(
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  colorFromCssString(
-                                                                GetBannerDetailsCall
-                                                                    .bannerColor(
-                                                                  bannerGetBannerDetailsResponse
-                                                                      .jsonBody,
-                                                                )!,
-                                                                defaultColor:
-                                                                    Colors
-                                                                        .black,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10.0),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(
-                                                                          12.0),
+                                                              ).then((value) =>
+                                                                  setState(
+                                                                      () {}));
+                                                            },
+                                                            child: Container(
+                                                              decoration:
+                                                                  const BoxDecoration(),
                                                               child: Column(
                                                                 mainAxisSize:
                                                                     MainAxisSize
                                                                         .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceAround,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
                                                                 children: [
-                                                                  Container(
-                                                                    width: MediaQuery.sizeOf(context)
-                                                                            .width *
-                                                                        0.6,
-                                                                    decoration:
-                                                                        const BoxDecoration(),
-                                                                    child:
-                                                                        Visibility(
-                                                                      visible: containerBannersRecord?.bannerText !=
-                                                                              null &&
-                                                                          containerBannersRecord?.bannerText !=
-                                                                              '',
-                                                                      child:
-                                                                          Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                  const Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
                                                                             0.0,
+                                                                            5.0,
                                                                             0.0,
-                                                                            0.0,
-                                                                            5.0),
-                                                                        child:
-                                                                            Text(
-                                                                          containerBannersRecord!
-                                                                              .bannerText,
-                                                                          textAlign:
-                                                                              TextAlign.start,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .override(
-                                                                                fontFamily: 'Open Sans',
-                                                                                color: Colors.white,
-                                                                                fontSize: 13.0,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.bold,
-                                                                              ),
-                                                                        ),
-                                                                      ),
+                                                                            0.0),
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .share_outlined,
+                                                                      color: Color(
+                                                                          0xFFFCFCFC),
+                                                                      size:
+                                                                          24.0,
                                                                     ),
                                                                   ),
-                                                                  Container(
-                                                                    width: MediaQuery.sizeOf(context)
-                                                                            .width *
-                                                                        1.0,
-                                                                    height:
-                                                                        40.0,
-                                                                    decoration:
-                                                                        const BoxDecoration(),
-                                                                    alignment:
-                                                                        const AlignmentDirectional(
-                                                                            -1.0,
+                                                                  Padding(
+                                                                    padding: const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            5.0,
+                                                                            0.0,
                                                                             0.0),
-                                                                    child:
-                                                                        ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8.0),
-                                                                      child: Image
-                                                                          .network(
-                                                                        valueOrDefault<
-                                                                            String>(
-                                                                          GetBannerDetailsCall
-                                                                              .imageUrl(
-                                                                            bannerGetBannerDetailsResponse.jsonBody,
+                                                                    child: Text(
+                                                                      'Share',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Inter',
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            letterSpacing:
+                                                                                0.0,
                                                                           ),
-                                                                          '123',
-                                                                        ),
-                                                                        fit: BoxFit
-                                                                            .contain,
-                                                                        alignment: const Alignment(
-                                                                            -1.0,
-                                                                            0.0),
-                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
                                                               ),
                                                             ),
                                                           ),
-                                                        ).animateOnPageLoad(
-                                                            animationsMap[
-                                                                'containerOnPageLoadAnimation']!);
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          Container(
-                                            width: MediaQuery.sizeOf(context)
-                                                    .width *
-                                                1.0,
-                                            decoration: const BoxDecoration(),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(10.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Expanded(
-                                                    child: Builder(
-                                                      builder: (context) =>
-                                                          InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          logFirebaseEvent(
-                                                              'IMAGEEXPANDED_COPY_Container_a0r0ue0n_ON');
-                                                          logFirebaseEvent(
-                                                              'Container_alert_dialog');
-                                                          await showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (dialogContext) {
-                                                              return Dialog(
-                                                                elevation: 0,
-                                                                insetPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                alignment: const AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0)
-                                                                    .resolve(
-                                                                        Directionality.of(
-                                                                            context)),
-                                                                child:
-                                                                    GestureDetector(
-                                                                  onTap: () => _model
-                                                                          .unfocusNode
-                                                                          .canRequestFocus
-                                                                      ? FocusScope.of(
-                                                                              context)
-                                                                          .requestFocus(_model
-                                                                              .unfocusNode)
-                                                                      : FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      const InvitelinkWidget(),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ).then((value) =>
-                                                              setState(() {}));
-                                                        },
+                                                        ),
+                                                      ),
+                                                      Expanded(
                                                         child: Container(
                                                           decoration:
                                                               const BoxDecoration(),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              const Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child: Icon(
-                                                                  Icons
-                                                                      .share_outlined,
-                                                                  color: Color(
-                                                                      0xFFFCFCFC),
-                                                                  size: 24.0,
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                child: Text(
-                                                                  'Share',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Inter',
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            12.0,
-                                                                        letterSpacing:
-                                                                            0.0,
+                                                          child: Opacity(
+                                                            opacity: (widget.albumDoc![
+                                                                        widget
+                                                                            .index!])
+                                                                    .isUploading
+                                                                ? 0.5
+                                                                : 1.0,
+                                                            child: InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                logFirebaseEvent(
+                                                                    'IMAGEEXPANDED_COPY_Container_ebvamdl4_ON');
+                                                                logFirebaseEvent(
+                                                                    'Container_backend_call');
+
+                                                                await UserEventsRecord
+                                                                    .collection
+                                                                    .doc()
+                                                                    .set(
+                                                                        createUserEventsRecordData(
+                                                                      eventName:
+                                                                          'Download Image',
+                                                                      uid:
+                                                                          currentUserUid,
+                                                                      timestamp:
+                                                                          getCurrentTimestamp,
+                                                                      albumId:
+                                                                          (widget.albumDoc?[widget.index!])
+                                                                              ?.id,
+                                                                      key: columnUploadsRecord
+                                                                          ?.key,
+                                                                    ));
+                                                                logFirebaseEvent(
+                                                                    'Container_backend_call');
+
+                                                                await currentUserReference!
+                                                                    .update(
+                                                                        createUsersRecordData(
+                                                                  lastDownloadedAt:
+                                                                      getCurrentTimestamp,
+                                                                ));
+                                                                logFirebaseEvent(
+                                                                    'Container_custom_action');
+                                                                _model.downloadUrl =
+                                                                    await actions
+                                                                        .getDownloadUrl(
+                                                                  currentUserUid,
+                                                                  columnUploadsRecord!
+                                                                      .key,
+                                                                );
+                                                                logFirebaseEvent(
+                                                                    'Container_custom_action');
+                                                                await actions
+                                                                    .downloadImage(
+                                                                  _model
+                                                                      .downloadUrl!,
+                                                                  columnUploadsRecord
+                                                                      .key,
+                                                                );
+
+                                                                setState(() {});
+                                                              },
+                                                              child: Container(
+                                                                decoration:
+                                                                    const BoxDecoration(),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    const Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .file_download_outlined,
+                                                                        color: Color(
+                                                                            0xFFFCFCFC),
+                                                                        size:
+                                                                            24.0,
                                                                       ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Text(
+                                                                        'Download',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Inter',
+                                                                              color: Colors.white,
+                                                                              fontSize: 12.0,
+                                                                              letterSpacing: 0.0,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ),
-                                                            ],
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Container(
-                                                      decoration:
-                                                          const BoxDecoration(),
-                                                      child: Opacity(
-                                                        opacity: (widget.albumDoc![
-                                                                    widget
-                                                                        .index!])
-                                                                .isUploading
-                                                            ? 0.5
-                                                            : 1.0,
+                                                      Expanded(
                                                         child: InkWell(
                                                           splashColor: Colors
                                                               .transparent,
@@ -1099,59 +732,51 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                               .transparent,
                                                           onTap: () async {
                                                             logFirebaseEvent(
-                                                                'IMAGEEXPANDED_COPY_Container_ebvamdl4_ON');
+                                                                'IMAGEEXPANDED_COPY_Container_e8xaoa6c_ON');
                                                             logFirebaseEvent(
-                                                                'Container_backend_call');
-
-                                                            await UserEventsRecord
-                                                                .collection
-                                                                .doc()
-                                                                .set(
-                                                                    createUserEventsRecordData(
-                                                                  eventName:
-                                                                      'Download Image',
-                                                                  uid:
-                                                                      currentUserUid,
-                                                                  timestamp:
-                                                                      getCurrentTimestamp,
-                                                                  albumId: (widget
-                                                                              .albumDoc?[
-                                                                          widget
-                                                                              .index!])
-                                                                      ?.id,
-                                                                  key:
-                                                                      carouselUploadsRecord
-                                                                          .key,
-                                                                ));
-                                                            logFirebaseEvent(
-                                                                'Container_backend_call');
-
-                                                            await currentUserReference!
-                                                                .update(
-                                                                    createUsersRecordData(
-                                                              lastDownloadedAt:
-                                                                  getCurrentTimestamp,
-                                                            ));
-                                                            logFirebaseEvent(
-                                                                'Container_custom_action');
-                                                            _model.downloadUrl =
-                                                                await actions
-                                                                    .getDownloadUrl(
-                                                              currentUserUid,
-                                                              carouselUploadsRecord
-                                                                  .key,
-                                                            );
-                                                            logFirebaseEvent(
-                                                                'Container_custom_action');
-                                                            await actions
-                                                                .downloadImage(
-                                                              _model
-                                                                  .downloadUrl!,
-                                                              carouselUploadsRecord
-                                                                  .key,
-                                                            );
-
-                                                            setState(() {});
+                                                                'Container_bottom_sheet');
+                                                            await showModalBottomSheet(
+                                                              isScrollControlled:
+                                                                  true,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return GestureDetector(
+                                                                  onTap: () => _model
+                                                                          .unfocusNode
+                                                                          .canRequestFocus
+                                                                      ? FocusScope.of(
+                                                                              context)
+                                                                          .requestFocus(_model
+                                                                              .unfocusNode)
+                                                                      : FocusScope.of(
+                                                                              context)
+                                                                          .unfocus(),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: MediaQuery
+                                                                        .viewInsetsOf(
+                                                                            context),
+                                                                    child:
+                                                                        SizedBox(
+                                                                      height:
+                                                                          MediaQuery.sizeOf(context).height *
+                                                                              0.5,
+                                                                      child:
+                                                                          ExpandedImageOptionsWidget(
+                                                                        imageKey:
+                                                                            columnUploadsRecord!.key,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                safeSetState(
+                                                                    () {}));
                                                           },
                                                           child: Container(
                                                             decoration:
@@ -1170,7 +795,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                           0.0),
                                                                   child: Icon(
                                                                     Icons
-                                                                        .file_download_outlined,
+                                                                        .keyboard_control_outlined,
                                                                     color: Color(
                                                                         0xFFFCFCFC),
                                                                     size: 24.0,
@@ -1184,7 +809,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                           0.0,
                                                                           0.0),
                                                                   child: Text(
-                                                                    'Download',
+                                                                    'More',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -1205,154 +830,86 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                  Expanded(
-                                                    child: InkWell(
-                                                      splashColor:
-                                                          Colors.transparent,
-                                                      focusColor:
-                                                          Colors.transparent,
-                                                      hoverColor:
-                                                          Colors.transparent,
-                                                      highlightColor:
-                                                          Colors.transparent,
-                                                      onTap: () async {
-                                                        logFirebaseEvent(
-                                                            'IMAGEEXPANDED_COPY_Container_e8xaoa6c_ON');
-                                                        logFirebaseEvent(
-                                                            'Container_bottom_sheet');
-                                                        await showModalBottomSheet(
-                                                          isScrollControlled:
-                                                              true,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return GestureDetector(
-                                                              onTap: () => _model
-                                                                      .unfocusNode
-                                                                      .canRequestFocus
-                                                                  ? FocusScope.of(
-                                                                          context)
-                                                                      .requestFocus(
-                                                                          _model
-                                                                              .unfocusNode)
-                                                                  : FocusScope.of(
-                                                                          context)
-                                                                      .unfocus(),
-                                                              child: Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                        context),
-                                                                child:
-                                                                    SizedBox(
-                                                                  height: MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .height *
-                                                                      0.5,
-                                                                  child:
-                                                                      ExpandedImageOptionsWidget(
-                                                                    imageKey:
-                                                                        carouselUploadsRecord
-                                                                            .key,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ).then((value) =>
-                                                            safeSetState(
-                                                                () {}));
-                                                      },
-                                                      child: Container(
-                                                        decoration:
-                                                            const BoxDecoration(),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            const Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .keyboard_control_outlined,
-                                                                color: Color(
-                                                                    0xFFFCFCFC),
-                                                                size: 24.0,
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                'More',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Inter',
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          12.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
                                         ],
-                                      ),
-                                    ],
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
-                            );
-                          },
-                          carouselController: _model.carouselController ??=
-                              CarouselController(),
-                          options: CarouselOptions(
-                            initialPage: min(
-                                valueOrDefault<int>(
-                                  widget.index,
-                                  0,
+                            Container(
+                              constraints: BoxConstraints(
+                                minHeight:
+                                    MediaQuery.sizeOf(context).height * 0.3,
+                                maxWidth:
+                                    MediaQuery.sizeOf(context).width * 1.0,
+                                maxHeight:
+                                    MediaQuery.sizeOf(context).height * 0.5,
+                              ),
+                              decoration: const BoxDecoration(
+                                color: Colors.black,
+                              ),
+                              child: Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Builder(
+                                  builder: (context) {
+                                    if ((widget.albumDoc?[widget.index!])
+                                            ?.isLocal ==
+                                        false) {
+                                      return ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: CachedNetworkImage(
+                                          fadeInDuration:
+                                              const Duration(milliseconds: 0),
+                                          fadeOutDuration:
+                                              const Duration(milliseconds: 0),
+                                          imageUrl:
+                                              'https://picsum.photos/seed/912/600',
+                                          fit: BoxFit.scaleDown,
+                                          alignment: const Alignment(0.0, 0.0),
+                                        ),
+                                      );
+                                    } else {
+                                      return custom_widgets.ShowLocalImage(
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        path: (widget.albumDoc![widget.index!])
+                                            .imageUrl,
+                                      );
+                                    }
+                                  },
                                 ),
-                                carouselUploadsRecordList.length - 1),
-                            viewportFraction: 0.95,
-                            disableCenter: true,
-                            enlargeCenterPage: true,
-                            enlargeFactor: 0.2,
-                            enableInfiniteScroll: false,
-                            scrollDirection: Axis.horizontal,
-                            autoPlay: false,
-                            onPageChanged: (index, _) =>
-                                _model.carouselCurrentIndex = index,
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
+                      ],
+                      carouselController: _model.carouselController ??=
+                          CarouselController(),
+                      options: CarouselOptions(
+                        initialPage: min(
+                            valueOrDefault<int>(
+                              widget.index,
+                              0,
+                            ),
+                            0),
+                        viewportFraction: 0.95,
+                        disableCenter: true,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0.2,
+                        enableInfiniteScroll: false,
+                        scrollDirection: Axis.horizontal,
+                        autoPlay: false,
+                        onPageChanged: (index, _) =>
+                            _model.carouselCurrentIndex = index,
+                      ),
+                    ),
                   ),
                 ),
               ),
