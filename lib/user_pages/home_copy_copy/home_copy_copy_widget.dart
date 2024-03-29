@@ -685,7 +685,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                         ),
                                                                         'index':
                                                                             serializeParam(
-                                                                          albumIndex,
+                                                                          imagesListIndex,
                                                                           ParamType
                                                                               .int,
                                                                         ),
@@ -768,7 +768,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                           ),
                                                                           'index':
                                                                               serializeParam(
-                                                                            albumIndex,
+                                                                            imagesListIndex,
                                                                             ParamType.int,
                                                                           ),
                                                                         }.withoutNulls,
