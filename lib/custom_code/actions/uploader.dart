@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom actions
+
 import 'dart:collection';
 import 'dart:io';
 import 'package:path/path.dart' show basename;
@@ -82,22 +84,18 @@ class Uploader {
       ),
     );
     uploadImages();
-    if (_appState != null) {
-      _appState!.update(() {
-        _appState!.isUploading = _isUploading;
-        _appState!.uploadProgress = progress;
-      });
-    }
+    _appState?.update(() {
+      _appState!.isUploading = _isUploading;
+      _appState!.uploadProgress = progress;
+    });
   }
 
   Future<void> removeFromUploadQueue(String path) async {
     _uploadQueue.removeWhere((item) => item.path == path);
-    if (_appState != null) {
-      _appState!.update(() {
-        _appState!.isUploading = _isUploading;
-        _appState!.uploadProgress = progress;
-      });
-    }
+    _appState?.update(() {
+      _appState!.isUploading = _isUploading;
+      _appState!.uploadProgress = progress;
+    });
     await SQLiteManager.instance.deleteImage(path: path);
   }
 
@@ -108,12 +106,10 @@ class Uploader {
       _isUploading = true;
       _uploadedCount = 0;
       _totalcount = _uploadQueue.length.toDouble();
-      if (_appState != null) {
-        _appState!.update(() {
-          _appState!.isUploading = _isUploading;
-          _appState!.uploadProgress = progress;
-        });
-      }
+      _appState?.update(() {
+        _appState!.isUploading = _isUploading;
+        _appState!.uploadProgress = progress;
+      });
     }
     while (_uploadQueue.isNotEmpty) {
       final row = _uploadQueue.first;
@@ -206,14 +202,14 @@ class Uploader {
         );
       } finally {
         _uploadQueue.removeFirst();
-        _appState!.update(() {
+        _appState?.update(() {
           _appState!.isUploading = _isUploading;
           _appState!.uploadProgress = progress;
         });
       }
     }
     _isUploading = false;
-    _appState!.update(() {
+    _appState?.update(() {
       _appState!.isUploading = _isUploading;
       _appState!.uploadProgress = progress;
     });
