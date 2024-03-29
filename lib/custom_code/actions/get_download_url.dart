@@ -17,13 +17,8 @@ import 'package:file_saver/file_saver.dart';
 
 Future<String> getDownloadUrl(
   String userid,
-  String imageId,
+  String key,
 ) async {
-  final snap =
-      await FirebaseFirestore.instance.collection('uploads').doc(imageId).get();
-  final key = (snap.data())?['key'];
-  if (key == null) return '';
-
   // Create a reference to the file you want to download
   Reference ref = FirebaseStorage.instance
       .ref()

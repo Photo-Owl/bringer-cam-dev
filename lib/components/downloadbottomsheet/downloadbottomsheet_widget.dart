@@ -620,6 +620,7 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                   logFirebaseEvent('RichText_custom_action');
                   await actions.downloadImage(
                     widget.imageDocument!.watermarkedImage500,
+                    widget.imageDocument!.key,
                   );
                 },
                 child: RichText(

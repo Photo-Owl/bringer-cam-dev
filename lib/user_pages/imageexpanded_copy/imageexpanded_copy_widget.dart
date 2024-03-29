@@ -411,6 +411,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                         await actions
                                                             .downloadImage(
                                                           _model.downloadURL!,
+                                                          imagesItem.id,
                                                         );
 
                                                         setState(() {});
@@ -649,6 +650,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                         await actions
                                                             .downloadImage(
                                                           _model.downloadUrl!,
+                                                          imagesItem.id,
                                                         );
 
                                                         setState(() {});
