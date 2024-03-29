@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/expanded_image_options/expanded_image_options_widget.dart';
 import '/components/invitelink/invitelink_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -13,7 +12,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'imageexpanded_copy_model.dart';
 export 'imageexpanded_copy_model.dart';
@@ -33,26 +31,10 @@ class ImageexpandedCopyWidget extends StatefulWidget {
       _ImageexpandedCopyWidgetState();
 }
 
-class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
-    with TickerProviderStateMixin {
+class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
   late ImageexpandedCopyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final animationsMap = {
-    'columnOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-  };
 
   @override
   void initState() {
@@ -118,121 +100,82 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                         final imagesItem = images[imagesIndex];
                         return Column(
                           mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (!imagesItem.isLocal)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      decoration: const BoxDecoration(),
-                                      child: Align(
-                                        alignment:
-                                            const AlignmentDirectional(-1.0, 0.0),
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 5.0, 0.0, 2.0),
-                                          child: Text(
-                                            '',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: Colors.white,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    FutureBuilder<List<UsersRecord>>(
-                                      future: queryUsersRecordOnce(
-                                        queryBuilder: (usersRecord) =>
-                                            usersRecord.where(
-                                          'uid',
-                                          isEqualTo: currentUserUid,
-                                        ),
-                                        singleRecord: true,
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 1.0,
-                                              height: 1.0,
-                                              child: SpinKitRotatingPlain(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .accent2,
-                                                size: 1.0,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<UsersRecord> rowUsersRecordList =
-                                            snapshot.data!;
-                                        // Return an empty Container when the item does not exist.
-                                        if (snapshot.data!.isEmpty) {
-                                          return Container();
-                                        }
-                                        final rowUsersRecord =
-                                            rowUsersRecordList.isNotEmpty
-                                                ? rowUsersRecordList.first
-                                                : null;
-                                        return SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 1.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Shared By ${rowUsersRecord?.displayName}',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color: Colors.white,
-                                                        fontSize: 10.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ),
-                                              if (rowUsersRecord
-                                                      ?.isBusinessAccount ??
-                                                  true)
-                                                const Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          2.0, 0.0, 0.0, 0.0),
-                                                  child: Icon(
-                                                    Icons.verified,
-                                                    color: Color(0xFF0073FF),
-                                                    size: 10.0,
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ).animateOnPageLoad(animationsMap[
-                                    'columnOnPageLoadAnimation']!),
+                            FutureBuilder<List<UsersRecord>>(
+                              future: queryUsersRecordOnce(
+                                queryBuilder: (usersRecord) =>
+                                    usersRecord.where(
+                                  'uid',
+                                  isEqualTo: currentUserUid,
+                                ),
+                                singleRecord: true,
                               ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 1.0,
+                                      height: 1.0,
+                                      child: SpinKitRotatingPlain(
+                                        color: FlutterFlowTheme.of(context)
+                                            .accent2,
+                                        size: 1.0,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                List<UsersRecord> rowUsersRecordList =
+                                    snapshot.data!;
+                                // Return an empty Container when the item does not exist.
+                                if (snapshot.data!.isEmpty) {
+                                  return Container();
+                                }
+                                final rowUsersRecord =
+                                    rowUsersRecordList.isNotEmpty
+                                        ? rowUsersRecordList.first
+                                        : null;
+                                return SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 1.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Shared By ${rowUsersRecord?.displayName}',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: Colors.white,
+                                                fontSize: 10.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      if (rowUsersRecord?.isBusinessAccount ??
+                                          true)
+                                        const Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  2.0, 0.0, 0.0, 0.0),
+                                          child: Icon(
+                                            Icons.verified,
+                                            color: Color(0xFF0073FF),
+                                            size: 10.0,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                             Expanded(
                               child: Align(
                                 alignment: const AlignmentDirectional(0.0, 0.0),
