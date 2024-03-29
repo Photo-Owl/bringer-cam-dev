@@ -192,7 +192,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         null,
         debugLabel: 'SaveImageIsolate',
       );
-      final unixTimestamp = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      final unixTimestamp = DateTime.now().millisecondsSinceEpoch;
       final uploader = Uploader();
       uploader.appState = context.read<FFAppState>();
       await uploader.addToUploadQueue(newPath, unixTimestamp);

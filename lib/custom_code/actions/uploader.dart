@@ -146,16 +146,16 @@ class Uploader {
         String? albumId;
         if (snapshot.docs.isNotEmpty) {
           final doc = snapshot.docs.first;
-          final timestamp = DateTime.fromMillisecondsSinceEpoch(
-              (row.unixTimestamp ?? 0) * 1000);
+          final timestamp =
+              DateTime.fromMillisecondsSinceEpoch((row.unixTimestamp ?? 0));
           final diff = timestamp.difference(doc['uploaded_at'].toDate());
           if (diff.inMinutes < 15) {
             albumId = doc['album_id'];
           }
         }
 
-        final timestamp = DateTime.fromMillisecondsSinceEpoch(
-            (row.unixTimestamp ?? 0) * 1000);
+        final timestamp =
+            DateTime.fromMillisecondsSinceEpoch((row.unixTimestamp ?? 0));
 
         if (albumId == null) {
           // Create a new album document

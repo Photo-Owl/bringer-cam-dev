@@ -53,11 +53,12 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
 
     // Add image to the group
     groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
-      id: doc['key'],
-      imageUrl: doc['resized_image_250'],
+      id: doc['key'] ?? '',
+      imageUrl: doc['resized_image_250'] ?? '',
       isUploading: null, // This is Firestore data, so isUploading is null
       isLocal: false,
-      timestamp: doc['uploaded_at'].toDate(), // Timestamp from Firestore
+      timestamp: doc['uploaded_at']?.toDate() ??
+          DateTime.fromMillisecondsSinceEpoch(0), // Timestamp from Firestore
     ));
 
     // Add owner to the set of unique owners for this date
@@ -71,11 +72,13 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
   // Merge and sort images by date
   List<ImageModelStruct> combinedImages = [
     ...firestoreSnapshot.docs.map((doc) => ImageModelStruct(
-          id: doc['key'],
-          imageUrl: doc['resized_image_250'],
+          id: doc['key'] ?? '',
+          imageUrl: doc['resized_image_250'] ?? '',
           isUploading: null, // This is Firestore data, so isUploading is null
           isLocal: false,
-          timestamp: doc['uploaded_at'].toDate(), // Timestamp from Firestore
+          timestamp: doc['uploaded_at']?.toDate() ??
+              DateTime.fromMillisecondsSinceEpoch(
+                  0), // Timestamp from Firestore
         )),
     ...sqliteImages
   ]..sort((a, b) => (b.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0))
@@ -128,7 +131,7 @@ Future<List<ImageModelStruct>> fetchImagesFromSQLite(String uid) async {
       isUploading: maps[i].isUploading == 1,
       isLocal: true,
       timestamp: DateTime.fromMillisecondsSinceEpoch(
-          maps[i].timestamp ?? 0 * 1000), // Convert unixTimestamp to DateTime
+          maps[i].timestamp ?? 0), // Convert unixTimestamp to DateTime
     );
   });
 }
