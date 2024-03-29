@@ -72,7 +72,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                   context.pop();
                 }
                 context.pushNamed(
-                  'Uploads',
+                  'HomeCopy',
                   extra: <String, dynamic>{
                     kTransitionInfoKey: const TransitionInfo(
                       hasTransition: true,

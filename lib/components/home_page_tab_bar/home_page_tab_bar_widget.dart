@@ -99,7 +99,7 @@ class _HomePageTabBarWidgetState extends State<HomePageTabBarWidget> {
                 logFirebaseEvent('HOME_TAB_BAR_Container_85m191xu_ON_TAP');
                 logFirebaseEvent('Container_navigate_to');
 
-                context.goNamed('Uploads');
+                context.goNamed('HomeCopy');
               },
               child: Container(
                 decoration: BoxDecoration(

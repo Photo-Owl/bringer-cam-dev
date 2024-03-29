@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'index.dart'; // Imports other custom actions
-
 import 'dart:collection';
 import 'dart:io';
 import 'package:path/path.dart' show basename;
@@ -39,10 +37,14 @@ class Uploader {
   var _uploadedCount = 0;
   var _totalcount = double.infinity;
   var _isUploading = false;
+  late final Future _startupTask;
+  var _isInitialized = false;
 
   // Can be initialized only once
   Uploader._() : userId = FirebaseAuth.instance.currentUser!.uid {
-    SQLiteManager.instance.fetchImagesToUpload(ownerId: userId).then((rows) {
+    _startupTask = SQLiteManager.instance
+        .fetchImagesToUpload(ownerId: userId)
+        .then((rows) {
       _uploadQueue.addAll(rows.map(
         (row) => UploadItem(
           path: row.path,
@@ -69,6 +71,12 @@ class Uploader {
   UploadItem? get currentlyUploading =>
       _isUploading ? _uploadQueue.first : null;
   double get progress => _uploadedCount / _totalcount;
+
+  Future<void> ensureInitialized() async {
+    if (_isInitialized) return;
+    await _startupTask;
+    _isInitialized = true;
+  }
 
   Future<void> addToUploadQueue(String path, int timestamp) async {
     await SQLiteManager.instance.insertImage(
@@ -101,6 +109,8 @@ class Uploader {
 
   Future<void> uploadImages() async {
     if (_isUploading) return;
+
+    await ensureInitialized();
 
     if (_uploadQueue.isNotEmpty) {
       _isUploading = true;

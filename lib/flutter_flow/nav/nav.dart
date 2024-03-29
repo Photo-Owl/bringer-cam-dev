@@ -282,12 +282,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const CameraWidget(),
         ),
         FFRoute(
-          name: 'Uploads',
-          path: '/uploads',
-          requireAuth: true,
-          builder: (context, params) => const UploadsWidget(),
-        ),
-        FFRoute(
           name: 'LocalImage',
           path: '/LocalImage',
           requireAuth: true,
