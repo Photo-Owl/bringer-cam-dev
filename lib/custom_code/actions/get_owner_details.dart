@@ -20,7 +20,7 @@ Future<List<OwnerDetailsStruct>> getOwnerDetails(List<String> owners) async {
   }
   final ownerDetails = await FirebaseFirestore.instance
       .collection('users')
-      .where('uid', arrayContainsAny: splitOwners)
+      .where('uid', whereIn: splitOwners)
       .get();
   // TODO: decide on a field for photo urls
   return ownerDetails.docs.map((doc) {

@@ -627,8 +627,8 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                           albumItem.images
                                                               .toList();
                                                       return Wrap(
-                                                        spacing: 7.0,
-                                                        runSpacing: 7.0,
+                                                        spacing: 3.0,
+                                                        runSpacing: 3.0,
                                                         alignment:
                                                             WrapAlignment.start,
                                                         crossAxisAlignment:
@@ -721,6 +721,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                           100.0,
                                                                       fit: BoxFit
                                                                           .cover,
+                                                                      memCacheWidth:
+                                                                          100,
+                                                                      memCacheHeight:
+                                                                          100,
                                                                     ),
                                                                   ),
                                                                 );
