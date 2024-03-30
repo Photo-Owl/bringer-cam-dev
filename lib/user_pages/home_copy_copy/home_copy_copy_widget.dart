@@ -627,8 +627,8 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                           albumItem.images
                                                               .toList();
                                                       return Wrap(
-                                                        spacing: 3.0,
-                                                        runSpacing: 3.0,
+                                                        spacing: 4.0,
+                                                        runSpacing: 4.0,
                                                         alignment:
                                                             WrapAlignment.start,
                                                         crossAxisAlignment:
@@ -696,7 +696,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                       ClipRRect(
                                                                     borderRadius:
                                                                         BorderRadius.circular(
-                                                                            8.0),
+                                                                            5.0),
                                                                     child:
                                                                         OctoImage(
                                                                       placeholderBuilder:
@@ -721,10 +721,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                           100.0,
                                                                       fit: BoxFit
                                                                           .cover,
-                                                                      memCacheWidth:
-                                                                          100,
-                                                                      memCacheHeight:
-                                                                          100,
                                                                     ),
                                                                   ),
                                                                 );
