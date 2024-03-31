@@ -147,7 +147,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   ) async {
     BackgroundIsolateBinaryMessenger.ensureInitialized(token);
     debugPrint('Image captured and saved to $filePath');
-    await _processImage(filePath);
+    //await _processImage(filePath);
 
     final image = await File(filePath).readAsBytes();
 

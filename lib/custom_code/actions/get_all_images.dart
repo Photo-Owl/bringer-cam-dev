@@ -14,7 +14,6 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 Future<List<TimelineItemStruct>> getAllImages(String uid) async {
-  // Fetch images from Firestore with the specified filters
   final firestoreSnapshot = await FirebaseFirestore.instance
       .collection('uploads')
       .where('faces', arrayContains: 'users/$uid')
@@ -26,7 +25,8 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
       .where('owner_id', isEqualTo: uid)
       .orderBy('uploaded_at', descending: true)
       .get();
-
+  // Fetch images from SQLite and merge them with Firestore images
+  List<ImageModelStruct> sqliteImages = await fetchImagesFromSQLite(uid);
   // Combine the results of both queries and remove duplicates
   final uniqueDocIds = <String>{};
   final combinedDocs = <QueryDocumentSnapshot<Map<String, dynamic>>>[];
@@ -68,45 +68,23 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
     }
   }
 
-  // Fetch images from SQLite and merge them with Firestore images
-  List<ImageModelStruct> sqliteImages =
-      await fetchImagesFromSQLite(uid); // Assuming you have this method
-
-  // Merge and sort images by date
-  List<ImageModelStruct> combinedImages = [...sqliteImages];
-  for (final doc in firestoreSnapshot.docs) {
-    final data = doc.data();
-    if ([data['key'], data['resized_image_250'], data['uploaded_at']]
-        .every((element) => element != null)) {
-      combinedImages.add(
-        ImageModelStruct(
-          id: doc['key'],
-          imageUrl: doc['resized_image_250'],
-          isUploading: null, // This is Firestore data, so isUploading is null
-          isLocal: false,
-          timestamp: doc['uploaded_at']?.toDate(), // Timestamp from Firestore
-        ),
-      );
-    }
-  }
-  combinedImages.sort(
-    (a, b) => (b.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0)).compareTo(
-      a.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0),
-    ),
-  );
-
-  // Group SQLite images by date and add them to the existing groups
-  for (var image in combinedImages) {
-    String date =
-        DateFormat('yyyy-MM-dd').format(image.timestamp ?? DateTime.now());
+  for (final localimage in sqliteImages) {
+    final date =
+        DateFormat('yyyy-MM-dd').format(localimage.timestamp ?? DateTime.now());
     if (!groupedImagesWithOwners.containsKey(date)) {
       groupedImagesWithOwners[date] = {
         'images': [],
         'owners': Set<String>(),
       };
     }
-    // Add image to the group
-    groupedImagesWithOwners[date]!['images'].add(image);
+    groupedImagesWithOwners[date]!['images'].add(localimage);
+  }
+
+  for (final entry in groupedImagesWithOwners.entries) {
+    final images = entry.value['images'];
+    images.sort((a, b) => (b.timestamp ?? DateTime.now())
+        .compareTo(a.timestamp ?? DateTime.now()) as int);
+    groupedImagesWithOwners[entry.key]?['images'] = images;
   }
 
   //return groupedImagesWithOwners;
