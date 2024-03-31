@@ -120,7 +120,8 @@ class Uploader {
     final notifPlugin = FlutterLocalNotificationsPlugin();
     await notifPlugin.initialize(
       InitializationSettings(
-          android: AndroidInitializationSettings('ic_launcher')),
+        android: AndroidInitializationSettings('ic_launcher'),
+      ),
     );
 
     if (_uploadQueue.isNotEmpty) {
@@ -145,6 +146,9 @@ class Uploader {
           progress: _uploadedCount.round(),
           maxProgress: _totalcount.round(),
           showProgress: true,
+          ongoing: true,
+          silent: true,
+          onlyAlertOnce: true,
         ),
       ),
     );
@@ -240,6 +244,7 @@ class Uploader {
         );
       } finally {
         _uploadQueue.removeFirst();
+        _uploadedCount++;
         _appState?.update(() {
           _appState!.isUploading = _isUploading;
           _appState!.uploadProgress = progress;
@@ -257,12 +262,16 @@ class Uploader {
               progress: _uploadedCount.round(),
               maxProgress: _totalcount.round(),
               showProgress: true,
+              ongoing: true,
+              silent: true,
+              onlyAlertOnce: true,
             ),
           ),
         );
       }
     }
     _isUploading = false;
+    await notifPlugin.cancel(1234);
     _appState?.update(() {
       _appState!.isUploading = _isUploading;
       _appState!.uploadProgress = progress;

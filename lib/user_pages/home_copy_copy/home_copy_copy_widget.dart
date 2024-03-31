@@ -129,12 +129,13 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
             timestamp: getCurrentTimestamp,
           ));
       logFirebaseEvent('HomeCopyCopy_custom_action');
-      _model.images = await actions.getAllImages(
+      _model.timeline1 = await actions.getAllImages(
         currentUserUid,
       );
       logFirebaseEvent('HomeCopyCopy_update_page_state');
       setState(() {
         _model.loaded = true;
+        _model.timeline = _model.timeline1!.toList().cast<TimelineItemStruct>();
       });
     });
 
@@ -415,7 +416,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                               10.0, 0.0, 10.0, 0.0),
                           child: Builder(
                             builder: (context) {
-                              final album = _model.images!.toList();
+                              final album = _model.timeline.toList();
                               if (album.isEmpty) {
                                 return const Center(
                                   child: NoPhotosWidget(),
@@ -432,14 +433,16 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                     _model.loaded = false;
                                   });
                                   logFirebaseEvent('ListView_custom_action');
-                                  _model.imagesCopy =
-                                      await actions.getAllImages(
+                                  _model.timeline2 = await actions.getAllImages(
                                     currentUserUid,
                                   );
                                   logFirebaseEvent(
                                       'ListView_update_page_state');
                                   setState(() {
                                     _model.loaded = true;
+                                    _model.timeline = _model.timeline2!
+                                        .toList()
+                                        .cast<TimelineItemStruct>();
                                   });
                                 },
                                 child: ListView.separated(

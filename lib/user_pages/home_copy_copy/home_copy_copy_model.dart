@@ -11,17 +11,27 @@ class HomeCopyCopyModel extends FlutterFlowModel<HomeCopyCopyWidget> {
 
   bool loaded = false;
 
+  List<TimelineItemStruct> timeline = [];
+  void addToTimeline(TimelineItemStruct item) => timeline.add(item);
+  void removeFromTimeline(TimelineItemStruct item) => timeline.remove(item);
+  void removeAtIndexFromTimeline(int index) => timeline.removeAt(index);
+  void insertAtIndexInTimeline(int index, TimelineItemStruct item) =>
+      timeline.insert(index, item);
+  void updateTimelineAtIndex(
+          int index, Function(TimelineItemStruct) updateFn) =>
+      timeline[index] = updateFn(timeline[index]);
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
   // Stores action output result for [Custom Action - checkVersion] action in HomeCopyCopy widget.
   bool? versionCheckResult;
   // Stores action output result for [Custom Action - getAllImages] action in HomeCopyCopy widget.
-  List<TimelineItemStruct>? images;
+  List<TimelineItemStruct>? timeline1;
   // Model for sidebar component.
   late SidebarModel sidebarModel;
   // Stores action output result for [Custom Action - getAllImages] action in ListView widget.
-  List<TimelineItemStruct>? imagesCopy;
+  List<TimelineItemStruct>? timeline2;
   // Model for FetchingPhotos component.
   late FetchingPhotosModel fetchingPhotosModel;
 

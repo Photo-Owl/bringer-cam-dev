@@ -302,7 +302,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'HomeCopyCopy',
-          path: '/homeCopyCopy',
+          path: '/home',
           builder: (context, params) => const HomeCopyCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
