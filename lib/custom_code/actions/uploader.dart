@@ -16,6 +16,7 @@ import 'package:path/path.dart' show basename;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mime_type/mime_type.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class UploadItem {
   final String path;
@@ -27,6 +28,11 @@ class UploadItem {
     required this.unixTimestamp,
     required this.isUploading,
   });
+
+  @override
+  String toString() {
+    return path;
+  }
 }
 
 class Uploader {
@@ -44,7 +50,7 @@ class Uploader {
   Uploader._() : userId = FirebaseAuth.instance.currentUser!.uid {
     _startupTask = SQLiteManager.instance
         .fetchImagesToUpload(ownerId: userId)
-        .then((rows) {
+        .then((rows) async {
       _uploadQueue.addAll(rows.map(
         (row) => UploadItem(
           path: row.path,
@@ -52,6 +58,7 @@ class Uploader {
           isUploading: row.isUploading == 1,
         ),
       ));
+      await uploadImages();
     });
   }
 
@@ -72,7 +79,7 @@ class Uploader {
       _isUploading ? _uploadQueue.first : null;
   double get progress => _uploadedCount / _totalcount;
 
-  Future<void> ensureInitialized() async {
+  Future<void> waitForUploads() async {
     if (_isInitialized) return;
     await _startupTask;
     _isInitialized = true;
@@ -91,7 +98,7 @@ class Uploader {
         isUploading: false,
       ),
     );
-    uploadImages();
+    // uploadImages();
     _appState?.update(() {
       _appState!.isUploading = _isUploading;
       _appState!.uploadProgress = progress;
@@ -110,7 +117,11 @@ class Uploader {
   Future<void> uploadImages() async {
     if (_isUploading) return;
 
-    await ensureInitialized();
+    final notifPlugin = FlutterLocalNotificationsPlugin();
+    await notifPlugin.initialize(
+      InitializationSettings(
+          android: AndroidInitializationSettings('ic_launcher')),
+    );
 
     if (_uploadQueue.isNotEmpty) {
       _isUploading = true;
@@ -121,6 +132,23 @@ class Uploader {
         _appState!.uploadProgress = progress;
       });
     }
+    await notifPlugin.show(
+      1234,
+      'Uploading images',
+      'Uploading images to the cloud',
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          'com.smoose.photoowldev.uploads',
+          'Upload notification',
+          channelDescription: 'To show notifications for upload progress',
+          importance: Importance.min,
+          progress: _uploadedCount.round(),
+          maxProgress: _totalcount.round(),
+          showProgress: true,
+        ),
+      ),
+    );
+
     while (_uploadQueue.isNotEmpty) {
       final row = _uploadQueue.first;
       try {
@@ -216,6 +244,22 @@ class Uploader {
           _appState!.isUploading = _isUploading;
           _appState!.uploadProgress = progress;
         });
+        await notifPlugin.show(
+          1234,
+          'Uploading images',
+          'Uploading images to the cloud',
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              'com.smoose.photoowldev.uploads',
+              'Upload notification',
+              channelDescription: 'To show notifications for upload progress',
+              importance: Importance.min,
+              progress: _uploadedCount.round(),
+              maxProgress: _totalcount.round(),
+              showProgress: true,
+            ),
+          ),
+        );
       }
     }
     _isUploading = false;

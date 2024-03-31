@@ -23,6 +23,8 @@ void taskDispatcher() {
   Workmanager().executeTask((task, _) async {
     await initFirebase();
     await SQLiteManager.initialize();
+    final uploader = Uploader();
+    await uploader.waitForUploads();
     return Future.value(true);
   });
 }
@@ -36,9 +38,24 @@ Future startAutoUpload() async {
     'com.smoose.photoowldev.uploadTask',
     'com.smoose.photoowldev.uploadTask',
     frequency: const Duration(minutes: 15),
+    existingWorkPolicy: ExistingWorkPolicy.replace,
+    constraints: Constraints(
+      networkType: NetworkType.connected,
+      requiresBatteryNotLow: true,
+    ),
   );
-  if (FirebaseAuth.instance.currentUser != null) {
-    final uploader = Uploader();
-    uploader.uploadImages();
-  }
+  // Workmanager().cancelAll();
+  // Workmanager().registerOneOffTask(
+  //   'com.smoose.photoowldev.upload1',
+  //   'upload-img',
+  //   existingWorkPolicy: ExistingWorkPolicy.replace,
+  //   constraints: Constraints(
+  //     networkType: NetworkType.connected,
+  //     requiresBatteryNotLow: true,
+  //   ),
+  // );
+  // if (FirebaseAuth.instance.currentUser != null) {
+  //   final uploader = Uploader();
+  //   uploader.uploadImages();
+  // }
 }
