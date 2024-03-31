@@ -80,7 +80,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
             backgroundColor: Colors.black,
             appBar: AppBar(
               backgroundColor: const Color(0x004B39EF),
-              automaticallyImplyLeading: false,
+              automaticallyImplyLeading: true,
               title: Text(
                 ' ',
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -150,93 +150,104 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        FutureBuilder<List<UsersRecord>>(
-                                          future: queryUsersRecordOnce(
-                                            queryBuilder: (usersRecord) =>
-                                                usersRecord.where(
-                                              'uid',
-                                              isEqualTo: containerUploadsRecord
-                                                  ?.ownerId,
+                                        if (imagesItem.isLocal == false)
+                                          FutureBuilder<List<UsersRecord>>(
+                                            future: queryUsersRecordOnce(
+                                              queryBuilder: (usersRecord) =>
+                                                  usersRecord.where(
+                                                'uid',
+                                                isEqualTo:
+                                                    containerUploadsRecord
+                                                        ?.ownerId,
+                                              ),
+                                              singleRecord: true,
                                             ),
-                                            singleRecord: true,
-                                          ),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 1.0,
-                                                  height: 1.0,
-                                                  child: SpinKitRotatingPlain(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .accent2,
-                                                    size: 1.0,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            List<UsersRecord>
-                                                rowUsersRecordList =
-                                                snapshot.data!;
-                                            // Return an empty Container when the item does not exist.
-                                            if (snapshot.data!.isEmpty) {
-                                              return Container();
-                                            }
-                                            final rowUsersRecord =
-                                                rowUsersRecordList.isNotEmpty
-                                                    ? rowUsersRecordList.first
-                                                    : null;
-                                            return SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 1.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      'Shared By ${rowUsersRecord?.displayName}',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Inter',
-                                                            color: Colors.white,
-                                                            fontSize: 14.0,
-                                                            letterSpacing: 0.0,
-                                                          ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 1.0,
+                                                    height: 1.0,
+                                                    child: SpinKitRotatingPlain(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .accent2,
+                                                      size: 1.0,
                                                     ),
                                                   ),
-                                                  if (rowUsersRecord
-                                                          ?.isBusinessAccount ??
-                                                      true)
-                                                    const Padding(
+                                                );
+                                              }
+                                              List<UsersRecord>
+                                                  rowUsersRecordList =
+                                                  snapshot.data!;
+                                              // Return an empty Container when the item does not exist.
+                                              if (snapshot.data!.isEmpty) {
+                                                return Container();
+                                              }
+                                              final rowUsersRecord =
+                                                  rowUsersRecordList.isNotEmpty
+                                                      ? rowUsersRecordList.first
+                                                      : null;
+                                              return SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  6.0,
                                                                   0.0,
+                                                                  1.0,
                                                                   0.0,
                                                                   0.0),
-                                                      child: Icon(
-                                                        Icons.verified,
-                                                        color:
-                                                            Color(0xFF0073FF),
-                                                        size: 14.0,
+                                                      child: Text(
+                                                        'Shared By ${rowUsersRecord?.displayName}',
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Inter',
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 14.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
                                                       ),
                                                     ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        ),
+                                                    if (rowUsersRecord
+                                                            ?.isBusinessAccount ??
+                                                        true)
+                                                      const Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    6.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Icon(
+                                                          Icons.verified,
+                                                          color:
+                                                              Color(0xFF0073FF),
+                                                          size: 14.0,
+                                                        ),
+                                                      ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         Padding(
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(
@@ -263,33 +274,46 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                       child: Builder(
                                         builder: (context) {
                                           if (!imagesItem.isLocal) {
-                                            return Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 10.0, 0.0, 10.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: CachedNetworkImage(
-                                                  fadeInDuration:
-                                                      const Duration(milliseconds: 0),
-                                                  fadeOutDuration:
-                                                      const Duration(milliseconds: 0),
-                                                  imageUrl: functions
-                                                      .convertToImagePath(
-                                                          imagesItem.imageUrl),
-                                                  fit: BoxFit.scaleDown,
-                                                  alignment:
-                                                      const Alignment(0.0, 0.0),
+                                            return Container(
+                                              decoration: const BoxDecoration(),
+                                              child: Padding(
+                                                padding: const EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 10.0, 0.0, 10.0),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  child: CachedNetworkImage(
+                                                    fadeInDuration: const Duration(
+                                                        milliseconds: 0),
+                                                    fadeOutDuration: const Duration(
+                                                        milliseconds: 0),
+                                                    imageUrl: functions
+                                                        .convertToImagePath(
+                                                            imagesItem
+                                                                .imageUrl),
+                                                    fit: BoxFit.scaleDown,
+                                                    alignment:
+                                                        const Alignment(0.0, 0.0),
+                                                  ),
                                                 ),
                                               ),
                                             );
                                           } else {
-                                            return custom_widgets
-                                                .ShowLocalImage(
-                                              width: double.infinity,
-                                              height: double.infinity,
-                                              path: imagesItem.imageUrl,
+                                            return Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 10.0, 0.0, 0.0),
+                                              child: Container(
+                                                decoration: const BoxDecoration(),
+                                                child: custom_widgets
+                                                    .ShowLocalImage(
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  path: imagesItem.imageUrl,
+                                                ),
+                                              ),
                                             );
                                           }
                                         },

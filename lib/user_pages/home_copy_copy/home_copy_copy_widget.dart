@@ -499,8 +499,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
+                                                      MainAxisAlignment.start,
                                                   children: [
                                                     Builder(
                                                       builder: (context) {
@@ -577,11 +576,18 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                         );
                                                       },
                                                     ),
-                                                    Expanded(
-                                                      child: Align(
-                                                        alignment:
-                                                            const AlignmentDirectional(
-                                                                0.0, 0.0),
+                                                    Align(
+                                                      alignment:
+                                                          const AlignmentDirectional(
+                                                              0.0, 0.0),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    10.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
                                                         child: Text(
                                                           'Photos from ${albumItem.owners.first}${(List<String> var1) {
                                                             return var1.length >
@@ -719,9 +725,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                             .convertToImagePath(imagesListItem.imageUrl),
                                                                       ),
                                                                       width:
-                                                                          100.0,
+                                                                          (MediaQuery.sizeOf(context).width - 48) /
+                                                                              3,
                                                                       height:
-                                                                          100.0,
+                                                                          (MediaQuery.sizeOf(context).width - 48) /
+                                                                              3,
                                                                       fit: BoxFit
                                                                           .cover,
                                                                     ),
@@ -729,8 +737,14 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                 );
                                                               } else {
                                                                 return Container(
-                                                                  width: 100.0,
-                                                                  height: 100.0,
+                                                                  width: (MediaQuery.sizeOf(context)
+                                                                              .width -
+                                                                          48) /
+                                                                      3,
+                                                                  height: (MediaQuery.sizeOf(context)
+                                                                              .width -
+                                                                          48) /
+                                                                      3,
                                                                   decoration:
                                                                       BoxDecoration(
                                                                     borderRadius:
@@ -791,20 +805,20 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                                 const AlignmentDirectional(0.0, 0.0),
                                                                             child:
                                                                                 SizedBox(
-                                                                              width: 100.0,
-                                                                              height: 100.0,
+                                                                              width: double.infinity,
+                                                                              height: double.infinity,
                                                                               child: custom_widgets.ShowLocalImage(
-                                                                                width: 100.0,
-                                                                                height: 100.0,
+                                                                                width: double.infinity,
+                                                                                height: double.infinity,
                                                                                 path: imagesListItem.imageUrl,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Container(
                                                                             width:
-                                                                                100.0,
+                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
                                                                             height:
-                                                                                100.0,
+                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
                                                                             decoration:
                                                                                 const BoxDecoration(
                                                                               gradient: LinearGradient(
