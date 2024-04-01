@@ -80,6 +80,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
             backgroundColor: Colors.black,
             appBar: AppBar(
               backgroundColor: const Color(0x004B39EF),
+              iconTheme: IconThemeData(
+                  color: FlutterFlowTheme.of(context).secondaryBackground),
               automaticallyImplyLeading: true,
               title: Text(
                 ' ',
@@ -92,7 +94,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
               ),
               actions: const [],
               centerTitle: false,
-              elevation: 2.0,
+              elevation: 0.0,
             ),
             body: SafeArea(
               top: true,

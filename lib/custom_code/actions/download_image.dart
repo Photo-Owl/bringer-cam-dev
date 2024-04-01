@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:path_provider/path_provider.dart';
+
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:android_download_manager/android_download_manager.dart';
@@ -19,10 +21,12 @@ Future<void> downloadImage(String url, String key) async {
     await FileSaver.instance.saveFile(name: key, link: LinkDetails(link: url));
     return;
   }
+  final directory = await getExternalStorageDirectory();
+  final path = '${directory!.path}/Pictures/Bringer/$key';
 
   AndroidDownloadManager.enqueue(
     downloadUrl: url,
-    downloadPath: '/sdcard/Pictures/Bringer/',
+    downloadPath: path,
     fileName: key,
   );
 }
