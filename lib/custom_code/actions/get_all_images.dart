@@ -51,21 +51,19 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
       };
     }
     print(doc);
-    if (doc.data().containsKey('key') &&
-        doc.data().containsKey('resized_image_250')) {
-      groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
-        id: doc['key'],
-        imageUrl: doc['resized_image_250'],
-        isUploading: null, // This is Firestore data, so isUploading is null
-        isLocal: false,
-        timestamp: doc['uploaded_at']?.toDate() ??
-            DateTime.fromMillisecondsSinceEpoch(0), // Timestamp from Firestore
-      ));
-      // Add image to the group
 
-      // Add owner to the set of unique owners for this date
-      groupedImagesWithOwners[date]!['owners'].add(ownerId);
-    }
+    groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
+      id: doc.data()['key'] ?? '',
+      imageUrl: doc.data()['resized_image_250'] ?? doc.data()['upload_url'],
+      isUploading: null, // This is Firestore data, so isUploading is null
+      isLocal: false,
+      timestamp: doc['uploaded_at']?.toDate() ??
+          DateTime.fromMillisecondsSinceEpoch(0), // Timestamp from Firestore
+    ));
+    // Add image to the group
+
+    // Add owner to the set of unique owners for this date
+    groupedImagesWithOwners[date]!['owners'].add(ownerId);
   }
 
   for (final localimage in sqliteImages) {
@@ -87,9 +85,30 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
     groupedImagesWithOwners[entry.key]?['images'] = images;
   }
 
-  //return groupedImagesWithOwners;
+  List<String> dates = groupedImagesWithOwners.keys.toList();
+
+  // Convert each date string to a DateTime object
+  List<DateTime> dateTimes = dates.map((date) => DateTime.parse(date)).toList();
+
+  // Sort the list of DateTime objects in descending order
+  dateTimes.sort((a, b) => b.compareTo(a));
+
+  // Create a new map with the sorted dates as keys and the corresponding values from the original map
+  Map<String, Map<String, dynamic>> sortedGroupedImagesWithOwners = {};
+  for (DateTime dateTime in dateTimes) {
+    String date = dateTime.toIso8601String().substring(8, 10) +
+        '-' +
+        dateTime.toIso8601String().substring(5, 7) +
+        '-' +
+        dateTime.toIso8601String().substring(2, 4);
+    final orginalKey = DateFormat('yyyy-MM-dd').format(dateTime);
+    print(date);
+    sortedGroupedImagesWithOwners[date] = groupedImagesWithOwners[orginalKey]!;
+  }
+
+  print(sortedGroupedImagesWithOwners);
   final result = <TimelineItemStruct>[];
-  for (final entry in groupedImagesWithOwners.entries) {
+  for (final entry in sortedGroupedImagesWithOwners.entries) {
     final ownerDetails =
         await getOwnerDetails((entry.value['owners'] as Set<String>).toList());
     result.add(
