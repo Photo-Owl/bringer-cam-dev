@@ -10,22 +10,11 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:file_saver/file_saver.dart';
 
-Future<String> getDownloadUrl(
-  String userid,
-  String key,
-) async {
-  // Create a reference to the file you want to download
-  Reference ref = FirebaseStorage.instance
-      .ref()
-      .child('users/' + userid + '/uploads/' + key);
-
-  // Get the download URL
-  String url = await ref.getDownloadURL();
-
-  return url;
+Future<String> getDownloadUrl(String key) async {
+  final [userId, fileName] = key.split('/');
+  return await FirebaseStorage.instance
+      .ref('$userId/uploads/$fileName')
+      .getDownloadURL();
 }

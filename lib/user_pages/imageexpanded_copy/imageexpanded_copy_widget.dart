@@ -500,7 +500,6 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                               _model.downloadURL =
                                                                   await actions
                                                                       .getDownloadUrl(
-                                                                currentUserUid,
                                                                 imagesItem.id,
                                                               );
                                                               logFirebaseEvent(
@@ -744,7 +743,6 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                           _model.downloadUrl =
                                                               await actions
                                                                   .getDownloadUrl(
-                                                            currentUserUid,
                                                             imagesItem.id,
                                                           );
                                                           logFirebaseEvent(

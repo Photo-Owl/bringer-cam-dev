@@ -202,8 +202,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                         'PAYMENT_SUCCESSFUL_DOWNLOAD_NOW_BTN_ON_T');
                                     logFirebaseEvent('Button_custom_action');
                                     await actions.getDownloadUrl(
-                                      containerUploadsRecord!.ownerId,
-                                      containerUploadsRecord.key,
+                                      containerUploadsRecord!.key,
                                     );
                                   },
                                   text: 'Download Now',
