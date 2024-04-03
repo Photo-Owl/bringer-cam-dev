@@ -32,7 +32,7 @@ void taskDispatcher() {
 Future startAutoUpload() async {
   Workmanager().initialize(
     taskDispatcher,
-    isInDebugMode: kDebugMode,
+    isInDebugMode: false,
   );
   Workmanager().registerPeriodicTask(
     'com.smoose.photoowldev.uploadTask',

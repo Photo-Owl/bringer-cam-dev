@@ -204,6 +204,10 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     }
   }
 
+  bool _isLandscape(CameraValue val) =>
+      val.deviceOrientation == DeviceOrientation.landscapeLeft ||
+      val.deviceOrientation == DeviceOrientation.landscapeRight;
+
   @override
   Widget build(BuildContext context) {
     if (!hidSystemUI) return Container();
@@ -211,10 +215,29 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
       child: Stack(
         children: [
           Align(
-              alignment: Alignment.topCenter,
-              child: controller == null || !controller!.value.isInitialized
-                  ? const Icon(Icons.camera_rounded)
-                  : CameraPreview(controller!)),
+            alignment: Alignment.topCenter,
+            child: controller == null || !controller!.value.isInitialized
+                ? const Icon(Icons.camera_rounded)
+                : ValueListenableBuilder(
+                    valueListenable: controller!,
+                    builder: (context, val, child) {
+                      return AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 100),
+                        transitionBuilder: (child, anim) => FadeTransition(
+                          opacity: anim,
+                          child: child,
+                        ),
+                        child: val.isTakingPicture
+                            ? AspectRatio(
+                                aspectRatio:
+                                    _isLandscape(val) ? 16 / 9 : 9 / 16,
+                                child: const SizedBox.expand(),
+                              )
+                            : CameraPreview(controller!),
+                      );
+                    },
+                  ),
+          ),
           Container(
             padding: const EdgeInsets.only(top: 15, bottom: 45),
             alignment: Alignment.bottomCenter,
