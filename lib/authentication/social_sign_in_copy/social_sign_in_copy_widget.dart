@@ -260,6 +260,12 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                                 },
                                               ),
                                             });
+                                            logFirebaseEvent(
+                                                'Button_navigate_to');
+
+                                            context.goNamedAuth(
+                                                'RedirectionCopy',
+                                                context.mounted);
                                           }
                                         }
                                       } else if (widget.phoneNumber != null &&
