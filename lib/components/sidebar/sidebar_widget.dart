@@ -66,7 +66,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                   logFirebaseEvent('SIDEBAR_COMP_Container_fhich1a8_ON_TAP');
                   logFirebaseEvent('Container_navigate_to');
 
-                  context.pushNamed('HomeCopy');
+                  context.pushNamed('HomeCopyCopy');
                 },
                 child: Container(
                   width: 300.0,

@@ -199,11 +199,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'HomeCopy',
-          path: '/homeCopy',
-          builder: (context, params) => const HomeCopyWidget(),
-        ),
-        FFRoute(
           name: 'Album',
           path: '/album',
           requireAuth: true,

@@ -60,7 +60,7 @@ class _HomePageTabBarWidgetState extends State<HomePageTabBarWidget> {
                 logFirebaseEvent('HOME_TAB_BAR_Container_s7mjz3js_ON_TAP');
                 logFirebaseEvent('Container_navigate_to');
 
-                context.goNamed('HomeCopy');
+                context.goNamed('HomeCopyCopy');
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -99,7 +99,7 @@ class _HomePageTabBarWidgetState extends State<HomePageTabBarWidget> {
                 logFirebaseEvent('HOME_TAB_BAR_Container_85m191xu_ON_TAP');
                 logFirebaseEvent('Container_navigate_to');
 
-                context.goNamed('HomeCopy');
+                context.goNamed('HomeCopyCopy');
               },
               child: Container(
                 decoration: BoxDecoration(

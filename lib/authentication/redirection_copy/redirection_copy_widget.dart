@@ -74,8 +74,6 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
       logFirebaseEvent('REDIRECTION_COPY_RedirectionCopy_ON_INIT');
       if ((currentUserPhoto != '') &&
           (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
-        logFirebaseEvent('RedirectionCopy_wait__delay');
-        await Future.delayed(const Duration(milliseconds: 5000));
         logFirebaseEvent('RedirectionCopy_navigate_to');
 
         context.goNamed('camera');

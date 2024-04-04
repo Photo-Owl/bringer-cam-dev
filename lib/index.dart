@@ -13,12 +13,11 @@ export '/user_pages/premium_photos/premium_photos_widget.dart'
 export '/events/createan_event/createan_event_widget.dart'
     show CreateanEventWidget;
 export '/read_qr/read_qr_widget.dart' show ReadQrWidget;
-export '/wait_for_verification/wait_for_verification_widget.dart'
+export '/authentication/wait_for_verification/wait_for_verification_widget.dart'
     show WaitForVerificationWidget;
 export '/cantfindphotos/cantfindphotos_widget.dart' show CantfindphotosWidget;
 export '/authentication/social_sign_in/social_sign_in_widget.dart'
     show SocialSignInWidget;
-export '/user_pages/home_copy/home_copy_widget.dart' show HomeCopyWidget;
 export '/user_pages/album/album_widget.dart' show AlbumWidget;
 export '/user_pages/imageexpanded_copy/imageexpanded_copy_widget.dart'
     show ImageexpandedCopyWidget;
