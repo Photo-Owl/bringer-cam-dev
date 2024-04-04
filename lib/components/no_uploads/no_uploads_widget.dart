@@ -2,8 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'no_uploads_model.dart';
 export 'no_uploads_model.dart';
 
@@ -45,7 +43,7 @@ class _NoUploadsWidgetState extends State<NoUploadsWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +60,7 @@ class _NoUploadsWidgetState extends State<NoUploadsWidget> {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
           child: FFButtonWidget(
             onPressed: () async {
               logFirebaseEvent('NO_UPLOADS_COMP_CREATE_EVENT_BTN_ON_TAP');
@@ -74,8 +72,8 @@ class _NoUploadsWidgetState extends State<NoUploadsWidget> {
             options: FFButtonOptions(
               width: 170.0,
               height: 50.0,
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
               color: FlutterFlowTheme.of(context).primary,
               textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                     fontFamily: 'Lexend Deca',
@@ -85,7 +83,7 @@ class _NoUploadsWidgetState extends State<NoUploadsWidget> {
                     fontWeight: FontWeight.normal,
                   ),
               elevation: 2.0,
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.transparent,
                 width: 1.0,
               ),

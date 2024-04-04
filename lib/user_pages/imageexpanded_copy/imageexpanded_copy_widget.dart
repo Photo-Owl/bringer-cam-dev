@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import '/components/expanded_image_options/expanded_image_options_widget.dart';
 import '/components/invitelink/invitelink_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -10,12 +9,9 @@ import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'imageexpanded_copy_model.dart';
 export 'imageexpanded_copy_model.dart';
 
@@ -82,7 +78,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
             key: scaffoldKey,
             backgroundColor: Colors.black,
             appBar: AppBar(
-              backgroundColor: Color(0x004B39EF),
+              backgroundColor: const Color(0x004B39EF),
               iconTheme: IconThemeData(
                   color: FlutterFlowTheme.of(context).secondaryBackground),
               automaticallyImplyLeading: true,
@@ -95,7 +91,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                       letterSpacing: 0.0,
                     ),
               ),
-              actions: [],
+              actions: const [],
               centerTitle: false,
               elevation: 0.0,
             ),
@@ -104,7 +100,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
               child: Builder(
                 builder: (context) {
                   final images = widget.albumDoc!.toList();
-                  return Container(
+                  return SizedBox(
                     width: double.infinity,
                     height: MediaQuery.sizeOf(context).height * 1.0,
                     child: CarouselSlider.builder(
@@ -123,7 +119,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
-                              return Center(
+                              return const Center(
                                 child: SizedBox(
                                   width: 50.0,
                                   height: 50.0,
@@ -142,13 +138,13 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                     ? containerUploadsRecordList.first
                                     : null;
                             return Container(
-                              decoration: BoxDecoration(),
+                              decoration: const BoxDecoration(),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
                                         15.0, 0.0, 0.0, 0.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
@@ -208,7 +204,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0.0,
                                                                   1.0,
@@ -233,7 +229,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                     if (rowUsersRecord
                                                             ?.isBusinessAccount ??
                                                         true)
-                                                      Padding(
+                                                      const Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
@@ -255,7 +251,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                           ),
                                         Padding(
                                           padding:
-                                              EdgeInsetsDirectional.fromSTEB(
+                                              const EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 6.0, 0.0, 0.0),
                                           child: Text(
                                             imagesItem.timestamp!.toString(),
@@ -275,36 +271,52 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                   ),
                                   Expanded(
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
                                       child: Builder(
                                         builder: (context) {
                                           if (!imagesItem.isLocal) {
                                             return Container(
-                                              decoration: BoxDecoration(),
-                                              child: Container(
-                                                width: double.infinity,
-                                                height: double.infinity,
-                                                child:
-                                                    custom_widgets.FadeInImage(
-                                                  width: double.infinity,
-                                                  height: double.infinity,
-                                                  imageUrl: functions
-                                                      .convertToImagePath(
-                                                          containerUploadsRecord!
-                                                              .uploadUrl),
-                                                  placeholderImage: functions
-                                                      .convertToImagePath(
-                                                          imagesItem.imageUrl),
+                                              decoration: const BoxDecoration(),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(10.0),
+                                                child: SizedBox(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          0.9,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          0.75,
+                                                  child: custom_widgets
+                                                      .FadeInImage(
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.9,
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .height *
+                                                        0.75,
+                                                    imageUrl: functions
+                                                        .convertToImagePath(
+                                                            containerUploadsRecord!
+                                                                .uploadUrl),
+                                                    placeholderImage: functions
+                                                        .convertToImagePath(
+                                                            imagesItem
+                                                                .imageUrl),
+                                                  ),
                                                 ),
                                               ),
                                             );
                                           } else {
                                             return Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 10.0, 0.0, 0.0),
                                               child: Container(
-                                                decoration: BoxDecoration(),
+                                                decoration: const BoxDecoration(),
                                                 child: custom_widgets
                                                     .ShowLocalImage(
                                                   width: double.infinity,
@@ -319,9 +331,9 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(0.0, 1.0),
+                                    alignment: const AlignmentDirectional(0.0, 1.0),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 16.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -356,7 +368,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
-                                                return Center(
+                                                return const Center(
                                                   child: SizedBox(
                                                     width: 10.0,
                                                     height: 10.0,
@@ -385,12 +397,12 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                           .first
                                                       : null;
                                               return Container(
-                                                constraints: BoxConstraints(
+                                                constraints: const BoxConstraints(
                                                   maxWidth: 750.0,
                                                 ),
-                                                decoration: BoxDecoration(),
+                                                decoration: const BoxDecoration(),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
+                                                  padding: const EdgeInsetsDirectional
                                                       .fromSTEB(15.0, 10.0,
                                                           15.0, 10.0),
                                                   child: Container(
@@ -399,7 +411,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                             .width *
                                                         1.0,
                                                     decoration: BoxDecoration(
-                                                      gradient: LinearGradient(
+                                                      gradient: const LinearGradient(
                                                         colors: [
                                                           Color(0xFF0F009C),
                                                           Color(0xFF129A8C)
@@ -418,7 +430,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                     ),
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsets.all(10.0),
+                                                          const EdgeInsets.all(10.0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -429,7 +441,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                           Expanded(
                                                             child: Container(
                                                               decoration:
-                                                                  BoxDecoration(),
+                                                                  const BoxDecoration(),
                                                               child: Column(
                                                                 mainAxisSize:
                                                                     MainAxisSize
@@ -457,7 +469,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                         ),
                                                                   ),
                                                                   Padding(
-                                                                    padding: EdgeInsetsDirectional
+                                                                    padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
                                                                             5.0,
@@ -514,14 +526,14 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                             options:
                                                                 FFButtonOptions(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           12.0,
                                                                           0.0,
                                                                           12.0,
                                                                           0.0),
                                                               iconPadding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           0.0,
@@ -547,7 +559,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                       ),
                                                               elevation: 2.0,
                                                               borderSide:
-                                                                  BorderSide(
+                                                                  const BorderSide(
                                                                 width: 0.0,
                                                               ),
                                                               borderRadius:
@@ -568,9 +580,9 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                             width: MediaQuery.sizeOf(context)
                                                     .width *
                                                 1.0,
-                                            decoration: BoxDecoration(),
+                                            decoration: const BoxDecoration(),
                                             child: Padding(
-                                              padding: EdgeInsets.all(10.0),
+                                              padding: const EdgeInsets.all(10.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -606,7 +618,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                 backgroundColor:
                                                                     Colors
                                                                         .transparent,
-                                                                alignment: AlignmentDirectional(
+                                                                alignment: const AlignmentDirectional(
                                                                         0.0,
                                                                         0.0)
                                                                     .resolve(
@@ -625,7 +637,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                               context)
                                                                           .unfocus(),
                                                                   child:
-                                                                      InvitelinkWidget(),
+                                                                      const InvitelinkWidget(),
                                                                 ),
                                                               );
                                                             },
@@ -634,13 +646,13 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                         },
                                                         child: Container(
                                                           decoration:
-                                                              BoxDecoration(),
+                                                              const BoxDecoration(),
                                                           child: Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
                                                             children: [
-                                                              Padding(
+                                                              const Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -658,7 +670,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
                                                                             5.0,
@@ -690,7 +702,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                   Expanded(
                                                     child: Container(
                                                       decoration:
-                                                          BoxDecoration(),
+                                                          const BoxDecoration(),
                                                       child: InkWell(
                                                         splashColor:
                                                             Colors.transparent,
@@ -753,13 +765,13 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                         },
                                                         child: Container(
                                                           decoration:
-                                                              BoxDecoration(),
+                                                              const BoxDecoration(),
                                                           child: Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
                                                             children: [
-                                                              Padding(
+                                                              const Padding(
                                                                 padding:
                                                                     EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -777,7 +789,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                               ),
                                                               Padding(
                                                                 padding:
-                                                                    EdgeInsetsDirectional
+                                                                    const EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
                                                                             5.0,
@@ -848,7 +860,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                     .viewInsetsOf(
                                                                         context),
                                                                 child:
-                                                                    Container(
+                                                                    SizedBox(
                                                                   height: MediaQuery.sizeOf(
                                                                               context)
                                                                           .height *
@@ -869,12 +881,12 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                       },
                                                       child: Container(
                                                         decoration:
-                                                            BoxDecoration(),
+                                                            const BoxDecoration(),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
                                                           children: [
-                                                            Padding(
+                                                            const Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
                                                                       .fromSTEB(
@@ -892,7 +904,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                             ),
                                                             Padding(
                                                               padding:
-                                                                  EdgeInsetsDirectional
+                                                                  const EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           0.0,
                                                                           5.0,

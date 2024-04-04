@@ -1,10 +1,7 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'product_model.dart';
 export 'product_model.dart';
 
@@ -67,7 +64,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                   context.pop();
                 },
               ),
-              actions: [],
+              actions: const [],
               centerTitle: true,
               elevation: 2.0,
             ),
@@ -90,9 +87,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                           ],
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 24.0, 20.0, 24.0, 0.0),
                             child: Text(
                               'Photo Album',
@@ -106,9 +103,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 24.0, 8.0, 24.0, 0.0),
                             child: Text(
                               'Preserve cherished moments in our A4 Photo Owl Gallery Album. Hand-pick photos from our app, printed on high-quality paper.',
@@ -123,9 +120,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 24.0, 12.0, 24.0, 0.0),
                             child: Text(
                               '1. Size: A4 Booklet\n2. 2 Photos per page',
@@ -157,7 +154,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     context.pushNamed(
                       'SelectPhotos',
                       extra: <String, dynamic>{
-                        kTransitionInfoKey: TransitionInfo(
+                        kTransitionInfoKey: const TransitionInfo(
                           hasTransition: true,
                           transitionType: PageTransitionType.rightToLeft,
                         ),
@@ -169,7 +166,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     height: 50.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primary,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 4.0,
                           color: Color(0x2AFDFDFD),

@@ -1,10 +1,7 @@
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'wait_for_verification_model.dart';
 export 'wait_for_verification_model.dart';
 
@@ -64,7 +61,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
-                      return Center(
+                      return const Center(
                         child: SizedBox(
                           width: 50.0,
                           height: 50.0,
@@ -102,7 +99,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                             child: Image.asset(
                               'assets/images/Image.png',
                               fit: BoxFit.fitHeight,
-                              alignment: Alignment(0.0, -1.0),
+                              alignment: const Alignment(0.0, -1.0),
                             ),
                           ),
                         ),
@@ -136,7 +133,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           30.0, 20.0, 30.0, 24.0),
                                       child: Text(
                                         'Hang tight while we find your photos!',
@@ -155,9 +152,9 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                       ),
                                     ),
                                     Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             30.0, 10.0, 30.0, 0.0),
                                         child: Text(
                                           'You can close the app now.\nWe will text you on Whatsapp as soon as we find \'em',
@@ -183,7 +180,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                             ))
                               Container(
                                 width: MediaQuery.sizeOf(context).width * 1.0,
-                                constraints: BoxConstraints(
+                                constraints: const BoxConstraints(
                                   maxWidth: 700.0,
                                 ),
                                 decoration: BoxDecoration(
@@ -195,9 +192,9 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 20.0, 0.0, 0.0),
                                         child: Text(
                                           'By taking a selfie, you\'ll help us \nfinding your photos!',
@@ -213,9 +210,9 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                       ),
                                     ),
                                     Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 20.0, 0.0, 0.0),
                                         child: Text(
                                           'Looks like you are using PhotoOwl on desktop.\n\nUse a Mobile phone to register yourself.\n',

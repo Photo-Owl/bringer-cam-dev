@@ -3,19 +3,15 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
-import 'package:provider/provider.dart';
 import 'album_model.dart';
 export 'album_model.dart';
 
@@ -45,8 +41,8 @@ class _AlbumWidgetState extends State<AlbumWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 400.ms,
-          begin: Offset(0.0, 10.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 10.0),
+          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -94,8 +90,8 @@ class _AlbumWidgetState extends State<AlbumWidget>
           curve: Curves.easeInOut,
           delay: 100.ms,
           duration: 400.ms,
-          begin: Offset(0.0, 15.0),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 15.0),
+          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -131,7 +127,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Scaffold(
+          return const Scaffold(
             backgroundColor: Colors.white,
             body: Center(
               child: SizedBox(
@@ -166,11 +162,11 @@ class _AlbumWidgetState extends State<AlbumWidget>
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  iconTheme: IconThemeData(color: Colors.black),
+                  iconTheme: const IconThemeData(color: Colors.black),
                   automaticallyImplyLeading: true,
                   actions: [
                     Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -179,7 +175,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                         onTap: () async {
                           logFirebaseEvent('ALBUM_PAGE_Icon_7c0t5vdv_ON_TAP');
                           logFirebaseEvent('Icon_copy_to_clipboard');
-                          await Clipboard.setData(ClipboardData(
+                          await Clipboard.setData(const ClipboardData(
                               text: 'https://app.bringerapp.com'));
                           logFirebaseEvent('Icon_show_snack_bar');
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -193,7 +189,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                   fontSize: 14.0,
                                 ),
                               ),
-                              duration: Duration(milliseconds: 4000),
+                              duration: const Duration(milliseconds: 4000),
                               backgroundColor: Colors.white,
                             ),
                           );
@@ -213,20 +209,20 @@ class _AlbumWidgetState extends State<AlbumWidget>
                   top: true,
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 15.0, 0.0, 0.0),
                             child: FutureBuilder<List<UploadsRecord>>(
                               future: queryUploadsRecordOnce(
                                 queryBuilder: (uploadsRecord) => uploadsRecord
                                     .where(
                                       'faces',
-                                      arrayContains: 'users/${currentUserUid}',
+                                      arrayContains: 'users/$currentUserUid',
                                     )
                                     .where(
                                       'album_id',
@@ -237,7 +233,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
                                 if (!snapshot.hasData) {
-                                  return Center(
+                                  return const Center(
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
@@ -274,9 +270,9 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                             BorderRadius.circular(8.0),
                                         child: CachedNetworkImage(
                                           fadeInDuration:
-                                              Duration(milliseconds: 100),
+                                              const Duration(milliseconds: 100),
                                           fadeOutDuration:
-                                              Duration(milliseconds: 100),
+                                              const Duration(milliseconds: 100),
                                           imageUrl:
                                               functions.convertToImagePath(
                                                   containerUploadsRecord!
@@ -288,7 +284,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                   .height *
                                               1.0,
                                           fit: BoxFit.cover,
-                                          alignment: Alignment(0.0, 0.0),
+                                          alignment: const Alignment(0.0, 0.0),
                                         ),
                                       ).animateOnPageLoad(animationsMap[
                                           'imageOnPageLoadAnimation']!),
@@ -300,7 +296,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                             MediaQuery.sizeOf(context).height *
                                                 1.0,
                                         decoration: BoxDecoration(
-                                          gradient: LinearGradient(
+                                          gradient: const LinearGradient(
                                             colors: [
                                               Color(0x31000000),
                                               Color(0x9E000000)
@@ -314,7 +310,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                               BorderRadius.circular(8.0),
                                         ),
                                         child: Padding(
-                                          padding: EdgeInsets.all(10.0),
+                                          padding: const EdgeInsets.all(10.0),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -323,7 +319,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 0.0, 0.0, 5.0),
                                                 child: Text(
@@ -342,13 +338,13 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
+                                                padding: const EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         0.0, 0.0, 0.0, 5.0),
                                                 child: Text(
                                                   dateTimeFormat(
                                                       'yMMMd',
-                                                      albumAlbumsRecord!
+                                                      albumAlbumsRecord
                                                           .createdAt!),
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -374,7 +370,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 15.0, 0.0, 0.0),
                             child: FutureBuilder<List<UsersRecord>>(
                               future: queryUsersRecordOnce(
@@ -388,7 +384,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
                                 if (!snapshot.hasData) {
-                                  return Center(
+                                  return const Center(
                                     child: SizedBox(
                                       width: 50.0,
                                       height: 50.0,
@@ -415,7 +411,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 8.0, 0.0),
                                       child: Container(
                                         width: 24.0,
@@ -426,28 +422,28 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                               if (random_data.randomInteger(
                                                       0, 3) ==
                                                   0) {
-                                                return Color(0xFFF183FB);
+                                                return const Color(0xFFF183FB);
                                               } else if (random_data
                                                       .randomInteger(0, 3) ==
                                                   1) {
-                                                return Color(0xFF79C4B2);
+                                                return const Color(0xFF79C4B2);
                                               } else if (random_data
                                                       .randomInteger(0, 3) ==
                                                   2) {
-                                                return Color(0xFFF9AD54);
+                                                return const Color(0xFFF9AD54);
                                               } else {
-                                                return Color(0xFF5BA6F0);
+                                                return const Color(0xFF5BA6F0);
                                               }
                                             }(),
-                                            Color(0xFFBD7AFF),
+                                            const Color(0xFFBD7AFF),
                                           ),
                                           shape: BoxShape.circle,
                                         ),
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            const AlignmentDirectional(0.0, 0.0),
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                              const AlignmentDirectional(0.0, 0.0),
                                           child: Text(
                                             valueOrDefault<String>(
                                               (String var1) {
@@ -471,7 +467,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                     ),
                                     Align(
                                       alignment:
-                                          AlignmentDirectional(-1.0, 0.0),
+                                          const AlignmentDirectional(-1.0, 0.0),
                                       child: RichText(
                                         textScaler:
                                             MediaQuery.of(context).textScaler,
@@ -484,15 +480,15 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                   .bodyMedium
                                                   .override(
                                                     fontFamily: 'Inter',
-                                                    color: Color(0xFF79767D),
+                                                    color: const Color(0xFF79767D),
                                                     fontSize: 12.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                             ),
                                             TextSpan(
-                                              text: rowUsersRecord!.displayName,
-                                              style: TextStyle(
+                                              text: rowUsersRecord.displayName,
+                                              style: const TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 12.0,
@@ -508,9 +504,9 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                         ),
                                       ),
                                     ),
-                                    if (rowUsersRecord?.isBusinessAccount ??
+                                    if (rowUsersRecord.isBusinessAccount ??
                                         true)
-                                      Padding(
+                                      const Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             4.0, 0.0, 0.0, 2.0),
                                         child: Icon(
@@ -526,7 +522,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 30.0),
                             child: Container(
                               width: MediaQuery.sizeOf(context).width * 1.0,
@@ -535,9 +531,9 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                     .secondaryBackground,
                               ),
                               child: Align(
-                                alignment: AlignmentDirectional(-1.0, 0.0),
+                                alignment: const AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 15.0, 0.0, 0.0),
                                   child: StreamBuilder<List<UploadsRecord>>(
                                     stream: queryUploadsRecord(
@@ -546,7 +542,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                               .where(
                                                 'faces',
                                                 arrayContains:
-                                                    'users/${currentUserUid}',
+                                                    'users/$currentUserUid',
                                               )
                                               .where(
                                                 'album_id',
@@ -558,7 +554,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
                                       if (!snapshot.hasData) {
-                                        return Center(
+                                        return const Center(
                                           child: SizedBox(
                                             width: 50.0,
                                             height: 50.0,
@@ -604,7 +600,7 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                                   BorderRadius.circular(8.0),
                                               child: OctoImage(
                                                 placeholderBuilder: (_) =>
-                                                    SizedBox.expand(
+                                                    const SizedBox.expand(
                                                   child: Image(
                                                     image: BlurHashImage(
                                                         'LAKBRFxu9FWB-;M{~qRj00xu00j['),

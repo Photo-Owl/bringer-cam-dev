@@ -16,14 +16,14 @@ Future<List<FetchImagesToUploadRow>> performFetchImagesToUpload(
   final query = '''
 SELECT "path", "unix_timestamp" AS "unixTimestamp", "is_uploading" AS "isUploading"  FROM Images
   WHERE is_uploaded = 0
-  AND owner = '${ownerId}'
+  AND owner = '$ownerId'
   ORDER BY unix_timestamp ASC;
 ''';
   return _readQuery(database, query, (d) => FetchImagesToUploadRow(d));
 }
 
 class FetchImagesToUploadRow extends SqliteRow {
-  FetchImagesToUploadRow(Map<String, dynamic> data) : super(data);
+  FetchImagesToUploadRow(super.data);
 
   String get path => data['path'] as String;
   int? get unixTimestamp => data['unixTimestamp'] as int?;
@@ -39,7 +39,7 @@ Future<List<ReadUploadedImagesRow>> performReadUploadedImages(
 }) {
   final query = '''
 SELECT "path" FROM Images
-  WHERE owner = '${ownerId}'
+  WHERE owner = '$ownerId'
   AND is_uploaded = 1
   ORDER BY unix_timestamp DESC;
 ''';
@@ -47,7 +47,7 @@ SELECT "path" FROM Images
 }
 
 class ReadUploadedImagesRow extends SqliteRow {
-  ReadUploadedImagesRow(Map<String, dynamic> data) : super(data);
+  ReadUploadedImagesRow(super.data);
 
   String get path => data['path'] as String;
 }
@@ -62,14 +62,14 @@ Future<List<ReadImagesToUploadRow>> performReadImagesToUpload(
   final query = '''
 SELECT "path", "unix_timestamp", "is_uploading" FROM Images
   WHERE is_uploaded = 0
-  AND owner = '${ownerId}'
+  AND owner = '$ownerId'
   ORDER BY unix_timestamp DESC;;
 ''';
   return _readQuery(database, query, (d) => ReadImagesToUploadRow(d));
 }
 
 class ReadImagesToUploadRow extends SqliteRow {
-  ReadImagesToUploadRow(Map<String, dynamic> data) : super(data);
+  ReadImagesToUploadRow(super.data);
 
   String get path => data['path'] as String;
   int? get unixTimestamp => data['unixTimestamp'] as int?;
@@ -86,14 +86,14 @@ Future<List<ShowLocalImagesRow>> performShowLocalImages(
   final query = '''
 SELECT "path", "unix_timestamp" AS "timestamp","is_uploading" AS "isUploading" FROM Images
   WHERE is_uploaded = 0
-  AND owner = '${ownerId}'
+  AND owner = '$ownerId'
   ORDER BY unix_timestamp ASC;
 ''';
   return _readQuery(database, query, (d) => ShowLocalImagesRow(d));
 }
 
 class ShowLocalImagesRow extends SqliteRow {
-  ShowLocalImagesRow(Map<String, dynamic> data) : super(data);
+  ShowLocalImagesRow(super.data);
 
   String get path => data['path'] as String;
   int? get timestamp => data['timestamp'] as int?;

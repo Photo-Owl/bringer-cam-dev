@@ -4,9 +4,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
-import 'package:provider/provider.dart';
 import 'enlargedimage_model.dart';
 export 'enlargedimage_model.dart';
 
@@ -61,11 +59,11 @@ class _EnlargedimageWidgetState extends State<EnlargedimageWidget> {
         Stack(
           children: [
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: OctoImage(
-                  placeholderBuilder: (_) => SizedBox.expand(
+                  placeholderBuilder: (_) => const SizedBox.expand(
                     child: Image(
                       image: BlurHashImage('BEN]Rv-WPn}SQ[VF'),
                       fit: BoxFit.cover,
@@ -81,9 +79,9 @@ class _EnlargedimageWidgetState extends State<EnlargedimageWidget> {
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(1.0, 0.0),
+              alignment: const AlignmentDirectional(1.0, 0.0),
               child: Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,

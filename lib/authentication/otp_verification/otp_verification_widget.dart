@@ -5,12 +5,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'otp_verification_model.dart';
 export 'otp_verification_model.dart';
 
@@ -47,8 +43,8 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(0.0, 13.999999999999986),
-          end: Offset(0.0, 0.0),
+          begin: const Offset(0.0, 13.999999999999986),
+          end: const Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -102,7 +98,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                         width: 300.0,
                         height: 200.0,
                         fit: BoxFit.none,
-                        alignment: Alignment(0.0, -1.0),
+                        alignment: const Alignment(0.0, -1.0),
                       ),
                     ),
                   ),
@@ -116,7 +112,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               15.0, 24.0, 15.0, 0.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -124,7 +120,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     15.0, 0.0, 0.0, 0.0),
                                 child: Text(
                                   'Confirm your Code',
@@ -140,7 +136,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     15.0, 10.0, 15.0, 0.0),
                                 child: Text(
                                   'This code helps keep your account safe and secure.',
@@ -155,7 +151,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 20.0, 0.0, 0.0),
                                 child: PinCodeTextField(
                                   autoDisposeControllers: false,
@@ -183,7 +179,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                     fieldHeight: 45.0,
                                     fieldWidth: 45.0,
                                     borderWidth: 2.0,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(12.0),
                                       bottomRight: Radius.circular(12.0),
                                       topLeft: Radius.circular(12.0),
@@ -209,16 +205,15 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                   onCompleted: (_) async {
                                     logFirebaseEvent(
                                         'OTP_VERIFICATION_PinCode_ptgdrbkr_ON_PIN');
-                                    Function() _navigate = () {};
+                                    Function() navigate = () {};
                                     logFirebaseEvent('PinCode_auth');
                                     GoRouter.of(context).prepareAuthEvent();
                                     final smsCodeVal =
                                         _model.pinCodeController!.text;
-                                    if (smsCodeVal == null ||
-                                        smsCodeVal.isEmpty) {
+                                    if (smsCodeVal.isEmpty) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        SnackBar(
+                                        const SnackBar(
                                           content: Text(
                                               'Enter SMS verification code.'),
                                         ),
@@ -234,7 +229,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                       return;
                                     }
 
-                                    _navigate = () => context.goNamedAuth(
+                                    navigate = () => context.goNamedAuth(
                                         'RedirectionCopy', context.mounted);
                                     logFirebaseEvent(
                                         'PinCode_google_analytics_event');
@@ -249,7 +244,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                       ));
                                     }
 
-                                    _navigate();
+                                    navigate();
                                   },
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -261,7 +256,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 20.0, 16.0, 100.0),
                           child: FFButtonWidget(
                             onPressed: () {
@@ -271,10 +266,10 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 56.0,
-                              padding: EdgeInsets.all(0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsets.all(0.0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: Color(0xFF007EFC),
+                              color: const Color(0xFF007EFC),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
@@ -284,7 +279,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 2.0,
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),

@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:cached_network_image/cached_network_image.dart';
+
 class FadeInImage extends StatefulWidget {
   const FadeInImage({
     super.key,
@@ -32,9 +34,30 @@ class FadeInImage extends StatefulWidget {
 class _FadeInImageState extends State<FadeInImage> {
   @override
   Widget build(BuildContext context) {
-    return FadeInImage(
+    return CachedNetworkImage(
       imageUrl: widget.imageUrl,
-      placeholderImage: widget.placeholderImage,
+      fit: BoxFit.contain,
+      placeholder: (context, url) => SizedBox(
+        width: widget.width,
+        height: widget.height,
+        child: Stack(
+          children: [
+            SizedBox(
+              width: widget.width,
+              height: widget.height,
+              child: Image.network(
+                widget.placeholderImage,
+                fit: BoxFit.contain,
+              ),
+            ),
+            const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

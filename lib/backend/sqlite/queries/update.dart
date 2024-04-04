@@ -9,7 +9,7 @@ Future performInsertImage(
 }) {
   final query = '''
 INSERT INTO Images ("path", "owner", "unix_timestamp", "is_uploaded", "is_uploading")
-  VALUES('${path}', '${ownerId}', ${unixTimestamp}, 0, 0);
+  VALUES('$path', '$ownerId', $unixTimestamp, 0, 0);
 ''';
   return database.rawQuery(query);
 }
@@ -22,7 +22,7 @@ Future performDeleteImage(
   String? path,
 }) {
   final query = '''
-DELETE FROM Images WHERE "path" = '${path}';
+DELETE FROM Images WHERE "path" = '$path';
 ''';
   return database.rawQuery(query);
 }

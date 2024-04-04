@@ -1,8 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'wait_for_verificationold_model.dart';
 export 'wait_for_verificationold_model.dart';
 
@@ -57,7 +55,7 @@ class _WaitForVerificationoldWidgetState
                 child: Material(
                   color: Colors.transparent,
                   elevation: 3.0,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(0.0),
                       bottomRight: Radius.circular(0.0),
@@ -67,7 +65,7 @@ class _WaitForVerificationoldWidgetState
                   ),
                   child: Container(
                     height: 50.0,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFF2A2F32),
                       boxShadow: [
                         BoxShadow(
@@ -87,7 +85,7 @@ class _WaitForVerificationoldWidgetState
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,7 +112,7 @@ class _WaitForVerificationoldWidgetState
             ],
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
+            padding: const EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 0.0),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -126,7 +124,7 @@ class _WaitForVerificationoldWidgetState
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Text(
                         'Hold on a quick second while we verify you 🤗',
                         textAlign: TextAlign.center,

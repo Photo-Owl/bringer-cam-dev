@@ -3,8 +3,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'sharetoatendees_model.dart';
 export 'sharetoatendees_model.dart';
 
@@ -42,7 +40,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: AlignmentDirectional(0.0, 0.0),
+      alignment: const AlignmentDirectional(0.0, 0.0),
       child: Container(
         width: 500.0,
         height: 300.0,
@@ -59,10 +57,10 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(1.0, 0.0),
+                  alignment: const AlignmentDirectional(1.0, 0.0),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 10.0, 5.0),
+                        const EdgeInsetsDirectional.fromSTEB(10.0, 5.0, 10.0, 5.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -89,7 +87,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                   child: Container(
                     width: 300.0,
                     decoration: BoxDecoration(
@@ -97,7 +95,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                     ),
                     child: Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                       child: Text(
                         'You Uploaded some Great Photos !',
                         textAlign: TextAlign.center,
@@ -122,7 +120,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
                     child: Text(
                       'Share it with your attendees by inviting them to PhotoOwl ',
                       textAlign: TextAlign.center,
@@ -136,20 +134,20 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
                             'SHARETOATENDEES_COMP_GET_LINK_BTN_ON_TAP');
                         logFirebaseEvent('Button_copy_to_clipboard');
-                        await Clipboard.setData(ClipboardData(
+                        await Clipboard.setData(const ClipboardData(
                             text:
                                 'https://your-photos-vdpy50.flutterflow.app/'));
                         logFirebaseEvent('Button_show_snack_bar');
@@ -161,7 +159,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
                             ),
-                            duration: Duration(milliseconds: 4000),
+                            duration: const Duration(milliseconds: 4000),
                             backgroundColor:
                                 FlutterFlowTheme.of(context).secondary,
                           ),
@@ -170,10 +168,10 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                       text: 'Get Link',
                       options: FFButtonOptions(
                         height: 40.0,
-                        padding: EdgeInsetsDirectional.fromSTEB(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primaryText,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -183,7 +181,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                                   letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),
@@ -215,14 +213,14 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
@@ -234,10 +232,10 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                       text: 'Download QR code',
                       options: FFButtonOptions(
                         height: 40.0,
-                        padding: EdgeInsetsDirectional.fromSTEB(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primaryText,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -247,7 +245,7 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                                   letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),

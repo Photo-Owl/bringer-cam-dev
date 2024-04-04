@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
-import '../schema/structs/index.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
@@ -23,7 +21,7 @@ class InstamojoGroup {
 
 class GetAccessTokenCall {
   Future<ApiCallResponse> call() async {
-    final ffApiRequestBody = '''
+    const ffApiRequestBody = '''
 {
   "client_id": "O37u9BWWpUj5iACsZkuTwar6hlcPVsGM2DQ9HYlZ",
   "client_secret": "lZSSVwl07yXh2gdLzVczqiFabd62MbZNbdr6afk2DN0tZpxpD88YlO3wtdp1smRRVX6SthLZwgPL7av9l1vDDmgEJ656wkscSho3wOgCjsFfpkRVjgLPOM5eZ5FDmsl0"
@@ -72,11 +70,11 @@ class CreatePaymentRequestCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "auth_token": "${authToken}",
-  "amount": "${amount}",
-  "purpose": "${purpose}",
-  "buyer_name": "${buyerName}",
-  "phone_number": "${phoneNumber}"
+  "auth_token": "$authToken",
+  "amount": "$amount",
+  "purpose": "$purpose",
+  "buyer_name": "$buyerName",
+  "phone_number": "$phoneNumber"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Create Payment Request',
@@ -127,8 +125,8 @@ class VerifyPaymentCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "payment_request_id": "${paymentRequestid}",
-  "auth_token": "${authtoken}"
+  "payment_request_id": "$paymentRequestid",
+  "auth_token": "$authtoken"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Verify payment',
@@ -161,8 +159,8 @@ class UserOnboardingCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "imageUrl": "${storageUrl}",
-  "uid": "${uid}"
+  "imageUrl": "$storageUrl",
+  "uid": "$uid"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'userOnboarding',
@@ -190,9 +188,9 @@ class SearchFacesUsingTIFCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "faceId": "${faceid}",
-  "uId": "${uid}",
-  "sourceKey": "${sourceKey}"
+  "faceId": "$faceid",
+  "uId": "$uid",
+  "sourceKey": "$sourceKey"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'searchFacesUsingTIF',
@@ -218,7 +216,7 @@ class DeleteImageCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "Key": "${key}"
+  "Key": "$key"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'DeleteImage',
@@ -264,8 +262,8 @@ class GetBannerDetailsCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "uid": "${uid}",
-  "key": "${key}"
+  "uid": "$uid",
+  "key": "$key"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'GetBannerDetails',
@@ -319,7 +317,7 @@ class SearchOnUploadCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "albumId": "${albumId}"
+  "albumId": "$albumId"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'SearchOnUpload',
@@ -345,7 +343,7 @@ class GetPurchasableImagesCall {
   }) async {
     final ffApiRequestBody = '''
 {
-  "uid": "${uid}"
+  "uid": "$uid"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'getPurchasableImages',
@@ -373,7 +371,7 @@ class GetReviwOrderDetailsCall {
 
     final ffApiRequestBody = '''
 {
-  "keys": ${keys}
+  "keys": $keys
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'GetReviwOrderDetails',
