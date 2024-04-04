@@ -4,7 +4,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'payment_successful_model.dart';
 export 'payment_successful_model.dart';
 
@@ -14,7 +16,7 @@ class PaymentSuccessfulWidget extends StatefulWidget {
     this.imagekey,
     this.premiumphotoDoc,
     bool? hasMultipleDocs,
-  }) : hasMultipleDocs = hasMultipleDocs ?? false;
+  }) : this.hasMultipleDocs = hasMultipleDocs ?? false;
 
   final String? imagekey;
   final PremiumPhotoPurchasesRecord? premiumphotoDoc;
@@ -54,7 +56,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
     return Container(
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
             blurRadius: 4.0,
             color: Color(0x33000000),
@@ -75,9 +77,9 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
               color: FlutterFlowTheme.of(context).primaryBackground,
             ),
             child: Align(
-              alignment: const AlignmentDirectional(0.0, -1.0),
+              alignment: AlignmentDirectional(0.0, -1.0),
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(10.0),
                 child: Lottie.asset(
                   'assets/lottie_animations/animation_lkgowv35.json',
                   height: 200.0,
@@ -89,7 +91,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Text(
               'Payment Successful !',
               textAlign: TextAlign.center,
@@ -103,7 +105,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0),
             child: Material(
               color: Colors.transparent,
               elevation: 3.0,
@@ -113,7 +115,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
               child: Container(
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
                       blurRadius: 4.0,
                       color: Color(0x33000000),
@@ -130,7 +132,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(5.0, 10.0, 5.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(5.0, 10.0, 5.0, 0.0),
                       child: Text(
                         'Lifetime Access Purchased ✨',
                         textAlign: TextAlign.center,
@@ -142,7 +144,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
+                      padding: EdgeInsetsDirectional.fromSTEB(
                           20.0, 10.0, 20.0, 10.0),
                       child: Text(
                         'Wohoo ! The photo is all yours!',
@@ -166,7 +168,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
-                            return const Center(
+                            return Center(
                               child: SizedBox(
                                 width: 50.0,
                                 height: 50.0,
@@ -189,12 +191,12 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                   ? containerUploadsRecordList.first
                                   : null;
                           return Container(
-                            decoration: const BoxDecoration(),
+                            decoration: BoxDecoration(),
                             child: Visibility(
                               visible: widget.imagekey != null &&
                                   widget.imagekey != '',
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: EdgeInsetsDirectional.fromSTEB(
                                     20.0, 0.0, 20.0, 0.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
@@ -208,9 +210,9 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                   text: 'Download Now',
                                   options: FFButtonOptions(
                                     height: 40.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         24.0, 0.0, 24.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
@@ -223,7 +225,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                           letterSpacing: 0.0,
                                         ),
                                     elevation: 5.0,
-                                    borderSide: const BorderSide(
+                                    borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1.0,
                                     ),
@@ -247,9 +249,9 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                         text: 'See all Purchased Images',
                         options: FFButtonOptions(
                           height: 40.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 0.0, 24.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primaryBackground,
                           textStyle: FlutterFlowTheme.of(context)
@@ -269,7 +271,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                       ),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(5.0, 10.0, 5.0, 20.0),
+                          EdgeInsetsDirectional.fromSTEB(5.0, 10.0, 5.0, 20.0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,

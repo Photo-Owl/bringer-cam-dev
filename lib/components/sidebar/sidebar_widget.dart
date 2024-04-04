@@ -2,6 +2,8 @@ import '/components/contact_usbottomsheet/contact_usbottomsheet_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'sidebar_model.dart';
 export 'sidebar_model.dart';
 
@@ -9,7 +11,7 @@ class SidebarWidget extends StatefulWidget {
   const SidebarWidget({
     super.key,
     int? index,
-  }) : index = index ?? 0;
+  }) : this.index = index ?? 0;
 
   final int index;
 
@@ -71,7 +73,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 child: Container(
                   width: 300.0,
                   height: 146.0,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(0.0),
@@ -82,7 +84,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                   ),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(28.0, 28.0, 108.0, 40.0),
+                        EdgeInsetsDirectional.fromSTEB(28.0, 28.0, 108.0, 40.0),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
@@ -96,7 +98,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
             ],
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 10.0),
+            padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 10.0),
             child: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -112,14 +114,14 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 width: double.infinity,
                 height: 56.0,
                 decoration: BoxDecoration(
-                  color: widget.index == 0 ? const Color(0xFFDBE2F9) : Colors.white,
+                  color: widget.index == 0 ? Color(0xFFDBE2F9) : Colors.white,
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 child: Align(
-                  alignment: const AlignmentDirectional(-1.0, 0.0),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
                     child: Text(
                       'Home',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -134,48 +136,9 @@ class _SidebarWidgetState extends State<SidebarWidget> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 10.0),
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                logFirebaseEvent('SIDEBAR_COMP_Hom_ON_TAP');
-                logFirebaseEvent('Hom_navigate_to');
-
-                context.pushNamed('PremiumPhotos');
-              },
-              child: Container(
-                width: double.infinity,
-                height: 56.0,
-                decoration: BoxDecoration(
-                  color: widget.index == 1 ? const Color(0xFFDBE2F9) : Colors.white,
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                child: Align(
-                  alignment: const AlignmentDirectional(-1.0, 0.0),
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
-                    child: Text(
-                      'Your Premium Photos',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Inter',
-                            fontSize: 16.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
           Builder(
             builder: (context) => Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 10.0),
+              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 10.0),
               child: InkWell(
                 splashColor: Colors.transparent,
                 focusColor: Colors.transparent,
@@ -185,19 +148,19 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                   logFirebaseEvent('SIDEBAR_COMP_Hom_ON_TAP');
                   logFirebaseEvent('Hom_alert_dialog');
                   await showDialog(
-                    barrierColor: const Color(0x23000000),
+                    barrierColor: Color(0x23000000),
                     context: context,
                     builder: (dialogContext) {
                       return Dialog(
                         elevation: 0,
                         insetPadding: EdgeInsets.zero,
                         backgroundColor: Colors.transparent,
-                        alignment: const AlignmentDirectional(0.0, 1.0)
+                        alignment: AlignmentDirectional(0.0, 1.0)
                             .resolve(Directionality.of(context)),
-                        child: SizedBox(
+                        child: Container(
                           height: MediaQuery.sizeOf(context).height * 0.4,
                           width: MediaQuery.sizeOf(context).width * 1.0,
-                          child: const ContactUsbottomsheetWidget(),
+                          child: ContactUsbottomsheetWidget(),
                         ),
                       );
                     },
@@ -210,10 +173,10 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   child: Align(
-                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                    alignment: AlignmentDirectional(-1.0, 0.0),
                     child: Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
                       child: Text(
                         'Contact us',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -230,7 +193,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 20.0),
+            padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 20.0),
             child: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -248,10 +211,10 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 child: Align(
-                  alignment: const AlignmentDirectional(-1.0, 0.0),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
                     child: Text(
                       'Policies',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -267,7 +230,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 20.0),
+            padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 20.0),
             child: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,
@@ -285,10 +248,10 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 child: Align(
-                  alignment: const AlignmentDirectional(-1.0, 0.0),
+                  alignment: AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 5.0),
                     child: Text(
                       'About us',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(

@@ -2,7 +2,10 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'cantfindphotos_model.dart';
 export 'cantfindphotos_model.dart';
 
@@ -66,7 +69,7 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                   context.pop();
                 },
               ),
-              actions: const [],
+              actions: [],
               centerTitle: false,
               elevation: 2.0,
             ),
@@ -84,7 +87,7 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
-                      return const Center(
+                      return Center(
                         child: SizedBox(
                           width: 50.0,
                           height: 50.0,
@@ -120,7 +123,7 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
                                   .secondaryBackground,
-                              boxShadow: const [
+                              boxShadow: [
                                 BoxShadow(
                                   blurRadius: 3.0,
                                   color: Color(0x33000000),
@@ -138,7 +141,7 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       30.0, 20.0, 30.0, 10.0),
                                   child: Text(
                                     'Can\'t find your photos? Don\'t worry.',
@@ -155,7 +158,7 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 5.0, 0.0, 5.0),
                                   child: Container(
                                     width:
@@ -168,9 +171,9 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: const AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
                                         30.0, 10.0, 30.0, 0.0),
                                     child: Text(
                                       'Appologies, there may be a slight delay in uploading the photos. \nWe will text you on whatsapp as soon as we find your photos. 🤗',

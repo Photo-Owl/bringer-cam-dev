@@ -4,6 +4,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'no_photos_model.dart';
 export 'no_photos_model.dart';
 
@@ -47,7 +49,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
         Container(
           width: 80.0,
           height: 80.0,
-          decoration: const BoxDecoration(),
+          decoration: BoxDecoration(),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
@@ -57,7 +59,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
           ),
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+          padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +76,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
           ),
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+          padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
           child: FFButtonWidget(
             onPressed: () async {
               logFirebaseEvent('NO_PHOTOS_COMP_REFRESH_BTN_ON_TAP');
@@ -100,7 +102,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
                             letterSpacing: 0.0,
                           ),
                     ),
-                    duration: const Duration(milliseconds: 5850),
+                    duration: Duration(milliseconds: 5850),
                     backgroundColor:
                         FlutterFlowTheme.of(context).primaryBackground,
                   ),
@@ -118,7 +120,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
                             letterSpacing: 0.0,
                           ),
                     ),
-                    duration: const Duration(milliseconds: 5850),
+                    duration: Duration(milliseconds: 5850),
                     backgroundColor:
                         FlutterFlowTheme.of(context).primaryBackground,
                   ),
@@ -131,9 +133,9 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
             options: FFButtonOptions(
               width: 170.0,
               height: 56.0,
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-              iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-              color: const Color(0xFF1589FC),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              color: Color(0xFF1589FC),
               textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                     fontFamily: 'Lexend Deca',
                     color: Colors.white,
@@ -142,7 +144,7 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
                     fontWeight: FontWeight.normal,
                   ),
               elevation: 2.0,
-              borderSide: const BorderSide(
+              borderSide: BorderSide(
                 color: Colors.transparent,
                 width: 1.0,
               ),

@@ -5,9 +5,12 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'social_sign_in_copy_model.dart';
 export 'social_sign_in_copy_model.dart';
 
@@ -48,8 +51,8 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: const Offset(0.0, 13.999999999999986),
-          end: const Offset(0.0, 0.0),
+          begin: Offset(0.0, 13.999999999999986),
+          end: Offset(0.0, 0.0),
         ),
       ],
     ),
@@ -101,7 +104,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                     child: Image.asset(
                       'assets/images/Image.png',
                       fit: BoxFit.fitHeight,
-                      alignment: const Alignment(0.0, -1.0),
+                      alignment: Alignment(0.0, -1.0),
                     ),
                   ),
                 ),
@@ -121,7 +124,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: EdgeInsets.all(20.0),
                               child: Text(
                                 'Sign In to get started',
                                 style: FlutterFlowTheme.of(context)
@@ -136,9 +139,9 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                             ),
                             if (widget.email != null && widget.email != '')
                               Align(
-                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       15.0, 10.0, 15.0, 0.0),
                                   child: Text(
                                     'This account is already associated with ${widget.email}',
@@ -154,7 +157,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                 ),
                               ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   15.0, 30.0, 15.0, 30.0),
                               child: Stack(
                                 children: [
@@ -179,7 +182,8 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                       if (user == null) {
                                         return;
                                       }
-                                      if (currentPhoneNumber == '') {
+                                      if (currentPhoneNumber == null ||
+                                          currentPhoneNumber == '') {
                                         if (valueOrDefault<bool>(
                                             currentUserDocument
                                                 ?.isBusinessAccount,
@@ -197,15 +201,15 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                             context: context,
                                             builder: (alertDialogContext) {
                                               return AlertDialog(
-                                                title: const Text('Error'),
-                                                content: const Text(
+                                                title: Text('Error'),
+                                                content: Text(
                                                     'This email is used for a business account. Try using a different email'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
                                                             alertDialogContext),
-                                                    child: const Text('Ok'),
+                                                    child: Text('Ok'),
                                                   ),
                                                 ],
                                               );
@@ -230,15 +234,15 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                               context: context,
                                               builder: (alertDialogContext) {
                                                 return AlertDialog(
-                                                  title: const Text('Error'),
-                                                  content: const Text(
+                                                  title: Text('Error'),
+                                                  content: Text(
                                                       'This phone number is already associated with another email id'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () =>
                                                           Navigator.pop(
                                                               alertDialogContext),
-                                                      child: const Text('Ok'),
+                                                      child: Text('Ok'),
                                                     ),
                                                   ],
                                                 );
@@ -286,15 +290,15 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                             context: context,
                                             builder: (alertDialogContext) {
                                               return AlertDialog(
-                                                title: const Text('Error'),
-                                                content: const Text(
+                                                title: Text('Error'),
+                                                content: Text(
                                                     'This email id is already registered with another phone number'),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
                                                             alertDialogContext),
-                                                    child: const Text('Ok'),
+                                                    child: Text('Ok'),
                                                   ),
                                                 ],
                                               );
@@ -313,15 +317,15 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                           context: context,
                                           builder: (alertDialogContext) {
                                             return AlertDialog(
-                                              title: const Text('Error'),
-                                              content: const Text(
+                                              title: Text('Error'),
+                                              content: Text(
                                                   'This email id is already registered with another phone number'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
                                                       Navigator.pop(
                                                           alertDialogContext),
-                                                  child: const Text('Ok'),
+                                                  child: Text('Ok'),
                                                 ),
                                               ],
                                             );
@@ -333,12 +337,12 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 56.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           24.0, 0.0, 24.0, 0.0),
                                       iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
+                                          EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 10.0, 0.0),
-                                      color: const Color(0xFF1589FC),
+                                      color: Color(0xFF1589FC),
                                       textStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .override(
@@ -348,7 +352,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                             letterSpacing: 0.0,
                                           ),
                                       elevation: 2.0,
-                                      borderSide: const BorderSide(
+                                      borderSide: BorderSide(
                                         color: Color(0xFF5282E5),
                                         width: 0.0,
                                       ),
@@ -356,9 +360,9 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 10.0, 0.0, 0.0),
                                       child: ClipRRect(
                                         borderRadius:
@@ -367,7 +371,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                           'assets/images/Google_logo.png',
                                           width: 36.0,
                                           fit: BoxFit.fitHeight,
-                                          alignment: const Alignment(0.0, 0.0),
+                                          alignment: Alignment(0.0, 0.0),
                                         ),
                                       ),
                                     ),
@@ -377,7 +381,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                             ),
                             if (widget.email == null || widget.email == '')
                               Padding(
-                                padding: const EdgeInsets.all(20.0),
+                                padding: EdgeInsets.all(20.0),
                                 child: InkWell(
                                   splashColor: Colors.transparent,
                                   focusColor: Colors.transparent,
@@ -411,7 +415,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Inter',
-                                          color: const Color(0xFF1589FC),
+                                          color: Color(0xFF1589FC),
                                           fontSize: 15.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.w600,
@@ -420,7 +424,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                 ),
                               ),
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   20.0, 55.0, 20.0, 10.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
@@ -456,7 +460,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                             animationsMap['columnOnPageLoadAnimation']!),
                       Flexible(
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 30.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -464,7 +468,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                             children: [
                               if (currentUserReference != null)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 30.0, 0.0, 15.0),
                                   child: Text(
                                     'Login Successful',
@@ -496,11 +500,11 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                           text: 'Continue',
                           options: FFButtonOptions(
                             height: 40.0,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 24.0, 0.0, 24.0, 0.0),
-                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: const Color(0xFF1589FC),
+                            color: Color(0xFF1589FC),
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
@@ -509,7 +513,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                                   letterSpacing: 0.0,
                                 ),
                             elevation: 3.0,
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               color: Colors.transparent,
                               width: 1.0,
                             ),

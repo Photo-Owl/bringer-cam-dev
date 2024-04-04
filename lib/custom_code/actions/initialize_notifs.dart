@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,6 +29,7 @@ Future<void> initializeNotifs() async {
     provisional: true,
     badge: true,
   );
+
   if (FirebaseAuth.instance.currentUser != null) {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     if (notificationSettings.authorizationStatus ==
@@ -41,13 +44,36 @@ Future<void> initializeNotifs() async {
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   _firebaseMessaging.getInitialMessage();
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
 
-    if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
-    }
+  const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'bringer_noti',
+    'Bringer notificatoion',
+    importance: Importance.max,
+  );
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    RemoteNotification notification = message.notification!;
+    AndroidNotification android = message.notification!.android!;
+
+    flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            icon: android.smallIcon,
+          ),
+        ));
   });
 }
 

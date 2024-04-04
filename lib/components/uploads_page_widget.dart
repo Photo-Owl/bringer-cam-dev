@@ -7,6 +7,7 @@ import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'uploads_page_model.dart';
 export 'uploads_page_model.dart';
 
@@ -14,7 +15,7 @@ class UploadsPageWidget extends StatefulWidget {
   const UploadsPageWidget({
     super.key,
     double? uploadProgress,
-  }) : uploadProgress = uploadProgress ?? 0.0;
+  }) : this.uploadProgress = uploadProgress ?? 0.0;
 
   final double uploadProgress;
 
@@ -52,18 +53,18 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Align(
-          alignment: const AlignmentDirectional(0.0, 0.0),
+          alignment: AlignmentDirectional(0.0, 0.0),
           child: wrapWithModel(
             model: _model.homePageTabBarModel,
             updateCallback: () => setState(() {}),
-            child: const HomePageTabBarWidget(
+            child: HomePageTabBarWidget(
               selected: 'Gallery',
             ),
           ),
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0),
             child: RefreshIndicator(
               onRefresh: () async {
                 logFirebaseEvent('UPLOADS_ListView_1ygeinss_ON_PULL_TO_REF');
@@ -74,7 +75,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                 context.pushNamed(
                   'HomeCopy',
                   extra: <String, dynamic>{
-                    kTransitionInfoKey: const TransitionInfo(
+                    kTransitionInfoKey: TransitionInfo(
                       hasTransition: true,
                       transitionType: PageTransitionType.fade,
                       duration: Duration(milliseconds: 0),
@@ -89,7 +90,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                   if (widget.uploadProgress > 0.0)
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,7 +134,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                     child: FutureBuilder<List<ReadImagesToUploadRow>>(
                       future: SQLiteManager.instance.readImagesToUpload(
                         ownerId: currentUserUid,
@@ -172,7 +173,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                                 gridViewReadImagesToUploadRowList[
                                     gridViewIndex];
                             return Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: EdgeInsets.all(10.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -204,8 +205,8 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                                 child: Stack(
                                   children: [
                                     Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
-                                      child: SizedBox(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Container(
                                         width: 100.0,
                                         height: 100.0,
                                         child: custom_widgets.ShowLocalImage(
@@ -217,7 +218,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                                       ),
                                     ),
                                     Container(
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
                                             Color(0x99101213),
@@ -280,7 +281,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                           final gridViewReadUploadedImagesRow =
                               gridViewReadUploadedImagesRowList[gridViewIndex];
                           return Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0),
                             child: InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -312,8 +313,8 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                               child: Stack(
                                 children: [
                                   Align(
-                                    alignment: const AlignmentDirectional(0.0, 0.0),
-                                    child: SizedBox(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Container(
                                       width: 100.0,
                                       height: 100.0,
                                       child: custom_widgets.ShowLocalImage(
@@ -325,7 +326,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                                     ),
                                   ),
                                   Container(
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
                                           Color(0x99101213),
@@ -337,9 +338,9 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                                       ),
                                     ),
                                     child: Align(
-                                      alignment: const AlignmentDirectional(1.0, 1.0),
+                                      alignment: AlignmentDirectional(1.0, 1.0),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 5.0, 5.0),
                                         child: FaIcon(
                                           FontAwesomeIcons.check,

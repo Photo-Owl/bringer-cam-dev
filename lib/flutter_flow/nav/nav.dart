@@ -1,13 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 
+import '/backend/sqlite/sqlite_manager.dart';
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
+import '/main.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/lat_lng.dart';
+import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
@@ -72,15 +81,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? const RedirectionCopyWidget()
-          : const SignInCopyWidget(),
+          ? RedirectionCopyWidget()
+          : SignInCopyWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? const RedirectionCopyWidget()
-              : const SignInCopyWidget(),
+              ? RedirectionCopyWidget()
+              : SignInCopyWidget(),
         ),
         FFRoute(
           name: 'OtpVerification',
@@ -113,17 +122,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'SkipSelfie',
           path: '/skipSelfie',
-          builder: (context, params) => const SkipSelfieWidget(),
+          builder: (context, params) => SkipSelfieWidget(),
         ),
         FFRoute(
           name: 'Product',
           path: '/product',
-          builder: (context, params) => const ProductWidget(),
+          builder: (context, params) => ProductWidget(),
         ),
         FFRoute(
           name: 'SelectPhotos',
           path: '/selectPhotos',
-          builder: (context, params) => const SelectPhotosWidget(),
+          builder: (context, params) => SelectPhotosWidget(),
         ),
         FFRoute(
           name: 'Address',
@@ -150,12 +159,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'PremiumPhotos',
           path: '/Premium',
-          builder: (context, params) => const PremiumPhotosWidget(),
+          builder: (context, params) => PremiumPhotosWidget(),
         ),
         FFRoute(
           name: 'CreateanEvent',
           path: '/createanEvent',
-          builder: (context, params) => const CreateanEventWidget(),
+          builder: (context, params) => CreateanEventWidget(),
         ),
         FFRoute(
           name: 'ReadQr',
@@ -170,12 +179,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'WaitForVerification',
           path: '/waitForVerification',
-          builder: (context, params) => const WaitForVerificationWidget(),
+          builder: (context, params) => WaitForVerificationWidget(),
         ),
         FFRoute(
           name: 'Cantfindphotos',
           path: '/cantfindphotos',
-          builder: (context, params) => const CantfindphotosWidget(),
+          builder: (context, params) => CantfindphotosWidget(),
         ),
         FFRoute(
           name: 'SocialSignIn',
@@ -201,7 +210,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'HomeCopy',
           path: '/homeCopy',
-          builder: (context, params) => const HomeCopyWidget(),
+          builder: (context, params) => HomeCopyWidget(),
         ),
         FFRoute(
           name: 'Album',
@@ -274,12 +283,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'RedirectionCopy',
           path: '/Bringer',
           requireAuth: true,
-          builder: (context, params) => const RedirectionCopyWidget(),
+          builder: (context, params) => RedirectionCopyWidget(),
         ),
         FFRoute(
           name: 'camera',
           path: '/camera',
-          builder: (context, params) => const CameraWidget(),
+          builder: (context, params) => CameraWidget(),
         ),
         FFRoute(
           name: 'LocalImage',
@@ -303,7 +312,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'HomeCopyCopy',
           path: '/home',
-          builder: (context, params) => const HomeCopyCopyWidget(),
+          builder: (context, params) => HomeCopyCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -490,7 +499,7 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? const Center(
+              ? Center(
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
@@ -543,7 +552,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

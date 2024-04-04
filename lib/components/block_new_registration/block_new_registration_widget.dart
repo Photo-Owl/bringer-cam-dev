@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'block_new_registration_model.dart';
 export 'block_new_registration_model.dart';
 
@@ -48,7 +50,7 @@ class _BlockNewRegistrationWidgetState
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
             child: Text(
               'We are full !',
               style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -60,7 +62,7 @@ class _BlockNewRegistrationWidgetState
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
             child: Text(
               'we appreciate your interest in our beta testing program. \nHowever, we\'ve reached our maximum capacity.\nThank you for your support! Please stay connected for future opportunities and exciting updates.',
               style: FlutterFlowTheme.of(context).bodyMedium.override(

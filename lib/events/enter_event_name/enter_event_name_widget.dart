@@ -2,6 +2,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'enter_event_name_model.dart';
 export 'enter_event_name_model.dart';
 
@@ -52,7 +54,7 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(24.0, 20.0, 0.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(24.0, 20.0, 0.0, 0.0),
             child: Text(
               'Enter Event Name :',
               style: FlutterFlowTheme.of(context).headlineMedium.override(
@@ -64,13 +66,13 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -126,7 +128,7 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                             filled: true,
                             fillColor: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                            contentPadding: EdgeInsetsDirectional.fromSTEB(
                                 20.0, 24.0, 20.0, 24.0),
                           ),
                           style:
@@ -145,14 +147,14 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               30.0, 0.0, 30.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () {
@@ -162,8 +164,8 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 40.0,
-                              padding: const EdgeInsets.all(0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsets.all(0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primaryText,
                               textStyle: FlutterFlowTheme.of(context)
@@ -174,7 +176,7 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                                         .primaryBackground,
                                     letterSpacing: 0.0,
                                   ),
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),

@@ -10,8 +10,11 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'createan_event_model.dart';
 export 'createan_event_model.dart';
 
@@ -58,7 +61,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const UpdateRequiredWidget(),
+                child: UpdateRequiredWidget(),
               ),
             );
           },
@@ -67,7 +70,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
         return;
       }
 
-      if (currentUserDisplayName == '') {
+      if (currentUserDisplayName == null || currentUserDisplayName == '') {
         logFirebaseEvent('CreateanEvent_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
@@ -81,7 +84,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const GiveNameWidget(),
+                child: GiveNameWidget(),
               ),
             );
           },
@@ -133,7 +136,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            body: const Center(
+            body: Center(
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
@@ -170,7 +173,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                   child: wrapWithModel(
                     model: _model.sidebarModel,
                     updateCallback: () => setState(() {}),
-                    child: const SidebarWidget(),
+                    child: SidebarWidget(),
                   ),
                 ),
                 appBar: AppBar(
@@ -182,7 +185,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                         child: FlutterFlowIconButton(
                           borderColor:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -206,7 +209,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                       ),
                       AuthUserStreamWidget(
                         builder: (context) => Text(
-                          'Hey $currentUserDisplayName',
+                          'Hey ${currentUserDisplayName}',
                           style:
                               FlutterFlowTheme.of(context).titleMedium.override(
                                     fontFamily: 'Inter',
@@ -216,7 +219,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                       ),
                     ],
                   ),
-                  actions: const [],
+                  actions: [],
                   centerTitle: false,
                   elevation: 0.0,
                 ),
@@ -225,7 +228,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                   child: Column(
                     children: [
                       Align(
-                        alignment: const Alignment(0.0, 0),
+                        alignment: Alignment(0.0, 0),
                         child: FlutterFlowButtonTabBar(
                           useToggleButtonStyle: false,
                           labelStyle:
@@ -233,7 +236,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
-                          unselectedLabelStyle: const TextStyle(),
+                          unselectedLabelStyle: TextStyle(),
                           labelColor: FlutterFlowTheme.of(context).primaryText,
                           unselectedLabelColor:
                               FlutterFlowTheme.of(context).secondaryText,
@@ -244,9 +247,9 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                           borderWidth: 0.0,
                           borderRadius: 5.0,
                           elevation: 0.0,
-                          buttonMargin: const EdgeInsetsDirectional.fromSTEB(
+                          buttonMargin: EdgeInsetsDirectional.fromSTEB(
                               5.0, 10.0, 10.0, 5.0),
-                          tabs: const [
+                          tabs: [
                             Tab(
                               text: 'Create An Event',
                             ),
@@ -275,7 +278,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 200.0, 0.0, 0.0),
                                       child: Container(
                                         decoration: BoxDecoration(
@@ -293,7 +296,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                               size: 145.0,
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 10.0, 0.0, 0.0),
                                               child: FFButtonWidget(
@@ -325,7 +328,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                                               .viewInsetsOf(
                                                                   context),
                                                           child:
-                                                              const EnterEventNameWidget(),
+                                                              EnterEventNameWidget(),
                                                         ),
                                                       );
                                                     },
@@ -335,14 +338,14 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                                 text: '+ Create an Event',
                                                 options: FFButtonOptions(
                                                   height: 40.0,
-                                                  padding: const EdgeInsetsDirectional
+                                                  padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           24.0, 0.0, 24.0, 0.0),
                                                   iconPadding:
-                                                      const EdgeInsetsDirectional
+                                                      EdgeInsetsDirectional
                                                           .fromSTEB(0.0, 0.0,
                                                               0.0, 0.0),
-                                                  color: const Color(0xFF3293E1),
+                                                  color: Color(0xFF3293E1),
                                                   textStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -353,7 +356,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                                             letterSpacing: 0.0,
                                                           ),
                                                   elevation: 3.0,
-                                                  borderSide: const BorderSide(
+                                                  borderSide: BorderSide(
                                                     color: Colors.transparent,
                                                     width: 1.0,
                                                   ),
@@ -364,7 +367,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                               ),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsetsDirectional
+                                              padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       0.0, 30.0, 0.0, 0.0),
                                               child: Container(
@@ -398,7 +401,7 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 15.0),
                                       child: Container(
                                         decoration: BoxDecoration(

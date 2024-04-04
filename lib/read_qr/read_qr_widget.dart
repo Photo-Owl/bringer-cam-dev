@@ -5,6 +5,8 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'read_qr_model.dart';
 export 'read_qr_model.dart';
 
@@ -56,7 +58,7 @@ class _ReadQrWidgetState extends State<ReadQrWidget> {
             body: SafeArea(
               top: true,
               child: Align(
-                alignment: const AlignmentDirectional(0.0, 0.0),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: FutureBuilder<List<QrCodesRecord>>(
                   future: queryQrCodesRecordOnce(
                     queryBuilder: (qrCodesRecord) => qrCodesRecord.where(
@@ -68,7 +70,7 @@ class _ReadQrWidgetState extends State<ReadQrWidget> {
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
-                      return const Center(
+                      return Center(
                         child: SizedBox(
                           width: 40.0,
                           height: 40.0,
@@ -97,8 +99,8 @@ class _ReadQrWidgetState extends State<ReadQrWidget> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: CachedNetworkImage(
-                            fadeInDuration: const Duration(milliseconds: 0),
-                            fadeOutDuration: const Duration(milliseconds: 0),
+                            fadeInDuration: Duration(milliseconds: 0),
+                            fadeOutDuration: Duration(milliseconds: 0),
                             imageUrl: columnQrCodesRecord!.logoUrl,
                             width: 200.0,
                             height: 200.0,
@@ -106,7 +108,7 @@ class _ReadQrWidgetState extends State<ReadQrWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 30.0, 0.0, 0.0),
                           child: Text(
                             'Follow to get your photos',
@@ -119,32 +121,32 @@ class _ReadQrWidgetState extends State<ReadQrWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 25.0, 0.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               logFirebaseEvent(
                                   'READ_QR_PAGE_FOLLOW_NOW_BTN_ON_TAP');
                               logFirebaseEvent('Button_launch_u_r_l');
-                              await launchURL(columnQrCodesRecord.redirectUrl);
+                              await launchURL(columnQrCodesRecord!.redirectUrl);
                             },
                             text: 'Follow Now',
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   24.0, 0.0, 24.0, 0.0),
-                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: const Color(0xFFCBF7C2),
+                              color: Color(0xFFCBF7C2),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
                                     fontFamily: 'Inter',
-                                    color: const Color(0xFF333333),
+                                    color: Color(0xFF333333),
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 0.0,
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 color: Color(0x6E000000),
                                 width: 1.0,
                               ),

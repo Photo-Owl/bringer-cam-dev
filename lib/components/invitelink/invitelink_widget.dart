@@ -3,6 +3,8 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'invitelink_model.dart';
 export 'invitelink_model.dart';
 
@@ -40,7 +42,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: const AlignmentDirectional(0.0, 0.0),
+      alignment: AlignmentDirectional(0.0, 0.0),
       child: Container(
         width: 300.0,
         height: 230.0,
@@ -58,10 +60,10 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Align(
-                  alignment: const AlignmentDirectional(1.0, 0.0),
+                  alignment: AlignmentDirectional(1.0, 0.0),
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 5.0),
+                        EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 5.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -88,7 +90,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                   child: Text(
                     'Found Someone You Know\nin the Picture?',
                     textAlign: TextAlign.center,
@@ -108,7 +110,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                 Expanded(
                   child: Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                     child: Text(
                       'Invite them to Bringer and we will get this to them 🤗',
                       textAlign: TextAlign.center,
@@ -122,19 +124,19 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
+                        EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent('INVITELINK_COMP_GET_LINK_BTN_ON_TAP');
                         logFirebaseEvent('Button_copy_to_clipboard');
-                        await Clipboard.setData(const ClipboardData(
+                        await Clipboard.setData(ClipboardData(
                             text:
                                 'https://your-photos-vdpy50.flutterflow.app/'));
                         logFirebaseEvent('Button_show_snack_bar');
@@ -146,7 +148,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                                 color: FlutterFlowTheme.of(context).primaryText,
                               ),
                             ),
-                            duration: const Duration(milliseconds: 4000),
+                            duration: Duration(milliseconds: 4000),
                             backgroundColor:
                                 FlutterFlowTheme.of(context).secondary,
                           ),
@@ -156,11 +158,11 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                       options: FFButtonOptions(
                         width: 180.0,
                         height: 56.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: const Color(0xFF1589FC),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: Color(0xFF1589FC),
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Inter',
@@ -169,7 +171,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                                   letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),

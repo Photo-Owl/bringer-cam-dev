@@ -4,11 +4,15 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'local_image_model.dart';
 export 'local_image_model.dart';
 
@@ -102,7 +106,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
-                          return const Center(
+                          return Center(
                             child: SizedBox(
                               width: 50.0,
                               height: 50.0,
@@ -116,7 +120,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                         }
                         final uploadedReadUploadedImagesRowList =
                             snapshot.data!;
-                        return SizedBox(
+                        return Container(
                           width: double.infinity,
                           height: double.infinity,
                           child: CarouselSlider.builder(
@@ -135,14 +139,14 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                     children: [
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(1.0, 0.0),
+                                            AlignmentDirectional(1.0, 0.0),
                                         child: FlutterFlowIconButton(
                                           borderColor: Colors.transparent,
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 44.0,
                                           fillColor: Colors.transparent,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.arrow_back,
                                             color: Colors.white,
                                             size: 24.0,
@@ -159,14 +163,14 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                       if (!widget.isUploaded!)
                                         Align(
                                           alignment:
-                                              const AlignmentDirectional(1.0, 0.0),
+                                              AlignmentDirectional(1.0, 0.0),
                                           child: FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
                                             borderRadius: 20.0,
                                             borderWidth: 1.0,
                                             buttonSize: 44.0,
                                             fillColor: Colors.transparent,
-                                            icon: const Icon(
+                                            icon: Icon(
                                               Icons.delete_rounded,
                                               color: Colors.white,
                                               size: 24.0,
@@ -185,7 +189,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                               await _model.uploadedController
                                                   ?.previousPage(
                                                 duration:
-                                                    const Duration(milliseconds: 300),
+                                                    Duration(milliseconds: 300),
                                                 curve: Curves.ease,
                                               );
                                             },
@@ -195,7 +199,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                   ).animateOnPageLoad(animationsMap[
                                       'rowOnPageLoadAnimation1']!),
                                   Expanded(
-                                    child: SizedBox(
+                                    child: Container(
                                       width: double.infinity,
                                       height: double.infinity,
                                       child: custom_widgets.ShowLocalImage(
@@ -240,7 +244,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
-                          return const Center(
+                          return Center(
                             child: SizedBox(
                               width: 50.0,
                               height: 50.0,
@@ -254,7 +258,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                         }
                         final notuploadedReadImagesToUploadRowList =
                             snapshot.data!;
-                        return SizedBox(
+                        return Container(
                           width: double.infinity,
                           height: double.infinity,
                           child: CarouselSlider.builder(
@@ -274,14 +278,14 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                     children: [
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(1.0, 0.0),
+                                            AlignmentDirectional(1.0, 0.0),
                                         child: FlutterFlowIconButton(
                                           borderColor: Colors.transparent,
                                           borderRadius: 20.0,
                                           borderWidth: 1.0,
                                           buttonSize: 44.0,
                                           fillColor: Colors.transparent,
-                                          icon: const Icon(
+                                          icon: Icon(
                                             Icons.arrow_back,
                                             color: Colors.white,
                                             size: 24.0,
@@ -298,14 +302,14 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                       if (!widget.isUploaded!)
                                         Align(
                                           alignment:
-                                              const AlignmentDirectional(1.0, 0.0),
+                                              AlignmentDirectional(1.0, 0.0),
                                           child: FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
                                             borderRadius: 20.0,
                                             borderWidth: 1.0,
                                             buttonSize: 44.0,
                                             fillColor: Colors.transparent,
-                                            icon: const Icon(
+                                            icon: Icon(
                                               Icons.delete_rounded,
                                               color: Colors.white,
                                               size: 24.0,
@@ -324,7 +328,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                               await _model.notuploadedController
                                                   ?.previousPage(
                                                 duration:
-                                                    const Duration(milliseconds: 300),
+                                                    Duration(milliseconds: 300),
                                                 curve: Curves.ease,
                                               );
                                             },
@@ -334,7 +338,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                   ).animateOnPageLoad(animationsMap[
                                       'rowOnPageLoadAnimation2']!),
                                   Expanded(
-                                    child: SizedBox(
+                                    child: Container(
                                       width: double.infinity,
                                       height: double.infinity,
                                       child: custom_widgets.ShowLocalImage(

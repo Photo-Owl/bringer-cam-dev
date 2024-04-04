@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 Future initFirebase() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: const FirebaseOptions(
+        options: FirebaseOptions(
             apiKey: "AIzaSyBlzTW6aaY4kp7l47Pzz1MXtiqFKJF34vU",
             authDomain: "bringer-cam-dev.firebaseapp.com",
             projectId: "bringer-cam-dev",

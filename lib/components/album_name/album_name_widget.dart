@@ -1,8 +1,12 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'album_name_model.dart';
 export 'album_name_model.dart';
 
@@ -53,7 +57,7 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
         borderRadius: BorderRadius.circular(15.0),
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+        padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
         child: FutureBuilder<List<AlbumsRecord>>(
           future: queryAlbumsRecordOnce(
             queryBuilder: (albumsRecord) => albumsRecord.where(
@@ -65,7 +69,7 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
           builder: (context, snapshot) {
             // Customize what your widget looks like when it's loading.
             if (!snapshot.hasData) {
-              return const Center(
+              return Center(
                 child: SizedBox(
                   width: 50.0,
                   height: 50.0,
@@ -92,7 +96,7 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 20.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 20.0),
                     child: Text(
                       'Give a name for this album',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -164,11 +168,12 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                   ),
                   Padding(
                     padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 15.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 15.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent('ALBUM_NAME_COMP_CONFIRM_BTN_ON_TAP');
-                        if (_model.textController.text != '') {
+                        if (_model.textController.text != null &&
+                            _model.textController.text != '') {
                           logFirebaseEvent('Button_backend_call');
 
                           await columnAlbumsRecord!.reference
@@ -192,7 +197,7 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                              duration: const Duration(milliseconds: 4000),
+                              duration: Duration(milliseconds: 4000),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).error,
                             ),
@@ -203,10 +208,10 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                       text: 'Confirm',
                       options: FFButtonOptions(
                         height: 40.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
+                        padding: EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
@@ -215,7 +220,7 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                                   letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1.0,
                         ),
