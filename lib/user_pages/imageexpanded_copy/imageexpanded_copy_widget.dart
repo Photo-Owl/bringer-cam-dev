@@ -753,13 +753,43 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                   .getDownloadUrl(
                                                             imagesItem.id,
                                                           );
-                                                          logFirebaseEvent(
-                                                              'Container_custom_action');
-                                                          await actions
-                                                              .downloadImage(
-                                                            _model.downloadUrl!,
-                                                            imagesItem.id,
-                                                          );
+                                                          await Future.wait([
+                                                            Future(() async {
+                                                              logFirebaseEvent(
+                                                                  'Container_custom_action');
+                                                              await actions
+                                                                  .downloadImage(
+                                                                _model
+                                                                    .downloadUrl!,
+                                                                imagesItem.id,
+                                                              );
+                                                            }),
+                                                            Future(() async {
+                                                              logFirebaseEvent(
+                                                                  'Container_show_snack_bar');
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                SnackBar(
+                                                                  content: const Text(
+                                                                    'Downloading Image',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                  duration: const Duration(
+                                                                      milliseconds:
+                                                                          4000),
+                                                                  backgroundColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .accent2,
+                                                                ),
+                                                              );
+                                                            }),
+                                                          ]);
 
                                                           setState(() {});
                                                         },
@@ -870,6 +900,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                     imageKey:
                                                                         imagesItem
                                                                             .id,
+                                                                    imageitem: widget
+                                                                            .albumDoc![
+                                                                        widget
+                                                                            .index!],
                                                                   ),
                                                                 ),
                                                               ),

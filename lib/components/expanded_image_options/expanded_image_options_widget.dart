@@ -1,3 +1,5 @@
+import '/backend/schema/structs/index.dart';
+import '/backend/sqlite/sqlite_manager.dart';
 import '/components/report_options/report_options_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -9,9 +11,11 @@ class ExpandedImageOptionsWidget extends StatefulWidget {
   const ExpandedImageOptionsWidget({
     super.key,
     required this.imageKey,
+    required this.imageitem,
   });
 
   final String? imageKey;
+  final ImageModelStruct? imageitem;
 
   @override
   State<ExpandedImageOptionsWidget> createState() =>
@@ -82,6 +86,70 @@ class _ExpandedImageOptionsWidgetState
                         ),
                   ),
                 ),
+                if (widget.imageitem?.isLocal ?? true)
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'EXPANDED_IMAGE_OPTIONS_ReportImage_ON_TA');
+                        logFirebaseEvent(
+                            'ReportImage_close_dialog,_drawer,_etc');
+                        Navigator.pop(context);
+                        logFirebaseEvent('ReportImage_backend_call');
+                        await SQLiteManager.instance.deleteImage(
+                          path: widget.imageitem!.imageUrl,
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 8.0, 0.0, 8.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 0.0, 0.0),
+                                child: Icon(
+                                  Icons.delete_rounded,
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  size: 20.0,
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Delete Image',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          color: FlutterFlowTheme.of(context)
+                                              .tertiary,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: InkWell(
