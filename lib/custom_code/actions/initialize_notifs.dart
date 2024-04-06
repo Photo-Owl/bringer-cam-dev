@@ -42,36 +42,27 @@ Future<void> initializeNotifs() async {
     }
   }
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  _firebaseMessaging.getInitialMessage();
-
-  const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'bringer_noti',
-    'Bringer notificatoion',
-    importance: Importance.max,
-  );
-
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification notification = message.notification!;
     AndroidNotification android = message.notification!.android!;
 
-    flutterLocalNotificationsPlugin.show(
+    final notifPlugin = FlutterLocalNotificationsPlugin();
+    notifPlugin.initialize(
+      InitializationSettings(
+        android: AndroidInitializationSettings('ic_launcher'),
+      ),
+    );
+
+    notifPlugin.show(
         notification.hashCode,
         notification.title,
         notification.body,
         NotificationDetails(
           android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
+            'com.smoose.photoowldev.uploads',
+            'Upload notification',
             icon: android.smallIcon,
+            importance: Importance.min,
           ),
         ));
   });

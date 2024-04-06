@@ -98,7 +98,7 @@ class Uploader {
         isUploading: false,
       ),
     );
-    // uploadImages();
+    uploadImages();
     _appState?.update(() {
       _appState!.isUploading = _isUploading;
       _appState!.uploadProgress = progress;
@@ -119,7 +119,7 @@ class Uploader {
 
     final notifPlugin = FlutterLocalNotificationsPlugin();
     await notifPlugin.initialize(
-      InitializationSettings(
+      const InitializationSettings(
         android: AndroidInitializationSettings('ic_launcher'),
       ),
     );

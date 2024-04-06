@@ -21,11 +21,18 @@ import 'package:workmanager/workmanager.dart';
 @pragma('vm:entry-point')
 void taskDispatcher() {
   Workmanager().executeTask((task, _) async {
-    await initFirebase();
-    await SQLiteManager.initialize();
-    final uploader = Uploader();
-    await uploader.waitForUploads();
-    return Future.value(true);
+    try {
+      await initFirebase();
+      await SQLiteManager.initialize();
+      final uploader = Uploader();
+      await uploader.waitForUploads();
+      return true;
+    } catch (e) {
+      if (e is Error) {
+        debugPrintStack(stackTrace: e.stackTrace);
+      }
+      return false;
+    }
   });
 }
 
@@ -55,7 +62,6 @@ Future startAutoUpload() async {
   //   ),
   // );
   // if (FirebaseAuth.instance.currentUser != null) {
-  //   final uploader = Uploader();
-  //   uploader.uploadImages();
+  //     final uploader = Uploader();
   // }
 }
