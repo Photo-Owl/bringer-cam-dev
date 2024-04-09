@@ -217,8 +217,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             albumDoc: params.getParam<ImageModelStruct>(
               'albumDoc',
               ParamType.DataStruct,
-              isList: true,
-              structBuilder: ImageModelStruct.fromSerializableMap,
+              true,
+              null,
+              ImageModelStruct.fromSerializableMap,
             ),
             index: params.getParam(
               'index',
@@ -551,7 +552,8 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() =>
+      const TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {
