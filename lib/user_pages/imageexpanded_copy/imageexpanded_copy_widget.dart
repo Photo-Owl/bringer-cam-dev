@@ -274,7 +274,9 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                       alignment: const AlignmentDirectional(0.0, 0.0),
                                       child: Builder(
                                         builder: (context) {
-                                          if (!imagesItem.isLocal) {
+                                          if (!imagesItem.isLocal &&
+                                              (containerUploadsRecord !=
+                                                  null)) {
                                             return Container(
                                               decoration: const BoxDecoration(),
                                               child: Padding(
@@ -300,8 +302,46 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                         0.75,
                                                     imageUrl: functions
                                                         .convertToImagePath(
-                                                            containerUploadsRecord!
+                                                            containerUploadsRecord
                                                                 .uploadUrl),
+                                                    placeholderImage: functions
+                                                        .convertToImagePath(
+                                                            imagesItem
+                                                                .imageUrl),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          } else if (!imagesItem.isLocal &&
+                                              !(containerUploadsRecord !=
+                                                  null)) {
+                                            return Container(
+                                              decoration: const BoxDecoration(),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(10.0),
+                                                child: SizedBox(
+                                                  width:
+                                                      MediaQuery.sizeOf(context)
+                                                              .width *
+                                                          0.9,
+                                                  height:
+                                                      MediaQuery.sizeOf(context)
+                                                              .height *
+                                                          0.75,
+                                                  child: custom_widgets
+                                                      .FadeInImage(
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.9,
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .height *
+                                                        0.75,
+                                                    imageUrl: functions
+                                                        .convertToImagePath(
+                                                            imagesItem
+                                                                .imageUrl),
                                                     placeholderImage: functions
                                                         .convertToImagePath(
                                                             imagesItem

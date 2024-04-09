@@ -105,6 +105,8 @@ class _ExpandedImageOptionsWidgetState
                         await SQLiteManager.instance.deleteImage(
                           path: widget.imageitem!.imageUrl,
                         );
+                        logFirebaseEvent('ReportImage_navigate_back');
+                        context.safePop();
                       },
                       child: Container(
                         width: double.infinity,

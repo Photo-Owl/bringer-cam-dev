@@ -51,9 +51,15 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
       };
     }
     print(doc);
-
+    final key = doc
+        .data()['upload_url']
+        .split('/')
+        .pop()
+        .split('?')[0]
+        .split('%2F')
+        .pop();
     groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
-      id: doc.data()['key'] ?? '',
+      id: doc.data()['key'] ?? key,
       imageUrl: doc.data()['resized_image_250'] ?? doc.data()['upload_url'],
       isUploading: null, // This is Firestore data, so isUploading is null
       isLocal: false,

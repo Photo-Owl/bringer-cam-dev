@@ -11,49 +11,61 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> initializeNotifs() async {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  final notificationSettings =
-      await FirebaseMessaging.instance.requestPermission(
-    alert: true,
-    carPlay: true,
-    criticalAlert: true,
-    sound: true,
-    announcement: true,
-    provisional: true,
-    badge: true,
-  );
+  await Firebase.initializeApp();
 
-  if (FirebaseAuth.instance.currentUser != null) {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
-    if (notificationSettings.authorizationStatus ==
-        AuthorizationStatus.authorized) {
-      final fcmToken = await FirebaseMessaging.instance.getToken();
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(uid)
-          .update({'fcmToken': fcmToken});
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  try {
+    final NotificationSettings notificationSettings =
+        await _firebaseMessaging.requestPermission(
+      alert: true,
+      carPlay: true,
+      criticalAlert: true,
+      sound: true,
+      announcement: true,
+      provisional: true,
+      badge: true,
+    );
+
+    if (_auth.currentUser != null &&
+        notificationSettings.authorizationStatus ==
+            AuthorizationStatus.authorized) {
+      final String? uid = _auth.currentUser!.uid;
+      final String? fcmToken = await _firebaseMessaging.getToken();
+
+      if (uid != null && fcmToken != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .update({'fcmToken': fcmToken});
+      }
     }
+  } catch (e) {
+    print('Error initializing notifications: $e');
   }
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    RemoteNotification notification = message.notification!;
-    AndroidNotification android = message.notification!.android!;
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
 
-    final notifPlugin = FlutterLocalNotificationsPlugin();
-    notifPlugin.initialize(
-      InitializationSettings(
-        android: AndroidInitializationSettings('ic_launcher'),
-      ),
-    );
+    if (notification != null && android != null) {
+      final FlutterLocalNotificationsPlugin notifPlugin =
+          FlutterLocalNotificationsPlugin();
+      final AndroidInitializationSettings initializationSettingsAndroid =
+          AndroidInitializationSettings('ic_launcher');
 
-    notifPlugin.show(
+      notifPlugin.initialize(
+        InitializationSettings(android: initializationSettingsAndroid),
+      );
+
+      notifPlugin.show(
         notification.hashCode,
         notification.title,
         notification.body,
@@ -63,9 +75,14 @@ Future<void> initializeNotifs() async {
             'Upload notification',
             icon: android.smallIcon,
             importance: Importance.min,
+            playSound: true,
           ),
-        ));
+        ),
+      );
+    }
   });
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
