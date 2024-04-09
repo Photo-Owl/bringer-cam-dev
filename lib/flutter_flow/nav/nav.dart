@@ -218,6 +218,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'albumDoc',
               ParamType.DataStruct,
               true,
+              null,
               ImageModelStruct.fromSerializableMap,
             ),
             index: params.getParam(
