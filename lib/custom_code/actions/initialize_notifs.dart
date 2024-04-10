@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 // Import libraries
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,15 +67,15 @@ Future<void> initializeNotifs() async {
   }
 
   // Configure Awesome Notifications channels (optional)
-  AwesomeNotifications().setNotificationChannel(
-    channelKey:
-        'com.smoose.photoowldev.uploads', // Same as used in createNotification
-    channelName: 'Upload notification',
-    channelDescription: 'Notifications for general information',
-    defaultColor: Color(0xFF0000FF), // Customize notification color
-    playSound: true, // Enable sound
-    importance: Importance.Low, // Set notification importance
-  );
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+      channelKey: 'com.smoose.photoowldev.uploads',
+      channelName: 'Upload notification',
+      channelDescription: 'Notification channel for basic tests',
+      defaultColor: Color(0xFF9D50DD),
+      ledColor: Colors.white,
+    )
+  ]);
 
   // Listen for foreground messages
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
