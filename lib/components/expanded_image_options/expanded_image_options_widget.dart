@@ -1,8 +1,9 @@
 import '/backend/schema/structs/index.dart';
-import '/backend/sqlite/sqlite_manager.dart';
+import '/components/deleteoption/deleteoption_widget.dart';
 import '/components/report_options/report_options_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'expanded_image_options_model.dart';
 export 'expanded_image_options_model.dart';
@@ -86,8 +87,8 @@ class _ExpandedImageOptionsWidgetState
                         ),
                   ),
                 ),
-                if (widget.imageitem?.isLocal ?? true)
-                  Padding(
+                Builder(
+                  builder: (context) => Padding(
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                     child: InkWell(
@@ -97,15 +98,38 @@ class _ExpandedImageOptionsWidgetState
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         logFirebaseEvent(
-                            'EXPANDED_IMAGE_OPTIONS_ReportImage_ON_TA');
+                            'EXPANDED_IMAGE_OPTIONS_DeleteImage_ON_TA');
                         logFirebaseEvent(
-                            'ReportImage_close_dialog,_drawer,_etc');
+                            'DeleteImage_close_dialog,_drawer,_etc');
                         Navigator.pop(context);
-                        logFirebaseEvent('ReportImage_backend_call');
-                        await SQLiteManager.instance.deleteImage(
-                          path: widget.imageitem!.imageUrl,
-                        );
-                        logFirebaseEvent('ReportImage_navigate_back');
+                        if (widget.imageitem!.isLocal) {
+                          logFirebaseEvent('DeleteImage_custom_action');
+                          await actions.deleteImage(
+                            widget.imageitem!.imageUrl,
+                          );
+                        } else {
+                          logFirebaseEvent('DeleteImage_alert_dialog');
+                          await showDialog(
+                            barrierColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            context: context,
+                            builder: (dialogContext) {
+                              return Dialog(
+                                elevation: 0,
+                                insetPadding: EdgeInsets.zero,
+                                backgroundColor: Colors.transparent,
+                                alignment: const AlignmentDirectional(0.0, 0.0)
+                                    .resolve(Directionality.of(context)),
+                                child: DeleteoptionWidget(
+                                  imageitem: ImageModelStruct(),
+                                  imageKey: widget.imageKey!,
+                                ),
+                              );
+                            },
+                          ).then((value) => setState(() {}));
+                        }
+
+                        logFirebaseEvent('DeleteImage_navigate_back');
                         context.safePop();
                       },
                       child: Container(
@@ -152,6 +176,7 @@ class _ExpandedImageOptionsWidgetState
                       ),
                     ),
                   ),
+                ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: InkWell(

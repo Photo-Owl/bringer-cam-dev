@@ -10,11 +10,25 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// Import libraries
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+// Function to create notification with Awesome Notifications
+void createAwesomeNotification(String title, String body) {
+  AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: UniqueKey().hashCode,
+      channelKey:
+          'com.smoose.photoowldev.uploads', // You can customize this channel key
+      title: title,
+      body: body,
+    ),
+  );
+}
 
 Future<void> initializeNotifs() async {
   await Firebase.initializeApp();
@@ -51,37 +65,26 @@ Future<void> initializeNotifs() async {
     print('Error initializing notifications: $e');
   }
 
+  // Configure Awesome Notifications channels (optional)
+  AwesomeNotifications().setNotificationChannel(
+    channelKey:
+        'com.smoose.photoowldev.uploads', // Same as used in createNotification
+    channelName: 'Upload notification',
+    channelDescription: 'Notifications for general information',
+    defaultColor: Color(0xFF0000FF), // Customize notification color
+    playSound: true, // Enable sound
+    importance: Importance.Low, // Set notification importance
+  );
+
+  // Listen for foreground messages
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
-
-    if (notification != null && android != null) {
-      final FlutterLocalNotificationsPlugin notifPlugin =
-          FlutterLocalNotificationsPlugin();
-      final AndroidInitializationSettings initializationSettingsAndroid =
-          AndroidInitializationSettings('ic_launcher');
-
-      notifPlugin.initialize(
-        InitializationSettings(android: initializationSettingsAndroid),
-      );
-
-      notifPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            'com.smoose.photoowldev.uploads',
-            'Upload notification',
-            icon: android.smallIcon,
-            importance: Importance.min,
-            playSound: true,
-          ),
-        ),
-      );
+    if (notification != null) {
+      createAwesomeNotification(notification.title!, notification.body!);
     }
   });
 
+  // Background message handler (optional)
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
 
