@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:flutter/services.dart';
@@ -21,7 +22,10 @@ import 'package:flutter/foundation.dart';
 import 'package:media_scanner/media_scanner.dart';
 import 'package:media_store_plus/media_store_plus.dart';
 import 'package:provider/provider.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/custom_code/actions/uploader.dart';
+
+const goldColor = Color(0xFFFDD207);
 
 class _ShutterButton extends StatelessWidget {
   final bool isTakingPicture;
@@ -32,10 +36,19 @@ class _ShutterButton extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    const bringerColors = [
+      Color(0xFFFFD400),
+      Color(0xFFFFD204),
+      Color(0xFF0CA8FE),
+      Color(0xFF007EFC),
+    ];
     return Container(
-      decoration: const ShapeDecoration(
+      decoration: ShapeDecoration(
         shape: CircleBorder(
-          side: BorderSide(color: Colors.white, width: 2),
+          side: BorderSide(
+            color: isTakingPicture ? Colors.white70 : Colors.white,
+            width: 5,
+          ),
         ),
       ),
       child: Material(
@@ -45,13 +58,68 @@ class _ShutterButton extends StatelessWidget {
         child: InkWell(
           onTap: onPressed,
           child: Container(
+            alignment: Alignment.topRight,
             margin: const EdgeInsets.all(5),
-            height: 60,
-            width: 60,
+            padding: const EdgeInsets.all(10),
+            height: 56,
+            width: 56,
             decoration: ShapeDecoration(
               shape: const CircleBorder(),
-              color: isTakingPicture ? Colors.white70 : Colors.white,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.centerRight,
+                colors: isTakingPicture
+                    ? bringerColors
+                        .map((color) => color.withOpacity(0.7))
+                        .toList()
+                    : bringerColors,
+                stops: const [0, 0.2, 0.8, 1],
+              ),
             ),
+            child: const Icon(
+              Icons.auto_awesome,
+              color: Colors.white,
+              size: 18,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CameraMode {
+  static const portrait = 'Portrait';
+  static const photo = 'Photo';
+  static const nightSight = 'Night Sight';
+
+  final String name;
+  final bool isSelected;
+
+  const _CameraMode({required this.name, required this.isSelected});
+}
+
+class _ModeSelector extends StatelessWidget {
+  final void Function()? onTap;
+  final _CameraMode mode;
+  const _ModeSelector({required this.mode, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(16),
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          color: mode.isSelected ? goldColor : Colors.transparent,
+          child: Text(
+            mode.name,
+            style: TextStyle(
+                color: mode.isSelected ? Colors.black : Colors.white,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -76,13 +144,16 @@ class Camera extends StatefulWidget {
 class _CameraState extends State<Camera> with WidgetsBindingObserver {
   CameraController? controller;
   late final List<CameraDescription> cameras;
+  String? lastImagePath;
   int selectedCameraIndex = 0;
   bool hidSystemUI = false;
+  FlashMode flashMode = FlashMode.off;
 
   @override
   void initState() {
     super.initState();
     _fetchCameras();
+    _fetchLastImage();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky).then((s) {
       setState(() {
         hidSystemUI = true;
@@ -114,9 +185,19 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _fetchLastImage() async {
+    final lastImage = await SQLiteManager.instance
+        .readImagesToUpload(ownerId: currentUserUid)
+        .then((images) => images.firstOrNull);
+    setState(() {
+      lastImagePath = lastImage?.path;
+    });
+  }
+
   Future<void> _fetchCameras() async {
     cameras = await availableCameras();
     controller = CameraController(cameras[0], ResolutionPreset.max);
+    controller?.setFlashMode(flashMode);
     await controller!.initialize();
     setState(() {});
   }
@@ -124,6 +205,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   Future<void> _onSwitchCamera() async {
     final nextCam = (selectedCameraIndex + 1) % cameras.length;
     controller?.setDescription(cameras[nextCam]);
+    controller?.setFlashMode(flashMode);
     setState(() {
       selectedCameraIndex = nextCam;
     });
@@ -210,87 +292,188 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    if (!hidSystemUI) return Container();
+    if (!hidSystemUI ||
+        controller == null ||
+        !controller!.value.isInitialized) {
+      return Container();
+    }
     return SafeArea(
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: controller == null || !controller!.value.isInitialized
-                ? const Icon(Icons.camera_rounded)
-                : ValueListenableBuilder(
-                    valueListenable: controller!,
-                    builder: (context, val, child) {
-                      return AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 100),
-                        transitionBuilder: (child, anim) => FadeTransition(
-                          opacity: anim,
-                          child: child,
-                        ),
-                        child: val.isTakingPicture
-                            ? AspectRatio(
-                                aspectRatio:
-                                    _isLandscape(val) ? 16 / 9 : 9 / 16,
-                                child: const SizedBox.expand(),
-                              )
-                            : CameraPreview(controller!),
-                      );
-                    },
-                  ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 15, bottom: 45),
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 32),
+        child: ValueListenableBuilder(
+          valueListenable: controller!,
+          builder: (context, val, child) {
+            return Column(
               children: [
-                Material(
-                  color: Colors.transparent,
-                  shape: const CircleBorder(),
-                  clipBehavior: Clip.hardEdge,
-                  child: IconButton(
-                    onPressed: () => context.goNamed('homeCopyCopy'),
-                    icon: const Icon(Icons.photo_library_rounded),
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    tooltip: 'Gallery',
-                    iconSize: 24,
-                  ),
-                ),
-                Semantics(
-                  button: true,
-                  label: 'Capture photo',
-                  child: controller != null
-                      ? ValueListenableBuilder(
-                          valueListenable: controller!,
-                          builder: (context, val, child) => _ShutterButton(
-                            isTakingPicture: val.isTakingPicture,
-                            onPressed: Feedback.wrapForLongPress(
-                              _onCapturePressed,
-                              context,
-                            ),
-                          ),
-                        )
-                      : const _ShutterButton(isTakingPicture: true),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  shape: const CircleBorder(),
-                  clipBehavior: Clip.hardEdge,
-                  child: IconButton(
-                    onPressed:
-                        Feedback.wrapForLongPress(_onSwitchCamera, context),
-                    icon: const Icon(
-                      Icons.cameraswitch_outlined,
+                Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.close_rounded,
+                        color: Colors.white70,
+                        size: 28,
+                      ),
                     ),
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    tooltip: 'Switch camera',
-                    iconSize: 24,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: val.description.lensDirection ==
+                                  CameraLensDirection.front
+                              ? null
+                              : () {
+                                  final newMode = flashMode == FlashMode.off
+                                      ? FlashMode.always
+                                      : FlashMode.off;
+                                  setState(() {
+                                    flashMode = newMode;
+                                    controller?.setFlashMode(newMode);
+                                  });
+                                },
+                          color: val.flashMode == FlashMode.off
+                              ? Colors.white
+                              : goldColor,
+                          disabledColor: Colors.white60,
+                          icon: Icon(
+                            val.flashMode == FlashMode.off
+                                ? Icons.flash_off_rounded
+                                : Icons.flash_on_rounded,
+                            size: 28,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.timer,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 100),
+                          transitionBuilder: (child, anim) => FadeTransition(
+                            opacity: anim,
+                            child: child,
+                          ),
+                          child: val.isTakingPicture
+                              ? AspectRatio(
+                                  aspectRatio:
+                                      _isLandscape(val) ? 16 / 9 : 9 / 16,
+                                  child: const SizedBox.expand(),
+                                )
+                              : Material(
+                                  clipBehavior: Clip.hardEdge,
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.transparent,
+                                  elevation: 0,
+                                  child: CameraPreview(controller!),
+                                ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(top: 15, bottom: 45),
+                        alignment: Alignment.bottomCenter,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () => context.goNamed('homeCopyCopy'),
+                              child: Container(
+                                width: 56,
+                                height: 56,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: Colors.white),
+                                ),
+                                clipBehavior: Clip.hardEdge,
+                                child: Image(
+                                  image: (lastImagePath == null
+                                      ? BlurHashImage(
+                                          'eHNAr3_3xuxu%M~qWBt7IURjt79FIU%Mayt7ofWB%MWBM{%MRjD%ay')
+                                      : FileImage(File(
+                                          lastImagePath!))) as ImageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
+                              child: Semantics(
+                                button: true,
+                                label: 'Capture photo',
+                                child: _ShutterButton(
+                                  isTakingPicture: val.isTakingPicture,
+                                  onPressed: Feedback.wrapForLongPress(
+                                    _onCapturePressed,
+                                    context,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Material(
+                              color: Colors.transparent,
+                              shape: const CircleBorder(),
+                              clipBehavior: Clip.hardEdge,
+                              child: IconButton(
+                                onPressed: Feedback.wrapForLongPress(
+                                    _onSwitchCamera, context),
+                                icon: const Icon(
+                                  Icons.cameraswitch_outlined,
+                                ),
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                tooltip: 'Switch camera',
+                                iconSize: 24,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _ModeSelector(
+                      mode: _CameraMode(
+                        name: _CameraMode.portrait,
+                        isSelected: false,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: _ModeSelector(
+                        mode: _CameraMode(
+                          name: _CameraMode.photo,
+                          isSelected: true,
+                        ),
+                      ),
+                    ),
+                    _ModeSelector(
+                      mode: _CameraMode(
+                        name: _CameraMode.nightSight,
+                        isSelected: false,
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ),
-        ],
+            );
+          },
+        ),
       ),
     );
   }
