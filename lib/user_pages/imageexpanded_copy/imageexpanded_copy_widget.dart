@@ -315,21 +315,24 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                           } else if (!imagesItem.isLocal &&
                                               !(containerUploadsRecord !=
                                                   null)) {
-                                            return Container(
-                                              decoration: const BoxDecoration(),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(10.0),
-                                                child: SizedBox(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          0.9,
-                                                  height:
-                                                      MediaQuery.sizeOf(context)
-                                                              .height *
-                                                          0.75,
-                                                  child: custom_widgets
-                                                      .FadeInImage(
+                                            return InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onDoubleTap: () async {
+                                                logFirebaseEvent(
+                                                    'IMAGEEXPANDED_COPY_Container_xpafxtcd_ON');
+                                                logFirebaseEvent(
+                                                    'Container_update_page_state');
+                                                _model.liked = !_model.liked;
+                                              },
+                                              child: Container(
+                                                decoration: const BoxDecoration(),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(10.0),
+                                                  child: SizedBox(
                                                     width: MediaQuery.sizeOf(
                                                                 context)
                                                             .width *
@@ -338,14 +341,25 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                 context)
                                                             .height *
                                                         0.75,
-                                                    imageUrl: functions
-                                                        .convertToImagePath(
-                                                            imagesItem
-                                                                .imageUrl),
-                                                    placeholderImage: functions
-                                                        .convertToImagePath(
-                                                            imagesItem
-                                                                .imageUrl),
+                                                    child: custom_widgets
+                                                        .FadeInImage(
+                                                      width: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width *
+                                                          0.9,
+                                                      height: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .height *
+                                                          0.75,
+                                                      imageUrl: functions
+                                                          .convertToImagePath(
+                                                              imagesItem
+                                                                  .imageUrl),
+                                                      placeholderImage: functions
+                                                          .convertToImagePath(
+                                                              imagesItem
+                                                                  .imageUrl),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -630,6 +644,102 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                         .spaceAround,
                                                 children: [
                                                   Expanded(
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        logFirebaseEvent(
+                                                            'IMAGEEXPANDED_COPY_Container_u0sydobl_ON');
+                                                        logFirebaseEvent(
+                                                            'Container_update_page_state');
+                                                        _model.liked =
+                                                            !_model.liked;
+                                                        logFirebaseEvent(
+                                                            'Container_custom_action');
+                                                        await actions
+                                                            .sendLikedNotification(
+                                                          containerUploadsRecord!
+                                                              .key,
+                                                          currentUserDisplayName,
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            const BoxDecoration(),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Builder(
+                                                              builder:
+                                                                  (context) {
+                                                                if (_model
+                                                                    .liked) {
+                                                                  return Padding(
+                                                                    padding: const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .favorite_rounded,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      size:
+                                                                          24.0,
+                                                                    ),
+                                                                  );
+                                                                } else {
+                                                                  return const Icon(
+                                                                    Icons
+                                                                        .favorite_border_rounded,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 24.0,
+                                                                  );
+                                                                }
+                                                              },
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                'Like',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
                                                     child: Builder(
                                                       builder: (context) =>
                                                           InkWell(
@@ -643,7 +753,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                             Colors.transparent,
                                                         onTap: () async {
                                                           logFirebaseEvent(
-                                                              'IMAGEEXPANDED_COPY_Container_u0sydobl_ON');
+                                                              'IMAGEEXPANDED_COPY_Container_yeog2gzu_ON');
                                                           logFirebaseEvent(
                                                               'Container_alert_dialog');
                                                           await showDialog(
