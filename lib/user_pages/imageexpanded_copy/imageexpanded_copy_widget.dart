@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/expanded_image_options/expanded_image_options_widget.dart';
 import '/components/invitelink/invitelink_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -11,6 +12,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'imageexpanded_copy_model.dart';
 export 'imageexpanded_copy_model.dart';
@@ -30,10 +32,34 @@ class ImageexpandedCopyWidget extends StatefulWidget {
       _ImageexpandedCopyWidgetState();
 }
 
-class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
+class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
+    with TickerProviderStateMixin {
   late ImageexpandedCopyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = {
+    'iconOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        ShakeEffect(
+          curve: Curves.linear,
+          delay: 280.ms,
+          duration: 300.ms,
+          hz: 2,
+          offset: const Offset(0.0, 0.0),
+          rotation: 0.087,
+        ),
+        ScaleEffect(
+          curve: Curves.bounceOut,
+          delay: 0.ms,
+          duration: 120.ms,
+          begin: const Offset(0.5, 0.5),
+          end: const Offset(1.0, 1.0),
+        ),
+      ],
+    ),
+  };
 
   @override
   void initState() {
@@ -277,21 +303,33 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                           if (!imagesItem.isLocal &&
                                               (containerUploadsRecord !=
                                                   null)) {
-                                            return Container(
-                                              decoration: const BoxDecoration(),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(10.0),
-                                                child: SizedBox(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          0.9,
-                                                  height:
-                                                      MediaQuery.sizeOf(context)
-                                                              .height *
-                                                          0.75,
-                                                  child: custom_widgets
-                                                      .FadeInImage(
+                                            return InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onDoubleTap: () async {
+                                                logFirebaseEvent(
+                                                    'IMAGEEXPANDED_COPY_Container_9ekd1032_ON');
+                                                logFirebaseEvent(
+                                                    'Container_update_page_state');
+                                                setState(() {
+                                                  _model.liked = !_model.liked;
+                                                });
+                                                logFirebaseEvent(
+                                                    'Container_custom_action');
+                                                await actions
+                                                    .sendLikedNotification(
+                                                  containerUploadsRecord.key,
+                                                  currentUserDisplayName,
+                                                );
+                                              },
+                                              child: Container(
+                                                decoration: const BoxDecoration(),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(10.0),
+                                                  child: SizedBox(
                                                     width: MediaQuery.sizeOf(
                                                                 context)
                                                             .width *
@@ -300,14 +338,25 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                 context)
                                                             .height *
                                                         0.75,
-                                                    imageUrl: functions
-                                                        .convertToImagePath(
-                                                            containerUploadsRecord
-                                                                .uploadUrl),
-                                                    placeholderImage: functions
-                                                        .convertToImagePath(
-                                                            imagesItem
-                                                                .imageUrl),
+                                                    child: custom_widgets
+                                                        .FadeInImage(
+                                                      width: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width *
+                                                          0.9,
+                                                      height: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .height *
+                                                          0.75,
+                                                      imageUrl: functions
+                                                          .convertToImagePath(
+                                                              containerUploadsRecord
+                                                                  .uploadUrl),
+                                                      placeholderImage: functions
+                                                          .convertToImagePath(
+                                                              imagesItem
+                                                                  .imageUrl),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -326,7 +375,16 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                     'IMAGEEXPANDED_COPY_Container_xpafxtcd_ON');
                                                 logFirebaseEvent(
                                                     'Container_update_page_state');
-                                                _model.liked = !_model.liked;
+                                                setState(() {
+                                                  _model.liked = !_model.liked;
+                                                });
+                                                logFirebaseEvent(
+                                                    'Container_custom_action');
+                                                await actions
+                                                    .sendLikedNotification(
+                                                  containerUploadsRecord!.key,
+                                                  currentUserDisplayName,
+                                                );
                                               },
                                               child: Container(
                                                 decoration: const BoxDecoration(),
@@ -658,8 +716,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                             'IMAGEEXPANDED_COPY_Container_u0sydobl_ON');
                                                         logFirebaseEvent(
                                                             'Container_update_page_state');
-                                                        _model.liked =
-                                                            !_model.liked;
+                                                        setState(() {
+                                                          _model.liked =
+                                                              !_model.liked;
+                                                        });
                                                         logFirebaseEvent(
                                                             'Container_custom_action');
                                                         await actions
@@ -696,7 +756,9 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget> {
                                                                           .alternate,
                                                                       size:
                                                                           24.0,
-                                                                    ),
+                                                                    ).animateOnPageLoad(
+                                                                        animationsMap[
+                                                                            'iconOnPageLoadAnimation']!),
                                                                   );
                                                                 } else {
                                                                   return const Icon(
