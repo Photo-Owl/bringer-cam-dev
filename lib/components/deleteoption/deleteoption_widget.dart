@@ -1,8 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'deleteoption_model.dart';
@@ -13,10 +15,12 @@ class DeleteoptionWidget extends StatefulWidget {
     super.key,
     required this.imageitem,
     required this.imageKey,
+    required this.deteletype,
   });
 
   final ImageModelStruct? imageitem;
   final String? imageKey;
+  final Deletion? deteletype;
 
   @override
   State<DeleteoptionWidget> createState() => _DeleteoptionWidgetState();
@@ -74,136 +78,120 @@ class _DeleteoptionWidgetState extends State<DeleteoptionWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 0.0),
                   child: Text(
-                    'Delete options',
+                    () {
+                      if (widget.deteletype == Deletion.local) {
+                        return 'Are you sure you would like to delete this photo?';
+                      } else if (widget.deteletype == Deletion.foreveryone) {
+                        return 'Are you sure you would like to remove access to this photo for everyone?';
+                      } else if (widget.deteletype == Deletion.forme) {
+                        return 'Are you sure you would like to remove access to this photo for Me?';
+                      } else {
+                        return 'Error';
+                      }
+                    }(),
                     textAlign: TextAlign.start,
                     style: FlutterFlowTheme.of(context).labelMedium.override(
                           fontFamily: 'Inter',
                           fontSize: 14.0,
                           letterSpacing: 0.0,
+                          fontWeight: FontWeight.normal,
                         ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      logFirebaseEvent('DELETEOPTION_COMP_ReportImage_ON_TAP');
-                      logFirebaseEvent('ReportImage_close_dialog,_drawer,_etc');
-                      Navigator.pop(context);
-                      logFirebaseEvent('ReportImage_backend_call');
-                      await DeleteImageCall.call(
-                        key: widget.imageKey,
-                      );
-                      logFirebaseEvent('ReportImage_navigate_back');
-                      context.safePop();
+                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 3.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      logFirebaseEvent(
+                          'DELETEOPTION_YES,_DELETE_FOR_ALL_BTN_ON_');
+                      if (widget.deteletype == Deletion.local) {
+                        logFirebaseEvent('Button_custom_action');
+                        await actions.deleteImage(
+                          widget.imageitem!.imageUrl,
+                        );
+                      } else {
+                        if (widget.deteletype == Deletion.forme) {
+                          logFirebaseEvent('Button_custom_action');
+                          await actions.deleteForMe(
+                            widget.imageitem!.id,
+                            currentUserUid,
+                          );
+                        } else {
+                          logFirebaseEvent('Button_backend_call');
+                          await DeleteImageCall.call(
+                            key: widget.imageKey,
+                          );
+                        }
+                      }
                     },
-                    child: Container(
+                    text: () {
+                      if (widget.deteletype == Deletion.local) {
+                        return 'Yes, Delete';
+                      } else if (widget.deteletype == Deletion.foreveryone) {
+                        return 'Yes, Delete for everyone';
+                      } else if (widget.deteletype == Deletion.forme) {
+                        return 'Yes, Delete for me';
+                      } else {
+                        return 'Error';
+                      }
+                    }(),
+                    options: FFButtonOptions(
                       width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                      ),
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 0.0, 0.0),
-                              child: Icon(
-                                Icons.people_outline_sharp,
-                                color: FlutterFlowTheme.of(context).tertiary,
-                                size: 20.0,
+                      height: 40.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: const Color(0xFFFF8984),
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 12.0,
+                                letterSpacing: 0.0,
                               ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Delete for others',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiary,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      elevation: 0.0,
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
                       ),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      logFirebaseEvent('DELETEOPTION_COMP_ReportImage_ON_TAP');
-                      logFirebaseEvent('ReportImage_close_dialog,_drawer,_etc');
-                      Navigator.pop(context);
-                      logFirebaseEvent('ReportImage_custom_action');
-                      await actions.deleteForMe(
-                        widget.imageitem!.id,
-                        currentUserUid,
-                      );
-                      logFirebaseEvent('ReportImage_navigate_back');
+                  padding: const EdgeInsetsDirectional.fromSTEB(8.0, 3.0, 8.0, 12.0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      logFirebaseEvent('DELETEOPTION_COMP_CANCEL_BTN_ON_TAP');
+                      logFirebaseEvent('Button_navigate_back');
                       context.safePop();
                     },
-                    child: Container(
+                    text: 'Cancel',
+                    options: FFButtonOptions(
                       width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                      ),
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 0.0, 0.0, 0.0),
-                              child: Icon(
-                                Icons.person_sharp,
-                                color: Color(0xB3EE8B60),
-                                size: 20.0,
+                      height: 40.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).accent3,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Inter',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 12.0,
+                                letterSpacing: 0.0,
                               ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Delete for me',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        color: const Color(0xB3EE8B60),
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      elevation: 0.0,
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
                       ),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                 ),

@@ -158,7 +158,6 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                           fontSize: 16.0,
                           letterSpacing: 0.0,
                         ),
-                    minLines: null,
                     validator:
                         _model.textControllerValidator.asValidator(context),
                   ),

@@ -532,7 +532,6 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                           letterSpacing: 0.0,
                                                         ),
                                                 textAlign: TextAlign.center,
-                                                minLines: null,
                                                 validator: _model
                                                     .textController1Validator
                                                     .asValidator(context),
@@ -591,7 +590,6 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                                         fontSize: 15.0,
                                                         letterSpacing: 0.0,
                                                       ),
-                                                  minLines: null,
                                                   keyboardType:
                                                       TextInputType.number,
                                                   validator: _model

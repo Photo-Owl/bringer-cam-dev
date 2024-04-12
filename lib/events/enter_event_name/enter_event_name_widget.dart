@@ -134,7 +134,6 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
-                          minLines: null,
                           cursorColor: FlutterFlowTheme.of(context).primary,
                           validator: _model.yourNameControllerValidator
                               .asValidator(context),

@@ -197,7 +197,6 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                                           letterSpacing: 0.0,
                                         ),
                                     textAlign: TextAlign.start,
-                                    minLines: null,
                                     validator: _model.textControllerValidator
                                         .asValidator(context),
                                   ),

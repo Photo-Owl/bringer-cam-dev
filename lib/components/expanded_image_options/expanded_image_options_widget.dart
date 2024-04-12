@@ -1,9 +1,9 @@
+import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/components/deleteoption/deleteoption_widget.dart';
 import '/components/report_options/report_options_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'expanded_image_options_model.dart';
 export 'expanded_image_options_model.dart';
@@ -75,108 +75,205 @@ class _ExpandedImageOptionsWidgetState
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 0.0, 0.0),
-                  child: Text(
-                    'Options',
-                    textAlign: TextAlign.start,
-                    style: FlutterFlowTheme.of(context).labelMedium.override(
-                          fontFamily: 'Inter',
-                          fontSize: 14.0,
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                ),
-                Builder(
-                  builder: (context) => Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        logFirebaseEvent(
-                            'EXPANDED_IMAGE_OPTIONS_DeleteImage_ON_TA');
-                        logFirebaseEvent(
-                            'DeleteImage_close_dialog,_drawer,_etc');
-                        Navigator.pop(context);
-                        if (widget.imageitem!.isLocal) {
-                          logFirebaseEvent('DeleteImage_custom_action');
-                          await actions.deleteImage(
-                            widget.imageitem!.imageUrl,
-                          );
-                        } else {
-                          logFirebaseEvent('DeleteImage_alert_dialog');
+                if (!widget.imageitem!.isLocal)
+                  Builder(
+                    builder: (context) => Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 12.0),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          logFirebaseEvent(
+                              'EXPANDED_IMAGE_OPTIONS_Deleteme_ON_TAP');
+                          logFirebaseEvent(
+                              'Deleteme_close_dialog,_drawer,_etc');
+                          Navigator.pop(context);
+                          logFirebaseEvent('Deleteme_alert_dialog');
                           await showDialog(
-                            barrierColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
                             context: context,
                             builder: (dialogContext) {
                               return Dialog(
                                 elevation: 0,
                                 insetPadding: EdgeInsets.zero,
                                 backgroundColor: Colors.transparent,
-                                alignment: const AlignmentDirectional(0.0, 0.0)
+                                alignment: const AlignmentDirectional(0.0, 1.0)
                                     .resolve(Directionality.of(context)),
                                 child: DeleteoptionWidget(
                                   imageitem: ImageModelStruct(),
                                   imageKey: widget.imageKey!,
+                                  deteletype: Deletion.forme,
                                 ),
                               );
                             },
                           ).then((value) => setState(() {}));
-                        }
 
-                        logFirebaseEvent('DeleteImage_navigate_back');
-                        context.safePop();
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 8.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 0.0, 0.0),
-                                child: Icon(
-                                  Icons.delete_rounded,
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                  size: 20.0,
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Delete Image',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          color: FlutterFlowTheme.of(context)
-                                              .tertiary,
-                                          letterSpacing: 0.0,
-                                        ),
+                          logFirebaseEvent('Deleteme_navigate_back');
+                          context.safePop();
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              'Delete for me',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.normal,
                                   ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                if (!widget.imageitem!.isLocal)
+                  Divider(
+                    thickness: 1.0,
+                    indent: 20.0,
+                    endIndent: 20.0,
+                    color: FlutterFlowTheme.of(context).accent3,
+                  ),
+                if (!widget.imageitem!.isLocal)
+                  Builder(
+                    builder: (context) => Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 12.0),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          logFirebaseEvent(
+                              'EXPANDED_IMAGE_OPTIONS_Deleteeveryone_ON');
+                          logFirebaseEvent(
+                              'Deleteeveryone_close_dialog,_drawer,_etc');
+                          Navigator.pop(context);
+                          logFirebaseEvent('Deleteeveryone_alert_dialog');
+                          await showDialog(
+                            context: context,
+                            builder: (dialogContext) {
+                              return Dialog(
+                                elevation: 0,
+                                insetPadding: EdgeInsets.zero,
+                                backgroundColor: Colors.transparent,
+                                alignment: const AlignmentDirectional(0.0, 1.0)
+                                    .resolve(Directionality.of(context)),
+                                child: DeleteoptionWidget(
+                                  imageitem: ImageModelStruct(),
+                                  imageKey: widget.imageKey!,
+                                  deteletype: Deletion.foreveryone,
+                                ),
+                              );
+                            },
+                          ).then((value) => setState(() {}));
+
+                          logFirebaseEvent('Deleteeveryone_navigate_back');
+                          context.safePop();
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              'Delete for everyone',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                if (widget.imageitem?.isLocal ?? true)
+                  Builder(
+                    builder: (context) => Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 12.0),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          logFirebaseEvent(
+                              'EXPANDED_IMAGE_OPTIONS_DeleteImage_ON_TA');
+                          logFirebaseEvent(
+                              'DeleteImage_close_dialog,_drawer,_etc');
+                          Navigator.pop(context);
+                          logFirebaseEvent('DeleteImage_alert_dialog');
+                          await showDialog(
+                            context: context,
+                            builder: (dialogContext) {
+                              return Dialog(
+                                elevation: 0,
+                                insetPadding: EdgeInsets.zero,
+                                backgroundColor: Colors.transparent,
+                                alignment: const AlignmentDirectional(0.0, 1.0)
+                                    .resolve(Directionality.of(context)),
+                                child: DeleteoptionWidget(
+                                  imageitem: ImageModelStruct(),
+                                  imageKey: widget.imageKey!,
+                                  deteletype: Deletion.local,
+                                ),
+                              );
+                            },
+                          ).then((value) => setState(() {}));
+
+                          logFirebaseEvent('DeleteImage_navigate_back');
+                          context.safePop();
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              'Delete Image',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                   child: InkWell(
@@ -222,9 +319,9 @@ class _ExpandedImageOptionsWidgetState
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Icon(
-                                Icons.warning_rounded,
+                                Icons.warning_amber_rounded,
                                 color: FlutterFlowTheme.of(context).error,
-                                size: 20.0,
+                                size: 25.0,
                               ),
                             ),
                             Expanded(

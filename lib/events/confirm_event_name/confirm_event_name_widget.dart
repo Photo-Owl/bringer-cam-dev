@@ -179,7 +179,6 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
-                              minLines: null,
                               cursorColor: FlutterFlowTheme.of(context).primary,
                               validator: _model.yourNameControllerValidator
                                   .asValidator(context),

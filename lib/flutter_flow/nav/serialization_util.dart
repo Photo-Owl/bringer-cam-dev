@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '/backend/backend.dart';
+import '/backend/schema/enums/enums.dart';
 
 import '/backend/sqlite/queries/sqlite_row.dart';
 import '/backend/sqlite/queries/read.dart';
@@ -91,6 +92,9 @@ String? serializeParam(
 
       case ParamType.DataStruct:
         return param is BaseStruct ? param.serialize() : null;
+
+      case ParamType.Enum:
+        return (param is Enum) ? param.serialize() : null;
 
       case ParamType.SqliteRow:
         return json.encode((param as SqliteRow).data);
@@ -184,6 +188,7 @@ enum ParamType {
   Document,
   DocumentReference,
   DataStruct,
+  Enum,
 
   SqliteRow,
 }
@@ -250,6 +255,9 @@ dynamic deserializeParam<T>(
       case ParamType.DataStruct:
         final data = json.decode(param) as Map<String, dynamic>? ?? {};
         return structBuilder != null ? structBuilder(data) : null;
+
+      case ParamType.Enum:
+        return deserializeEnum<T>(param);
 
       case ParamType.SqliteRow:
         final data = json.decode(param) as Map<String, dynamic>;

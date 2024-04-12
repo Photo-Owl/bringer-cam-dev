@@ -507,7 +507,6 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                                             fontSize: 12.0,
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
                                       validator: _model.textControllerValidator
                                           .asValidator(context),
                                     ),
