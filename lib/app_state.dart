@@ -32,9 +32,9 @@ class FFAppState extends ChangeNotifier {
     _isUploading = value;
   }
 
-  double _uploadProgress = 0.0;
-  double get uploadProgress => _uploadProgress;
-  set uploadProgress(double value) {
-    _uploadProgress = value;
+  double _uploadCount = 0.0;
+  double get uploadCount => _uploadCount;
+  set uploadCount(double value) {
+    _uploadCount = value;
   }
 }

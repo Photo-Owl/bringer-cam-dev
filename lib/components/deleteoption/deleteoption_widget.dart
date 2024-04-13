@@ -116,7 +116,7 @@ class _DeleteoptionWidgetState extends State<DeleteoptionWidget> {
                         if (widget.deteletype == Deletion.forme) {
                           logFirebaseEvent('Button_custom_action');
                           await actions.deleteForMe(
-                            widget.imageitem!.id,
+                            widget.imageKey!,
                             currentUserUid,
                           );
                         } else {

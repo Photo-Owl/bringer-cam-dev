@@ -13,10 +13,14 @@ class ExpandedImageOptionsWidget extends StatefulWidget {
     super.key,
     required this.imageKey,
     required this.imageitem,
+    required this.uploadid,
+    required this.uploadkey,
   });
 
   final String? imageKey;
   final ImageModelStruct? imageitem;
+  final String? uploadid;
+  final String? uploadkey;
 
   @override
   State<ExpandedImageOptionsWidget> createState() =>
@@ -53,7 +57,6 @@ class _ExpandedImageOptionsWidgetState
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-        width: 300.0,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           boxShadow: const [
@@ -102,8 +105,8 @@ class _ExpandedImageOptionsWidgetState
                                 alignment: const AlignmentDirectional(0.0, 1.0)
                                     .resolve(Directionality.of(context)),
                                 child: DeleteoptionWidget(
-                                  imageitem: ImageModelStruct(),
-                                  imageKey: widget.imageKey!,
+                                  imageitem: widget.imageitem!,
+                                  imageKey: widget.uploadid!,
                                   deteletype: Deletion.forme,
                                 ),
                               );
@@ -173,8 +176,8 @@ class _ExpandedImageOptionsWidgetState
                                 alignment: const AlignmentDirectional(0.0, 1.0)
                                     .resolve(Directionality.of(context)),
                                 child: DeleteoptionWidget(
-                                  imageitem: ImageModelStruct(),
-                                  imageKey: widget.imageKey!,
+                                  imageitem: widget.imageitem!,
+                                  imageKey: widget.uploadkey!,
                                   deteletype: Deletion.foreveryone,
                                 ),
                               );
@@ -237,7 +240,7 @@ class _ExpandedImageOptionsWidgetState
                                 alignment: const AlignmentDirectional(0.0, 1.0)
                                     .resolve(Directionality.of(context)),
                                 child: DeleteoptionWidget(
-                                  imageitem: ImageModelStruct(),
+                                  imageitem: widget.imageitem!,
                                   imageKey: widget.imageKey!,
                                   deteletype: Deletion.local,
                                 ),

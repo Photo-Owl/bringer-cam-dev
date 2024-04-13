@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom widgets
+
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
@@ -344,14 +346,14 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                             size: 28,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.timer,
-                            color: Colors.white,
-                            size: 28,
-                          ),
-                        ),
+                        // IconButton(
+                        //   onPressed: () {},
+                        //   icon: const Icon(
+                        //     Icons.timer,
+                        //     color: Colors.white,
+                        //     size: 28,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],
@@ -390,21 +392,28 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                           children: [
                             InkWell(
                               onTap: () => context.goNamed('homeCopyCopy'),
-                              child: Container(
-                                width: 56,
-                                height: 56,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: Colors.white),
-                                ),
+                              child: Material(
+                                color: Colors.transparent,
                                 clipBehavior: Clip.hardEdge,
-                                child: Image(
-                                  image: (lastImagePath == null
-                                      ? BlurHashImage(
-                                          'eHNAr3_3xuxu%M~qWBt7IURjt79FIU%Mayt7ofWB%MWBM{%MRjD%ay')
-                                      : FileImage(File(
-                                          lastImagePath!))) as ImageProvider,
-                                  fit: BoxFit.cover,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  side: const BorderSide(
+                                    color: Colors.white,
+                                    width: 1,
+                                  ),
+                                ),
+                                elevation: 1,
+                                child: SizedBox(
+                                  width: 56,
+                                  height: 56,
+                                  child: Image(
+                                    image: (lastImagePath == null
+                                        ? const BlurHashImage(
+                                            'eHNAr3_3xuxu%M~qWBt7IURjt79FIU%Mayt7ofWB%MWBM{%MRjD%ay')
+                                        : FileImage(File(
+                                            lastImagePath!))) as ImageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -445,32 +454,34 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     ],
                   ),
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _ModeSelector(
-                      mode: _CameraMode(
-                        name: _CameraMode.portrait,
-                        isSelected: false,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
-                      child: _ModeSelector(
-                        mode: _CameraMode(
-                          name: _CameraMode.photo,
-                          isSelected: true,
-                        ),
-                      ),
-                    ),
-                    _ModeSelector(
-                      mode: _CameraMode(
-                        name: _CameraMode.nightSight,
-                        isSelected: false,
-                      ),
-                    ),
-                  ],
-                ),
+                // Compensating for the height lost by commenting the modes
+                const SizedBox(height: 30),
+                // const Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     _ModeSelector(
+                //       mode: _CameraMode(
+                //         name: _CameraMode.portrait,
+                //         isSelected: false,
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: EdgeInsets.symmetric(horizontal: 24),
+                //       child: _ModeSelector(
+                //         mode: _CameraMode(
+                //           name: _CameraMode.photo,
+                //           isSelected: true,
+                //         ),
+                //       ),
+                //     ),
+                //     _ModeSelector(
+                //       mode: _CameraMode(
+                //         name: _CameraMode.nightSight,
+                //         isSelected: false,
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             );
           },

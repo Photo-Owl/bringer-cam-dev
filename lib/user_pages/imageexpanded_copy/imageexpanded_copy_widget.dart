@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/expanded_image_options/expanded_image_options_widget.dart';
 import '/components/invitelink/invitelink_widget.dart';
+import '/components/seenby_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -39,7 +40,27 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = {
-    'iconOnPageLoadAnimation': AnimationInfo(
+    'iconOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        ShakeEffect(
+          curve: Curves.linear,
+          delay: 280.ms,
+          duration: 300.ms,
+          hz: 2,
+          offset: const Offset(0.0, 0.0),
+          rotation: 0.087,
+        ),
+        ScaleEffect(
+          curve: Curves.bounceOut,
+          delay: 0.ms,
+          duration: 120.ms,
+          begin: const Offset(0.5, 0.5),
+          end: const Offset(1.0, 1.0),
+        ),
+      ],
+    ),
+    'iconOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
         ShakeEffect(
@@ -715,6 +736,111 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                         logFirebaseEvent(
                                                             'IMAGEEXPANDED_COPY_Container_u0sydobl_ON');
                                                         logFirebaseEvent(
+                                                            'Container_bottom_sheet');
+                                                        await showModalBottomSheet(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryText,
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return GestureDetector(
+                                                              onTap: () => _model
+                                                                      .unfocusNode
+                                                                      .canRequestFocus
+                                                                  ? FocusScope.of(
+                                                                          context)
+                                                                      .requestFocus(
+                                                                          _model
+                                                                              .unfocusNode)
+                                                                  : FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    const SeenbyWidget(),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ).then((value) =>
+                                                            safeSetState(
+                                                                () {}));
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            const BoxDecoration(),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Icon(
+                                                                Icons
+                                                                    .remove_red_eye_sharp,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                                size: 24.0,
+                                                              ).animateOnPageLoad(
+                                                                  animationsMap[
+                                                                      'iconOnPageLoadAnimation1']!),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                'Seen',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        logFirebaseEvent(
+                                                            'IMAGEEXPANDED_COPY_Container_7vjzbfqf_ON');
+                                                        logFirebaseEvent(
                                                             'Container_update_page_state');
                                                         setState(() {
                                                           _model.liked =
@@ -758,7 +884,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                           24.0,
                                                                     ).animateOnPageLoad(
                                                                         animationsMap[
-                                                                            'iconOnPageLoadAnimation']!),
+                                                                            'iconOnPageLoadAnimation2']!),
                                                                   );
                                                                 } else {
                                                                   return const Icon(
@@ -1116,6 +1242,13 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                             .albumDoc![
                                                                         widget
                                                                             .index!],
+                                                                    uploadid:
+                                                                        containerUploadsRecord!
+                                                                            .reference
+                                                                            .id,
+                                                                    uploadkey:
+                                                                        containerUploadsRecord
+                                                                            .key,
                                                                   ),
                                                                 ),
                                                               ),

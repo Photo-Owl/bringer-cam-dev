@@ -42,7 +42,7 @@ class Uploader {
   final String userId;
   final _uploadQueue = ListQueue<UploadItem>();
   var _uploadedCount = 0;
-  var _totalcount = double.infinity;
+  var _totalCount = double.infinity;
   var _isUploading = false;
   late final Future _startupTask;
   var _isInitialized = false;
@@ -78,7 +78,7 @@ class Uploader {
   bool get isUploading => _isUploading;
   UploadItem? get currentlyUploading =>
       _isUploading ? _uploadQueue.first : null;
-  double get progress => _uploadedCount / _totalcount;
+  double get progress => _uploadedCount / _totalCount;
 
   Future<void> waitForUploads() async {
     if (_isInitialized) return;
@@ -99,18 +99,20 @@ class Uploader {
         isUploading: false,
       ),
     );
+    _totalCount++;
     uploadImages();
     _appState?.update(() {
       _appState!.isUploading = _isUploading;
-      _appState!.uploadProgress = progress;
+      _appState!.uploadCount = _uploadedCount.toDouble();
     });
   }
 
   Future<void> removeFromUploadQueue(String path) async {
     _uploadQueue.removeWhere((item) => item.path == path);
+    _totalCount--;
     _appState?.update(() {
       _appState!.isUploading = _isUploading;
-      _appState!.uploadProgress = progress;
+      _appState!.uploadCount = _uploadedCount.toDouble();
     });
     await SQLiteManager.instance.deleteImage(path: path);
   }
@@ -121,17 +123,17 @@ class Uploader {
     final notifPlugin = FlutterLocalNotificationsPlugin();
     await notifPlugin.initialize(
       const InitializationSettings(
-        android: AndroidInitializationSettings('ic_launcher'),
+        android: AndroidInitializationSettings('ic_mono'),
       ),
     );
 
     if (_uploadQueue.isNotEmpty) {
       _isUploading = true;
       _uploadedCount = 0;
-      _totalcount = _uploadQueue.length.toDouble();
+      _totalCount = _uploadQueue.length.toDouble();
       _appState?.update(() {
         _appState!.isUploading = _isUploading;
-        _appState!.uploadProgress = progress;
+        _appState!.uploadCount = _uploadedCount.toDouble();
       });
     }
     await notifPlugin.show(
@@ -145,7 +147,7 @@ class Uploader {
           channelDescription: 'To show notifications for upload progress',
           importance: Importance.min,
           progress: _uploadedCount.round(),
-          maxProgress: _totalcount.round(),
+          maxProgress: _totalCount.round(),
           showProgress: true,
           ongoing: true,
           silent: true,
@@ -248,7 +250,7 @@ class Uploader {
         _uploadedCount++;
         _appState?.update(() {
           _appState!.isUploading = _isUploading;
-          _appState!.uploadProgress = progress;
+          _appState!.uploadCount = _uploadedCount.toDouble();
         });
         await notifPlugin.show(
           1234,
@@ -261,7 +263,7 @@ class Uploader {
               channelDescription: 'To show notifications for upload progress',
               importance: Importance.min,
               progress: _uploadedCount.round(),
-              maxProgress: _totalcount.round(),
+              maxProgress: _totalCount.round(),
               showProgress: true,
               ongoing: true,
               silent: true,
@@ -275,8 +277,19 @@ class Uploader {
     await notifPlugin.cancel(1234);
     _appState?.update(() {
       _appState!.isUploading = _isUploading;
-      _appState!.uploadProgress = progress;
     });
+    await notifPlugin.show(
+      1235,
+      'All photos uploaded!',
+      'All ${_uploadedCount.round()} photos you took were shared! 🎉',
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          'com.smoose.photoowldev.info',
+          'Bringer notifs',
+          channelDescription: 'Any notification from bringer',
+        ),
+      ),
+    );
   }
 }
 

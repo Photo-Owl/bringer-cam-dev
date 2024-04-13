@@ -11,36 +11,15 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-// Import libraries
-
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-// Function to create notification with Awesome Notifications
-void createAwesomeNotification(String title, String body) {
-  AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: UniqueKey().hashCode,
-      channelKey:
-          'com.smoose.photoowldev.uploads', // You can customize this channel key
-      title: title,
-      body: body,
-    ),
-  );
-}
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Future<void> initializeNotifs() async {
-  await Firebase.initializeApp();
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
   try {
     final NotificationSettings notificationSettings =
-        await _firebaseMessaging.requestPermission(
+        await FirebaseMessaging.instance.requestPermission(
       alert: true,
       carPlay: true,
       criticalAlert: true,
@@ -50,11 +29,11 @@ Future<void> initializeNotifs() async {
       badge: true,
     );
 
-    if (_auth.currentUser != null &&
+    if (FirebaseAuth.instance.currentUser != null &&
         notificationSettings.authorizationStatus ==
             AuthorizationStatus.authorized) {
-      final String? uid = _auth.currentUser!.uid;
-      final String? fcmToken = await _firebaseMessaging.getToken();
+      final String? uid = FirebaseAuth.instance.currentUser!.uid;
+      final String? fcmToken = await FirebaseMessaging.instance.getToken();
 
       if (uid != null && fcmToken != null) {
         await FirebaseFirestore.instance
@@ -67,22 +46,29 @@ Future<void> initializeNotifs() async {
     print('Error initializing notifications: $e');
   }
 
-  // Configure Awesome Notifications channels (optional)
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-      channelKey: 'com.smoose.photoowldev.uploads',
-      channelName: 'Upload notification',
-      channelDescription: 'Notification channel for basic tests',
-      defaultColor: Color(0xFF9D50DD),
-      ledColor: Colors.white,
-    )
-  ]);
+  final notifPlugin = FlutterLocalNotificationsPlugin();
+  await notifPlugin.initialize(
+    const InitializationSettings(
+      android: AndroidInitializationSettings('ic_mono'),
+    ),
+  );
 
   // Listen for foreground messages
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
-    if (notification != null) {
-      createAwesomeNotification(notification.title!, notification.body!);
+    if (notification != null && notification.android != null) {
+      await notifPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'com.smoose.photoowldev.info',
+            'Bringer notifs',
+            channelDescription: 'Any notification from bringer',
+          ),
+        ),
+      );
     }
   });
 

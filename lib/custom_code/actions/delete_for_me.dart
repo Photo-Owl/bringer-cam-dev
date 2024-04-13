@@ -15,7 +15,8 @@ import 'package:flutter/material.dart';
 // and then add the boilerplate code using the green button on the right!
 
 Future deleteForMe(String imageId, String userId) async {
-  return FirebaseFirestore.instance.doc('uploads/$imageId').update({
+  String id = imageId.split('/')[0];
+  return FirebaseFirestore.instance.doc('uploads/$id').update({
     'faces': FieldValue.arrayRemove(['users/$userId'])
   });
 }
