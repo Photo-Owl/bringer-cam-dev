@@ -244,7 +244,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         dirType: DirType.photo,
         dirName: DirName.pictures,
       );
-      if (isFileSaved) {
+      if (isFileSaved?.isNotEmpty ?? false) {
         newPath = '/sdcard/Pictures/Bringer/$fileName';
         await MediaScanner.loadMedia(path: newPath);
       }
