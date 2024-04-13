@@ -199,8 +199,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                           CrossAxisAlignment.start,
                                       children: [
                                         if (imagesItem.isLocal == false)
-                                          FutureBuilder<List<UsersRecord>>(
-                                            future: queryUsersRecordOnce(
+                                          StreamBuilder<List<UsersRecord>>(
+                                            stream: queryUsersRecord(
                                               queryBuilder: (usersRecord) =>
                                                   usersRecord.where(
                                                 'uid',
