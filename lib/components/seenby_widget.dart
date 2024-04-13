@@ -122,7 +122,9 @@ class _SeenbyWidgetState extends State<SeenbyWidget> {
                             stream: queryUsersRecord(
                               queryBuilder: (usersRecord) => usersRecord.where(
                                 'uid',
-                                isEqualTo: documentIdItem,
+                                isEqualTo: (String userref) {
+                                  return userref.split('/').removeLast();
+                                }(documentIdItem),
                               ),
                               singleRecord: true,
                             ),
