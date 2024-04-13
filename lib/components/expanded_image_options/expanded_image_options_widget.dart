@@ -57,6 +57,9 @@ class _ExpandedImageOptionsWidgetState
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
+        constraints: const BoxConstraints(
+          maxHeight: 500.0,
+        ),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           boxShadow: const [

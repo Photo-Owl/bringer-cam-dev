@@ -126,6 +126,11 @@ class _DeleteoptionWidgetState extends State<DeleteoptionWidget> {
                           );
                         }
                       }
+
+                      logFirebaseEvent('Button_close_dialog,_drawer,_etc');
+                      Navigator.pop(context);
+                      logFirebaseEvent('Button_navigate_back');
+                      context.safePop();
                     },
                     text: () {
                       if (widget.deteletype == Deletion.local) {

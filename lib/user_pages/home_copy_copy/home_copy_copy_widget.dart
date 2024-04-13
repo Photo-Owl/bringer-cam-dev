@@ -169,7 +169,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                 logFirebaseEvent('HOME_COPY_COPY_FloatingActionButton_dtrh');
                 logFirebaseEvent('FloatingActionButton_navigate_to');
 
-                context.pushNamed('camera');
+                context.goNamed('camera');
               },
               backgroundColor: Colors.transparent,
               child: Card(
@@ -261,101 +261,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                   return Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      StreamBuilder<UsersRecord>(
-                        stream: UsersRecord.getDocument(currentUserReference!),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return const Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Color(0xFF5282E5),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          final conditionalBuilderUsersRecord = snapshot.data!;
-                          return Builder(
-                            builder: (context) {
-                              if (conditionalBuilderUsersRecord.progressLevel <
-                                  100.0) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 10.0, 0.0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 10.0,
-                                                color: Color(0xFF2EB900),
-                                                offset: Offset(-1.0, 0.0),
-                                              )
-                                            ],
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Text(
-                                              (double prog) {
-                                                return '${prog.truncate()}%';
-                                              }(conditionalBuilderUsersRecord
-                                                  .progressLevel),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .success,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        'Finding your photos',
-                                        style: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .success,
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              } else {
-                                return Container(
-                                  width: 0.0,
-                                  height: 0.0,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.transparent,
-                                  ),
-                                );
-                              }
-                            },
-                          );
-                        },
-                      ),
                       Align(
                         alignment: const AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
@@ -438,7 +343,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                           16.0, 0.0, 0.0, 0.0),
                                       child: Text(
                                         'All${(double var1) {
-                                          return ' $var1.truncate() ';
+                                          return ' ${var1.truncate()} ';
                                         }(FFAppState().uploadCount)}photos you took were shared! 🎉',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
@@ -623,42 +528,44 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                         );
                                                       },
                                                     ),
-                                                    Align(
-                                                      alignment:
-                                                          const AlignmentDirectional(
-                                                              0.0, 0.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    10.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        child: Text(
-                                                          'Photos from ${albumItem.owners.first}${(List<String> var1) {
-                                                            return var1.length >
-                                                                    2
-                                                                ? ', ${var1[1]} & ${var1.length - 2} more'
-                                                                : var1.length >
-                                                                        1
-                                                                    ? '& ${var1[1]}'
-                                                                    : '';
-                                                          }(albumItem.owners.toList())}!',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Figtree',
-                                                                color: const Color(
-                                                                    0xFF5D5AFF),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
+                                                    Expanded(
+                                                      child: Align(
+                                                        alignment:
+                                                            const AlignmentDirectional(
+                                                                -1.0, 0.0),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            'Photos from ${albumItem.owners.first}${(List<String> var1) {
+                                                              return var1.length >
+                                                                      2
+                                                                  ? ', ${var1[1]} & ${var1.length - 2} more'
+                                                                  : var1.length >
+                                                                          1
+                                                                      ? '& ${var1[1]}'
+                                                                      : '';
+                                                            }(albumItem.owners.toList())}!',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Figtree',
+                                                                  color: const Color(
+                                                                      0xFF5D5AFF),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -723,30 +630,45 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                       () async {
                                                                     logFirebaseEvent(
                                                                         'HOME_COPY_COPY_Image_203iliga_ON_TAP');
-                                                                    logFirebaseEvent(
-                                                                        'Image_navigate_to');
+                                                                    await Future
+                                                                        .wait([
+                                                                      Future(
+                                                                          () async {
+                                                                        logFirebaseEvent(
+                                                                            'Image_navigate_to');
 
-                                                                    context
-                                                                        .pushNamed(
-                                                                      'ImageexpandedCopy',
-                                                                      queryParameters:
-                                                                          {
-                                                                        'albumDoc':
-                                                                            serializeParam(
-                                                                          albumItem
-                                                                              .images,
-                                                                          ParamType
-                                                                              .DataStruct,
-                                                                          true,
-                                                                        ),
-                                                                        'index':
-                                                                            serializeParam(
-                                                                          imagesListIndex,
-                                                                          ParamType
-                                                                              .int,
-                                                                        ),
-                                                                      }.withoutNulls,
-                                                                    );
+                                                                        context
+                                                                            .pushNamed(
+                                                                          'ImageexpandedCopy',
+                                                                          queryParameters:
+                                                                              {
+                                                                            'albumDoc':
+                                                                                serializeParam(
+                                                                              albumItem.images,
+                                                                              ParamType.DataStruct,
+                                                                              true,
+                                                                            ),
+                                                                            'index':
+                                                                                serializeParam(
+                                                                              imagesListIndex,
+                                                                              ParamType.int,
+                                                                            ),
+                                                                          }.withoutNulls,
+                                                                        );
+                                                                      }),
+                                                                      Future(
+                                                                          () async {
+                                                                        logFirebaseEvent(
+                                                                            'Image_custom_action');
+                                                                        await actions
+                                                                            .addSeenby(
+                                                                          currentUserUid,
+                                                                          imagesListItem
+                                                                              .id,
+                                                                          currentUserDisplayName,
+                                                                        );
+                                                                      }),
+                                                                    ]);
                                                                   },
                                                                   child:
                                                                       ClipRRect(
@@ -816,27 +738,42 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                         () async {
                                                                       logFirebaseEvent(
                                                                           'HOME_COPY_COPY_Stack_kr54o4qp_ON_TAP');
-                                                                      logFirebaseEvent(
-                                                                          'Stack_navigate_to');
+                                                                      await Future
+                                                                          .wait([
+                                                                        Future(
+                                                                            () async {
+                                                                          logFirebaseEvent(
+                                                                              'Stack_navigate_to');
 
-                                                                      context
-                                                                          .pushNamed(
-                                                                        'ImageexpandedCopy',
-                                                                        queryParameters:
-                                                                            {
-                                                                          'albumDoc':
-                                                                              serializeParam(
-                                                                            albumItem.images,
-                                                                            ParamType.DataStruct,
-                                                                            true,
-                                                                          ),
-                                                                          'index':
-                                                                              serializeParam(
-                                                                            imagesListIndex,
-                                                                            ParamType.int,
-                                                                          ),
-                                                                        }.withoutNulls,
-                                                                      );
+                                                                          context
+                                                                              .pushNamed(
+                                                                            'ImageexpandedCopy',
+                                                                            queryParameters:
+                                                                                {
+                                                                              'albumDoc': serializeParam(
+                                                                                albumItem.images,
+                                                                                ParamType.DataStruct,
+                                                                                true,
+                                                                              ),
+                                                                              'index': serializeParam(
+                                                                                imagesListIndex,
+                                                                                ParamType.int,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        }),
+                                                                        Future(
+                                                                            () async {
+                                                                          logFirebaseEvent(
+                                                                              'Stack_custom_action');
+                                                                          await actions
+                                                                              .addSeenby(
+                                                                            currentUserUid,
+                                                                            imagesListItem.id,
+                                                                            currentUserDisplayName,
+                                                                          );
+                                                                        }),
+                                                                      ]);
                                                                     },
                                                                     child:
                                                                         SizedBox(
