@@ -438,7 +438,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                           16.0, 0.0, 0.0, 0.0),
                                       child: Text(
                                         'All${(double var1) {
-                                          return ' $var1 ';
+                                          return ' $var1.truncate() ';
                                         }(FFAppState().uploadCount)}photos you took were shared! 🎉',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium

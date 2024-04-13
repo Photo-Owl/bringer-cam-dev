@@ -110,6 +110,11 @@ class UploadsRecord extends FirestoreRecord {
   String get orginalImageResolution => _orginalImageResolution ?? '';
   bool hasOrginalImageResolution() => _orginalImageResolution != null;
 
+  // "seen_by" field.
+  List<DocumentReference>? _seenBy;
+  List<DocumentReference> get seenBy => _seenBy ?? const [];
+  bool hasSeenBy() => _seenBy != null;
+
   void _initializeFields() {
     _uploadUrl = snapshotData['upload_url'] as String?;
     _ownerId = snapshotData['owner_id'] as String?;
@@ -132,6 +137,7 @@ class UploadsRecord extends FirestoreRecord {
         snapshotData['watermarked_image_resolution'] as String?;
     _orginalImageResolution =
         snapshotData['orginal_image_resolution'] as String?;
+    _seenBy = getDataList(snapshotData['seen_by']);
   }
 
   static CollectionReference get collection =>
@@ -236,7 +242,8 @@ class UploadsRecordDocumentEquality implements Equality<UploadsRecord> {
         e1?.albumId == e2?.albumId &&
         e1?.watermarkedImage500 == e2?.watermarkedImage500 &&
         e1?.watermarkedImageResolution == e2?.watermarkedImageResolution &&
-        e1?.orginalImageResolution == e2?.orginalImageResolution;
+        e1?.orginalImageResolution == e2?.orginalImageResolution &&
+        listEquality.equals(e1?.seenBy, e2?.seenBy);
   }
 
   @override
@@ -259,7 +266,8 @@ class UploadsRecordDocumentEquality implements Equality<UploadsRecord> {
         e?.albumId,
         e?.watermarkedImage500,
         e?.watermarkedImageResolution,
-        e?.orginalImageResolution
+        e?.orginalImageResolution,
+        e?.seenBy
       ]);
 
   @override

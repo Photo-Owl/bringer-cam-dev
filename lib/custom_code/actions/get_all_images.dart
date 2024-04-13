@@ -55,10 +55,10 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
     final key = doc
         .data()['upload_url']
         .split('/')
-        .pop()
+        .removeLast()
         .split('?')[0]
         .split('%2F')
-        .pop();
+        .removeLast();
     groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
       id: doc.data()['key'] ?? key,
       imageUrl: doc.data()['resized_image_250'] ?? doc.data()['upload_url'],

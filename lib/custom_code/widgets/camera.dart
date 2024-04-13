@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'index.dart'; // Imports other custom widgets
-
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
@@ -200,8 +198,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   Future<void> _fetchCameras() async {
     cameras = await availableCameras();
     controller = CameraController(cameras[0], ResolutionPreset.max);
-    controller?.setFlashMode(flashMode);
     await controller!.initialize();
+    controller?.setFlashMode(flashMode);
     setState(() {});
   }
 
@@ -312,7 +310,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                   alignment: Alignment.topLeft,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => context.goNamed('homeCopyCopy'),
                       icon: const Icon(
                         Icons.close_rounded,
                         color: Colors.white70,
