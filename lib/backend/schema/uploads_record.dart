@@ -111,8 +111,8 @@ class UploadsRecord extends FirestoreRecord {
   bool hasOrginalImageResolution() => _orginalImageResolution != null;
 
   // "seen_by" field.
-  List<DocumentReference>? _seenBy;
-  List<DocumentReference> get seenBy => _seenBy ?? const [];
+  List<String>? _seenBy;
+  List<String> get seenBy => _seenBy ?? const [];
   bool hasSeenBy() => _seenBy != null;
 
   void _initializeFields() {
