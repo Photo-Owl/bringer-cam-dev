@@ -229,7 +229,8 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 2.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 2.0, 0.0),
                     child: AuthUserStreamWidget(
                       builder: (context) => Text(
                         'Hey $currentUserDisplayName',
@@ -324,8 +325,8 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                             BorderRadius.circular(8.0),
                                       ),
                                       child: Align(
-                                        alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
+                                        alignment: const AlignmentDirectional(
+                                            0.0, 0.0),
                                         child: FutureBuilder<
                                             List<ReadUploadedImagesRow>>(
                                           future: SQLiteManager.instance
@@ -370,8 +371,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
                                     child: Text(
                                       FFAppState().uploadCount > 1.0
                                           ? 'All${(double var1) {
@@ -451,11 +453,13 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                           Opacity(
                                             opacity: 0.6,
                                             child: Align(
-                                              alignment: const AlignmentDirectional(
-                                                  -1.0, 0.0),
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      -1.0, 0.0),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
                                                         6.0, 0.0, 0.0, 6.0),
                                                 child: Text(
                                                   albumItem.date,
@@ -478,7 +482,8 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                     BorderRadius.circular(8.0),
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.all(12.0),
+                                                padding:
+                                                    const EdgeInsets.all(12.0),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -569,10 +574,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                           padding:
                                                               const EdgeInsetsDirectional
                                                                   .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
                                                           child: Text(
                                                             'Photos from ${albumItem.owners.first}${(List<String> var1) {
                                                               return var1.length >
