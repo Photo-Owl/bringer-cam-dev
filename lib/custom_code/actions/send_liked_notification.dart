@@ -14,7 +14,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future sendLikedNotification(String key, String displayName) async {
+Future sendLikedNotification(
+    String key, String displayName, String userId) async {
   final db = FirebaseFirestore.instance;
   final uploadsSnapshot = await db
       .collection('uploads')
@@ -22,12 +23,15 @@ Future sendLikedNotification(String key, String displayName) async {
       .limit(1)
       .get();
   final owner_id = uploadsSnapshot.docs[0].data()["owner_id"];
+  if (owner_id == userId) {
+    return;
+  }
 
   final ownerSnapshot = await db.collection("users").doc(owner_id).get();
 
   final token = ownerSnapshot.data()!['fcmToken'];
 
-  final title = displayName + " has like the photo you shared";
+  final title = displayName + " has liked the photo you shared";
   const body = "Tap to see which photo they liked";
 
   final payload = {

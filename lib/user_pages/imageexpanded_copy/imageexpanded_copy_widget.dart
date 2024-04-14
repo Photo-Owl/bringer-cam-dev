@@ -344,6 +344,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                     .sendLikedNotification(
                                                   containerUploadsRecord.key,
                                                   currentUserDisplayName,
+                                                  currentUserUid,
                                                 );
                                               },
                                               child: Container(
@@ -405,6 +406,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                     .sendLikedNotification(
                                                   containerUploadsRecord!.key,
                                                   currentUserDisplayName,
+                                                  currentUserUid,
                                                 );
                                               },
                                               child: Container(
@@ -765,9 +767,15 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                       .viewInsetsOf(
                                                                           context),
                                                                   child:
-                                                                      SeenbyWidget(
-                                                                    seenBy: containerUploadsRecord!
-                                                                        .seenBy,
+                                                                      SizedBox(
+                                                                    height:
+                                                                        MediaQuery.sizeOf(context).height *
+                                                                            0.6,
+                                                                    child:
+                                                                        SeenbyWidget(
+                                                                      seenBy: containerUploadsRecord!
+                                                                          .seenBy,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               );
@@ -859,6 +867,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                           containerUploadsRecord!
                                                               .key,
                                                           currentUserDisplayName,
+                                                          currentUserUid,
                                                         );
                                                       },
                                                       child: Container(
@@ -1255,6 +1264,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                     uploadkey:
                                                                         containerUploadsRecord
                                                                             .key,
+                                                                    oid: containerUploadsRecord
+                                                                        .ownerId,
                                                                   ),
                                                                 ),
                                                               ),
