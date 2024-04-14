@@ -53,9 +53,13 @@ class _DeleteoptionWidgetState extends State<DeleteoptionWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Container(
         width: 300.0,
+        constraints: const BoxConstraints(
+          minWidth: double.infinity,
+          maxWidth: double.infinity,
+        ),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           boxShadow: const [
@@ -71,7 +75,7 @@ class _DeleteoptionWidgetState extends State<DeleteoptionWidget> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+          padding: const EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 12.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,

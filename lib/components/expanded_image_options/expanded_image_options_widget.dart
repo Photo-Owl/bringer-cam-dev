@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
 import '/components/deleteoption/deleteoption_widget.dart';
@@ -15,12 +16,14 @@ class ExpandedImageOptionsWidget extends StatefulWidget {
     required this.imageitem,
     required this.uploadid,
     required this.uploadkey,
+    required this.oid,
   });
 
   final String? imageKey;
   final ImageModelStruct? imageitem;
   final String? uploadid;
   final String? uploadkey;
+  final String? oid;
 
   @override
   State<ExpandedImageOptionsWidget> createState() =>
@@ -81,7 +84,8 @@ class _ExpandedImageOptionsWidgetState
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (!widget.imageitem!.isLocal)
+                if (!widget.imageitem!.isLocal &&
+                    (widget.oid != currentUserUid))
                   Builder(
                     builder: (context) => Padding(
                       padding:
@@ -145,14 +149,8 @@ class _ExpandedImageOptionsWidgetState
                       ),
                     ),
                   ),
-                if (!widget.imageitem!.isLocal)
-                  Divider(
-                    thickness: 1.0,
-                    indent: 20.0,
-                    endIndent: 20.0,
-                    color: FlutterFlowTheme.of(context).accent3,
-                  ),
-                if (!widget.imageitem!.isLocal)
+                if (!widget.imageitem!.isLocal &&
+                    (widget.oid == currentUserUid))
                   Builder(
                     builder: (context) => Padding(
                       padding:

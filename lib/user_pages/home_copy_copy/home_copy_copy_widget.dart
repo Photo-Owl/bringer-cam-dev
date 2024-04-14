@@ -263,19 +263,30 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                     children: [
                       Align(
                         alignment: const AlignmentDirectional(-1.0, 0.0),
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 0.0, 8.0),
-                          child: Text(
-                            'Your photos',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  fontSize: 20.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Colors.white, Color(0x00FFFFFF)],
+                              stops: [0.0, 1.0],
+                              begin: AlignmentDirectional(0.0, -1.0),
+                              end: AlignmentDirectional(0, 1.0),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16.0, 4.0, 0.0, 4.0),
+                            child: Text(
+                              'Your photos',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    fontSize: 20.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
                           ),
                         ),
                       ),
@@ -296,45 +307,59 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Align(
-                                    alignment: const AlignmentDirectional(0.0, 0.0),
-                                    child: FutureBuilder<
-                                        List<ReadUploadedImagesRow>>(
-                                      future: SQLiteManager.instance
-                                          .readUploadedImages(
-                                        ownerId: currentUserUid,
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return const Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  Color(0xFF5282E5),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        final showLocalImageReadUploadedImagesRowList =
-                                            snapshot.data!;
-                                        return SizedBox(
-                                          width: 48.0,
-                                          height: 48.0,
-                                          child: custom_widgets.ShowLocalImage(
-                                            width: 48.0,
-                                            height: 48.0,
-                                            path:
-                                                showLocalImageReadUploadedImagesRowList
-                                                    .first.path,
+                                      child: Align(
+                                        alignment:
+                                            const AlignmentDirectional(0.0, 0.0),
+                                        child: FutureBuilder<
+                                            List<ReadUploadedImagesRow>>(
+                                          future: SQLiteManager.instance
+                                              .readUploadedImages(
+                                            ownerId: currentUserUid,
                                           ),
-                                        );
-                                      },
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return const Center(
+                                                child: SizedBox(
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                            Color>(
+                                                      Color(0xFF5282E5),
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            final showLocalImageReadUploadedImagesRowList =
+                                                snapshot.data!;
+                                            return SizedBox(
+                                              width: 48.0,
+                                              height: 48.0,
+                                              child:
+                                                  custom_widgets.ShowLocalImage(
+                                                width: 48.0,
+                                                height: 48.0,
+                                                path:
+                                                    showLocalImageReadUploadedImagesRowList
+                                                        .first.path,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -342,9 +367,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           16.0, 0.0, 0.0, 0.0),
                                       child: Text(
-                                        'All${(double var1) {
-                                          return ' ${var1.truncate()} ';
-                                        }(FFAppState().uploadCount)}photos you took were shared! 🎉',
+                                        FFAppState().uploadCount > 1.0
+                                            ? 'All${(double var1) {
+                                                return ' ${var1.truncate()} ';
+                                              }(FFAppState().uploadCount)}photos you took were shared! 🎉'
+                                            : 'Photo that you took was shared! 🎉',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -365,7 +392,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              10.0, 0.0, 10.0, 0.0),
+                              10.0, 4.0, 10.0, 0.0),
                           child: Builder(
                             builder: (context) {
                               final album = _model.timeline.toList();

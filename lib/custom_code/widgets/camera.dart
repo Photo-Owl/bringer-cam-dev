@@ -187,11 +187,18 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   }
 
   Future<void> _fetchLastImage() async {
-    final lastImage = await SQLiteManager.instance
+    var lastImage = await SQLiteManager.instance
         .readImagesToUpload(ownerId: currentUserUid)
-        .then((images) => images.firstOrNull);
+        .then((images) => images.firstOrNull)
+        .then((image) => image?.path ?? null);
+    if (lastImage == null) {
+      lastImage = await SQLiteManager.instance
+          .readUploadedImages(ownerId: currentUserUid)
+          .then((images) => images.firstOrNull)
+          .then((image) => image?.path ?? null);
+    }
     setState(() {
-      lastImagePath = lastImage?.path;
+      lastImagePath = lastImage;
     });
   }
 
@@ -278,8 +285,12 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         debugLabel: 'SaveImageIsolate',
       );
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch;
+      if (mounted) {
+        setState(() {
+          lastImagePath = newPath;
+        });
+      }
       await uploader.addToUploadQueue(newPath, unixTimestamp);
-      return;
     } catch (e) {
       if (e is Error) {
         debugPrintStack(stackTrace: e.stackTrace);

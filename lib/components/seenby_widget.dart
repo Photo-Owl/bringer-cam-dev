@@ -106,11 +106,11 @@ class _SeenbyWidgetState extends State<SeenbyWidget> {
                   ],
                 ),
               ),
-              Flexible(
-                child: Builder(
-                  builder: (context) {
-                    final documentId = widget.seenBy!.toList();
-                    return Column(
+              Builder(
+                builder: (context) {
+                  final documentId = widget.seenBy!.toList();
+                  return SingleChildScrollView(
+                    child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children:
                           List.generate(documentId.length, (documentIdIndex) {
@@ -223,9 +223,9 @@ class _SeenbyWidgetState extends State<SeenbyWidget> {
                           ),
                         );
                       }),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ],
           ),
