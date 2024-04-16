@@ -28,7 +28,7 @@ Future addSeenby(String userId, String key, String displayName) async {
 
   if (!seenby.contains(usersRef)) {
     seenby.add(usersRef);
-    if (owner_id != userId)
+    if (ownerId != userId)
       await sendSeenNotification(key, displayName, ownerId);
     await uploadSnapshot.docs[0].reference.update({"seen_by": seenby});
   }

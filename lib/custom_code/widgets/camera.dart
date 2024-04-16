@@ -190,16 +190,13 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     var lastImage = await SQLiteManager.instance
         .readImagesToUpload(ownerId: currentUserUid)
         .then((images) => images.firstOrNull)
-        .then((image) => image?.path ?? null);
-    if (lastImage == null) {
-      lastImage = await SQLiteManager.instance
-          .readUploadedImages(ownerId: currentUserUid)
-          .then((images) => images.firstOrNull)
-          .then((image) => image?.path ?? null);
-    }
-    setState(() {
-      lastImagePath = lastImage;
-    });
+        .then((image) => image?.path);
+    lastImage ??= await SQLiteManager.instance
+        .readUploadedImages(ownerId: currentUserUid)
+        .then((images) => images.firstOrNull)
+        .then((image) => image?.path);
+    lastImagePath = lastImage;
+    setState(() {});
   }
 
   Future<void> _fetchCameras() async {
@@ -280,15 +277,14 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
       final filePath = file.path;
       final rootIsolateToken = RootIsolateToken.instance!;
       final newPath = await compute(
-        (message) async => await _onSaveImage(filePath, rootIsolateToken),
+        (message) => _onSaveImage(filePath, rootIsolateToken),
         null,
         debugLabel: 'SaveImageIsolate',
       );
       final unixTimestamp = DateTime.now().millisecondsSinceEpoch;
       if (mounted) {
-        setState(() {
-          lastImagePath = newPath;
-        });
+        lastImagePath = newPath;
+        setState(() {});
       }
       await uploader.addToUploadQueue(newPath, unixTimestamp);
     } catch (e) {
