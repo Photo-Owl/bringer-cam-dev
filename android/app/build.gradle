@@ -3,8 +3,6 @@ plugins {
    id "kotlin-android"
    id "dev.flutter.flutter-gradle-plugin"
    id "com.google.gms.google-services"  // Google Services plugin
-
-   
 }
 
 def localProperties = new Properties()
@@ -49,8 +47,8 @@ android {
         applicationId "com.smoose.photoowldev"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 9
+        versionName "1.0.10"
     }
 
    signingConfigs {
@@ -75,6 +73,4 @@ flutter {
     source '../..'
 }
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10"
-}
+dependencies {}

@@ -62,5 +62,7 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9817719086198871~5502566209"/>
 
+        <service android:name=".AutoUploadService" />
+
     </application>
 </manifest>
