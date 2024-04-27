@@ -21,7 +21,7 @@ Future addSeenby(String userId, String key, String displayName) async {
       .where('key', isEqualTo: key)
       .limit(1)
       .get();
-  List<String> seenby = uploadSnapshot.docs[0].data()['seen_by'] ?? [];
+  List seenby = uploadSnapshot.docs[0].data()['seen_by'] ?? [];
   String ownerId = uploadSnapshot.docs[0].data()['owner_id'];
 
   final usersRef = "users/" + userId;
