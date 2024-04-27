@@ -26,7 +26,7 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
     super.initState();
     _model = createModel(context, () => EnterEventNameModel());
 
-    _model.yourNameController ??= TextEditingController();
+    _model.yourNameTextController ??= TextEditingController();
     _model.yourNameFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -76,7 +76,7 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          controller: _model.yourNameController,
+                          controller: _model.yourNameTextController,
                           focusNode: _model.yourNameFocusNode,
                           autofocus: true,
                           obscureText: false,
@@ -135,7 +135,7 @@ class _EnterEventNameWidgetState extends State<EnterEventNameWidget> {
                                     letterSpacing: 0.0,
                                   ),
                           cursorColor: FlutterFlowTheme.of(context).primary,
-                          validator: _model.yourNameControllerValidator
+                          validator: _model.yourNameTextControllerValidator
                               .asValidator(context),
                         ),
                       ),

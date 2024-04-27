@@ -31,3 +31,4 @@ export '/camera/camera_widget.dart' show CameraWidget;
 export '/user_pages/local_image/local_image_widget.dart' show LocalImageWidget;
 export '/user_pages/home_copy_copy/home_copy_copy_widget.dart'
     show HomeCopyCopyWidget;
+export '/compare_images/compare_images_widget.dart' show CompareImagesWidget;

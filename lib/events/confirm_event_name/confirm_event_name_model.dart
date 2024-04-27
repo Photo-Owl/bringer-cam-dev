@@ -7,8 +7,8 @@ class ConfirmEventNameModel extends FlutterFlowModel<ConfirmEventNameWidget> {
 
   // State field(s) for yourName widget.
   FocusNode? yourNameFocusNode;
-  TextEditingController? yourNameController;
-  String? Function(BuildContext, String?)? yourNameControllerValidator;
+  TextEditingController? yourNameTextController;
+  String? Function(BuildContext, String?)? yourNameTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
@@ -16,6 +16,6 @@ class ConfirmEventNameModel extends FlutterFlowModel<ConfirmEventNameWidget> {
   @override
   void dispose() {
     yourNameFocusNode?.dispose();
-    yourNameController?.dispose();
+    yourNameTextController?.dispose();
   }
 }

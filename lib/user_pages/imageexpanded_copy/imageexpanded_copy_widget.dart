@@ -39,48 +39,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'iconOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        ShakeEffect(
-          curve: Curves.linear,
-          delay: 280.ms,
-          duration: 300.ms,
-          hz: 2,
-          offset: const Offset(0.0, 0.0),
-          rotation: 0.087,
-        ),
-        ScaleEffect(
-          curve: Curves.bounceOut,
-          delay: 0.ms,
-          duration: 120.ms,
-          begin: const Offset(0.5, 0.5),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'iconOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        ShakeEffect(
-          curve: Curves.linear,
-          delay: 280.ms,
-          duration: 300.ms,
-          hz: 2,
-          offset: const Offset(0.0, 0.0),
-          rotation: 0.087,
-        ),
-        ScaleEffect(
-          curve: Curves.bounceOut,
-          delay: 0.ms,
-          duration: 120.ms,
-          begin: const Offset(0.5, 0.5),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -100,6 +59,49 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
           'Name': currentUserDisplayName,
         },
       );
+    });
+
+    animationsMap.addAll({
+      'iconOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ShakeEffect(
+            curve: Curves.linear,
+            delay: 280.0.ms,
+            duration: 300.0.ms,
+            hz: 2,
+            offset: const Offset(0.0, 0.0),
+            rotation: 0.087,
+          ),
+          ScaleEffect(
+            curve: Curves.bounceOut,
+            delay: 0.0.ms,
+            duration: 120.0.ms,
+            begin: const Offset(0.5, 0.5),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+      'iconOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ShakeEffect(
+            curve: Curves.linear,
+            delay: 280.0.ms,
+            duration: 300.0.ms,
+            hz: 2,
+            offset: const Offset(0.0, 0.0),
+            rotation: 0.087,
+          ),
+          ScaleEffect(
+            curve: Curves.bounceOut,
+            delay: 0.0.ms,
+            duration: 120.0.ms,
+            begin: const Offset(0.5, 0.5),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -322,6 +324,167 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                       child: Builder(
                                         builder: (context) {
                                           if (!imagesItem.isLocal &&
+                                              (containerUploadsRecord !=
+                                                  null) &&
+                                              containerUploadsRecord
+                                                  .isEdited &&
+                                              (containerUploadsRecord
+                                                          .reminiImage !=
+                                                      '')) {
+                                            return Stack(
+                                              children: [
+                                                InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onDoubleTap: () async {
+                                                    logFirebaseEvent(
+                                                        'IMAGEEXPANDED_COPY_Container_c68gkr07_ON');
+                                                    logFirebaseEvent(
+                                                        'Container_update_page_state');
+                                                    setState(() {
+                                                      _model.liked =
+                                                          !_model.liked;
+                                                    });
+                                                    logFirebaseEvent(
+                                                        'Container_custom_action');
+                                                    await actions
+                                                        .sendLikedNotification(
+                                                      containerUploadsRecord
+                                                          .key,
+                                                      currentUserDisplayName,
+                                                      currentUserUid,
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    decoration: const BoxDecoration(),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(10.0),
+                                                      child: SizedBox(
+                                                        width:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width *
+                                                                0.9,
+                                                        height:
+                                                            MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .height *
+                                                                0.75,
+                                                        child: custom_widgets
+                                                            .FadeInImage(
+                                                          width:
+                                                              MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width *
+                                                                  0.9,
+                                                          height:
+                                                              MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .height *
+                                                                  0.75,
+                                                          imageUrl:
+                                                              containerUploadsRecord
+                                                                  .reminiImage,
+                                                          placeholderImage: functions
+                                                              .convertToImagePath(
+                                                                  imagesItem
+                                                                      .imageUrl),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment:
+                                                      const AlignmentDirectional(
+                                                          1.0, 1.0),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                18.0, 18.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        logFirebaseEvent(
+                                                            'IMAGEEXPANDED_COPY_Container_zg5a7vi4_ON');
+                                                        logFirebaseEvent(
+                                                            'Container_navigate_to');
+
+                                                        context.pushNamed(
+                                                          'compareImages',
+                                                          queryParameters: {
+                                                            'uploadDoc':
+                                                                serializeParam(
+                                                              containerUploadsRecord,
+                                                              ParamType
+                                                                  .Document,
+                                                            ),
+                                                          }.withoutNulls,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            'uploadDoc':
+                                                                containerUploadsRecord,
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color:
+                                                              const Color(0x53101213),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      8.0,
+                                                                      3.0,
+                                                                      8.0,
+                                                                      3.0),
+                                                          child: Text(
+                                                            'Compare Orginal',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          } else if (!imagesItem.isLocal &&
                                               (containerUploadsRecord !=
                                                   null)) {
                                             return InkWell(
@@ -1099,50 +1262,96 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                             lastDownloadedAt:
                                                                 getCurrentTimestamp,
                                                           ));
-                                                          logFirebaseEvent(
-                                                              'Container_custom_action');
-                                                          _model.downloadUrl =
-                                                              await actions
-                                                                  .getDownloadUrl(
-                                                            imagesItem.id,
-                                                          );
-                                                          await Future.wait([
-                                                            Future(() async {
-                                                              logFirebaseEvent(
-                                                                  'Container_custom_action');
-                                                              await actions
-                                                                  .downloadImage(
-                                                                _model
-                                                                    .downloadUrl!,
-                                                                imagesItem.id,
-                                                              );
-                                                            }),
-                                                            Future(() async {
-                                                              logFirebaseEvent(
-                                                                  'Container_show_snack_bar');
-                                                              ScaffoldMessenger
-                                                                      .of(context)
-                                                                  .showSnackBar(
-                                                                SnackBar(
-                                                                  content: const Text(
-                                                                    'Downloading Image',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
+                                                          if (containerUploadsRecord
+                                                                      ?.reminiImage !=
+                                                                  null &&
+                                                              containerUploadsRecord
+                                                                      ?.reminiImage !=
+                                                                  '') {
+                                                            await Future.wait([
+                                                              Future(() async {
+                                                                logFirebaseEvent(
+                                                                    'Container_custom_action');
+                                                                await actions
+                                                                    .downloadImage(
+                                                                  functions.imagePathToString(
+                                                                      containerUploadsRecord!
+                                                                          .reminiImage),
+                                                                  imagesItem.id,
+                                                                );
+                                                              }),
+                                                              Future(() async {
+                                                                logFirebaseEvent(
+                                                                    'Container_show_snack_bar');
+                                                                ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                  SnackBar(
+                                                                    content:
+                                                                        const Text(
+                                                                      'Downloading Image',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
                                                                     ),
+                                                                    duration: const Duration(
+                                                                        milliseconds:
+                                                                            4000),
+                                                                    backgroundColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .accent2,
                                                                   ),
-                                                                  duration: const Duration(
-                                                                      milliseconds:
-                                                                          4000),
-                                                                  backgroundColor:
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .accent2,
-                                                                ),
-                                                              );
-                                                            }),
-                                                          ]);
+                                                                );
+                                                              }),
+                                                            ]);
+                                                          } else {
+                                                            logFirebaseEvent(
+                                                                'Container_custom_action');
+                                                            _model.downloadUrl =
+                                                                await actions
+                                                                    .getDownloadUrl(
+                                                              imagesItem.id,
+                                                            );
+                                                            await Future.wait([
+                                                              Future(() async {
+                                                                logFirebaseEvent(
+                                                                    'Container_custom_action');
+                                                                await actions
+                                                                    .downloadImage(
+                                                                  _model
+                                                                      .downloadUrl!,
+                                                                  imagesItem.id,
+                                                                );
+                                                              }),
+                                                              Future(() async {
+                                                                logFirebaseEvent(
+                                                                    'Container_show_snack_bar');
+                                                                ScaffoldMessenger.of(
+                                                                        context)
+                                                                    .showSnackBar(
+                                                                  SnackBar(
+                                                                    content:
+                                                                        const Text(
+                                                                      'Downloading Image',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                    duration: const Duration(
+                                                                        milliseconds:
+                                                                            4000),
+                                                                    backgroundColor:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .accent2,
+                                                                  ),
+                                                                );
+                                                              }),
+                                                            ]);
+                                                          }
 
                                                           setState(() {});
                                                         },

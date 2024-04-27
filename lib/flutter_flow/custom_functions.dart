@@ -57,3 +57,7 @@ int divisibilityCheck(
 ) {
   return itemCount % req;
 }
+
+String imagePathToString(String imagePath) {
+  return imagePath;
+}

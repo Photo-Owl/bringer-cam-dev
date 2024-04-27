@@ -34,7 +34,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
     super.initState();
     _model = createModel(context, () => ConfirmEventNameModel());
 
-    _model.yourNameController ??= TextEditingController(
+    _model.yourNameTextController ??= TextEditingController(
         text: widget.eventName != null && widget.eventName != ''
             ? widget.eventName
             : ' ');
@@ -118,7 +118,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              controller: _model.yourNameController,
+                              controller: _model.yourNameTextController,
                               focusNode: _model.yourNameFocusNode,
                               autofocus: true,
                               obscureText: false,
@@ -180,7 +180,7 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               cursorColor: FlutterFlowTheme.of(context).primary,
-                              validator: _model.yourNameControllerValidator
+                              validator: _model.yourNameTextControllerValidator
                                   .asValidator(context),
                             ),
                           ),
@@ -202,13 +202,15 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'CONFIRM_EVENT_NAME_UploadPhotos_ON_TAP');
-                                  if (_model.yourNameController.text != '') {
+                                  if (_model.yourNameTextController.text !=
+                                          '') {
                                     logFirebaseEvent(
                                         'UploadPhotos_backend_call');
 
                                     await containerAlbumsRecord!.reference
                                         .update(createAlbumsRecordData(
-                                      albumName: _model.yourNameController.text,
+                                      albumName:
+                                          _model.yourNameTextController.text,
                                     ));
                                     logFirebaseEvent(
                                         'UploadPhotos_close_dialog,_drawer,_etc');

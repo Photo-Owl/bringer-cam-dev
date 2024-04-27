@@ -115,6 +115,16 @@ class UploadsRecord extends FirestoreRecord {
   List<String> get seenBy => _seenBy ?? const [];
   bool hasSeenBy() => _seenBy != null;
 
+  // "is_edited" field.
+  bool? _isEdited;
+  bool get isEdited => _isEdited ?? false;
+  bool hasIsEdited() => _isEdited != null;
+
+  // "remini_image" field.
+  String? _reminiImage;
+  String get reminiImage => _reminiImage ?? '';
+  bool hasReminiImage() => _reminiImage != null;
+
   void _initializeFields() {
     _uploadUrl = snapshotData['upload_url'] as String?;
     _ownerId = snapshotData['owner_id'] as String?;
@@ -138,6 +148,8 @@ class UploadsRecord extends FirestoreRecord {
     _orginalImageResolution =
         snapshotData['orginal_image_resolution'] as String?;
     _seenBy = getDataList(snapshotData['seen_by']);
+    _isEdited = snapshotData['is_edited'] as bool?;
+    _reminiImage = snapshotData['remini_image'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -192,6 +204,8 @@ Map<String, dynamic> createUploadsRecordData({
   String? watermarkedImage500,
   String? watermarkedImageResolution,
   String? orginalImageResolution,
+  bool? isEdited,
+  String? reminiImage,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -212,6 +226,8 @@ Map<String, dynamic> createUploadsRecordData({
       'watermarked_image_500': watermarkedImage500,
       'watermarked_image_resolution': watermarkedImageResolution,
       'orginal_image_resolution': orginalImageResolution,
+      'is_edited': isEdited,
+      'remini_image': reminiImage,
     }.withoutNulls,
   );
 
@@ -243,7 +259,9 @@ class UploadsRecordDocumentEquality implements Equality<UploadsRecord> {
         e1?.watermarkedImage500 == e2?.watermarkedImage500 &&
         e1?.watermarkedImageResolution == e2?.watermarkedImageResolution &&
         e1?.orginalImageResolution == e2?.orginalImageResolution &&
-        listEquality.equals(e1?.seenBy, e2?.seenBy);
+        listEquality.equals(e1?.seenBy, e2?.seenBy) &&
+        e1?.isEdited == e2?.isEdited &&
+        e1?.reminiImage == e2?.reminiImage;
   }
 
   @override
@@ -267,7 +285,9 @@ class UploadsRecordDocumentEquality implements Equality<UploadsRecord> {
         e?.watermarkedImage500,
         e?.watermarkedImageResolution,
         e?.orginalImageResolution,
-        e?.seenBy
+        e?.seenBy,
+        e?.isEdited,
+        e?.reminiImage
       ]);
 
   @override
