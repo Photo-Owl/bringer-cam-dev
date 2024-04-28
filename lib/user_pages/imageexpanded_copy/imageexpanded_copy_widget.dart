@@ -409,7 +409,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                     padding:
                                                         const EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
-                                                                18.0, 18.0),
+                                                                22.0, 18.0),
                                                     child: InkWell(
                                                       splashColor:
                                                           Colors.transparent,

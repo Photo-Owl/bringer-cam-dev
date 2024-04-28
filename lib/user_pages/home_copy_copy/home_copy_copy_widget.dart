@@ -298,6 +298,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               10.0, 16.0, 10.0, 16.0),
                           child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.sizeOf(context).width * 1.0,
+                              maxHeight:
+                                  MediaQuery.sizeOf(context).height * 0.09,
+                            ),
                             decoration: BoxDecoration(
                               color: const Color(0xFF5F5CFF),
                               borderRadius: BorderRadius.circular(16.0),
@@ -364,26 +369,24 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                       ),
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        FFAppState().uploadCount > 1.0
-                                            ? 'All${(double var1) {
-                                                return ' ${var1.truncate()} ';
-                                              }(FFAppState().uploadCount)}photos you took were shared! 🎉'
-                                            : 'Photo that you took was shared! 🎉',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color: Colors.white,
-                                              fontSize: 18.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                      ),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 0.0, 0.0),
+                                    child: Text(
+                                      FFAppState().uploadCount > 1.0
+                                          ? 'All${(double var1) {
+                                              return ' ${var1.truncate()} ';
+                                            }(FFAppState().uploadCount)}photos you took were shared! 🎉'
+                                          : 'Photo that you took was shared! 🎉',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            color: Colors.white,
+                                            fontSize: 18.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                     ),
                                   ),
                                 ],

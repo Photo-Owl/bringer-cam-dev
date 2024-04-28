@@ -317,7 +317,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                   alignment: Alignment.topLeft,
                   children: [
                     IconButton(
-                      onPressed: () => context.goNamed('homeCopyCopy'),
+                      onPressed: () => context.goNamed('HomeCopyCopy'),
                       icon: const Icon(
                         Icons.close_rounded,
                         color: Colors.white70,
@@ -396,7 +396,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                              onTap: () => context.goNamed('homeCopyCopy'),
+                              onTap: () => context.goNamed('HomeCopyCopy'),
                               child: Material(
                                 color: Colors.transparent,
                                 clipBehavior: Clip.hardEdge,
