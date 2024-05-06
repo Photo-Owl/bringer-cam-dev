@@ -138,18 +138,14 @@ class AutoUploadService : Service() {
         startId: Int
     ): Int {
         Log.d(LOG_TAG, "service started")
-        sendDebugNotification(
-            "Auto upload service",
-            "Auto upload service is running."
-        )
         contentResolver.registerContentObserver(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             true,
             observer
         )
         val action = NotificationCompat.Action(
-            R.drawable.ic_mono, "TURN OFF", PendingIntent.getService(
-                this, 1, Intent(Settings.ACTION_ADD_ACCOUNT),
+            R.drawable.ic_mono, "TURN OFF", PendingIntent.getActivity(
+                this, 1, Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION),
                 PendingIntent.FLAG_IMMUTABLE
             )
         )
@@ -178,14 +174,6 @@ class AutoUploadService : Service() {
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             // rn having code in flutter side for notifications
-
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         val notifChannel = NotificationChannelCompat.Builder(

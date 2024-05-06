@@ -1,6 +1,5 @@
 package com.smoose.photoowldev
 
-import android.os.Bundle
 import android.content.Intent
 import android.os.Build
 import io.flutter.embedding.android.FlutterActivity
