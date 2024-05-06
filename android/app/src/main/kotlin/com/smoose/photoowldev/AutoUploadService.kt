@@ -1,7 +1,9 @@
 package com.smoose.photoowldev
 
 import android.Manifest
+import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.ContentObserver
@@ -10,11 +12,64 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.room.Room
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
+import java.util.Calendar
+
+class AddImageToSqliteWorker(
+    context: Context,
+    workerParams: WorkerParameters
+) : Worker(context, workerParams) {
+
+    companion object {
+        @JvmStatic
+        private val LOG_TAG = "bringer/addImageWorker"
+
+        @JvmStatic
+        private val DB_NAME = "bringerCam"
+    }
+
+    override fun doWork(): Result {
+        val imagePath = inputData.getString("path")
+        val imageOwner = inputData.getString("owner")
+        if (imagePath == null || imageOwner == null) {
+            Log.d(LOG_TAG, "Path or owner missing: Cannot add to DB")
+            return Result.success()
+        }
+        try {
+            val db = Room.databaseBuilder(
+                applicationContext,
+                ImagesDB::class.java,
+                DB_NAME
+            ).build()
+            val imagesDao = db.imagesDao()
+            imagesDao.insertAll(
+                Images(
+                    path = imagePath,
+                    owner = imageOwner,
+                    unixTimestamp = Calendar.getInstance().timeInMillis,
+                    isUploaded = 0,
+                    isUploading = 0,
+                )
+            )
+            return Result.success()
+        } catch (e: Error) {
+            Log.e(LOG_TAG, "Unexpected error", e)
+            return Result.failure()
+        }
+    }
+}
 
 class AutoUploadService : Service() {
     private val observer =
@@ -25,6 +80,18 @@ class AutoUploadService : Service() {
                     title = "New image taken",
                     desc = uri.toString()
                 )
+                val data = Data.Builder()
+                    .putString("path", uri.toString())
+                    .putString("owner", USER_ID)
+                    .build()
+                val addImageTask = OneTimeWorkRequestBuilder<AddImageToSqliteWorker>()
+                    .setInputData(data)
+                    .build()
+                WorkManager.getInstance(applicationContext).beginUniqueWork(
+                    ADD_IMAGE_TO_SQLITE,
+                    ExistingWorkPolicy.APPEND,
+                    addImageTask,
+                ).enqueue()
             }
         }
 
@@ -40,6 +107,15 @@ class AutoUploadService : Service() {
 
         @JvmStatic
         private val CHANNEL_ID = "com.smoose.photoowldev.autoUploadDebug"
+
+        @JvmStatic
+        private val ADD_IMAGE_TO_SQLITE =
+            "com.smoose.photoowldev.addImageToSqliteTask"
+
+        @JvmStatic
+        // TODO: My user ID, need to get it from Firebase somehow
+        // or this code should be moved to flutter and called via a methodchannel
+        private val USER_ID = "29HbAeKsDifW6XrsrEDnLVxzjLI2"
     }
 
     override fun onCreate() {
@@ -71,6 +147,20 @@ class AutoUploadService : Service() {
             true,
             observer
         )
+        val action = NotificationCompat.Action(
+            R.drawable.ic_mono, "TURN OFF", PendingIntent.getService(
+                this, 1, Intent(Settings.ACTION_ADD_ACCOUNT),
+                PendingIntent.FLAG_IMMUTABLE
+            )
+        )
+        val notif = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("Auto upload service")
+            .setContentText("Auto upload service is running in foreground.")
+            .setSmallIcon(R.drawable.ic_mono)
+            .addAction(action)
+            .setAutoCancel(false)
+            .build()
+        startForeground(1, notif)
         return START_STICKY
     }
 
@@ -104,7 +194,7 @@ class AutoUploadService : Service() {
         ).setName("Auto upload debug channel").build()
         try {
             notifManager.createNotificationChannel(notifChannel)
-            notifManager.notify(title.hashCode(), notif)
+            notifManager.notify(desc.hashCode(), notif)
         } catch (e: Error) {
             Log.e(LOG_TAG, e.toString())
         }
