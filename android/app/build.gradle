@@ -1,8 +1,9 @@
 plugins {
-   id "com.android.application"
-   id "kotlin-android"
-   id "dev.flutter.flutter-gradle-plugin"
-   id "com.google.gms.google-services"  // Google Services plugin
+    id "com.android.application"
+    id "kotlin-android"
+    id "com.google.devtools.ksp"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
 }
 
 def localProperties = new Properties()
@@ -30,51 +31,54 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 34
-    
+     namespace "com.smoose.photoowldev"
+     compileSdkVersion 34
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+     sourceSets {
+         main.java.srcDirs += 'src/main/kotlin'
+     }
+
+     defaultConfig {
+         minSdkVersion 21
+         targetSdkVersion 34
+         versionCode flutterVersionCode.toInteger()
+         versionName flutterVersionName
+     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        // redundant line but required to build using AGP 7 for download_manager
+        // package
+        targetCompatibility JavaVersion.VERSION_17
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-        checkReleaseBuilds false
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
     }
-
-    defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.smoose.photoowldev"
-        minSdkVersion 21
-        targetSdkVersion 34
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
-    }
-
-   signingConfigs {
-       release {
-           keyAlias keystoreProperties['keyAlias']
-           keyPassword keystoreProperties['keyPassword']
-           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-           storePassword keystoreProperties['storePassword']
-       }
-   }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
     }
 }
 
+
 flutter {
     source '../..'
 }
 
+kotlin {
+    jvmToolchain 17
+}
+
 dependencies {
-    def room_version = "2.6.1"
+    def room_version = "2.5.2"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
 }

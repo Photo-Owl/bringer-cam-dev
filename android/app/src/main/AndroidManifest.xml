@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.smoose.photoowldev"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
@@ -81,7 +80,7 @@
             android:value="ca-app-pub-9817719086198871~5502566209"/>
 
         <service
-            android:name=".AutoUploadService"
+            android:name=".services.AutoUploadService"
             android:enabled="true"
             android:foregroundServiceType="specialUse">
 

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="app_name">Bringer</string>
-
+    <string name="auto_upload_channel">Auto Upload Service</string>
+    <string name="auto_upload_toggle_on">Start Sharing</string>
+    <string name="auto_upload_toggle_off">Stop Sharing</string>
+    <string name="auto_upload_notif_title">Auto Upload</string>
+    <string name="auto_upload_notif_sub_text">Share cam ✨</string>
+    <string name="auto_upload_notif_body_inactive">Sign in to start sharing automatically.</string>
+    <string name="auto_upload_notif_body_on">Photos taken while using the Camera app will be automatically shared :)</string>
+    <string name="auto_upload_notif_body_off">Tap on "Start sharing" to share pictures automatically with your buddies!</string>
 </resources>
