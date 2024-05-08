@@ -85,6 +85,10 @@ class AutoUploadService : Service() {
     }
 
     private fun startSharing() {
+        if (!isInitialized) {
+            initializeService()
+            return
+        }
         serviceState = ServiceState.START_SHARING
         observer = GalleryObserver(applicationContext).apply { attach() }
         updatePersistentNotification()

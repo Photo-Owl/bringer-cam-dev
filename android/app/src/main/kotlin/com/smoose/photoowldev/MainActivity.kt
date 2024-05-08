@@ -11,6 +11,10 @@ import com.smoose.photoowldev.services.ServiceState
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import android.app.AppOpsManager
+import android.content.Context
+import android.net.Uri
+import android.provider.Settings
 
 class MainActivity : FlutterActivity() {
     private lateinit var autoUploadChannel: MethodChannel
@@ -33,6 +37,7 @@ class MainActivity : FlutterActivity() {
                 setMethodCallHandler { methodCall, result ->
                     when (methodCall.method) {
                         "setSignInStatus" -> setSignInStatus(methodCall.argument("userId"), result)
+                        "checkForPermissions"-> checkForPermissions()
                         else -> result.notImplemented()
                     }
                 }
@@ -43,6 +48,53 @@ class MainActivity : FlutterActivity() {
         autoUploadChannel.setMethodCallHandler(null)
         super.cleanUpFlutterEngine(flutterEngine)
     }
+    private fun checkForPermissions(){
+        checkPackageUsageStatsPermission()
+        requestOverlayPermission()
+    }
+    private fun checkPackageUsageStatsPermission() {
+
+        Log.d("mainActivity debug","Checking usage stats permission...")
+//        val permission =ActivityCompat.checkSelfPermission(this, Manifest.permission.PACKAGE_USAGE_STATS);
+
+        var granted = false
+        val appOps: AppOpsManager = context
+                .getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val mode: Int = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
+                android.os.Process.myUid(), context.getPackageName())
+
+        granted = if (mode == AppOpsManager.MODE_DEFAULT) {
+            context.checkCallingOrSelfPermission(android.Manifest.permission.PACKAGE_USAGE_STATS) === PackageManager.PERMISSION_GRANTED
+        } else {
+            mode == AppOpsManager.MODE_ALLOWED
+        }
+        Log.d("mainActivity debug","permission $granted")
+        if (!granted) {
+            Log.d("mainActivity debug","Permission usage stats not granted. Requesting permission...")
+            requestUsageStatsPermission()
+        } else {
+            Log.d("mainActivity debug","Permission already granted.")
+            return;
+        }
+    }
+    private fun requestUsageStatsPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS, Uri.parse("package:$packageName"))
+            startActivityForResult(intent, 1)
+
+        }
+    }
+    private fun requestOverlayPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+                startActivityForResult(intent, 1)
+            }
+        }
+    }
+
+
 
     private fun initializeService(
         isSignedIn: Boolean,
@@ -52,7 +104,7 @@ class MainActivity : FlutterActivity() {
             val intent = Intent(this, AutoUploadService::class.java)
             intent.putExtra(
                 AutoUploadService.SERVICE_STATE_EXTRA,
-                if (isSignedIn) ServiceState.INIT else ServiceState.START_SHARING
+                if (!isSignedIn) ServiceState.INIT else ServiceState.START_SHARING
             )
             val canSend =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -68,7 +120,7 @@ class MainActivity : FlutterActivity() {
                     startService(intent)
                 }
             }
-            result.success(null)
+            result.success("implememted")
         } catch (e: Error) {
             Log.e(LOG_TAG, "Unexpected error.", e)
             result.error("ERROR", "Unexpected error", null)
@@ -78,10 +130,10 @@ class MainActivity : FlutterActivity() {
     private fun setSignInStatus(userId: String?, result: MethodChannel.Result) {
         if (userId == null) {
             AppState.authUser = null
-            initializeService(true, result)
+            initializeService(false, result)
         } else {
             AppState.authUser = userId
-            initializeService(false, result)
+            initializeService(true, result)
         }
     }
 }
