@@ -13,6 +13,15 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.smoose.photoowldev.R
+import android.os.Handler
+import android.os.Looper
+import android.content.Context
+import android.provider.MediaStore
+import android.app.usage.UsageStats
+import android.app.usage.UsageStatsManager
+import android.util.Log
+import com.smoose.photoowldev.services.OverlayService
+
 
 internal class ServiceState {
     companion object {
@@ -25,6 +34,16 @@ internal class ServiceState {
 class AutoUploadService : Service() {
     private var observer: GalleryObserver? = null
     private var serviceState: Int = 0
+    private val handler = Handler(Looper.getMainLooper())
+    private val runnable = object : Runnable {
+        override fun run() {
+            val defaultCameraApp = getDefaultCameraApp()
+            if(defaultCameraApp!=null)
+                getUsageStatsForPackage(defaultCameraApp) // for google
+
+            handler.postDelayed(this, 1000) // Schedule the task to run every 1 second
+        }
+    }
 
     companion object {
         @JvmStatic
@@ -87,13 +106,82 @@ class AutoUploadService : Service() {
     private fun startSharing() {
         if (!isInitialized) {
             initializeService()
+            startUsageStatsTask()
             return
         }
         serviceState = ServiceState.START_SHARING
         observer = GalleryObserver(applicationContext).apply { attach() }
         updatePersistentNotification()
+        startUsageStatsTask()
     }
+    private fun startUsageStatsTask() {
+        handler.post(runnable)
+    }
+    private fun getDefaultCameraApp(): String?{
+        // Query for the default camera app
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val cameraApps = packageManager.queryIntentActivities(cameraIntent, PackageManager.MATCH_DEFAULT_ONLY)
 
+        // Assuming there's at least one camera app
+        val defaultCameraApp = cameraApps.firstOrNull()
+        if (defaultCameraApp!= null) {
+            val packageName = defaultCameraApp.activityInfo.packageName
+            return packageName;
+        } else {
+            return null;
+        }
+    }
+    private fun showPopUp(){
+        val intent = Intent(this, OverlayService::class.java)
+        startService(intent)
+    }
+    private  fun hidePopUp(){
+        val intent = Intent(this, OverlayService::class.java)
+        stopService(intent)
+    }
+    private fun getUsageStatsForPackage(packageName: String) {
+        val sharedPreferences = getSharedPreferences("bringer_shared_preferences",Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val endTime = System.currentTimeMillis()
+        val startTime = endTime - 1000 * 60 * 60 // 1 hour ago
+        val query = UsageStatsManager.INTERVAL_DAILY
+        val stats = usageStatsManager.queryUsageStats(query, startTime, endTime)
+        if (stats!= null && stats.isNotEmpty()) {
+            for (usageStats in stats) {
+                if (usageStats.packageName == packageName) {
+                    val lastTimeUsed = usageStats.lastTimeUsed
+                    val totalTimeInForeground = usageStats.totalTimeInForeground
+
+                    // Check if variables exist in shared preferences
+                    val oldCameraLastTimeUsed = sharedPreferences.getString("camera_last_time_used", "")
+                    val oldCameraTotalTimeInForeground = sharedPreferences.getString("camera_total_time_in_foreground", "")
+
+                    // If variables are not present, initialize them
+                    if (oldCameraLastTimeUsed!!.isEmpty() || oldCameraTotalTimeInForeground!!.isEmpty()) {
+                        Log.d("mainActivity debug usage stats","First time detected")
+
+                    } else {
+                        if((oldCameraLastTimeUsed!=lastTimeUsed.toString())&&(oldCameraTotalTimeInForeground ==totalTimeInForeground.toString())){
+                            Log.d("mainActivity debug usage stats","CAMERA OPEN DETECTED")
+                            showPopUp()
+                        }else if((oldCameraLastTimeUsed!=lastTimeUsed.toString())&&(oldCameraTotalTimeInForeground !=totalTimeInForeground.toString())){
+
+                            Log.d("mainActivity debug usage stats","CAMERA CLOSE DETECTED - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground" )
+
+                            hidePopUp()
+                        }
+
+                    }
+                    editor.putString("camera_last_time_used", lastTimeUsed.toString())
+                    editor.putString("camera_total_time_in_foreground", totalTimeInForeground.toString())
+                    editor.apply()
+                    break;
+                }
+
+            }
+        }
+    }
     private fun stopSharing() {
         serviceState = ServiceState.STOP_SHARING
         observer?.apply { detach() }?.let { observer = null }
