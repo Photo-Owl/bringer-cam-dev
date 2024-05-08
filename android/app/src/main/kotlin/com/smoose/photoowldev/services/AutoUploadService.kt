@@ -4,30 +4,31 @@ import android.Manifest
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
+import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.provider.MediaStore
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.smoose.photoowldev.R
-import android.os.Handler
-import android.os.Looper
-import android.content.Context
-import android.provider.MediaStore
-import android.app.usage.UsageStats
-import android.app.usage.UsageStatsManager
-import android.util.Log
-import com.smoose.photoowldev.services.OverlayService
 
 
 internal class ServiceState {
     companion object {
-        @JvmStatic val INIT = 0
-        @JvmStatic val START_SHARING = 1
-        @JvmStatic val STOP_SHARING = 2
+        @JvmStatic
+        val INIT = 0
+        @JvmStatic
+        val START_SHARING = 1
+        @JvmStatic
+        val STOP_SHARING = 2
     }
 }
 
@@ -38,10 +39,13 @@ class AutoUploadService : Service() {
     private val runnable = object : Runnable {
         override fun run() {
             val defaultCameraApp = getDefaultCameraApp()
-            if(defaultCameraApp!=null)
+            if (defaultCameraApp != null)
                 getUsageStatsForPackage(defaultCameraApp) // for google
 
-            handler.postDelayed(this, 1000) // Schedule the task to run every 1 second
+            handler.postDelayed(
+                this,
+                1000
+            ) // Schedule the task to run every 1 second
         }
     }
 
@@ -114,74 +118,107 @@ class AutoUploadService : Service() {
         updatePersistentNotification()
         startUsageStatsTask()
     }
+
     private fun startUsageStatsTask() {
         handler.post(runnable)
     }
-    private fun getDefaultCameraApp(): String?{
+
+    private fun getDefaultCameraApp(): String? {
         // Query for the default camera app
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val cameraApps = packageManager.queryIntentActivities(cameraIntent, PackageManager.MATCH_DEFAULT_ONLY)
+        val cameraApps = packageManager.queryIntentActivities(
+            cameraIntent,
+            PackageManager.MATCH_DEFAULT_ONLY
+        )
 
         // Assuming there's at least one camera app
         val defaultCameraApp = cameraApps.firstOrNull()
-        if (defaultCameraApp!= null) {
+        if (defaultCameraApp != null) {
             val packageName = defaultCameraApp.activityInfo.packageName
-            return packageName;
+            return packageName
         } else {
-            return null;
+            return null
         }
     }
-    private fun showPopUp(){
+
+    private fun showPopUp() {
         val intent = Intent(this, OverlayService::class.java)
         startService(intent)
     }
-    private  fun hidePopUp(){
+
+    private fun hidePopUp() {
         val intent = Intent(this, OverlayService::class.java)
         stopService(intent)
     }
+
     private fun getUsageStatsForPackage(packageName: String) {
-        val sharedPreferences = getSharedPreferences("bringer_shared_preferences",Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(
+            "bringer_shared_preferences",
+            Context.MODE_PRIVATE
+        )
         val editor = sharedPreferences.edit()
-        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val usageStatsManager =
+            getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val endTime = System.currentTimeMillis()
         val startTime = endTime - 1000 * 60 * 60 // 1 hour ago
         val query = UsageStatsManager.INTERVAL_DAILY
         val stats = usageStatsManager.queryUsageStats(query, startTime, endTime)
-        if (stats!= null && stats.isNotEmpty()) {
+        if (stats != null && stats.isNotEmpty()) {
             for (usageStats in stats) {
                 if (usageStats.packageName == packageName) {
                     val lastTimeUsed = usageStats.lastTimeUsed
                     val totalTimeInForeground = usageStats.totalTimeInForeground
 
                     // Check if variables exist in shared preferences
-                    val oldCameraLastTimeUsed = sharedPreferences.getString("camera_last_time_used", "")
-                    val oldCameraTotalTimeInForeground = sharedPreferences.getString("camera_total_time_in_foreground", "")
+                    val oldCameraLastTimeUsed =
+                        sharedPreferences.getString("camera_last_time_used", "")
+                    val oldCameraTotalTimeInForeground =
+                        sharedPreferences.getString(
+                            "camera_total_time_in_foreground",
+                            ""
+                        )
 
                     // If variables are not present, initialize them
                     if (oldCameraLastTimeUsed!!.isEmpty() || oldCameraTotalTimeInForeground!!.isEmpty()) {
-                        Log.d("mainActivity debug usage stats","First time detected")
+                        Log.d(
+                            "mainActivity debug usage stats",
+                            "First time detected"
+                        )
 
                     } else {
-                        if((oldCameraLastTimeUsed!=lastTimeUsed.toString())&&(oldCameraTotalTimeInForeground ==totalTimeInForeground.toString())){
-                            Log.d("mainActivity debug usage stats","CAMERA OPEN DETECTED")
+                        if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground == totalTimeInForeground.toString())) {
+                            Log.d(
+                                "mainActivity debug usage stats",
+                                "CAMERA OPEN DETECTED"
+                            )
                             showPopUp()
-                        }else if((oldCameraLastTimeUsed!=lastTimeUsed.toString())&&(oldCameraTotalTimeInForeground !=totalTimeInForeground.toString())){
+                        } else if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground != totalTimeInForeground.toString())) {
 
-                            Log.d("mainActivity debug usage stats","CAMERA CLOSE DETECTED - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground" )
+                            Log.d(
+                                "mainActivity debug usage stats",
+                                "CAMERA CLOSE DETECTED - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
+                            )
 
                             hidePopUp()
                         }
 
                     }
-                    editor.putString("camera_last_time_used", lastTimeUsed.toString())
-                    editor.putString("camera_total_time_in_foreground", totalTimeInForeground.toString())
+                    editor.putString(
+                        "camera_last_time_used",
+                        lastTimeUsed.toString()
+                    )
+                    editor.putString(
+                        "camera_total_time_in_foreground",
+                        totalTimeInForeground.toString()
+                    )
                     editor.apply()
-                    break;
+                    break
                 }
 
             }
         }
     }
+
     private fun stopSharing() {
         serviceState = ServiceState.STOP_SHARING
         observer?.apply { detach() }?.let { observer = null }
@@ -204,11 +241,13 @@ class AutoUploadService : Service() {
     }
 
     private fun createPersistentNotification(): Notification {
-        val contentText = getString(when (serviceState) {
-            ServiceState.START_SHARING -> R.string.auto_upload_notif_body_on
-            ServiceState.STOP_SHARING -> R.string.auto_upload_notif_body_off
-            else -> R.string.auto_upload_notif_body_inactive
-        })
+        val contentText = getString(
+            when (serviceState) {
+                ServiceState.START_SHARING -> R.string.auto_upload_notif_body_on
+                ServiceState.STOP_SHARING -> R.string.auto_upload_notif_body_off
+                else -> R.string.auto_upload_notif_body_inactive
+            }
+        )
 
         val notifBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.auto_upload_notif_title))
