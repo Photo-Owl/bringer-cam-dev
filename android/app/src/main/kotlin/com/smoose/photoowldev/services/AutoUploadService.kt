@@ -7,6 +7,7 @@ import android.app.Service
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Handler
@@ -18,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.smoose.photoowldev.AppState
 import com.smoose.photoowldev.R
 
 
@@ -29,12 +31,15 @@ internal class ServiceState {
         val START_SHARING = 1
         @JvmStatic
         val STOP_SHARING = 2
+        @JvmStatic
+        val INIT_SIGNED_IN = 3
     }
 }
 
 class AutoUploadService : Service() {
     private var observer: GalleryObserver? = null
     private var serviceState: Int = 0
+    private lateinit var sharedPrefs: SharedPreferences
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
         override fun run() {
@@ -48,6 +53,12 @@ class AutoUploadService : Service() {
             ) // Schedule the task to run every 1 second
         }
     }
+
+    private val prefsListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == "sharing_status")
+                getPersistedShareStatus()
+        }
 
     companion object {
         @JvmStatic
@@ -69,6 +80,21 @@ class AutoUploadService : Service() {
         val SERVICE_STATE_EXTRA = "service_state"
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        sharedPrefs = getSharedPreferences(
+            "bringer_shared_preferences",
+            Context.MODE_PRIVATE
+        )
+        getPersistedShareStatus()
+        sharedPrefs.registerOnSharedPreferenceChangeListener(prefsListener)
+    }
+
+    override fun onDestroy() {
+        sharedPrefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
+        super.onDestroy()
+    }
+
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
@@ -80,14 +106,15 @@ class AutoUploadService : Service() {
     ): Int {
         val newState = intent?.extras?.getInt(SERVICE_STATE_EXTRA, 0) ?: 0
         when (newState) {
-            ServiceState.INIT -> initializeService()
+            ServiceState.INIT -> initializeService(isSignedIn = false)
             ServiceState.START_SHARING -> startSharing()
             ServiceState.STOP_SHARING -> stopSharing()
+            ServiceState.INIT_SIGNED_IN -> initializeService(isSignedIn = true)
         }
         return START_STICKY
     }
 
-    private fun initializeService() {
+    private fun initializeService(isSignedIn: Boolean = false) {
         isInitialized = true
         observer = GalleryObserver(applicationContext).apply { attach() }
 
@@ -103,24 +130,39 @@ class AutoUploadService : Service() {
             }
         }
 
-        serviceState = ServiceState.START_SHARING
+        if (!isSignedIn) {
+            serviceState = ServiceState.INIT
+        } else {
+            getPersistedShareStatus()
+            if (serviceState == ServiceState.START_SHARING) {
+                startUsageStatsTask()
+            }
+        }
         startForeground(SERVICE_ID, createPersistentNotification())
     }
 
     private fun startSharing() {
-        if (!isInitialized) {
-            initializeService()
-            startUsageStatsTask()
-            return
-        }
         serviceState = ServiceState.START_SHARING
+        sharedPrefs.edit().putBoolean("sharing_status", true).apply()
         observer = GalleryObserver(applicationContext).apply { attach() }
-        updatePersistentNotification()
         startUsageStatsTask()
+        updatePersistentNotification()
+    }
+
+    private fun stopSharing() {
+        serviceState = ServiceState.STOP_SHARING
+        sharedPrefs.edit().putBoolean("sharing_status", false).apply()
+        observer?.apply { detach() }?.let { observer = null }
+        updatePersistentNotification()
     }
 
     private fun startUsageStatsTask() {
         handler.post(runnable)
+    }
+
+    private fun getPersistedShareStatus() {
+        val isSharingOn = sharedPrefs.getBoolean("sharing_status", false)
+        serviceState = if (isSharingOn) ServiceState.START_SHARING else ServiceState.STOP_SHARING
     }
 
     private fun getDefaultCameraApp(): String? {
@@ -152,11 +194,7 @@ class AutoUploadService : Service() {
     }
 
     private fun getUsageStatsForPackage(packageName: String) {
-        val sharedPreferences = getSharedPreferences(
-            "bringer_shared_preferences",
-            Context.MODE_PRIVATE
-        )
-        val editor = sharedPreferences.edit()
+        val editor = sharedPrefs.edit()
         val usageStatsManager =
             getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val endTime = System.currentTimeMillis()
@@ -171,9 +209,9 @@ class AutoUploadService : Service() {
 
                     // Check if variables exist in shared preferences
                     val oldCameraLastTimeUsed =
-                        sharedPreferences.getString("camera_last_time_used", "")
+                        sharedPrefs.getString("camera_last_time_used", "")
                     val oldCameraTotalTimeInForeground =
-                        sharedPreferences.getString(
+                        sharedPrefs.getString(
                             "camera_total_time_in_foreground",
                             ""
                         )
@@ -217,12 +255,6 @@ class AutoUploadService : Service() {
 
             }
         }
-    }
-
-    private fun stopSharing() {
-        serviceState = ServiceState.STOP_SHARING
-        observer?.apply { detach() }?.let { observer = null }
-        updatePersistentNotification()
     }
 
     private fun updatePersistentNotification() {

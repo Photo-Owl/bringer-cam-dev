@@ -7,6 +7,7 @@ import android.view.WindowManager
 import com.smoose.photoowldev.R
 import android.view.View
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.PixelFormat
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,8 +21,15 @@ import android.widget.ImageView
 class OverlayService : Service() {
 
     private lateinit var overlayView: View
-    //TODO: on create service set the value for isSharingOn
-    private var isSharingOn = true
+    private var isSharingOn = false
+    private lateinit var sharedPrefs: SharedPreferences
+
+    private val prefsListener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == "sharing_status")
+                getPersistedShareStatus()
+        }
+
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
@@ -30,13 +38,17 @@ class OverlayService : Service() {
         val imageView = overlayView.findViewById<ImageView>(R.id.imageView)
         if (isSharingOn){
             imageView.setImageResource(R.drawable.bringer_logo_bandw)
+            sharedPrefs.edit().putBoolean("sharing_status", false).apply()
             isSharingOn = false
         }else{
             imageView.setImageResource(R.drawable.bringer_logo)
+            sharedPrefs.edit().putBoolean("sharing_status", true).apply()
             isSharingOn = true
         }
+    }
 
-
+    private fun getPersistedShareStatus() {
+        isSharingOn = sharedPrefs.getBoolean("sharing_status", false)
     }
 
     override fun onCreate() {
@@ -51,6 +63,12 @@ class OverlayService : Service() {
             }
         }
         val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+        sharedPrefs = getSharedPreferences(
+            "bringer_shared_preferences",
+            Context.MODE_PRIVATE
+        )
+        getPersistedShareStatus()
+        sharedPrefs.registerOnSharedPreferenceChangeListener(prefsListener)
         val params = WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -66,9 +84,10 @@ class OverlayService : Service() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        sharedPrefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
         if (overlayView!= null) {
             (getSystemService(Context.WINDOW_SERVICE) as WindowManager).removeView(overlayView)
         }
+        super.onDestroy()
     }
 }

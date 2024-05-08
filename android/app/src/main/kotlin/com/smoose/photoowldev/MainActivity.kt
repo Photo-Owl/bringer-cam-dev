@@ -123,7 +123,7 @@ class MainActivity : FlutterActivity() {
             val intent = Intent(this, AutoUploadService::class.java)
             intent.putExtra(
                 AutoUploadService.SERVICE_STATE_EXTRA,
-                if (!isSignedIn) ServiceState.INIT else ServiceState.START_SHARING
+                if (isSignedIn) ServiceState.INIT_SIGNED_IN else ServiceState.INIT
             )
             val canSend =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -139,7 +139,7 @@ class MainActivity : FlutterActivity() {
                     startService(intent)
                 }
             }
-            result.success("implememted")
+            result.success("")
         } catch (e: Error) {
             Log.e(LOG_TAG, "Unexpected error.", e)
             result.error("ERROR", "Unexpected error", null)
