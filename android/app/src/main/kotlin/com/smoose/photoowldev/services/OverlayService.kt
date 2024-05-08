@@ -21,13 +21,21 @@ import android.widget.ImageView
 class OverlayService : Service() {
 
     private lateinit var overlayView: View
-    private var isSharingOn = false
+    private var isSharingOn = true
     private lateinit var sharedPrefs: SharedPreferences
 
     private val prefsListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == "sharing_status")
+            if (key == "sharing_status"){
                 getPersistedShareStatus()
+                val imageView = overlayView.findViewById<ImageView>(R.id.imageView)
+                if (isSharingOn){
+                    imageView.setImageResource(R.drawable.bringer_logo)
+                }else{
+                    imageView.setImageResource(R.drawable.bringer_logo_bandw)
+                }
+            }
+
         }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -48,7 +56,7 @@ class OverlayService : Service() {
     }
 
     private fun getPersistedShareStatus() {
-        isSharingOn = sharedPrefs.getBoolean("sharing_status", false)
+        isSharingOn = sharedPrefs.getBoolean("sharing_status", true)
     }
 
     override fun onCreate() {

@@ -56,8 +56,15 @@ class AutoUploadService : Service() {
 
     private val prefsListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == "sharing_status")
+            if (key == "sharing_status"){
                 getPersistedShareStatus()
+                if(serviceState == ServiceState.START_SHARING){
+                    startSharing()
+                }else{
+                    stopSharing()
+                }
+            }
+
         }
 
     companion object {
@@ -161,7 +168,7 @@ class AutoUploadService : Service() {
     }
 
     private fun getPersistedShareStatus() {
-        val isSharingOn = sharedPrefs.getBoolean("sharing_status", false)
+        val isSharingOn = sharedPrefs.getBoolean("sharing_status", true)
         serviceState = if (isSharingOn) ServiceState.START_SHARING else ServiceState.STOP_SHARING
     }
 
