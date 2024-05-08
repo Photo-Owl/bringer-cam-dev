@@ -10,17 +10,13 @@ import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.smoose.photoowldev.AppState
 
 internal class GalleryObserver(private val context: Context) {
     companion object {
         @JvmStatic
         private val ADD_IMAGE_TO_SQLITE =
             "com.smoose.photoowldev.addImageToSqliteTask"
-
-        @JvmStatic
-        // TODO: My user ID, need to get it from Firebase somehow
-        // or this code should be moved to flutter and called via a methodchannel
-        private val USER_ID = "29HbAeKsDifW6XrsrEDnLVxzjLI2"
     }
 
     private val observer =
@@ -29,9 +25,8 @@ internal class GalleryObserver(private val context: Context) {
                 super.onChange(selfChange, uri)
                 if (selfChange) return
                 val data = Data.Builder()
-                    // TODO: Need to resolve this to actual image link
                     .putString("path", uri.toString())
-                    .putString("owner", USER_ID)
+                    .putString("owner", AppState.authUser)
                     .build()
                 val addImageTask =
                     OneTimeWorkRequestBuilder<AddImageToSqliteWorker>()

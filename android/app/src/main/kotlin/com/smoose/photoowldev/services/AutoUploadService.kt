@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.smoose.photoowldev.R
 
-private class ServiceState {
+internal class ServiceState {
     companion object {
         @JvmStatic val INIT = 0
         @JvmStatic val START_SHARING = 1
@@ -43,7 +43,7 @@ class AutoUploadService : Service() {
         private val SERVICE_ID = 1
 
         @JvmStatic
-        private val SERVICE_STATE_EXTRA = "service_state"
+        val SERVICE_STATE_EXTRA = "service_state"
     }
 
     override fun onBind(p0: Intent?): IBinder? {
