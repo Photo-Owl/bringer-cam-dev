@@ -21,6 +21,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.smoose.photoowldev.AppState
 import com.smoose.photoowldev.R
+import java.io.File
+import android.os.Environment
+import android.database.Cursor
+import android.net.Uri
 
 
 internal class ServiceState {
@@ -37,7 +41,8 @@ internal class ServiceState {
 }
 
 class AutoUploadService : Service() {
-    private var observer: GalleryObserver? = null
+//    private var observer: GalleryObserver? = null
+    private var fileObserver: ImageFileObserver? =null;
     private var serviceState: Int = 0
     private lateinit var sharedPrefs: SharedPreferences
     private val handler = Handler(Looper.getMainLooper())
@@ -45,8 +50,7 @@ class AutoUploadService : Service() {
         override fun run() {
             val defaultCameraApp = getDefaultCameraApp()
             if (defaultCameraApp != null)
-                getUsageStatsForPackage(defaultCameraApp) // for google
-
+                getUsageStatsForPackage(defaultCameraApp)
             handler.postDelayed(
                 this,
                 1000
@@ -121,10 +125,19 @@ class AutoUploadService : Service() {
         return START_STICKY
     }
 
+    private fun startObserving() {
+        fileObserver = ImageFileObserver(this)
+        fileObserver?.startWatching()
+    }
+
+    private fun stopObserving() {
+        fileObserver?.stopWatching()
+        fileObserver = null
+    }
     private fun initializeService(isSignedIn: Boolean = false) {
         isInitialized = true
-        observer = GalleryObserver(applicationContext).apply { attach() }
-
+//        observer = GalleryObserver(applicationContext).apply { attach() }
+        startObserving()
         with(NotificationManagerCompat.from(applicationContext)) {
             if (getNotificationChannel(CHANNEL_ID) == null) {
                 val notifChannel = NotificationChannelCompat.Builder(
@@ -151,7 +164,8 @@ class AutoUploadService : Service() {
     private fun startSharing() {
         serviceState = ServiceState.START_SHARING
         sharedPrefs.edit().putBoolean("sharing_status", true).apply()
-        observer = GalleryObserver(applicationContext).apply { attach() }
+//        observer = GalleryObserver(applicationContext).apply { attach() }
+        startObserving()
         startUsageStatsTask()
         updatePersistentNotification()
     }
@@ -159,7 +173,8 @@ class AutoUploadService : Service() {
     private fun stopSharing() {
         serviceState = ServiceState.STOP_SHARING
         sharedPrefs.edit().putBoolean("sharing_status", false).apply()
-        observer?.apply { detach() }?.let { observer = null }
+//        observer?.apply { detach() }?.let { observer = null }
+        stopObserving()
         updatePersistentNotification()
     }
 
@@ -213,7 +228,6 @@ class AutoUploadService : Service() {
                 if (usageStats.packageName == packageName) {
                     val lastTimeUsed = usageStats.lastTimeUsed
                     val totalTimeInForeground = usageStats.totalTimeInForeground
-
                     // Check if variables exist in shared preferences
                     val oldCameraLastTimeUsed =
                         sharedPrefs.getString("camera_last_time_used", "")

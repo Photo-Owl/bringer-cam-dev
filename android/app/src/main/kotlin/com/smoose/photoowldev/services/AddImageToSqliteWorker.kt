@@ -45,6 +45,7 @@ class AddImageToSqliteWorker(
                     isUploading = 0,
                 )
             )
+            //TODO: call the flutter code to start uploading
             val images = imagesDao.lastAdded()
             Log.d(LOG_TAG, "inserted: ${images.path}")
             return Result.success()

@@ -1,5 +1,6 @@
 package com.smoose.photoowldev
 
+import androidx.core.content.ContextCompat
 import android.Manifest
 import android.app.AppOpsManager
 import android.content.Context
@@ -55,10 +56,17 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun checkForPermissions() {
+        checkReadPermission()
         checkPackageUsageStatsPermission()
         requestOverlayPermission()
     }
-
+    private fun checkReadPermission(){
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED ||ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE), 123)
+        } else {
+            Log.d("mainActivity debug","READ EXTERNAL STORAGE Permission granted")
+        }
+    }
     private fun checkPackageUsageStatsPermission() {
 
         Log.d("mainActivity debug", "Checking usage stats permission...")
