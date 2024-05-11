@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 import com.smoose.photoowldev.db.Images
 import com.smoose.photoowldev.db.ImagesDB
 import java.util.Calendar
+import com.smoose.photoowldev.MethodChannelHolder
 
 class AddImageToSqliteWorker(
     context: Context,
@@ -45,7 +46,9 @@ class AddImageToSqliteWorker(
                     isUploading = 0,
                 )
             )
-            //TODO: call the flutter code to start uploading
+
+            MethodChannelHolder.methodChannel?.invokeMethod("upload_image", imagePath)
+
             val images = imagesDao.lastAdded()
             Log.d(LOG_TAG, "inserted: ${images.path}")
             return Result.success()

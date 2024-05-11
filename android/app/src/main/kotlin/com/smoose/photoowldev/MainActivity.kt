@@ -16,6 +16,7 @@ import com.smoose.photoowldev.services.ServiceState
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import com.smoose.photoowldev.MethodChannelHolder
 
 class MainActivity : FlutterActivity() {
     private lateinit var autoUploadChannel: MethodChannel
@@ -48,12 +49,14 @@ class MainActivity : FlutterActivity() {
                     }
                 }
             }
+        MethodChannelHolder.methodChannel = autoUploadChannel;
+
     }
 
-    override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
-        autoUploadChannel.setMethodCallHandler(null)
-        super.cleanUpFlutterEngine(flutterEngine)
-    }
+//    override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
+//        autoUploadChannel.setMethodCallHandler(null)
+//        super.cleanUpFlutterEngine(flutterEngine)
+//    }
 
     private fun checkForPermissions() {
         checkReadPermission()
@@ -140,7 +143,7 @@ class MainActivity : FlutterActivity() {
                         Manifest.permission.POST_NOTIFICATIONS
                     ) == PackageManager.PERMISSION_GRANTED
                 else true
-            if (!AutoUploadService.isInitialized() && canSend) {
+            if (canSend) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     startForegroundService(intent)
                 } else {

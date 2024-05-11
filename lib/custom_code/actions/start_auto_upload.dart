@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -52,6 +53,21 @@ Future startAutoUpload() async {
       requiresBatteryNotLow: true,
     ),
   );
+  const autoUploadChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
+  autoUploadChannel.setMethodCallHandler((MethodCall methodCall) async {
+    if (methodCall.method == "upload_image") {
+      Workmanager().registerOneOffTask(
+        'com.smoose.photoowldev.immediateTask',
+        'upload-img',
+        existingWorkPolicy: ExistingWorkPolicy.append,
+        constraints: Constraints(
+          networkType: NetworkType.connected,
+          requiresBatteryNotLow: true,
+        ),
+      );
+    }
+  });
+
   // Workmanager().cancelAll();
   // Workmanager().registerOneOffTask(
   //   'com.smoose.photoowldev.upload1',
