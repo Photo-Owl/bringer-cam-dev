@@ -62,6 +62,20 @@ class MainActivity : FlutterActivity() {
         checkReadPermission()
         checkPackageUsageStatsPermission()
         requestOverlayPermission()
+        checkIgnoreBatteryOptimizationPermission()
+    }
+    private fun checkIgnoreBatteryOptimizationPermission(){
+        if(ActivityCompat.checkSelfPermission(
+                        activity,
+                        Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                ) != PackageManager.PERMISSION_GRANTED){
+            val intent = Intent(
+                    Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                    Uri.parse("package:$packageName")
+            )
+            startActivityForResult(intent, 3)
+        }
+
     }
     private fun checkReadPermission(){
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED ||ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {

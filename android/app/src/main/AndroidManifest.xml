@@ -25,8 +25,10 @@
         tools:ignore="SystemPermissionTypo" />
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
 
     <queries>
+        <package android:name="com.google.android.GoogleCamera" />
         <intent>
             <action android:name="android.intent.action.CAMERA_BUTTON" />
         </intent>

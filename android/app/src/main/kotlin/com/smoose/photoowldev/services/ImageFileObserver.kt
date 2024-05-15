@@ -26,7 +26,7 @@ class ImageFileObserver (private val context: Context) : FileObserver("/storage/
         super.stopWatching()
     }
     override fun onEvent(event: Int, path: String?){
-//        Log.d("mainActivity debug","event $event detected on $path")
+        Log.d("mainActivity debug","event $event detected on $path")
 
         if(event == 128){
            val actual_path="/storage/emulated/0/DCIM/Camera/"+path
