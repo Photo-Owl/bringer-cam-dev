@@ -25,6 +25,13 @@ import java.io.File
 import android.os.Environment
 import android.database.Cursor
 import android.net.Uri
+import android.view.View
+import android.widget.ImageView
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.WindowManager
+import android.graphics.PixelFormat
+import android.view.Gravity
 
 
 internal class ServiceState {
@@ -41,10 +48,11 @@ internal class ServiceState {
 }
 
 class AutoUploadService : Service() {
-//    private var observer: GalleryObserver? = null
+    private lateinit var overlayView: View
+    private  var isSharingOn: Boolean =true;
+    private lateinit var sharedPrefs: SharedPreferences
     private var fileObserver: ImageFileObserver? =null;
     private var serviceState: Int = 0
-    private lateinit var sharedPrefs: SharedPreferences
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
         override fun run() {
@@ -62,10 +70,17 @@ class AutoUploadService : Service() {
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             if (key == "sharing_status"){
                 getPersistedShareStatus()
+                val imageView = overlayView.findViewById<ImageView>(R.id.imageView)
                 if(serviceState == ServiceState.START_SHARING){
+
                     startSharing()
                 }else{
                     stopSharing()
+                }
+                if (isSharingOn){
+                    imageView.setImageResource(R.drawable.bringer_logo)
+                }else{
+                    imageView.setImageResource(R.drawable.bringer_logo_bandw)
                 }
             }
 
@@ -93,6 +108,7 @@ class AutoUploadService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        overlayView = LayoutInflater.from(this).inflate(R.layout.popup_layout, null)
         sharedPrefs = getSharedPreferences(
             "bringer_shared_preferences",
             Context.MODE_PRIVATE
@@ -126,13 +142,22 @@ class AutoUploadService : Service() {
     }
 
     private fun startObserving() {
-        fileObserver = ImageFileObserver(this)
+        if (fileObserver == null) {
+            fileObserver = ImageFileObserver(this)
+        }
         fileObserver?.startWatching()
+    }
+    private fun registerPreferenceChangeListener() {
+        sharedPrefs.registerOnSharedPreferenceChangeListener(prefsListener)
+    }
+
+    private fun unregisterPreferenceChangeListener() {
+        sharedPrefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
     }
 
     private fun stopObserving() {
         fileObserver?.stopWatching()
-        fileObserver = null
+
     }
     private fun initializeService(isSignedIn: Boolean = false) {
         isInitialized = true
@@ -162,8 +187,9 @@ class AutoUploadService : Service() {
     }
 
     private fun startSharing() {
+        isSharingOn =true
         serviceState = ServiceState.START_SHARING
-        sharedPrefs.edit().putBoolean("sharing_status", true).apply()
+//        sharedPrefs.edit().putBoolean("sharing_status", true).apply()
 //        observer = GalleryObserver(applicationContext).apply { attach() }
         startObserving()
         startUsageStatsTask()
@@ -171,8 +197,9 @@ class AutoUploadService : Service() {
     }
 
     private fun stopSharing() {
+        isSharingOn =false
         serviceState = ServiceState.STOP_SHARING
-        sharedPrefs.edit().putBoolean("sharing_status", false).apply()
+//        sharedPrefs.edit().putBoolean("sharing_status", false).apply()
 //        observer?.apply { detach() }?.let { observer = null }
         stopObserving()
         updatePersistentNotification()
@@ -183,7 +210,7 @@ class AutoUploadService : Service() {
     }
 
     private fun getPersistedShareStatus() {
-        val isSharingOn = sharedPrefs.getBoolean("sharing_status", true)
+        isSharingOn = sharedPrefs.getBoolean("sharing_status", true)
         serviceState = if (isSharingOn) ServiceState.START_SHARING else ServiceState.STOP_SHARING
     }
 
@@ -206,21 +233,50 @@ class AutoUploadService : Service() {
     }
 
     private fun showPopUp() {
-        val intent = Intent(this, OverlayService::class.java)
-        startService(intent)
+
+        overlayView.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                overlayOnClick()
+                true
+            } else {
+                false
+            }
+        }
+        val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+        val params = WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT
+        )
+        params.gravity = Gravity.START
+        windowManager.addView(overlayView, params)
     }
 
     private fun hidePopUp() {
-        val intent = Intent(this, OverlayService::class.java)
-        stopService(intent)
-    }
+        if (overlayView!= null && overlayView.parent!= null) {
+            (getSystemService(Context.WINDOW_SERVICE) as WindowManager).removeView(overlayView)
 
+        }
+    }
+    private fun overlayOnClick(){
+        Log.d("mainActivity debug overlay","overlay click detected")
+        val imageView = overlayView.findViewById<ImageView>(R.id.imageView)
+        if (isSharingOn){
+
+            stopSharing()
+        }else{
+
+            startSharing()
+        }
+    }
     private fun getUsageStatsForPackage(packageName: String) {
         val editor = sharedPrefs.edit()
         val usageStatsManager =
             getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val endTime = System.currentTimeMillis()
-        val startTime = endTime - 1000 * 60 * 60 // 1 hour ago
+        val startTime = endTime - 1000  // 1 hour ago
         val query = UsageStatsManager.INTERVAL_DAILY
         val stats = usageStatsManager.queryUsageStats(query, startTime, endTime)
         if (stats != null && stats.isNotEmpty()) {
@@ -340,4 +396,6 @@ class AutoUploadService : Service() {
 
         return notifBuilder.build()
     }
+
+
 }

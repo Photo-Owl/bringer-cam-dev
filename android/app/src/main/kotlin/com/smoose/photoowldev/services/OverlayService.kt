@@ -44,14 +44,12 @@ class OverlayService : Service() {
         Log.d("mainActivity debug overlay","overlay click detected")
         val imageView = overlayView.findViewById<ImageView>(R.id.imageView)
         if (isSharingOn){
-            //setting to false
-            imageView.setImageResource(R.drawable.bringer_logo_bandw)
-            sharedPrefs.edit().putBoolean("sharing_status", false).apply()
+
+
             isSharingOn = false
         }else{
-            //setting to true
-            imageView.setImageResource(R.drawable.bringer_logo)
-            sharedPrefs.edit().putBoolean("sharing_status", true).apply()
+
+
             isSharingOn = true
         }
     }

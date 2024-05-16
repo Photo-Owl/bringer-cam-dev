@@ -9,19 +9,30 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Data
 import com.smoose.photoowldev.AppState
+import android.content.SharedPreferences
 
 class ImageFileObserver (private val context: Context) : FileObserver("/storage/emulated/0/DCIM/Camera") {
+    private lateinit var sharedPrefs: SharedPreferences
+    init {
+        sharedPrefs = context.getSharedPreferences(
+                "bringer_shared_preferences",
+                Context.MODE_PRIVATE
+        )
+    }
+
     companion object {
         @JvmStatic
         private val ADD_IMAGE_TO_SQLITE =
                 "com.smoose.photoowldev.addImageToSqliteTask"
     }
-        override fun startWatching(){
+    override fun startWatching(){
+        sharedPrefs.edit().putBoolean("sharing_status", true).apply()
         Log.d("mainActivity debug","started file obervation")
         super.startWatching()
     }
 
     override fun stopWatching(){
+        sharedPrefs.edit().putBoolean("sharing_status", false).apply()
         Log.d("mainActivity debug","stopped file obervation")
         super.stopWatching()
     }
