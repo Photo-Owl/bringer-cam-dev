@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:bringer_cam_dev/user_pages/alldone/alldone_widget.dart';
+import 'package:bringer_cam_dev/user_pages/connect_gallery/connect_gallery_widget.dart';
+import 'package:bringer_cam_dev/user_pages/displayover/displayover_widget.dart';
+import 'package:bringer_cam_dev/user_pages/usageaccess/usageaccess_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
@@ -300,7 +304,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'HomeCopyCopy',
           path: '/home',
           builder: (context, params) => const HomeCopyCopyWidget(),
-        )
+        ),
+
+        FFRoute(
+          name: 'connectgallery',
+          path: '/connectgallery',
+          builder: (context, params) => const ConnectGalleryWidget(),
+        ),
+        FFRoute(
+          name: 'displayover',
+          path: '/displayover',
+          builder: (context, params) => const DisplayoverWidget(),
+        ),
+        FFRoute(
+          name: 'usageacess',
+          path: '/usageacess',
+          builder: (context, params) => const UsageaccessWidget(),
+        ),
+        FFRoute(
+          name: 'alldone',
+          path: '/alldone',
+          builder: (context, params) => const AlldoneWidget(),
+        ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
 
