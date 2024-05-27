@@ -42,11 +42,11 @@ class MainActivity : FlutterActivity() {
                             ), result
                         )
 
-                        "checkForPermissions" -> checkForPermissions()
-                        "requestExternalStoragePermission" -> requestExternalStoragePermission()
-                        "requestUsageStatsAccess" -> requestUsageStatsAccess()
-                        "requestOverlayPermission" -> requestOverlayPermission()
-                        "requestIgnoreBatteryOptimization" -> requestIgnoreBatteryOptimization()
+                        "checkForPermissions" -> result.success(checkForPermissions())
+                        "requestExternalStoragePermission" -> result.success(requestExternalStoragePermission())
+                        "requestUsageStatsAccess" -> result.success(requestUsageStatsAccess())
+                        "requestOverlayPermission" -> result.success(requestOverlayPermission())
+                        "requestIgnoreBatteryOptimization" -> result.success(requestIgnoreBatteryOptimization())
                         else -> result.notImplemented()
                     }
                 }

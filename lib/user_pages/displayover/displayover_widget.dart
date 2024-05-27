@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -296,10 +298,22 @@ class _DisplayoverWidgetState extends State<DisplayoverWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             0.0, 16.0, 0.0, 16.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+                            final permsGiven = await platform.invokeMethod<bool>('requestOverlayPermission', null) ?? false;
+                            if (!context.mounted) return;
+                            if (permsGiven) {
+                              context.pushNamed('usageaccess');
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                  Text('Failed to get overlay permission.'),
+                                ),
+                              );
+                            }
                           },
-                          text: 'Give permission to files',
+                          text: 'Give permission to draw over apps',
                           options: FFButtonOptions(
                             width: double.infinity,
                             height: 50.0,

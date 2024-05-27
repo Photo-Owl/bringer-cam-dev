@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
@@ -43,6 +46,8 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = <String, AnimationInfo>{};
+
+  var showPermsRequest = true;
 
   @override
   void initState() {
@@ -118,10 +123,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
       logFirebaseEvent('HomeCopyCopy_backend_call');
 
       await UserEventsRecord.collection.doc().set(createUserEventsRecordData(
-        eventName: 'Home',
-        uid: currentUserUid,
-        timestamp: getCurrentTimestamp,
-      ));
+            eventName: 'Home',
+            uid: currentUserUid,
+            timestamp: getCurrentTimestamp,
+          ));
       logFirebaseEvent('HomeCopyCopy_custom_action');
       _model.timeline1 = await actions.getAllImages(
         currentUserUid,
@@ -131,6 +136,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
         _model.loaded = true;
         _model.timeline = _model.timeline1!.toList().cast<TimelineItemStruct>();
       });
+
+      const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+      showPermsRequest =
+      ! (await platform.invokeMethod<bool>('checkForPermissions', null) ?? false);
+      safeSetState(() {});
     });
 
     animationsMap.addAll({
@@ -241,10 +251,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                         'Hey ${currentUserDisplayName}',
                         textAlign: TextAlign.center,
                         style:
-                        FlutterFlowTheme.of(context).titleMedium.override(
-                          fontFamily: 'Inter',
-                          letterSpacing: 0.0,
-                        ),
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                       ),
                     ),
                   ),
@@ -289,15 +299,16 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                fontFamily: 'Inter',
-                                fontSize: 20.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w500,
-                              ),
+                                    fontFamily: 'Inter',
+                                    fontSize: 20.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                             ),
                           ),
                         ),
                       ),
+                      if (showPermsRequest)
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 16.0, 16.0, 16.0),
@@ -324,7 +335,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: Image.asset(
-                                        'assets/images/LOGO.png',
+                                        'assets/images/logo.png',
                                         width: 56.0,
                                         height: 56.0,
                                         fit: BoxFit.cover,
@@ -365,21 +376,19 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                    fontFamily: 'Inter',
-                                    color: Color(0xFF534308),
-                                    fontSize: 28.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                        fontFamily: 'Inter',
+                                        color: Color(0xFF534308),
+                                        fontSize: 28.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 16.0),
                                 child: FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
-                                  },
+                                  onPressed: () => context.pushNamed('connectgallery'),
                                   text: 'Connect Bringer to Your Camera',
                                   options: FFButtonOptions(
                                     width: double.infinity,
@@ -393,10 +402,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
-                                      fontFamily: 'Inter',
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                    ),
+                                          fontFamily: 'Inter',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                        ),
                                     elevation: 3.0,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
@@ -410,35 +419,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(-1.0, 0.0),
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width * 1.0,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.white, Color(0x00FFFFFF)],
-                              stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.0, -1.0),
-                              end: AlignmentDirectional(0, 1.0),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 4.0, 0.0, 4.0),
-                            child: Text(
-                              'Your photos',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                fontFamily: 'Inter',
-                                fontSize: 20.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                       if (!FFAppState().isUploading &&
                           (FFAppState().uploadCount > 0.0))
                         Padding(
@@ -448,7 +428,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                             constraints: BoxConstraints(
                               maxWidth: MediaQuery.sizeOf(context).width * 1.0,
                               maxHeight:
-                              MediaQuery.sizeOf(context).height * 0.09,
+                                  MediaQuery.sizeOf(context).height * 0.09,
                             ),
                             decoration: BoxDecoration(
                               color: Color(0xFF5F5CFF),
@@ -468,11 +448,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
                                         borderRadius:
-                                        BorderRadius.circular(8.0),
+                                            BorderRadius.circular(8.0),
                                       ),
                                       child: Align(
                                         alignment:
-                                        AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.0, 0.0),
                                         child: FutureBuilder<
                                             List<ReadUploadedImagesRow>>(
                                           future: SQLiteManager.instance
@@ -487,10 +467,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                   width: 50.0,
                                                   height: 50.0,
                                                   child:
-                                                  CircularProgressIndicator(
+                                                      CircularProgressIndicator(
                                                     valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
+                                                        AlwaysStoppedAnimation<
+                                                            Color>(
                                                       Color(0xFF5282E5),
                                                     ),
                                                   ),
@@ -498,17 +478,17 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                               );
                                             }
                                             final showLocalImageReadUploadedImagesRowList =
-                                            snapshot.data!;
+                                                snapshot.data!;
                                             return Container(
                                               width: 48.0,
                                               height: 48.0,
                                               child:
-                                              custom_widgets.ShowLocalImage(
+                                                  custom_widgets.ShowLocalImage(
                                                 width: 48.0,
                                                 height: 48.0,
                                                 path:
-                                                showLocalImageReadUploadedImagesRowList
-                                                    .first.path,
+                                                    showLocalImageReadUploadedImagesRowList
+                                                        .first.path,
                                               ),
                                             );
                                           },
@@ -522,18 +502,18 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                     child: Text(
                                       FFAppState().uploadCount > 1.0
                                           ? 'All${(double var1) {
-                                        return ' ${var1.truncate()} ';
-                                      }(FFAppState().uploadCount)}photos you took were shared! 🎉'
+                                              return ' ${var1.truncate()} ';
+                                            }(FFAppState().uploadCount)}photos you took were shared! 🎉'
                                           : 'Photo that you took was shared! 🎉',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                        fontFamily: 'Inter',
-                                        color: Colors.white,
-                                        fontSize: 18.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                            fontFamily: 'Inter',
+                                            color: Colors.white,
+                                            fontSize: 18.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                     ),
                                   ),
                                 ],
@@ -603,16 +583,16 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
-                                                    6.0, 0.0, 0.0, 6.0),
+                                                        6.0, 0.0, 0.0, 6.0),
                                                 child: Text(
                                                   albumItem.date,
                                                   style: FlutterFlowTheme.of(
-                                                      context)
+                                                          context)
                                                       .bodyMedium
                                                       .override(
-                                                    fontFamily: 'Inter',
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
                                                 ),
                                               ),
                                             ),
@@ -622,15 +602,15 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFF4F4FF),
                                                 borderRadius:
-                                                BorderRadius.circular(8.0),
+                                                    BorderRadius.circular(8.0),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsets.all(12.0),
                                                 child: Row(
                                                   mainAxisSize:
-                                                  MainAxisSize.max,
+                                                      MainAxisSize.max,
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                                      MainAxisAlignment.start,
                                                   children: [
                                                     Builder(
                                                       builder: (context) {
@@ -641,109 +621,109 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                           spacing: 0.0,
                                                           runSpacing: 0.0,
                                                           alignment:
-                                                          WrapAlignment
-                                                              .start,
+                                                              WrapAlignment
+                                                                  .start,
                                                           crossAxisAlignment:
-                                                          WrapCrossAlignment
-                                                              .start,
+                                                              WrapCrossAlignment
+                                                                  .start,
                                                           direction:
-                                                          Axis.horizontal,
+                                                              Axis.horizontal,
                                                           runAlignment:
-                                                          WrapAlignment
-                                                              .start,
+                                                              WrapAlignment
+                                                                  .start,
                                                           verticalDirection:
-                                                          VerticalDirection
-                                                              .down,
+                                                              VerticalDirection
+                                                                  .down,
                                                           clipBehavior:
-                                                          Clip.antiAlias,
+                                                              Clip.antiAlias,
                                                           children:
-                                                          List.generate(
-                                                              owners.length,
+                                                              List.generate(
+                                                                  owners.length,
                                                                   (ownersIndex) {
-                                                                final ownersItem =
+                                                            final ownersItem =
                                                                 owners[
-                                                                ownersIndex];
-                                                                return Container(
-                                                                  width: 32.0,
-                                                                  height: 32.0,
-                                                                  decoration:
+                                                                    ownersIndex];
+                                                            return Container(
+                                                              width: 32.0,
+                                                              height: 32.0,
+                                                              decoration:
                                                                   BoxDecoration(
-                                                                    color: FlutterFlowTheme.of(
+                                                                color: FlutterFlowTheme.of(
                                                                         context)
-                                                                        .info,
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                  ),
-                                                                  child: Align(
-                                                                    alignment:
+                                                                    .info,
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                              ),
+                                                              child: Align(
+                                                                alignment:
                                                                     AlignmentDirectional(
                                                                         0.0,
                                                                         0.0),
-                                                                    child: Text(
-                                                                          (String
+                                                                child: Text(
+                                                                  (String
                                                                       var1) {
-                                                                        return var1[
+                                                                    return var1[
                                                                         0];
-                                                                      }(ownersItem),
-                                                                      style: FlutterFlowTheme.of(
+                                                                  }(ownersItem),
+                                                                  style: FlutterFlowTheme.of(
                                                                           context)
-                                                                          .bodyMedium
-                                                                          .override(
+                                                                      .bodyMedium
+                                                                      .override(
                                                                         fontFamily:
-                                                                        'Figtree',
+                                                                            'Figtree',
                                                                         color: Colors
                                                                             .white,
                                                                         fontSize:
-                                                                        16.0,
+                                                                            16.0,
                                                                         letterSpacing:
-                                                                        0.0,
+                                                                            0.0,
                                                                         fontWeight:
-                                                                        FontWeight.w500,
+                                                                            FontWeight.w500,
                                                                       ),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              }),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }),
                                                         );
                                                       },
                                                     ),
                                                     Expanded(
                                                       child: Align(
                                                         alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
+                                                            AlignmentDirectional(
+                                                                -1.0, 0.0),
                                                         child: Padding(
                                                           padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                              10.0,
-                                                              0.0,
-                                                              0.0,
-                                                              0.0),
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      10.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
                                                           child: Text(
                                                             'Photos from ${albumItem.owners.first}${(List<String> var1) {
                                                               return var1.length >
-                                                                  2
+                                                                      2
                                                                   ? ', ${var1[1]} & ${var1.length - 2} more'
                                                                   : var1.length >
-                                                                  1
-                                                                  ? '& ${var1[1]}'
-                                                                  : '';
+                                                                          1
+                                                                      ? '& ${var1[1]}'
+                                                                      : '';
                                                             }(albumItem.owners.toList())}!',
                                                             style: FlutterFlowTheme
-                                                                .of(context)
+                                                                    .of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                              fontFamily:
-                                                              'Figtree',
-                                                              color: Color(
-                                                                  0xFF5D5AFF),
-                                                              letterSpacing:
-                                                              0.0,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w600,
-                                                            ),
+                                                                  fontFamily:
+                                                                      'Figtree',
+                                                                  color: Color(
+                                                                      0xFF5D5AFF),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
                                                           ),
                                                         ),
                                                       ),
@@ -757,283 +737,283 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Align(
                                                   alignment:
-                                                  AlignmentDirectional(
-                                                      -1.0, 0.0),
+                                                      AlignmentDirectional(
+                                                          -1.0, 0.0),
                                                   child: Builder(
                                                     builder: (context) {
                                                       final imagesList =
-                                                      albumItem.images
-                                                          .toList();
+                                                          albumItem.images
+                                                              .toList();
                                                       return Wrap(
                                                         spacing: 4.0,
                                                         runSpacing: 4.0,
                                                         alignment:
-                                                        WrapAlignment.start,
+                                                            WrapAlignment.start,
                                                         crossAxisAlignment:
-                                                        WrapCrossAlignment
-                                                            .start,
+                                                            WrapCrossAlignment
+                                                                .start,
                                                         direction:
-                                                        Axis.horizontal,
+                                                            Axis.horizontal,
                                                         runAlignment:
-                                                        WrapAlignment.start,
+                                                            WrapAlignment.start,
                                                         verticalDirection:
-                                                        VerticalDirection
-                                                            .down,
+                                                            VerticalDirection
+                                                                .down,
                                                         clipBehavior: Clip.none,
                                                         children: List.generate(
                                                             imagesList.length,
-                                                                (imagesListIndex) {
-                                                              final imagesListItem =
+                                                            (imagesListIndex) {
+                                                          final imagesListItem =
                                                               imagesList[
-                                                              imagesListIndex];
-                                                              return Builder(
-                                                                builder: (context) {
-                                                                  if (!imagesListItem
-                                                                      .isLocal) {
-                                                                    return InkWell(
-                                                                      splashColor:
+                                                                  imagesListIndex];
+                                                          return Builder(
+                                                            builder: (context) {
+                                                              if (!imagesListItem
+                                                                  .isLocal) {
+                                                                return InkWell(
+                                                                  splashColor:
                                                                       Colors
                                                                           .transparent,
-                                                                      focusColor: Colors
-                                                                          .transparent,
-                                                                      hoverColor: Colors
-                                                                          .transparent,
-                                                                      highlightColor:
+                                                                  focusColor: Colors
+                                                                      .transparent,
+                                                                  hoverColor: Colors
+                                                                      .transparent,
+                                                                  highlightColor:
                                                                       Colors
                                                                           .transparent,
-                                                                      onTap:
+                                                                  onTap:
+                                                                      () async {
+                                                                    logFirebaseEvent(
+                                                                        'HOME_COPY_COPY_Image_203iliga_ON_TAP');
+                                                                    await Future
+                                                                        .wait([
+                                                                      Future(
                                                                           () async {
                                                                         logFirebaseEvent(
-                                                                            'HOME_COPY_COPY_Image_203iliga_ON_TAP');
-                                                                        await Future
-                                                                            .wait([
-                                                                          Future(
-                                                                                  () async {
-                                                                                logFirebaseEvent(
-                                                                                    'Image_navigate_to');
+                                                                            'Image_navigate_to');
 
-                                                                                context
-                                                                                    .pushNamed(
-                                                                                  'ImageexpandedCopy',
-                                                                                  queryParameters:
-                                                                                  {
-                                                                                    'albumDoc':
-                                                                                    serializeParam(
-                                                                                      albumItem.images,
-                                                                                      ParamType.DataStruct,
-                                                                                      true,
-                                                                                    ),
-                                                                                    'index':
-                                                                                    serializeParam(
-                                                                                      imagesListIndex,
-                                                                                      ParamType.int,
-                                                                                    ),
-                                                                                  }.withoutNulls,
-                                                                                );
-                                                                              }),
-                                                                          Future(
-                                                                                  () async {
-                                                                                logFirebaseEvent(
-                                                                                    'Image_custom_action');
-                                                                                await actions
-                                                                                    .addSeenby(
-                                                                                  currentUserUid,
-                                                                                  imagesListItem
-                                                                                      .id,
-                                                                                  currentUserDisplayName,
-                                                                                );
-                                                                              }),
-                                                                        ]);
-                                                                      },
-                                                                      child:
+                                                                        context
+                                                                            .pushNamed(
+                                                                          'ImageexpandedCopy',
+                                                                          queryParameters:
+                                                                              {
+                                                                            'albumDoc':
+                                                                                serializeParam(
+                                                                              albumItem.images,
+                                                                              ParamType.DataStruct,
+                                                                              true,
+                                                                            ),
+                                                                            'index':
+                                                                                serializeParam(
+                                                                              imagesListIndex,
+                                                                              ParamType.int,
+                                                                            ),
+                                                                          }.withoutNulls,
+                                                                        );
+                                                                      }),
+                                                                      Future(
+                                                                          () async {
+                                                                        logFirebaseEvent(
+                                                                            'Image_custom_action');
+                                                                        await actions
+                                                                            .addSeenby(
+                                                                          currentUserUid,
+                                                                          imagesListItem
+                                                                              .id,
+                                                                          currentUserDisplayName,
+                                                                        );
+                                                                      }),
+                                                                    ]);
+                                                                  },
+                                                                  child:
                                                                       ClipRRect(
-                                                                        borderRadius:
+                                                                    borderRadius:
                                                                         BorderRadius.circular(
                                                                             5.0),
-                                                                        child:
+                                                                    child:
                                                                         OctoImage(
-                                                                          placeholderBuilder:
-                                                                              (_) =>
+                                                                      placeholderBuilder:
+                                                                          (_) =>
                                                                               SizedBox.expand(
-                                                                                child:
-                                                                                Image(
-                                                                                  image:
-                                                                                  BlurHashImage('LAKBRFxu9FWB-;M{~qRj00xu00j['),
-                                                                                  fit: BoxFit
-                                                                                      .cover,
-                                                                                ),
-                                                                              ),
+                                                                        child:
+                                                                            Image(
                                                                           image:
-                                                                          CachedNetworkImageProvider(
-                                                                            functions
-                                                                                .convertToImagePath(imagesListItem.imageUrl),
-                                                                          ),
-                                                                          width:
-                                                                          (MediaQuery.sizeOf(context).width - 48) /
-                                                                              3,
-                                                                          height:
-                                                                          (MediaQuery.sizeOf(context).width - 48) /
-                                                                              3,
+                                                                              BlurHashImage('LAKBRFxu9FWB-;M{~qRj00xu00j['),
                                                                           fit: BoxFit
                                                                               .cover,
                                                                         ),
                                                                       ),
-                                                                    );
-                                                                  } else {
-                                                                    return Container(
-                                                                      width: (MediaQuery.sizeOf(context)
-                                                                          .width -
+                                                                      image:
+                                                                          CachedNetworkImageProvider(
+                                                                        functions
+                                                                            .convertToImagePath(imagesListItem.imageUrl),
+                                                                      ),
+                                                                      width:
+                                                                          (MediaQuery.sizeOf(context).width - 48) /
+                                                                              3,
+                                                                      height:
+                                                                          (MediaQuery.sizeOf(context).width - 48) /
+                                                                              3,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              } else {
+                                                                return Container(
+                                                                  width: (MediaQuery.sizeOf(context)
+                                                                              .width -
                                                                           48) /
-                                                                          3,
-                                                                      height: (MediaQuery.sizeOf(context)
-                                                                          .width -
+                                                                      3,
+                                                                  height: (MediaQuery.sizeOf(context)
+                                                                              .width -
                                                                           48) /
-                                                                          3,
-                                                                      decoration:
+                                                                      3,
+                                                                  decoration:
                                                                       BoxDecoration(
-                                                                        borderRadius:
+                                                                    borderRadius:
                                                                         BorderRadius.circular(
                                                                             8.0),
-                                                                      ),
-                                                                      child:
+                                                                  ),
+                                                                  child:
                                                                       InkWell(
-                                                                        splashColor:
+                                                                    splashColor:
                                                                         Colors
                                                                             .transparent,
-                                                                        focusColor:
+                                                                    focusColor:
                                                                         Colors
                                                                             .transparent,
-                                                                        hoverColor:
+                                                                    hoverColor:
                                                                         Colors
                                                                             .transparent,
-                                                                        highlightColor:
+                                                                    highlightColor:
                                                                         Colors
                                                                             .transparent,
-                                                                        onTap:
+                                                                    onTap:
+                                                                        () async {
+                                                                      logFirebaseEvent(
+                                                                          'HOME_COPY_COPY_Stack_kr54o4qp_ON_TAP');
+                                                                      await Future
+                                                                          .wait([
+                                                                        Future(
                                                                             () async {
                                                                           logFirebaseEvent(
-                                                                              'HOME_COPY_COPY_Stack_kr54o4qp_ON_TAP');
-                                                                          await Future
-                                                                              .wait([
-                                                                            Future(
-                                                                                    () async {
-                                                                                  logFirebaseEvent(
-                                                                                      'Stack_navigate_to');
+                                                                              'Stack_navigate_to');
 
-                                                                                  context
-                                                                                      .pushNamed(
-                                                                                    'ImageexpandedCopy',
-                                                                                    queryParameters:
-                                                                                    {
-                                                                                      'albumDoc': serializeParam(
-                                                                                        albumItem.images,
-                                                                                        ParamType.DataStruct,
-                                                                                        true,
-                                                                                      ),
-                                                                                      'index': serializeParam(
-                                                                                        imagesListIndex,
-                                                                                        ParamType.int,
-                                                                                      ),
-                                                                                    }.withoutNulls,
-                                                                                  );
-                                                                                }),
-                                                                            Future(
-                                                                                    () async {
-                                                                                  logFirebaseEvent(
-                                                                                      'Stack_custom_action');
-                                                                                  await actions
-                                                                                      .addSeenby(
-                                                                                    currentUserUid,
-                                                                                    imagesListItem.id,
-                                                                                    currentUserDisplayName,
-                                                                                  );
-                                                                                }),
-                                                                          ]);
-                                                                        },
-                                                                        child:
+                                                                          context
+                                                                              .pushNamed(
+                                                                            'ImageexpandedCopy',
+                                                                            queryParameters:
+                                                                                {
+                                                                              'albumDoc': serializeParam(
+                                                                                albumItem.images,
+                                                                                ParamType.DataStruct,
+                                                                                true,
+                                                                              ),
+                                                                              'index': serializeParam(
+                                                                                imagesListIndex,
+                                                                                ParamType.int,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        }),
+                                                                        Future(
+                                                                            () async {
+                                                                          logFirebaseEvent(
+                                                                              'Stack_custom_action');
+                                                                          await actions
+                                                                              .addSeenby(
+                                                                            currentUserUid,
+                                                                            imagesListItem.id,
+                                                                            currentUserDisplayName,
+                                                                          );
+                                                                        }),
+                                                                      ]);
+                                                                    },
+                                                                    child:
                                                                         Container(
-                                                                          width:
+                                                                      width:
                                                                           80.0,
-                                                                          height:
+                                                                      height:
                                                                           100.0,
-                                                                          child:
+                                                                      child:
                                                                           Stack(
-                                                                            children: [
-                                                                              Align(
-                                                                                alignment:
+                                                                        children: [
+                                                                          Align(
+                                                                            alignment:
                                                                                 AlignmentDirectional(0.0, 0.0),
-                                                                                child:
+                                                                            child:
                                                                                 Container(
-                                                                                  width: double.infinity,
-                                                                                  height: double.infinity,
-                                                                                  child: custom_widgets.ShowLocalImage(
-                                                                                    width: double.infinity,
-                                                                                    height: double.infinity,
-                                                                                    path: imagesListItem.imageUrl,
-                                                                                  ),
-                                                                                ),
+                                                                              width: double.infinity,
+                                                                              height: double.infinity,
+                                                                              child: custom_widgets.ShowLocalImage(
+                                                                                width: double.infinity,
+                                                                                height: double.infinity,
+                                                                                path: imagesListItem.imageUrl,
                                                                               ),
-                                                                              Container(
-                                                                                width:
-                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
-                                                                                height:
-                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
-                                                                                decoration:
-                                                                                BoxDecoration(
-                                                                                  gradient: LinearGradient(
-                                                                                    colors: [
-                                                                                      Color(0x99101213),
-                                                                                      Colors.transparent
-                                                                                    ],
-                                                                                    stops: [
-                                                                                      0.0,
-                                                                                      0.4
-                                                                                    ],
-                                                                                    begin: AlignmentDirectional(1.0, 1.0),
-                                                                                    end: AlignmentDirectional(-1.0, -1.0),
-                                                                                  ),
-                                                                                ),
-                                                                                child:
-                                                                                Align(
-                                                                                  alignment: AlignmentDirectional(1.0, 1.0),
-                                                                                  child: Builder(
-                                                                                    builder: (context) {
-                                                                                      if (imagesListItem.isUploading) {
-                                                                                        return Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
-                                                                                          child: Icon(
-                                                                                            Icons.cloud_upload_outlined,
-                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                            size: 14.0,
-                                                                                          ),
-                                                                                        );
-                                                                                      } else {
-                                                                                        return Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
-                                                                                          child: FaIcon(
-                                                                                            FontAwesomeIcons.clock,
-                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                            size: 14.0,
-                                                                                          ),
-                                                                                        );
-                                                                                      }
-                                                                                    },
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ],
+                                                                            ),
                                                                           ),
-                                                                        ),
+                                                                          Container(
+                                                                            width:
+                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
+                                                                            height:
+                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              gradient: LinearGradient(
+                                                                                colors: [
+                                                                                  Color(0x99101213),
+                                                                                  Colors.transparent
+                                                                                ],
+                                                                                stops: [
+                                                                                  0.0,
+                                                                                  0.4
+                                                                                ],
+                                                                                begin: AlignmentDirectional(1.0, 1.0),
+                                                                                end: AlignmentDirectional(-1.0, -1.0),
+                                                                              ),
+                                                                            ),
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: AlignmentDirectional(1.0, 1.0),
+                                                                              child: Builder(
+                                                                                builder: (context) {
+                                                                                  if (imagesListItem.isUploading) {
+                                                                                    return Padding(
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                      child: Icon(
+                                                                                        Icons.cloud_upload_outlined,
+                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                        size: 14.0,
+                                                                                      ),
+                                                                                    );
+                                                                                  } else {
+                                                                                    return Padding(
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                      child: FaIcon(
+                                                                                        FontAwesomeIcons.clock,
+                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                        size: 14.0,
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
                                                                       ),
-                                                                    );
-                                                                  }
-                                                                },
-                                                              );
-                                                            }),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                            },
+                                                          );
+                                                        }),
                                                       );
                                                     },
                                                   ),
@@ -1043,7 +1023,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                           ),
                                         ],
                                       ).animateOnPageLoad(animationsMap[
-                                      'columnOnPageLoadAnimation']!),
+                                          'columnOnPageLoadAnimation']!),
                                     );
                                   },
                                 ),

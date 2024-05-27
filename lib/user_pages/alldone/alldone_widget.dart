@@ -8,7 +8,6 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 import 'alldone_model.dart';
-export 'alldone_model.dart';
 
 class AlldoneWidget extends StatefulWidget {
   const AlldoneWidget({super.key});
@@ -171,7 +170,7 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 8.0, 0.0, 0.0),
                           child: Text(
-                            'Step 3',
+                            'Quick share',
                             textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -191,7 +190,7 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 8.0, 0.0, 16.0),
                           child: Text(
-                            'Allow Usage Access',
+                            'All done!',
                             textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -211,7 +210,7 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 16.0),
                           child: Text(
-                            'Helps us know you’re clicking photos so we can help you share them.\n',
+                            'Open your camera app to check how easy it is to share photos!',
                             textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -231,7 +230,7 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                             0.0, 16.0, 0.0, 16.0),
                         child: FFButtonWidget(
                           onPressed: () {
-                            print('Button pressed ...');
+                            context.goNamed('camera');
                           },
                           text: 'Go to camera',
                           options: FFButtonOptions(

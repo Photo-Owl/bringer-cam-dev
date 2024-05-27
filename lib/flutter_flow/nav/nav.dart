@@ -317,8 +317,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const DisplayoverWidget(),
         ),
         FFRoute(
-          name: 'usageacess',
-          path: '/usageacess',
+          name: 'usageaccess',
+          path: '/usageaccess',
           builder: (context, params) => const UsageaccessWidget(),
         ),
         FFRoute(

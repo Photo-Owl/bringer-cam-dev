@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -296,8 +298,20 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             0.0, 16.0, 0.0, 16.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+                            final permsGiven = await platform.invokeMethod<bool>('requestUsageStatsAccess', null) ?? false;
+                            if (!context.mounted) return;
+                            if (permsGiven) {
+                              context.pushNamed('alldone');
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                  Text('Failed to get usage access.'),
+                                ),
+                              );
+                            }
                           },
                           text: 'Allow access',
                           options: FFButtonOptions(
