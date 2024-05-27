@@ -115,10 +115,7 @@ class MainActivity : FlutterActivity() {
         else
             ActivityCompat.checkSelfPermission(
                 context, Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(
-                        context, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) == PackageManager.PERMISSION_GRANTED
+            ) == PackageManager.PERMISSION_GRANTED
 
     private fun requestExternalStoragePermission(): Boolean {
         var isGranted = checkForExternalStoragePermission()
