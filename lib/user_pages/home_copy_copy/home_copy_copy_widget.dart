@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/backend/sqlite/sqlite_manager.dart';
 import '/components/fetching_photos_widget.dart';
 import '/components/give_name/give_name_widget.dart';
@@ -9,17 +10,22 @@ import '/components/update_required/update_required_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:math';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
+
 import 'home_copy_copy_model.dart';
 export 'home_copy_copy_model.dart';
 
@@ -36,20 +42,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'columnOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 250.ms,
-          begin: const Offset(0.0, 15.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -81,7 +74,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const UpdateRequiredWidget(),
+                child: UpdateRequiredWidget(),
               ),
             );
           },
@@ -90,7 +83,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
         return;
       }
 
-      if (currentUserDisplayName == '') {
+      if (currentUserDisplayName == null || currentUserDisplayName == '') {
         logFirebaseEvent('HomeCopyCopy_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
@@ -104,7 +97,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                   : FocusScope.of(context).unfocus(),
               child: Padding(
                 padding: MediaQuery.viewInsetsOf(context),
-                child: const GiveNameWidget(),
+                child: GiveNameWidget(),
               ),
             );
           },
@@ -125,10 +118,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
       logFirebaseEvent('HomeCopyCopy_backend_call');
 
       await UserEventsRecord.collection.doc().set(createUserEventsRecordData(
-            eventName: 'Home',
-            uid: currentUserUid,
-            timestamp: getCurrentTimestamp,
-          ));
+        eventName: 'Home',
+        uid: currentUserUid,
+        timestamp: getCurrentTimestamp,
+      ));
       logFirebaseEvent('HomeCopyCopy_custom_action');
       _model.timeline1 = await actions.getAllImages(
         currentUserUid,
@@ -138,6 +131,21 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
         _model.loaded = true;
         _model.timeline = _model.timeline1!.toList().cast<TimelineItemStruct>();
       });
+    });
+
+    animationsMap.addAll({
+      'columnOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effects: [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 250.0.ms,
+            begin: Offset(0.0, 15.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -179,9 +187,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(6.0),
-                  child: SizedBox(
+                  child: Container(
                     width: 36.0,
                     height: 36.0,
                     child: Stack(
@@ -213,30 +221,30 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
               child: wrapWithModel(
                 model: _model.sidebarModel,
                 updateCallback: () => setState(() {}),
-                child: const SidebarWidget(
+                child: SidebarWidget(
                   index: 0,
                 ),
               ),
             ),
             appBar: AppBar(
               backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-              iconTheme: const IconThemeData(color: Colors.black),
+              iconTheme: IconThemeData(color: Colors.black),
               automaticallyImplyLeading: true,
               title: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 2.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 2.0, 0.0),
                     child: AuthUserStreamWidget(
                       builder: (context) => Text(
-                        'Hey $currentUserDisplayName',
+                        'Hey ${currentUserDisplayName}',
                         textAlign: TextAlign.center,
                         style:
-                            FlutterFlowTheme.of(context).titleMedium.override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
+                        FlutterFlowTheme.of(context).titleMedium.override(
+                          fontFamily: 'Inter',
+                          letterSpacing: 0.0,
+                        ),
                       ),
                     ),
                   ),
@@ -251,7 +259,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                   ),
                 ],
               ),
-              actions: const [],
+              actions: [],
               centerTitle: true,
               elevation: 0.0,
             ),
@@ -262,10 +270,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Align(
-                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Container(
-                          width: MediaQuery.sizeOf(context).width * 1.0,
-                          decoration: const BoxDecoration(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [Colors.white, Color(0x00FFFFFF)],
                               stops: [0.0, 1.0],
@@ -274,18 +282,159 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 4.0, 0.0, 4.0),
+                            child: Text(
+                              'Gallery',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                fontFamily: 'Inter',
+                                fontSize: 20.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 16.0, 16.0, 16.0),
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xFFFFF8D6), Color(0xFFFFF3B7)],
+                              stops: [0.0, 1.0],
+                              begin: AlignmentDirectional(0.0, -1.0),
+                              end: AlignmentDirectional(0, 1.0),
+                            ),
+                            borderRadius: BorderRadius.circular(24.0),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        27.0, 27.0, 0.0, 0.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.asset(
+                                        'assets/images/LOGO.png',
+                                        width: 56.0,
+                                        height: 56.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        4.0, 35.0, 4.0, 0.0),
+                                    child: Icon(
+                                      Icons.add,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 27.0, 0.0, 0.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.asset(
+                                        'assets/images/cam.png',
+                                        width: 56.0,
+                                        height: 56.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 8.0, 8.0, 8.0),
+                                child: Text(
+                                  'Never worry about sharing photos again!',
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                    fontFamily: 'Inter',
+                                    color: Color(0xFF534308),
+                                    fontSize: 28.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 16.0),
+                                child: FFButtonWidget(
+                                  onPressed: () {
+                                    print('Button pressed ...');
+                                  },
+                                  text: 'Connect Bringer to Your Camera',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: 50.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        24.0, 16.0, 24.0, 16.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                      fontFamily: 'Inter',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                    ),
+                                    elevation: 3.0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(14.0),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(-1.0, 0.0),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Colors.white, Color(0x00FFFFFF)],
+                              stops: [0.0, 1.0],
+                              begin: AlignmentDirectional(0.0, -1.0),
+                              end: AlignmentDirectional(0, 1.0),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 4.0, 0.0, 4.0),
                             child: Text(
                               'Your photos',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Inter',
-                                    fontSize: 20.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                fontFamily: 'Inter',
+                                fontSize: 20.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                         ),
@@ -293,15 +442,20 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                       if (!FFAppState().isUploading &&
                           (FFAppState().uploadCount > 0.0))
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               10.0, 16.0, 10.0, 16.0),
                           child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.sizeOf(context).width * 1.0,
+                              maxHeight:
+                              MediaQuery.sizeOf(context).height * 0.09,
+                            ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF5F5CFF),
+                              color: Color(0xFF5F5CFF),
                               borderRadius: BorderRadius.circular(16.0),
                             ),
                             child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   19.0, 15.0, 19.0, 15.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
@@ -314,11 +468,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
+                                        BorderRadius.circular(8.0),
                                       ),
                                       child: Align(
                                         alignment:
-                                            const AlignmentDirectional(0.0, 0.0),
+                                        AlignmentDirectional(0.0, 0.0),
                                         child: FutureBuilder<
                                             List<ReadUploadedImagesRow>>(
                                           future: SQLiteManager.instance
@@ -328,15 +482,15 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                           builder: (context, snapshot) {
                                             // Customize what your widget looks like when it's loading.
                                             if (!snapshot.hasData) {
-                                              return const Center(
+                                              return Center(
                                                 child: SizedBox(
                                                   width: 50.0,
                                                   height: 50.0,
                                                   child:
-                                                      CircularProgressIndicator(
+                                                  CircularProgressIndicator(
                                                     valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                            Color>(
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
                                                       Color(0xFF5282E5),
                                                     ),
                                                   ),
@@ -344,17 +498,17 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                               );
                                             }
                                             final showLocalImageReadUploadedImagesRowList =
-                                                snapshot.data!;
-                                            return SizedBox(
+                                            snapshot.data!;
+                                            return Container(
                                               width: 48.0,
                                               height: 48.0,
                                               child:
-                                                  custom_widgets.ShowLocalImage(
+                                              custom_widgets.ShowLocalImage(
                                                 width: 48.0,
                                                 height: 48.0,
                                                 path:
-                                                    showLocalImageReadUploadedImagesRowList
-                                                        .first.path,
+                                                showLocalImageReadUploadedImagesRowList
+                                                    .first.path,
                                               ),
                                             );
                                           },
@@ -362,25 +516,23 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                       ),
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        FFAppState().uploadCount > 1.0
-                                            ? 'All${(double var1) {
-                                                return ' ${var1.truncate()} ';
-                                              }(FFAppState().uploadCount)}photos you took were shared! 🎉'
-                                            : 'Photo that you took was shared! 🎉',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Inter',
-                                              color: Colors.white,
-                                              fontSize: 18.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 0.0, 0.0),
+                                    child: Text(
+                                      FFAppState().uploadCount > 1.0
+                                          ? 'All${(double var1) {
+                                        return ' ${var1.truncate()} ';
+                                      }(FFAppState().uploadCount)}photos you took were shared! 🎉'
+                                          : 'Photo that you took was shared! 🎉',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                        fontFamily: 'Inter',
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                   ),
@@ -391,18 +543,18 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                         ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
+                          padding: EdgeInsetsDirectional.fromSTEB(
                               10.0, 4.0, 10.0, 0.0),
                           child: Builder(
                             builder: (context) {
                               final album = _model.timeline.toList();
                               if (album.isEmpty) {
-                                return const Center(
+                                return Center(
                                   child: NoPhotosWidget(),
                                 );
                               }
                               return RefreshIndicator(
-                                key: const Key('RefreshIndicator_1ydg9f2c'),
+                                key: Key('RefreshIndicator_1ydg9f2c'),
                                 onRefresh: () async {
                                   logFirebaseEvent(
                                       'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
@@ -425,7 +577,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                   });
                                 },
                                 child: ListView.separated(
-                                  padding: const EdgeInsets.fromLTRB(
+                                  padding: EdgeInsets.fromLTRB(
                                     0,
                                     0,
                                     0,
@@ -434,33 +586,33 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                   scrollDirection: Axis.vertical,
                                   itemCount: album.length,
                                   separatorBuilder: (_, __) =>
-                                      const SizedBox(height: 10.0),
+                                      SizedBox(height: 10.0),
                                   itemBuilder: (context, albumIndex) {
                                     final albumItem = album[albumIndex];
                                     return Container(
                                       width: double.infinity,
-                                      decoration: const BoxDecoration(),
+                                      decoration: BoxDecoration(),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Opacity(
                                             opacity: 0.6,
                                             child: Align(
-                                              alignment: const AlignmentDirectional(
+                                              alignment: AlignmentDirectional(
                                                   -1.0, 0.0),
                                               child: Padding(
-                                                padding: const EdgeInsetsDirectional
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(
-                                                        6.0, 0.0, 0.0, 6.0),
+                                                    6.0, 0.0, 0.0, 6.0),
                                                 child: Text(
                                                   albumItem.date,
                                                   style: FlutterFlowTheme.of(
-                                                          context)
+                                                      context)
                                                       .bodyMedium
                                                       .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -468,17 +620,17 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                           if (albumItem.owners.isNotEmpty)
                                             Container(
                                               decoration: BoxDecoration(
-                                                color: const Color(0xFFF4F4FF),
+                                                color: Color(0xFFF4F4FF),
                                                 borderRadius:
-                                                    BorderRadius.circular(8.0),
+                                                BorderRadius.circular(8.0),
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.all(12.0),
+                                                padding: EdgeInsets.all(12.0),
                                                 child: Row(
                                                   mainAxisSize:
-                                                      MainAxisSize.max,
+                                                  MainAxisSize.max,
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.start,
+                                                  MainAxisAlignment.start,
                                                   children: [
                                                     Builder(
                                                       builder: (context) {
@@ -489,109 +641,109 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                           spacing: 0.0,
                                                           runSpacing: 0.0,
                                                           alignment:
-                                                              WrapAlignment
-                                                                  .start,
+                                                          WrapAlignment
+                                                              .start,
                                                           crossAxisAlignment:
-                                                              WrapCrossAlignment
-                                                                  .start,
+                                                          WrapCrossAlignment
+                                                              .start,
                                                           direction:
-                                                              Axis.horizontal,
+                                                          Axis.horizontal,
                                                           runAlignment:
-                                                              WrapAlignment
-                                                                  .start,
+                                                          WrapAlignment
+                                                              .start,
                                                           verticalDirection:
-                                                              VerticalDirection
-                                                                  .down,
+                                                          VerticalDirection
+                                                              .down,
                                                           clipBehavior:
-                                                              Clip.antiAlias,
+                                                          Clip.antiAlias,
                                                           children:
-                                                              List.generate(
-                                                                  owners.length,
+                                                          List.generate(
+                                                              owners.length,
                                                                   (ownersIndex) {
-                                                            final ownersItem =
+                                                                final ownersItem =
                                                                 owners[
-                                                                    ownersIndex];
-                                                            return Container(
-                                                              width: 32.0,
-                                                              height: 32.0,
-                                                              decoration:
+                                                                ownersIndex];
+                                                                return Container(
+                                                                  width: 32.0,
+                                                                  height: 32.0,
+                                                                  decoration:
                                                                   BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
+                                                                    color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .info,
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                              ),
-                                                              child: Align(
-                                                                alignment:
-                                                                    const AlignmentDirectional(
+                                                                        .info,
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                  ),
+                                                                  child: Align(
+                                                                    alignment:
+                                                                    AlignmentDirectional(
                                                                         0.0,
                                                                         0.0),
-                                                                child: Text(
-                                                                  (String
+                                                                    child: Text(
+                                                                          (String
                                                                       var1) {
-                                                                    return var1[
+                                                                        return var1[
                                                                         0];
-                                                                  }(ownersItem),
-                                                                  style: FlutterFlowTheme.of(
+                                                                      }(ownersItem),
+                                                                      style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .bodyMedium
-                                                                      .override(
+                                                                          .bodyMedium
+                                                                          .override(
                                                                         fontFamily:
-                                                                            'Figtree',
+                                                                        'Figtree',
                                                                         color: Colors
                                                                             .white,
                                                                         fontSize:
-                                                                            16.0,
+                                                                        16.0,
                                                                         letterSpacing:
-                                                                            0.0,
+                                                                        0.0,
                                                                         fontWeight:
-                                                                            FontWeight.w500,
+                                                                        FontWeight.w500,
                                                                       ),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }),
                                                         );
                                                       },
                                                     ),
                                                     Expanded(
                                                       child: Align(
                                                         alignment:
-                                                            const AlignmentDirectional(
-                                                                -1.0, 0.0),
+                                                        AlignmentDirectional(
+                                                            -1.0, 0.0),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                              10.0,
+                                                              0.0,
+                                                              0.0,
+                                                              0.0),
                                                           child: Text(
                                                             'Photos from ${albumItem.owners.first}${(List<String> var1) {
                                                               return var1.length >
-                                                                      2
+                                                                  2
                                                                   ? ', ${var1[1]} & ${var1.length - 2} more'
                                                                   : var1.length >
-                                                                          1
-                                                                      ? '& ${var1[1]}'
-                                                                      : '';
+                                                                  1
+                                                                  ? '& ${var1[1]}'
+                                                                  : '';
                                                             }(albumItem.owners.toList())}!',
                                                             style: FlutterFlowTheme
-                                                                    .of(context)
+                                                                .of(context)
                                                                 .bodyMedium
                                                                 .override(
-                                                                  fontFamily:
-                                                                      'Figtree',
-                                                                  color: const Color(
-                                                                      0xFF5D5AFF),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
+                                                              fontFamily:
+                                                              'Figtree',
+                                                              color: Color(
+                                                                  0xFF5D5AFF),
+                                                              letterSpacing:
+                                                              0.0,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .w600,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
@@ -601,287 +753,287 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                               ),
                                             ),
                                           Padding(
-                                            padding: const EdgeInsets.all(10.0),
+                                            padding: EdgeInsets.all(10.0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                               children: [
                                                 Align(
                                                   alignment:
-                                                      const AlignmentDirectional(
-                                                          -1.0, 0.0),
+                                                  AlignmentDirectional(
+                                                      -1.0, 0.0),
                                                   child: Builder(
                                                     builder: (context) {
                                                       final imagesList =
-                                                          albumItem.images
-                                                              .toList();
+                                                      albumItem.images
+                                                          .toList();
                                                       return Wrap(
                                                         spacing: 4.0,
                                                         runSpacing: 4.0,
                                                         alignment:
-                                                            WrapAlignment.start,
+                                                        WrapAlignment.start,
                                                         crossAxisAlignment:
-                                                            WrapCrossAlignment
-                                                                .start,
+                                                        WrapCrossAlignment
+                                                            .start,
                                                         direction:
-                                                            Axis.horizontal,
+                                                        Axis.horizontal,
                                                         runAlignment:
-                                                            WrapAlignment.start,
+                                                        WrapAlignment.start,
                                                         verticalDirection:
-                                                            VerticalDirection
-                                                                .down,
+                                                        VerticalDirection
+                                                            .down,
                                                         clipBehavior: Clip.none,
                                                         children: List.generate(
                                                             imagesList.length,
-                                                            (imagesListIndex) {
-                                                          final imagesListItem =
+                                                                (imagesListIndex) {
+                                                              final imagesListItem =
                                                               imagesList[
-                                                                  imagesListIndex];
-                                                          return Builder(
-                                                            builder: (context) {
-                                                              if (!imagesListItem
-                                                                  .isLocal) {
-                                                                return InkWell(
-                                                                  splashColor:
+                                                              imagesListIndex];
+                                                              return Builder(
+                                                                builder: (context) {
+                                                                  if (!imagesListItem
+                                                                      .isLocal) {
+                                                                    return InkWell(
+                                                                      splashColor:
                                                                       Colors
                                                                           .transparent,
-                                                                  focusColor: Colors
-                                                                      .transparent,
-                                                                  hoverColor: Colors
-                                                                      .transparent,
-                                                                  highlightColor:
+                                                                      focusColor: Colors
+                                                                          .transparent,
+                                                                      hoverColor: Colors
+                                                                          .transparent,
+                                                                      highlightColor:
                                                                       Colors
                                                                           .transparent,
-                                                                  onTap:
-                                                                      () async {
-                                                                    logFirebaseEvent(
-                                                                        'HOME_COPY_COPY_Image_203iliga_ON_TAP');
-                                                                    await Future
-                                                                        .wait([
-                                                                      Future(
+                                                                      onTap:
                                                                           () async {
                                                                         logFirebaseEvent(
-                                                                            'Image_navigate_to');
+                                                                            'HOME_COPY_COPY_Image_203iliga_ON_TAP');
+                                                                        await Future
+                                                                            .wait([
+                                                                          Future(
+                                                                                  () async {
+                                                                                logFirebaseEvent(
+                                                                                    'Image_navigate_to');
 
-                                                                        context
-                                                                            .pushNamed(
-                                                                          'ImageexpandedCopy',
-                                                                          queryParameters:
-                                                                              {
-                                                                            'albumDoc':
-                                                                                serializeParam(
-                                                                              albumItem.images,
-                                                                              ParamType.DataStruct,
-                                                                              true,
-                                                                            ),
-                                                                            'index':
-                                                                                serializeParam(
-                                                                              imagesListIndex,
-                                                                              ParamType.int,
-                                                                            ),
-                                                                          }.withoutNulls,
-                                                                        );
-                                                                      }),
-                                                                      Future(
-                                                                          () async {
-                                                                        logFirebaseEvent(
-                                                                            'Image_custom_action');
-                                                                        await actions
-                                                                            .addSeenby(
-                                                                          currentUserUid,
-                                                                          imagesListItem
-                                                                              .id,
-                                                                          currentUserDisplayName,
-                                                                        );
-                                                                      }),
-                                                                    ]);
-                                                                  },
-                                                                  child:
+                                                                                context
+                                                                                    .pushNamed(
+                                                                                  'ImageexpandedCopy',
+                                                                                  queryParameters:
+                                                                                  {
+                                                                                    'albumDoc':
+                                                                                    serializeParam(
+                                                                                      albumItem.images,
+                                                                                      ParamType.DataStruct,
+                                                                                      true,
+                                                                                    ),
+                                                                                    'index':
+                                                                                    serializeParam(
+                                                                                      imagesListIndex,
+                                                                                      ParamType.int,
+                                                                                    ),
+                                                                                  }.withoutNulls,
+                                                                                );
+                                                                              }),
+                                                                          Future(
+                                                                                  () async {
+                                                                                logFirebaseEvent(
+                                                                                    'Image_custom_action');
+                                                                                await actions
+                                                                                    .addSeenby(
+                                                                                  currentUserUid,
+                                                                                  imagesListItem
+                                                                                      .id,
+                                                                                  currentUserDisplayName,
+                                                                                );
+                                                                              }),
+                                                                        ]);
+                                                                      },
+                                                                      child:
                                                                       ClipRRect(
-                                                                    borderRadius:
+                                                                        borderRadius:
                                                                         BorderRadius.circular(
                                                                             5.0),
-                                                                    child:
-                                                                        OctoImage(
-                                                                      placeholderBuilder:
-                                                                          (_) =>
-                                                                              const SizedBox.expand(
                                                                         child:
-                                                                            Image(
+                                                                        OctoImage(
+                                                                          placeholderBuilder:
+                                                                              (_) =>
+                                                                              SizedBox.expand(
+                                                                                child:
+                                                                                Image(
+                                                                                  image:
+                                                                                  BlurHashImage('LAKBRFxu9FWB-;M{~qRj00xu00j['),
+                                                                                  fit: BoxFit
+                                                                                      .cover,
+                                                                                ),
+                                                                              ),
                                                                           image:
-                                                                              BlurHashImage('LAKBRFxu9FWB-;M{~qRj00xu00j['),
+                                                                          CachedNetworkImageProvider(
+                                                                            functions
+                                                                                .convertToImagePath(imagesListItem.imageUrl),
+                                                                          ),
+                                                                          width:
+                                                                          (MediaQuery.sizeOf(context).width - 48) /
+                                                                              3,
+                                                                          height:
+                                                                          (MediaQuery.sizeOf(context).width - 48) /
+                                                                              3,
                                                                           fit: BoxFit
                                                                               .cover,
                                                                         ),
                                                                       ),
-                                                                      image:
-                                                                          CachedNetworkImageProvider(
-                                                                        functions
-                                                                            .convertToImagePath(imagesListItem.imageUrl),
-                                                                      ),
-                                                                      width:
-                                                                          (MediaQuery.sizeOf(context).width - 48) /
-                                                                              3,
-                                                                      height:
-                                                                          (MediaQuery.sizeOf(context).width - 48) /
-                                                                              3,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              } else {
-                                                                return Container(
-                                                                  width: (MediaQuery.sizeOf(context)
-                                                                              .width -
+                                                                    );
+                                                                  } else {
+                                                                    return Container(
+                                                                      width: (MediaQuery.sizeOf(context)
+                                                                          .width -
                                                                           48) /
-                                                                      3,
-                                                                  height: (MediaQuery.sizeOf(context)
-                                                                              .width -
+                                                                          3,
+                                                                      height: (MediaQuery.sizeOf(context)
+                                                                          .width -
                                                                           48) /
-                                                                      3,
-                                                                  decoration:
+                                                                          3,
+                                                                      decoration:
                                                                       BoxDecoration(
-                                                                    borderRadius:
+                                                                        borderRadius:
                                                                         BorderRadius.circular(
                                                                             8.0),
-                                                                  ),
-                                                                  child:
-                                                                      InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    focusColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    hoverColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    highlightColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    onTap:
-                                                                        () async {
-                                                                      logFirebaseEvent(
-                                                                          'HOME_COPY_COPY_Stack_kr54o4qp_ON_TAP');
-                                                                      await Future
-                                                                          .wait([
-                                                                        Future(
-                                                                            () async {
-                                                                          logFirebaseEvent(
-                                                                              'Stack_navigate_to');
-
-                                                                          context
-                                                                              .pushNamed(
-                                                                            'ImageexpandedCopy',
-                                                                            queryParameters:
-                                                                                {
-                                                                              'albumDoc': serializeParam(
-                                                                                albumItem.images,
-                                                                                ParamType.DataStruct,
-                                                                                true,
-                                                                              ),
-                                                                              'index': serializeParam(
-                                                                                imagesListIndex,
-                                                                                ParamType.int,
-                                                                              ),
-                                                                            }.withoutNulls,
-                                                                          );
-                                                                        }),
-                                                                        Future(
-                                                                            () async {
-                                                                          logFirebaseEvent(
-                                                                              'Stack_custom_action');
-                                                                          await actions
-                                                                              .addSeenby(
-                                                                            currentUserUid,
-                                                                            imagesListItem.id,
-                                                                            currentUserDisplayName,
-                                                                          );
-                                                                        }),
-                                                                      ]);
-                                                                    },
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width:
-                                                                          80.0,
-                                                                      height:
-                                                                          100.0,
-                                                                      child:
-                                                                          Stack(
-                                                                        children: [
-                                                                          Align(
-                                                                            alignment:
-                                                                                const AlignmentDirectional(0.0, 0.0),
-                                                                            child:
-                                                                                SizedBox(
-                                                                              width: double.infinity,
-                                                                              height: double.infinity,
-                                                                              child: custom_widgets.ShowLocalImage(
-                                                                                width: double.infinity,
-                                                                                height: double.infinity,
-                                                                                path: imagesListItem.imageUrl,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          Container(
-                                                                            width:
-                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
-                                                                            height:
-                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
-                                                                            decoration:
-                                                                                const BoxDecoration(
-                                                                              gradient: LinearGradient(
-                                                                                colors: [
-                                                                                  Color(0x99101213),
-                                                                                  Colors.transparent
-                                                                                ],
-                                                                                stops: [
-                                                                                  0.0,
-                                                                                  0.4
-                                                                                ],
-                                                                                begin: AlignmentDirectional(1.0, 1.0),
-                                                                                end: AlignmentDirectional(-1.0, -1.0),
-                                                                              ),
-                                                                            ),
-                                                                            child:
-                                                                                Align(
-                                                                              alignment: const AlignmentDirectional(1.0, 1.0),
-                                                                              child: Builder(
-                                                                                builder: (context) {
-                                                                                  if (imagesListItem.isUploading) {
-                                                                                    return Padding(
-                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
-                                                                                      child: Icon(
-                                                                                        Icons.cloud_upload_outlined,
-                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                        size: 14.0,
-                                                                                      ),
-                                                                                    );
-                                                                                  } else {
-                                                                                    return Padding(
-                                                                                      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
-                                                                                      child: FaIcon(
-                                                                                        FontAwesomeIcons.clock,
-                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                        size: 14.0,
-                                                                                      ),
-                                                                                    );
-                                                                                  }
-                                                                                },
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
                                                                       ),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              }
-                                                            },
-                                                          );
-                                                        }),
+                                                                      child:
+                                                                      InkWell(
+                                                                        splashColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                        focusColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                        hoverColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                        highlightColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          logFirebaseEvent(
+                                                                              'HOME_COPY_COPY_Stack_kr54o4qp_ON_TAP');
+                                                                          await Future
+                                                                              .wait([
+                                                                            Future(
+                                                                                    () async {
+                                                                                  logFirebaseEvent(
+                                                                                      'Stack_navigate_to');
+
+                                                                                  context
+                                                                                      .pushNamed(
+                                                                                    'ImageexpandedCopy',
+                                                                                    queryParameters:
+                                                                                    {
+                                                                                      'albumDoc': serializeParam(
+                                                                                        albumItem.images,
+                                                                                        ParamType.DataStruct,
+                                                                                        true,
+                                                                                      ),
+                                                                                      'index': serializeParam(
+                                                                                        imagesListIndex,
+                                                                                        ParamType.int,
+                                                                                      ),
+                                                                                    }.withoutNulls,
+                                                                                  );
+                                                                                }),
+                                                                            Future(
+                                                                                    () async {
+                                                                                  logFirebaseEvent(
+                                                                                      'Stack_custom_action');
+                                                                                  await actions
+                                                                                      .addSeenby(
+                                                                                    currentUserUid,
+                                                                                    imagesListItem.id,
+                                                                                    currentUserDisplayName,
+                                                                                  );
+                                                                                }),
+                                                                          ]);
+                                                                        },
+                                                                        child:
+                                                                        Container(
+                                                                          width:
+                                                                          80.0,
+                                                                          height:
+                                                                          100.0,
+                                                                          child:
+                                                                          Stack(
+                                                                            children: [
+                                                                              Align(
+                                                                                alignment:
+                                                                                AlignmentDirectional(0.0, 0.0),
+                                                                                child:
+                                                                                Container(
+                                                                                  width: double.infinity,
+                                                                                  height: double.infinity,
+                                                                                  child: custom_widgets.ShowLocalImage(
+                                                                                    width: double.infinity,
+                                                                                    height: double.infinity,
+                                                                                    path: imagesListItem.imageUrl,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Container(
+                                                                                width:
+                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
+                                                                                height:
+                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
+                                                                                decoration:
+                                                                                BoxDecoration(
+                                                                                  gradient: LinearGradient(
+                                                                                    colors: [
+                                                                                      Color(0x99101213),
+                                                                                      Colors.transparent
+                                                                                    ],
+                                                                                    stops: [
+                                                                                      0.0,
+                                                                                      0.4
+                                                                                    ],
+                                                                                    begin: AlignmentDirectional(1.0, 1.0),
+                                                                                    end: AlignmentDirectional(-1.0, -1.0),
+                                                                                  ),
+                                                                                ),
+                                                                                child:
+                                                                                Align(
+                                                                                  alignment: AlignmentDirectional(1.0, 1.0),
+                                                                                  child: Builder(
+                                                                                    builder: (context) {
+                                                                                      if (imagesListItem.isUploading) {
+                                                                                        return Padding(
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                          child: Icon(
+                                                                                            Icons.cloud_upload_outlined,
+                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                            size: 14.0,
+                                                                                          ),
+                                                                                        );
+                                                                                      } else {
+                                                                                        return Padding(
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                          child: FaIcon(
+                                                                                            FontAwesomeIcons.clock,
+                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                            size: 14.0,
+                                                                                          ),
+                                                                                        );
+                                                                                      }
+                                                                                    },
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }
+                                                                },
+                                                              );
+                                                            }),
                                                       );
                                                     },
                                                   ),
@@ -891,7 +1043,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                           ),
                                         ],
                                       ).animateOnPageLoad(animationsMap[
-                                          'columnOnPageLoadAnimation']!),
+                                      'columnOnPageLoadAnimation']!),
                                     );
                                   },
                                 ),
@@ -904,11 +1056,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                   );
                 } else {
                   return Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    alignment: AlignmentDirectional(0.0, 0.0),
                     child: wrapWithModel(
                       model: _model.fetchingPhotosModel,
                       updateCallback: () => setState(() {}),
-                      child: const FetchingPhotosWidget(),
+                      child: FetchingPhotosWidget(),
                     ),
                   );
                 }
