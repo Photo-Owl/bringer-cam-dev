@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -47,6 +48,10 @@ class MainActivity : FlutterActivity() {
                         "requestUsageStatsAccess" -> result.success(requestUsageStatsAccess())
                         "requestOverlayPermission" -> result.success(requestOverlayPermission())
                         "requestIgnoreBatteryOptimization" -> result.success(requestIgnoreBatteryOptimization())
+                        "openCamera" -> {
+                            startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA));
+                            result.success("")
+                        }
                         else -> result.notImplemented()
                     }
                 }
@@ -96,14 +101,21 @@ class MainActivity : FlutterActivity() {
     private fun requestExternalStoragePermission(): Boolean {
         var isGranted = checkForExternalStoragePermission()
         if (!isGranted) {
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ),
-                123
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                val uri = Uri.fromParts("package", packageName, null)
+                intent.setData(uri)
+                startActivity(intent)
+            } else {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    123
+                )
+            }
             isGranted = checkForExternalStoragePermission()
         }
         return isGranted

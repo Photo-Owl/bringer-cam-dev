@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -229,8 +231,11 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             0.0, 16.0, 0.0, 16.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            context.goNamed('camera');
+                          onPressed: () async {
+                            const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+                            await platform.invokeMethod('openCamera', null);
+                            if (!context.mounted) return;
+                            context.goNamed('HomeCopyCopy');
                           },
                           text: 'Go to camera',
                           options: FFButtonOptions(
