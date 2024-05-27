@@ -410,50 +410,50 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                 ],
                               ),
                             ),
-                            if (widget.email == null || widget.email == '')
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    logFirebaseEvent(
-                                        'SOCIAL_SIGN_IN_PAGE_Text_53z1hdab_ON_TAP');
-                                    logFirebaseEvent('Text_bottom_sheet');
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: MoreWaysToSignInWidget(
-                                            phoneNumber: widget.phoneNumber!,
-                                            userDocument: widget.userDocument,
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
-                                  },
-                                  child: Text(
-                                    'Find other ways to sign in',
-                                    textAlign: TextAlign.center,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Inter',
-                                          color: const Color(0xFF1589FC),
-                                          fontSize: 15.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                ),
-                              ),
+                            // if (widget.email == null || widget.email == '')
+                            //   Padding(
+                            //     padding: const EdgeInsets.all(20.0),
+                            //     child: InkWell(
+                            //       splashColor: Colors.transparent,
+                            //       focusColor: Colors.transparent,
+                            //       hoverColor: Colors.transparent,
+                            //       highlightColor: Colors.transparent,
+                            //       onTap: () async {
+                            //         logFirebaseEvent(
+                            //             'SOCIAL_SIGN_IN_PAGE_Text_53z1hdab_ON_TAP');
+                            //         logFirebaseEvent('Text_bottom_sheet');
+                            //         await showModalBottomSheet(
+                            //           isScrollControlled: true,
+                            //           backgroundColor: Colors.transparent,
+                            //           enableDrag: false,
+                            //           context: context,
+                            //           builder: (context) {
+                            //             return Padding(
+                            //               padding:
+                            //                   MediaQuery.viewInsetsOf(context),
+                            //               child: MoreWaysToSignInWidget(
+                            //                 phoneNumber: widget.phoneNumber!,
+                            //                 userDocument: widget.userDocument,
+                            //               ),
+                            //             );
+                            //           },
+                            //         ).then((value) => safeSetState(() {}));
+                            //       },
+                            //       child: Text(
+                            //         'Find other ways to sign in',
+                            //         textAlign: TextAlign.center,
+                            //         style: FlutterFlowTheme.of(context)
+                            //             .bodyMedium
+                            //             .override(
+                            //               fontFamily: 'Inter',
+                            //               color: const Color(0xFF1589FC),
+                            //               fontSize: 15.0,
+                            //               letterSpacing: 0.0,
+                            //               fontWeight: FontWeight.w600,
+                            //             ),
+                            //       ),
+                            //     ),
+                            //   ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   20.0, 55.0, 20.0, 10.0),
