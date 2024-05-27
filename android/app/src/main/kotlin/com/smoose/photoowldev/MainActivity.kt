@@ -43,15 +43,31 @@ class MainActivity : FlutterActivity() {
                             ), result
                         )
 
-                        "checkForPermissions" -> result.success(checkForPermissions())
-                        "requestExternalStoragePermission" -> result.success(requestExternalStoragePermission())
-                        "requestUsageStatsAccess" -> result.success(requestUsageStatsAccess())
-                        "requestOverlayPermission" -> result.success(requestOverlayPermission())
-                        "requestIgnoreBatteryOptimization" -> result.success(requestIgnoreBatteryOptimization())
+                        "checkForPermissions" -> result.success(
+                            checkForPermissions()
+                        )
+
+                        "requestExternalStoragePermission" -> result.success(
+                            requestExternalStoragePermission()
+                        )
+
+                        "requestUsageStatsAccess" -> result.success(
+                            requestUsageStatsAccess()
+                        )
+
+                        "requestOverlayPermission" -> result.success(
+                            requestOverlayPermission()
+                        )
+
+                        "requestIgnoreBatteryOptimization" -> result.success(
+                            requestIgnoreBatteryOptimization()
+                        )
+
                         "openCamera" -> {
-                            startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA));
+                            startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA))
                             result.success("")
                         }
+
                         else -> result.notImplemented()
                     }
                 }
@@ -91,21 +107,28 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun checkForExternalStoragePermission() =
-        ActivityCompat.checkSelfPermission(
-            context, Manifest.permission.READ_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                    context, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.READ_MEDIA_IMAGES
+            ) == PackageManager.PERMISSION_GRANTED
+        else
+            ActivityCompat.checkSelfPermission(
+                context, Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(
+                        context, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) == PackageManager.PERMISSION_GRANTED
 
     private fun requestExternalStoragePermission(): Boolean {
         var isGranted = checkForExternalStoragePermission()
         if (!isGranted) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                val uri = Uri.fromParts("package", packageName, null)
-                intent.setData(uri)
-                startActivity(intent)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ActivityCompat.requestPermissions(
+                    activity,
+                    arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                    123
+                )
             } else {
                 ActivityCompat.requestPermissions(
                     activity,
