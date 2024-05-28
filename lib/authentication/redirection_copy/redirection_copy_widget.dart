@@ -91,11 +91,13 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           ),
         });
       }
-      //TODO: check permission UI
       const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
-      final String? result = await platform.invokeMethod('setSignInStatus',
+      await platform.invokeMethod('setSignInStatus',
           {"userId": FirebaseAuth.instance.currentUser?.uid});
-      await platform.invokeMethod('checkForPermissions', null);
+      final permsGiven = await platform.invokeMethod('checkForPermissions', null);
+      if (!permsGiven) {
+        context.goNamed('connectgallery');
+      }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

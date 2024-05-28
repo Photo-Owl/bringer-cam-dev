@@ -31,3 +31,12 @@ export '/camera/camera_widget.dart' show CameraWidget;
 export '/user_pages/local_image/local_image_widget.dart' show LocalImageWidget;
 export '/user_pages/home_copy_copy/home_copy_copy_widget.dart'
     show HomeCopyCopyWidget;
+
+export '/user_pages/usageaccess/usageaccess_widget.dart'
+    show UsageaccessWidget;
+export '/user_pages/alldone/alldone_widget.dart'
+    show AlldoneWidget;
+export '/user_pages/displayover/displayover_widget.dart'
+    show DisplayoverWidget;
+export '/user_pages/connect_gallery/connect_gallery_widget.dart'
+    show ConnectGalleryWidget;
