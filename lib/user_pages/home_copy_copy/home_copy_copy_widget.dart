@@ -137,10 +137,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
         _model.timeline = _model.timeline1!.toList().cast<TimelineItemStruct>();
       });
 
-      const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
-      showPermsRequest =
-      ! (await platform.invokeMethod<bool>('checkForPermissions', null) ?? false);
-      safeSetState(() {});
+      await checkForPerms();
     });
 
     animationsMap.addAll({
@@ -166,6 +163,13 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     _model.dispose();
 
     super.dispose();
+  }
+
+  Future<void> checkForPerms() async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+    showPermsRequest =
+    ! (await platform.invokeMethod<bool>('checkForPermissions', null) ?? false);
+    safeSetState(() {});
   }
 
   @override
@@ -388,7 +392,12 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 16.0),
                                 child: FFButtonWidget(
-                                  onPressed: () => context.pushNamed('connectgallery'),
+                                  onPressed: () async {
+                                    context.pushNamed('connectgallery');
+                                    if (!context.mounted) return;
+                                    await checkForPerms();
+                                  },
+                                  showLoadingIndicator: false,
                                   text: 'Connect Bringer to Your Camera',
                                   options: FFButtonOptions(
                                     width: double.infinity,

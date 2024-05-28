@@ -96,7 +96,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           {"userId": FirebaseAuth.instance.currentUser?.uid});
       final permsGiven = await platform.invokeMethod('checkForPermissions', null);
       if (!permsGiven) {
-        context.goNamed('/connectgallery');
+        context.goNamed('connectgallery');
       }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
