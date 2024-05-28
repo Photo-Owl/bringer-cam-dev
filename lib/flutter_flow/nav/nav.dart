@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bringer_cam_dev/user_pages/alldone/alldone_widget.dart';
+import 'package:bringer_cam_dev/user_pages/battery_optimization/battery_optimization_widget.dart';
 import 'package:bringer_cam_dev/user_pages/connect_gallery/connect_gallery_widget.dart';
 import 'package:bringer_cam_dev/user_pages/displayover/displayover_widget.dart';
 import 'package:bringer_cam_dev/user_pages/usageaccess/usageaccess_widget.dart';
@@ -320,6 +321,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'usageaccess',
           path: '/usageaccess',
           builder: (context, params) => const UsageaccessWidget(),
+        ),
+        FFRoute(
+          name: 'batteryOptimization',
+          path: '/batteryOptimization',
+          builder: (context, params) => const BatteryOptimizationWidget(),
         ),
         FFRoute(
           name: 'alldone',

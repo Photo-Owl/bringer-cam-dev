@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.PowerManager
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
@@ -85,13 +86,12 @@ class MainActivity : FlutterActivity() {
         return isBatteryOptimizationIgnored() && checkForExternalStoragePermission() && checkForUsageStatsAccess() && canDrawOverlays()
     }
 
-    private fun isBatteryOptimizationIgnored() =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        else true
+    private fun isBatteryOptimizationIgnored(): Boolean {
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            powerManager.isIgnoringBatteryOptimizations(packageName)
+        } else true
+    }
 
     private fun requestIgnoreBatteryOptimization(): Boolean {
         var isGranted = isBatteryOptimizationIgnored()

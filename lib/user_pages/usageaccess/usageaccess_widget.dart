@@ -87,7 +87,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 20.0),
                           child: LinearPercentIndicator(
-                            percent: 0.66,
+                            percent: 0.5,
                             lineHeight: 12.0,
                             animation: false,
                             animateFromLastPercent: false,
@@ -314,7 +314,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                       false;
                               if (!context.mounted) return;
                               if (permsGiven) {
-                                context.pushNamed('alldone');
+                                context.pushNamed('batteryOptimization');
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
