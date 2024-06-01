@@ -27,11 +27,16 @@ import android.database.Cursor
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.LinearLayout
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.graphics.PixelFormat
 import android.view.Gravity
+import android.animation.ObjectAnimator
+import android.animation.AnimatorListenerAdapter
+import android.animation.Animator
 
 
 internal class ServiceState {
@@ -189,6 +194,7 @@ class AutoUploadService : Service() {
     private fun startSharing() {
         isSharingOn =true
         serviceState = ServiceState.START_SHARING
+        showToolTip()
 //        sharedPrefs.edit().putBoolean("sharing_status", true).apply()
 //        observer = GalleryObserver(applicationContext).apply { attach() }
         startObserving()
@@ -199,6 +205,7 @@ class AutoUploadService : Service() {
     private fun stopSharing() {
         isSharingOn =false
         serviceState = ServiceState.STOP_SHARING
+        showToolTip()
 //        sharedPrefs.edit().putBoolean("sharing_status", false).apply()
 //        observer?.apply { detach() }?.let { observer = null }
         stopObserving()
@@ -252,8 +259,37 @@ class AutoUploadService : Service() {
         )
         params.gravity = Gravity.START
         windowManager.addView(overlayView, params)
+        showToolTip()
     }
 
+    private fun showToolTip(){
+        val toolTipLayout = overlayView.findViewById<LinearLayout>(R.id.toolTipLayout)
+        //check for status and update the text and icon
+        val bubbleText = overlayView.findViewById<TextView>(R.id.bubbleText)
+        val bubbleIcon = overlayView.findViewById<ImageView>(R.id.statusIcon)
+        if(isSharingOn){
+            bubbleText.text = getString(R.string.chat_message_on)
+            bubbleIcon.setImageResource(R.drawable.status_icon_on)
+        }else{
+            bubbleText.text = getString(R.string.chat_message_off)
+            bubbleIcon.setImageResource(R.drawable.status_icon_off)
+        }
+
+        //animate the tool tip
+        val animator = ObjectAnimator.ofFloat(toolTipLayout, "alpha", 0f, 1f)
+        animator.duration = 700 // Duration of the animation in milliseconds
+        animator.start()
+        // Create a Handler to post delayed runnable
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            // Define the second animation to fade back to 0f
+            val reverseAnimator = ObjectAnimator.ofFloat(toolTipLayout, "alpha", 1f, 0f)
+            reverseAnimator.duration = 700 // Reverse animation duration in milliseconds
+            reverseAnimator.start()
+
+        }, 1200)
+
+    }
     private fun hidePopUp() {
         if (overlayView!= null && overlayView.parent!= null) {
             (getSystemService(Context.WINDOW_SERVICE) as WindowManager).removeView(overlayView)
