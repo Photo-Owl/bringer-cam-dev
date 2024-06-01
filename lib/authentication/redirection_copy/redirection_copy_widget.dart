@@ -94,10 +94,10 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
       const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
       await platform.invokeMethod('setSignInStatus',
           {"userId": FirebaseAuth.instance.currentUser?.uid});
-      final permsGiven = await platform.invokeMethod('checkForPermissions', null);
-      if (!permsGiven) {
-        context.goNamed('connectgallery');
-      }
+      // final permsGiven = await platform.invokeMethod('checkForPermissions', null);
+      // if (!permsGiven) {
+      //   context.goNamed('connectgallery');
+      // }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

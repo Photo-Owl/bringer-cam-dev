@@ -9,4 +9,8 @@
     <string name="auto_upload_notif_body_inactive">Sign in to start sharing automatically.</string>
     <string name="auto_upload_notif_body_on">Photos taken while using the Camera app will be automatically shared :)</string>
     <string name="auto_upload_notif_body_off">Tap on "Start sharing" to share pictures automatically with your buddies!</string>
+    <string name="bringer_logo">BringerLogo</string>
+    <string name="chat_bubble_triangle">chat_bubble_triangle</string>
+    <string name="chat_message_on">Sharing Mode is ON 🚀</string>
+    <string name="chat_message_off">Sharing Mode is OFF  🫣</string>
 </resources>
