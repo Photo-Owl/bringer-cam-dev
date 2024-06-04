@@ -1,6 +1,8 @@
 package com.smoose.photoowldev.services
 
 import android.Manifest
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
@@ -9,44 +11,38 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.smoose.photoowldev.AppState
 import com.smoose.photoowldev.R
-import java.io.File
-import android.os.Environment
-import android.database.Cursor
-import android.net.Uri
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.LinearLayout
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.WindowManager
-import android.graphics.PixelFormat
-import android.view.Gravity
-import android.animation.ObjectAnimator
-import android.animation.AnimatorListenerAdapter
-import android.animation.Animator
-
 
 internal class ServiceState {
     companion object {
         @JvmStatic
         val INIT = 0
+
         @JvmStatic
         val START_SHARING = 1
+
         @JvmStatic
         val STOP_SHARING = 2
+
         @JvmStatic
         val INIT_SIGNED_IN = 3
     }
@@ -54,9 +50,9 @@ internal class ServiceState {
 
 class AutoUploadService : Service() {
     private lateinit var overlayView: View
-    private  var isSharingOn: Boolean =true;
+    private var isSharingOn: Boolean = true
     private lateinit var sharedPrefs: SharedPreferences
-    private var fileObserver: ImageFileObserver? =null;
+    private var fileObserver: ImageFileObserver? = null
     private var serviceState: Int = 0
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
@@ -73,18 +69,19 @@ class AutoUploadService : Service() {
 
     private val prefsListener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == "sharing_status"){
+            if (key == "sharing_status") {
                 getPersistedShareStatus()
-                val imageView = overlayView.findViewById<ImageView>(R.id.imageView)
-                if(serviceState == ServiceState.START_SHARING){
+                val imageView =
+                    overlayView.findViewById<ImageView>(R.id.imageView)
+                if (serviceState == ServiceState.START_SHARING) {
 
                     startSharing()
-                }else{
+                } else {
                     stopSharing()
                 }
-                if (isSharingOn){
+                if (isSharingOn) {
                     imageView.setImageResource(R.drawable.bringer_logo)
-                }else{
+                } else {
                     imageView.setImageResource(R.drawable.bringer_logo_bandw)
                 }
             }
@@ -113,7 +110,8 @@ class AutoUploadService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        overlayView = LayoutInflater.from(this).inflate(R.layout.popup_layout, null)
+        overlayView =
+            LayoutInflater.from(this).inflate(R.layout.popup_layout, null)
         sharedPrefs = getSharedPreferences(
             "bringer_shared_preferences",
             Context.MODE_PRIVATE
@@ -152,6 +150,7 @@ class AutoUploadService : Service() {
         }
         fileObserver?.startWatching()
     }
+
     private fun registerPreferenceChangeListener() {
         sharedPrefs.registerOnSharedPreferenceChangeListener(prefsListener)
     }
@@ -164,6 +163,7 @@ class AutoUploadService : Service() {
         fileObserver?.stopWatching()
 
     }
+
     private fun initializeService(isSignedIn: Boolean = false) {
         isInitialized = true
 //        observer = GalleryObserver(applicationContext).apply { attach() }
@@ -192,7 +192,7 @@ class AutoUploadService : Service() {
     }
 
     private fun startSharing() {
-        isSharingOn =true
+        isSharingOn = true
         serviceState = ServiceState.START_SHARING
         showToolTip()
 //        sharedPrefs.edit().putBoolean("sharing_status", true).apply()
@@ -203,7 +203,7 @@ class AutoUploadService : Service() {
     }
 
     private fun stopSharing() {
-        isSharingOn =false
+        isSharingOn = false
         serviceState = ServiceState.STOP_SHARING
         showToolTip()
 //        sharedPrefs.edit().putBoolean("sharing_status", false).apply()
@@ -218,7 +218,8 @@ class AutoUploadService : Service() {
 
     private fun getPersistedShareStatus() {
         isSharingOn = sharedPrefs.getBoolean("sharing_status", true)
-        serviceState = if (isSharingOn) ServiceState.START_SHARING else ServiceState.STOP_SHARING
+        serviceState =
+            if (isSharingOn) ServiceState.START_SHARING else ServiceState.STOP_SHARING
     }
 
     private fun getDefaultCameraApp(): String? {
@@ -250,27 +251,34 @@ class AutoUploadService : Service() {
             }
         }
         val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+        val popupType =
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+                @Suppress("DEPRECATION")
+                WindowManager.LayoutParams.TYPE_PHONE
+            else
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         val params = WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            popupType,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            PixelFormat.TRANSLUCENT
         )
         params.gravity = Gravity.START
         windowManager.addView(overlayView, params)
         showToolTip()
     }
 
-    private fun showToolTip(){
-        val toolTipLayout = overlayView.findViewById<LinearLayout>(R.id.toolTipLayout)
+    private fun showToolTip() {
+        val toolTipLayout =
+            overlayView.findViewById<LinearLayout>(R.id.toolTipLayout)
         //check for status and update the text and icon
         val bubbleText = overlayView.findViewById<TextView>(R.id.bubbleText)
         val bubbleIcon = overlayView.findViewById<ImageView>(R.id.statusIcon)
-        if(isSharingOn){
+        if (isSharingOn) {
             bubbleText.text = getString(R.string.chat_message_on)
             bubbleIcon.setImageResource(R.drawable.status_icon_on)
-        }else{
+        } else {
             bubbleText.text = getString(R.string.chat_message_off)
             bubbleIcon.setImageResource(R.drawable.status_icon_off)
         }
@@ -283,30 +291,37 @@ class AutoUploadService : Service() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             // Define the second animation to fade back to 0f
-            val reverseAnimator = ObjectAnimator.ofFloat(toolTipLayout, "alpha", 1f, 0f)
-            reverseAnimator.duration = 700 // Reverse animation duration in milliseconds
+            val reverseAnimator =
+                ObjectAnimator.ofFloat(toolTipLayout, "alpha", 1f, 0f)
+            reverseAnimator.duration =
+                700 // Reverse animation duration in milliseconds
             reverseAnimator.start()
 
         }, 1200)
 
     }
+
     private fun hidePopUp() {
-        if (overlayView!= null && overlayView.parent!= null) {
-            (getSystemService(Context.WINDOW_SERVICE) as WindowManager).removeView(overlayView)
+        if (overlayView != null && overlayView.parent != null) {
+            (getSystemService(Context.WINDOW_SERVICE) as WindowManager).removeView(
+                overlayView
+            )
 
         }
     }
-    private fun overlayOnClick(){
-        Log.d("mainActivity debug overlay","overlay click detected")
+
+    private fun overlayOnClick() {
+        Log.d(LOG_TAG, "overlay click detected")
         val imageView = overlayView.findViewById<ImageView>(R.id.imageView)
-        if (isSharingOn){
+        if (isSharingOn) {
 
             stopSharing()
-        }else{
+        } else {
 
             startSharing()
         }
     }
+
     private fun getUsageStatsForPackage(packageName: String) {
         val editor = sharedPrefs.edit()
         val usageStatsManager =
@@ -322,8 +337,8 @@ class AutoUploadService : Service() {
                     val lastTimeUsed = usageStats.lastTimeUsed
                     val totalTimeInForeground = usageStats.totalTimeInForeground
                     Log.d(
-                            "mainActivity debug usage stats",
-                            "CAMERA PACKAGE - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
+                        LOG_TAG,
+                        "CAMERA PACKAGE - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
                     )
                     // Check if variables exist in shared preferences
                     val oldCameraLastTimeUsed =
@@ -337,21 +352,21 @@ class AutoUploadService : Service() {
                     // If variables are not present, initialize them
                     if (oldCameraLastTimeUsed!!.isEmpty() || oldCameraTotalTimeInForeground!!.isEmpty()) {
                         Log.d(
-                            "mainActivity debug usage stats",
+                            LOG_TAG,
                             "First time detected"
                         )
 
                     } else {
                         if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground == totalTimeInForeground.toString())) {
                             Log.d(
-                                "mainActivity debug usage stats",
+                                LOG_TAG,
                                 "CAMERA OPEN DETECTED"
                             )
                             showPopUp()
                         } else if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground != totalTimeInForeground.toString())) {
 
                             Log.d(
-                                "mainActivity debug usage stats",
+                                LOG_TAG,
                                 "CAMERA CLOSE DETECTED - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
                             )
 
