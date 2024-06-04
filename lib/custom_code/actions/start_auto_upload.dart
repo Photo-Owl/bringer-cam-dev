@@ -56,6 +56,11 @@ Future startAutoUpload() async {
   const autoUploadChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
   autoUploadChannel.setMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == "upload_image") {
+      WidgetsFlutterBinding.ensureInitialized();
+      final appState = FFAppState();
+      appState.update(() {
+        appState.shouldReloadGallery = true;
+      });
       Workmanager().registerOneOffTask(
         'com.smoose.photoowldev.immediateTask',
         'upload-img',

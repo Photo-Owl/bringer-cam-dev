@@ -37,4 +37,10 @@ class FFAppState extends ChangeNotifier {
   set uploadCount(double value) {
     _uploadCount = value;
   }
+
+  bool _shouldReloadGallery = false;
+  bool get shouldReloadGallery => _shouldReloadGallery;
+  set shouldReloadGallery(bool value) {
+    _shouldReloadGallery = value;
+  }
 }

@@ -168,9 +168,35 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     safeSetState(() {});
   }
 
+  Future<void> onRefresh() async {
+    logFirebaseEvent(
+        'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
+    logFirebaseEvent(
+        'ListView_update_page_state');
+    setState(() {
+      _model.loaded = false;
+    });
+    logFirebaseEvent('ListView_custom_action');
+    _model.timeline2 = await actions.getAllImages(
+      currentUserUid,
+    );
+    logFirebaseEvent(
+        'ListView_update_page_state');
+    setState(() {
+      _model.loaded = true;
+      _model.timeline = _model.timeline2!
+          .toList()
+          .cast<TimelineItemStruct>();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
+    final appState = context.watch<FFAppState>();
+
+    if (appState.shouldReloadGallery) {
+      onRefresh();
+    }
 
     return Title(
         title: 'Bringer  | Home',
@@ -540,27 +566,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                               }
                               return RefreshIndicator(
                                 key: Key('RefreshIndicator_1ydg9f2c'),
-                                onRefresh: () async {
-                                  logFirebaseEvent(
-                                      'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
-                                  logFirebaseEvent(
-                                      'ListView_update_page_state');
-                                  setState(() {
-                                    _model.loaded = false;
-                                  });
-                                  logFirebaseEvent('ListView_custom_action');
-                                  _model.timeline2 = await actions.getAllImages(
-                                    currentUserUid,
-                                  );
-                                  logFirebaseEvent(
-                                      'ListView_update_page_state');
-                                  setState(() {
-                                    _model.loaded = true;
-                                    _model.timeline = _model.timeline2!
-                                        .toList()
-                                        .cast<TimelineItemStruct>();
-                                  });
-                                },
+                                onRefresh: onRefresh,
                                 child: ListView.separated(
                                   padding: EdgeInsets.fromLTRB(
                                     0,
