@@ -196,6 +196,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
 
     if (appState.shouldReloadGallery) {
       onRefresh();
+      appState.update(() {
+        appState.shouldReloadGallery = false;
+      });
     }
 
     return Title(

@@ -72,18 +72,4 @@ Future startAutoUpload() async {
       );
     }
   });
-
-  // Workmanager().cancelAll();
-  // Workmanager().registerOneOffTask(
-  //   'com.smoose.photoowldev.upload1',
-  //   'upload-img',
-  //   existingWorkPolicy: ExistingWorkPolicy.replace,
-  //   constraints: Constraints(
-  //     networkType: NetworkType.connected,
-  //     requiresBatteryNotLow: true,
-  //   ),
-  // );
-  // if (FirebaseAuth.instance.currentUser != null) {
-  //     final uploader = Uploader();
-  // }
 }
