@@ -9,6 +9,11 @@ import com.smoose.photoowldev.db.Images
 import com.smoose.photoowldev.db.ImagesDB
 import java.util.Calendar
 import com.smoose.photoowldev.MethodChannelHolder
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.dart.DartExecutor
+import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.embedding.engine.loader.FlutterLoader;
+
 
 class AddImageToSqliteWorker(
     context: Context,
@@ -47,7 +52,8 @@ class AddImageToSqliteWorker(
                 )
             )
 
-            MethodChannelHolder.methodChannel?.invokeMethod("upload_image", imagePath)
+
+            MethodChannelHolder.serviceMethodChannel?.invokeMethod("upload_image", imagePath)
 
             val images = imagesDao.lastAdded()
             Log.d(LOG_TAG, "inserted: ${images.path}")
