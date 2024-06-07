@@ -34,7 +34,7 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        handleSharedImages(flutterEngine)
+        handleSharedPhotos(flutterEngine)
         autoUploadChannel = MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             CHANNEL_ID
@@ -81,28 +81,28 @@ class MainActivity : FlutterActivity() {
 
     }
 
-    private fun handleSharedImages(flutterEngine: FlutterEngine) {
-        var imagesList: List<String> = listOf()
+    private fun handleSharedPhotos(flutterEngine: FlutterEngine) {
+        var photosList: List<String> = listOf()
         when (intent.action) {
             Intent.ACTION_SEND -> {
                 intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let {
-                    imagesList = listOf(it.toString())
+                    photosList = listOf(it.toString())
                 }
             }
 
             Intent.ACTION_SEND_MULTIPLE -> {
                 intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
                     ?.map { it.toString() }
-                    ?.let { imagesList = it }
+                    ?.let { photosList = it }
             }
         }
 
-        if (imagesList.isNotEmpty()) {
+        if (photosList.isNotEmpty()) {
             val channel = MethodChannel(
                 flutterEngine.dartExecutor.binaryMessenger,
                 SHARE_CHANNEL_ID
             )
-            channel.invokeMethod("shareImages", imagesList)
+            channel.invokeMethod("sharePhotos", photosList)
         }
     }
 
