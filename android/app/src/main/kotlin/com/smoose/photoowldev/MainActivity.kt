@@ -27,10 +27,14 @@ class MainActivity : FlutterActivity() {
 
         @JvmStatic
         private val CHANNEL_ID = "com.smoose.photoowldev/autoUpload"
+
+        @JvmStatic
+        private val SHARE_CHANNEL_ID = "com.smoose.photoowldev/sharePhotos"
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        handleSharedImages(flutterEngine)
         autoUploadChannel = MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             CHANNEL_ID
@@ -77,6 +81,31 @@ class MainActivity : FlutterActivity() {
 
     }
 
+    private fun handleSharedImages(flutterEngine: FlutterEngine) {
+        var imagesList: List<String> = listOf()
+        when (intent.action) {
+            Intent.ACTION_SEND -> {
+                intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let {
+                    imagesList = listOf(it.toString())
+                }
+            }
+
+            Intent.ACTION_SEND_MULTIPLE -> {
+                intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
+                    ?.map { it.toString() }
+                    ?.let { imagesList = it }
+            }
+        }
+
+        if (imagesList.isNotEmpty()) {
+            val channel = MethodChannel(
+                flutterEngine.dartExecutor.binaryMessenger,
+                SHARE_CHANNEL_ID
+            )
+            channel.invokeMethod("shareImages", imagesList)
+        }
+    }
+
 //    override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
 //        autoUploadChannel.setMethodCallHandler(null)
 //        super.cleanUpFlutterEngine(flutterEngine)
@@ -87,7 +116,8 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun isBatteryOptimizationIgnored(): Boolean {
-        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        val powerManager =
+            getSystemService(Context.POWER_SERVICE) as PowerManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             powerManager.isIgnoringBatteryOptimizations(packageName)
         } else true

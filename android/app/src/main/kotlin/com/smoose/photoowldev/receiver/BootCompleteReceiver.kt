@@ -9,7 +9,7 @@ import com.smoose.photoowldev.services.AutoUploadService
 
 class BootCompleteReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+        if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             Log.d("bringer/receiver", "Auto started service on boot.")
             ContextCompat.startForegroundService(
                 context,
