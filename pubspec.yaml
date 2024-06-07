@@ -118,7 +118,8 @@ dependencies:
   video_player_web: 2.1.2
   workmanager: ^0.5.2
   badges: 2.0.2
-  percent_indicator: any
+  percent_indicator: 4.2.3
+  content_resolver: 0.3.1
 
 
   # The following adds the Cupertino Icons font to your application.

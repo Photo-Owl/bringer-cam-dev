@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'package:content_resolver/content_resolver.dart';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
@@ -168,14 +170,26 @@ class Uploader {
         );
 
         // Upload the image to Firebase Storage
-        final filePath = row.path;
-        final fileName = basename(filePath);
-        final ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
-        await ref.putFile(
-          File(filePath),
-          SettableMetadata(
-              contentType: mime(fileName)), // Set the content type here
-        );
+        late Reference ref;
+        if (row.path.startsWith('content://')) {
+          final image = await ContentResolver.resolveContent(row.path);
+          final fileName = image.fileName;
+          ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
+          await ref.putData(
+            image.data,
+            SettableMetadata(contentType: image.mimeType),
+          );
+        } else {
+          final filePath = row.path;
+          final fileName = basename(filePath);
+          ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
+          await ref.putFile(
+            File(filePath),
+            SettableMetadata(
+              contentType: mime(fileName),
+            ), // Set the content type here
+          );
+        }
 
         // Get the URL of the uploaded image
         final url = await ref.getDownloadURL();
