@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +71,8 @@ class _MyAppState extends State<MyApp> {
       const Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
+
+    _handleSharedPhotos();
   }
 
   @override
@@ -81,6 +85,17 @@ class _MyAppState extends State<MyApp> {
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
+
+  void _handleSharedPhotos() {
+    const photosChannel = MethodChannel('com.smoose.photoowldev/sharePhotos');
+    photosChannel.setMethodCallHandler((methodCall) async {
+      print('bringer/sharePhotos: received method call');
+      if (methodCall.method == "sharePhotos") {
+        final photosList = methodCall.arguments as List<String>;
+        _router.goNamed('sharePhotos', extra: photosList);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

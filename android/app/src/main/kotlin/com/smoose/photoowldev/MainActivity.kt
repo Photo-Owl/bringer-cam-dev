@@ -97,6 +97,8 @@ class MainActivity : FlutterActivity() {
             }
         }
 
+        Log.d("bringer/sharePhotos", "photosList: ${photosList.isNotEmpty()} ${photosList.size}")
+
         if (photosList.isNotEmpty()) {
             val channel = MethodChannel(
                 flutterEngine.dartExecutor.binaryMessenger,
