@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.core.content.IntentCompat
 import com.smoose.photoowldev.services.AutoUploadService
 import com.smoose.photoowldev.services.ServiceState
 import io.flutter.embedding.android.FlutterActivity
@@ -85,13 +86,21 @@ class MainActivity : FlutterActivity() {
         var photosList: List<String> = listOf()
         when (intent.action) {
             Intent.ACTION_SEND -> {
-                intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let {
+                IntentCompat.getParcelableExtra(
+                    intent,
+                    Intent.EXTRA_STREAM,
+                    Uri::class.java
+                )?.let {
                     photosList = listOf(it.toString())
                 }
             }
 
             Intent.ACTION_SEND_MULTIPLE -> {
-                intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
+                IntentCompat.getParcelableArrayListExtra(
+                    intent,
+                    Intent.EXTRA_STREAM,
+                    Uri::class.java
+                )
                     ?.map { it.toString() }
                     ?.let { photosList = it }
             }
