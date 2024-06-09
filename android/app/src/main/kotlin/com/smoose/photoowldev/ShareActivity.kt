@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.IntentCompat
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.dart.DartExecutor
 
 class ShareActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,5 +33,7 @@ class ShareActivity : Activity() {
                     ?.let { photosList = it }
             }
         }
+//        val flutterEngine = FlutterEngine(this)
+
     }
 }
