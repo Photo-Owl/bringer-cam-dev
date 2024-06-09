@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
     photosChannel.setMethodCallHandler((methodCall) async {
       debugPrint('bringer/sharePhotos: received method call');
       if (methodCall.method == "sharePhotos") {
-        final photosList = methodCall.arguments as List<String>;
+        final photosList = List.castFrom<dynamic, String>(methodCall.arguments as List);
         final uploader = Uploader();
         final timestamp = DateTime.timestamp().millisecondsSinceEpoch;
         for (final pic in photosList) {
