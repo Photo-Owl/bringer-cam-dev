@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import 'auth/firebase_auth/auth_util.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
 import 'backend/firebase/firebase_config.dart';
+import '/custom_code/actions/uploader.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 void main() async {
@@ -89,10 +91,16 @@ class _MyAppState extends State<MyApp> {
   void _handleSharedPhotos() {
     const photosChannel = MethodChannel('com.smoose.photoowldev/sharePhotos');
     photosChannel.setMethodCallHandler((methodCall) async {
-      print('bringer/sharePhotos: received method call');
+      debugPrint('bringer/sharePhotos: received method call');
       if (methodCall.method == "sharePhotos") {
         final photosList = methodCall.arguments as List<String>;
-        _router.goNamed('sharePhotos', extra: photosList);
+        final uploader = Uploader();
+        final timestamp = DateTime.timestamp().millisecondsSinceEpoch;
+        for (final pic in photosList) {
+          await uploader.addToUploadQueue(pic, timestamp);
+        }
+        Fluttertoast.showToast(msg: "Uploading the pics to Bringer...");
+        await uploader.waitForUploads();
       }
     });
   }
