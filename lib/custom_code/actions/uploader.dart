@@ -122,6 +122,8 @@ class Uploader {
   Future<void> uploadImages() async {
     if (_isUploading) return;
 
+    var didUpload = false;
+
     final notifPlugin = FlutterLocalNotificationsPlugin();
     await notifPlugin.initialize(
       const InitializationSettings(
@@ -137,26 +139,26 @@ class Uploader {
         _appState!.isUploading = _isUploading;
         _appState!.uploadCount = _uploadedCount.toDouble();
       });
-    }
-    await notifPlugin.show(
-      1234,
-      'Uploading images',
-      'Uploading images to the cloud',
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          'com.smoose.photoowldev.uploads',
-          'Upload notification',
-          channelDescription: 'To show notifications for upload progress',
-          importance: Importance.min,
-          progress: _uploadedCount.round(),
-          maxProgress: _totalCount.round(),
-          showProgress: true,
-          ongoing: true,
-          silent: true,
-          onlyAlertOnce: true,
+      await notifPlugin.show(
+        1234,
+        'Uploading images',
+        'Uploading images to the cloud',
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'com.smoose.photoowldev.uploads',
+            'Upload notification',
+            channelDescription: 'To show notifications for upload progress',
+            importance: Importance.min,
+            progress: _uploadedCount.round(),
+            maxProgress: _totalCount.round(),
+            showProgress: true,
+            ongoing: true,
+            silent: true,
+            onlyAlertOnce: true,
+          ),
         ),
-      ),
-    );
+      );
+    }
 
     while (_uploadQueue.isNotEmpty) {
       final row = _uploadQueue.first;
@@ -266,6 +268,7 @@ class Uploader {
           _appState!.isUploading = _isUploading;
           _appState!.uploadCount = _uploadedCount.toDouble();
         });
+        didUpload = true;
         await notifPlugin.show(
           1234,
           'Uploading images',
@@ -287,23 +290,25 @@ class Uploader {
         );
       }
     }
-    _isUploading = false;
-    await notifPlugin.cancel(1234);
-    _appState?.update(() {
-      _appState!.isUploading = _isUploading;
-    });
-    await notifPlugin.show(
-      1235,
-      'All photos uploaded!',
-      'All ${_uploadedCount.round()} photos you took were shared! 🎉',
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'com.smoose.photoowldev.info',
-          'Bringer notifs',
-          channelDescription: 'Any notification from bringer',
+    if (didUpload) {
+      _isUploading = false;
+      await notifPlugin.cancel(1234);
+      _appState?.update(() {
+        _appState!.isUploading = _isUploading;
+      });
+      await notifPlugin.show(
+        1235,
+        'All photos uploaded!',
+        'All ${_uploadedCount.round()} photos you took were shared! 🎉',
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'com.smoose.photoowldev.info',
+            'Bringer notifs',
+            channelDescription: 'Any notification from bringer',
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
 
