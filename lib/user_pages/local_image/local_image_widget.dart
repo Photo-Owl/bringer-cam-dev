@@ -96,9 +96,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                 builder: (context) {
                   if (widget.isUploaded ?? false) {
                     return FutureBuilder<List<ReadUploadedImagesRow>>(
-                      future: SQLiteManager.instance.readUploadedImages(
-                        ownerId: currentUserUid,
-                      ),
+                      future: SQLiteManager.instance.readUploadedImages(),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
@@ -234,9 +232,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                     );
                   } else {
                     return FutureBuilder<List<ReadImagesToUploadRow>>(
-                      future: SQLiteManager.instance.readImagesToUpload(
-                        ownerId: currentUserUid,
-                      ),
+                      future: SQLiteManager.instance.readImagesToUpload(),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
