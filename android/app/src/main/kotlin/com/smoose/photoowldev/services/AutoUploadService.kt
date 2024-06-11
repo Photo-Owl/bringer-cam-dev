@@ -34,6 +34,7 @@ import com.smoose.photoowldev.R
 
 internal class ServiceState {
     companion object {
+        @Deprecated("Not used since v13")
         @JvmStatic
         val INIT = 0
 
@@ -43,6 +44,7 @@ internal class ServiceState {
         @JvmStatic
         val STOP_SHARING = 2
 
+        @Deprecated("Not used since v13")
         @JvmStatic
         val INIT_SIGNED_IN = 3
     }
@@ -53,7 +55,7 @@ class AutoUploadService : Service() {
     private var isSharingOn: Boolean = true
     private lateinit var sharedPrefs: SharedPreferences
     private var fileObserver: ImageFileObserver? = null
-    private var serviceState: Int = 0
+    private var serviceState: Int = ServiceState.START_SHARING
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
         override fun run() {
@@ -134,12 +136,10 @@ class AutoUploadService : Service() {
         flags: Int,
         startId: Int
     ): Int {
-        val newState = intent?.extras?.getInt(SERVICE_STATE_EXTRA, 0) ?: 0
+        val newState = intent?.extras?.getInt(SERVICE_STATE_EXTRA, 1) ?: 1
         when (newState) {
-            ServiceState.INIT -> initializeService(isSignedIn = false)
             ServiceState.START_SHARING -> startSharing()
             ServiceState.STOP_SHARING -> stopSharing()
-            ServiceState.INIT_SIGNED_IN -> initializeService(isSignedIn = true)
         }
         return START_STICKY
     }
@@ -151,20 +151,12 @@ class AutoUploadService : Service() {
         fileObserver?.startWatching()
     }
 
-    private fun registerPreferenceChangeListener() {
-        sharedPrefs.registerOnSharedPreferenceChangeListener(prefsListener)
-    }
-
-    private fun unregisterPreferenceChangeListener() {
-        sharedPrefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
-    }
-
     private fun stopObserving() {
         fileObserver?.stopWatching()
 
     }
 
-    private fun initializeService(isSignedIn: Boolean = false) {
+    private fun initializeService() {
         isInitialized = true
 //        observer = GalleryObserver(applicationContext).apply { attach() }
         startObserving()
@@ -180,18 +172,14 @@ class AutoUploadService : Service() {
             }
         }
 
-        if (!isSignedIn) {
-            serviceState = ServiceState.INIT
-        } else {
-            getPersistedShareStatus()
-            if (serviceState == ServiceState.START_SHARING) {
-                startUsageStatsTask()
-            }
-        }
+        getPersistedShareStatus()
+        if (serviceState == ServiceState.START_SHARING)
+            startUsageStatsTask()
         startForeground(SERVICE_ID, createPersistentNotification())
     }
 
     private fun startSharing() {
+        if (!isInitialized) initializeService()
         isSharingOn = true
         serviceState = ServiceState.START_SHARING
         showToolTip()
@@ -203,6 +191,7 @@ class AutoUploadService : Service() {
     }
 
     private fun stopSharing() {
+        if (!isInitialized) initializeService()
         isSharingOn = false
         serviceState = ServiceState.STOP_SHARING
         showToolTip()
@@ -302,7 +291,7 @@ class AutoUploadService : Service() {
     }
 
     private fun hidePopUp() {
-        if (overlayView != null && overlayView.parent != null) {
+        if (overlayView.parent != null) {
             (getSystemService(Context.WINDOW_SERVICE) as WindowManager).removeView(
                 overlayView
             )
@@ -423,27 +412,25 @@ class AutoUploadService : Service() {
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
 
-        if (serviceState != ServiceState.INIT) {
-            val isStartSharing = serviceState == ServiceState.START_SHARING
-            val newState =
-                if (isStartSharing) ServiceState.STOP_SHARING
-                else ServiceState.START_SHARING
-            val intent = Intent(applicationContext, this::class.java)
-                .putExtra(SERVICE_STATE_EXTRA, newState)
-            val action = NotificationCompat.Action(
-                R.drawable.ic_mono,
-                getString(
-                    if (isStartSharing) R.string.auto_upload_toggle_off
-                    else R.string.auto_upload_toggle_on
-                ),
-                PendingIntent.getService(
-                    this, SERVICE_ID, intent,
-                    PendingIntent.FLAG_IMMUTABLE
-                            or PendingIntent.FLAG_UPDATE_CURRENT
-                )
+        val isStartSharing = serviceState == ServiceState.START_SHARING
+        val newState =
+            if (isStartSharing) ServiceState.STOP_SHARING
+            else ServiceState.START_SHARING
+        val intent = Intent(applicationContext, this::class.java)
+            .putExtra(SERVICE_STATE_EXTRA, newState)
+        val action = NotificationCompat.Action(
+            R.drawable.ic_mono,
+            getString(
+                if (isStartSharing) R.string.auto_upload_toggle_off
+                else R.string.auto_upload_toggle_on
+            ),
+            PendingIntent.getService(
+                this, SERVICE_ID, intent,
+                PendingIntent.FLAG_IMMUTABLE
+                        or PendingIntent.FLAG_UPDATE_CURRENT
             )
-            notifBuilder.addAction(action)
-        }
+        )
+        notifBuilder.addAction(action)
 
         return notifBuilder.build()
     }
