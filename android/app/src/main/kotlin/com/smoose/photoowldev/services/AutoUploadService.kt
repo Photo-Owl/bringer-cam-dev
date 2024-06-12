@@ -328,15 +328,20 @@ class AutoUploadService : Service() {
             getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val endTime = System.currentTimeMillis()
         val startTime = endTime - 1000
-//        val eventsQuery = UsageEventsQuery.Builder().setBeginTimeMillis(startTime)
-//            .setEndTimeMillis(endTime).build()
-        val events = UsageStatsManager.queryEvents(startTime,endTime)
-//        val events = UsageStatsManager.queryEvents(eventsQuery)
-//        for (usageEvent in events){
-//            val packageName = usageEvent.getPackageName()
-//            val eventType = usageEvent.getEventType()
-//            Log.d(LOG_TAG, "EVENT TYPE ${eventType} EVENT PACKAGE ${packageName}")
-//        }
+        // Need to change compileSdk to 35 for query builder
+        // val eventsQuery = UsageEventsQuery.Builder().setBeginTimeMillis(startTime)
+        //    .setEndTimeMillis(endTime).build()
+        // val events = usageStatsManager.queryEvents(eventsQuery)
+        val events = usageStatsManager.queryEvents(startTime, endTime)
+        val usageEvent = UsageEvents.Event()
+        while (events.hasNextEvent()) {
+            events.getNextEvent(usageEvent)
+            Log.d(
+                LOG_TAG,
+                "EVENT TYPE ${usageEvent.eventType}" +
+                        "EVENT PACKAGE ${usageEvent.packageName}"
+            )
+        }
         Log.d(LOG_TAG, "$usageStatsManager")
         val query = UsageStatsManager.INTERVAL_DAILY
         val stats = usageStatsManager.queryUsageStats(query, startTime, endTime)
