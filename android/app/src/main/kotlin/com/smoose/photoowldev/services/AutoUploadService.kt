@@ -336,73 +336,84 @@ class AutoUploadService : Service() {
         val usageEvent = UsageEvents.Event()
         while (events.hasNextEvent()) {
             events.getNextEvent(usageEvent)
-            Log.d(
-                LOG_TAG,
-                "EVENT TYPE ${usageEvent.eventType}" +
-                        "EVENT PACKAGE ${usageEvent.packageName}"
-            )
-        }
-        Log.d(LOG_TAG, "$usageStatsManager")
-        val query = UsageStatsManager.INTERVAL_DAILY
-        val stats = usageStatsManager.queryUsageStats(query, startTime, endTime)
-        if (stats != null && stats.isNotEmpty()) {
-            for (usageStats in stats) {
-                if (usageStats.packageName == packageName) {
-
-                    val lastTimeUsed = usageStats.lastTimeUsed
-                    val totalTimeInForeground = usageStats.totalTimeInForeground
+            if(usageEvent.packageName == packageName){
+                if(usageEvent.eventType == 11 || usageEvent.eventType == 1){
                     Log.d(
-                        LOG_TAG,
-                        "CAMERA PACKAGE - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
-                    )
-                    // Check if variables exist in shared preferences
-                    val oldCameraLastTimeUsed =
-                        sharedPrefs.getString("camera_last_time_used", "")
-                    val oldCameraTotalTimeInForeground =
-                        sharedPrefs.getString(
-                            "camera_total_time_in_foreground",
-                            ""
-                        )
-
-                    // If variables are not present, initialize them
-                    if (oldCameraLastTimeUsed!!.isEmpty() || oldCameraTotalTimeInForeground!!.isEmpty()) {
-                        Log.d(
-                            LOG_TAG,
-                            "First time detected"
-                        )
-
-                    } else {
-                        if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground == totalTimeInForeground.toString())) {
-                            Log.d(
                                 LOG_TAG,
                                 "CAMERA OPEN DETECTED"
                             )
                             showPopUp()
-                        } else if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground != totalTimeInForeground.toString())) {
-
-                            Log.d(
+                }else if(usageEvent.eventType == 2 || usageEvent.eventType == 23){
+                    Log.d(
                                 LOG_TAG,
-                                "CAMERA CLOSE DETECTED - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
+                                "CAMERA CLOSE DETECTED"
                             )
 
                             hidePopUp()
-                        }
-
-                    }
-                    editor.putString(
-                        "camera_last_time_used",
-                        lastTimeUsed.toString()
-                    )
-                    editor.putString(
-                        "camera_total_time_in_foreground",
-                        totalTimeInForeground.toString()
-                    )
-                    editor.apply()
-                    break
                 }
-
             }
+
         }
+//        val query = UsageStatsManager.INTERVAL_DAILY
+//        val stats = usageStatsManager.queryUsageStats(query, startTime, endTime)
+//        if (stats != null && stats.isNotEmpty()) {
+//            for (usageStats in stats) {
+//                if (usageStats.packageName == packageName) {
+//
+//                    val lastTimeUsed = usageStats.lastTimeUsed
+//                    val totalTimeInForeground = usageStats.totalTimeInForeground
+//                    Log.d(
+//                        LOG_TAG,
+//                        "CAMERA PACKAGE - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
+//                    )
+//                    // Check if variables exist in shared preferences
+//                    val oldCameraLastTimeUsed =
+//                        sharedPrefs.getString("camera_last_time_used", "")
+//                    val oldCameraTotalTimeInForeground =
+//                        sharedPrefs.getString(
+//                            "camera_total_time_in_foreground",
+//                            ""
+//                        )
+//
+//                    // If variables are not present, initialize them
+//                    if (oldCameraLastTimeUsed!!.isEmpty() || oldCameraTotalTimeInForeground!!.isEmpty()) {
+//                        Log.d(
+//                            LOG_TAG,
+//                            "First time detected"
+//                        )
+//
+//                    } else {
+//                        if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground == totalTimeInForeground.toString())) {
+//                            Log.d(
+//                                LOG_TAG,
+//                                "CAMERA OPEN DETECTED"
+//                            )
+//                            showPopUp()
+//                        } else if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground != totalTimeInForeground.toString())) {
+//
+//                            Log.d(
+//                                LOG_TAG,
+//                                "CAMERA CLOSE DETECTED - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
+//                            )
+//
+//                            hidePopUp()
+//                        }
+//
+//                    }
+//                    editor.putString(
+//                        "camera_last_time_used",
+//                        lastTimeUsed.toString()
+//                    )
+//                    editor.putString(
+//                        "camera_total_time_in_foreground",
+//                        totalTimeInForeground.toString()
+//                    )
+//                    editor.apply()
+//                    break
+//                }
+//
+//            }
+//        }
     }
 
     private fun updatePersistentNotification() {
