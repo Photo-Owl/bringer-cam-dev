@@ -282,7 +282,7 @@ class Uploader {
       1235,
       'All photos uploaded!',
       'All ${_uploadedCount.round()} photos you took were shared! 🎉',
-      NotificationDetails(
+      const NotificationDetails(
         android: AndroidNotificationDetails(
           'com.smoose.photoowldev.info',
           'Bringer notifs',

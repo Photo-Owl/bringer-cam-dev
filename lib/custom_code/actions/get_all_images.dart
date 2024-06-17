@@ -11,9 +11,6 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-
 Future<List<TimelineItemStruct>> getAllImages(String uid) async {
   final firestoreSnapshot = await FirebaseFirestore.instance
       .collection('uploads')
@@ -51,7 +48,7 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
         'owners': Set<String>(),
       };
     }
-    print(doc);
+    // print(doc);
     final key = doc
         .data()['upload_url']
         .split('/')
@@ -109,7 +106,7 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
         '-' +
         dateTime.toIso8601String().substring(2, 4);
     final orginalKey = DateFormat('yyyy-MM-dd').format(dateTime);
-    print(date);
+    // print(date);
     sortedGroupedImagesWithOwners[date] = groupedImagesWithOwners[orginalKey]!;
   }
 

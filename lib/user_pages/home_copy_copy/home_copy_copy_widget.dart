@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -14,18 +13,15 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:math';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +43,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
 
   final animationsMap = <String, AnimationInfo>{};
 
-  var showPermsRequest = true;
+  var showPermsRequest = false;
 
   @override
   void initState() {
@@ -172,9 +168,38 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     safeSetState(() {});
   }
 
+  Future<void> onRefresh() async {
+    logFirebaseEvent(
+        'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
+    logFirebaseEvent(
+        'ListView_update_page_state');
+    setState(() {
+      _model.loaded = false;
+    });
+    logFirebaseEvent('ListView_custom_action');
+    _model.timeline2 = await actions.getAllImages(
+      currentUserUid,
+    );
+    logFirebaseEvent(
+        'ListView_update_page_state');
+    setState(() {
+      _model.loaded = true;
+      _model.timeline = _model.timeline2!
+          .toList()
+          .cast<TimelineItemStruct>();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
+    final appState = context.watch<FFAppState>();
+
+    if (appState.shouldReloadGallery) {
+      onRefresh();
+      appState.update(() {
+        appState.shouldReloadGallery = false;
+      });
+    }
 
     return Title(
         title: 'Bringer  | Home',
@@ -544,27 +569,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                               }
                               return RefreshIndicator(
                                 key: Key('RefreshIndicator_1ydg9f2c'),
-                                onRefresh: () async {
-                                  logFirebaseEvent(
-                                      'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
-                                  logFirebaseEvent(
-                                      'ListView_update_page_state');
-                                  setState(() {
-                                    _model.loaded = false;
-                                  });
-                                  logFirebaseEvent('ListView_custom_action');
-                                  _model.timeline2 = await actions.getAllImages(
-                                    currentUserUid,
-                                  );
-                                  logFirebaseEvent(
-                                      'ListView_update_page_state');
-                                  setState(() {
-                                    _model.loaded = true;
-                                    _model.timeline = _model.timeline2!
-                                        .toList()
-                                        .cast<TimelineItemStruct>();
-                                  });
-                                },
+                                onRefresh: onRefresh,
                                 child: ListView.separated(
                                   padding: EdgeInsets.fromLTRB(
                                     0,

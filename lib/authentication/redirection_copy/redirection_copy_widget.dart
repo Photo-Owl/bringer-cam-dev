@@ -79,7 +79,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
         logFirebaseEvent('RedirectionCopy_navigate_to');
 
-        context.goNamed('camera');
+        context.goNamed('HomeCopyCopy');
 
         logFirebaseEvent('RedirectionCopy_backend_call');
 
@@ -762,7 +762,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                       'Button_navigate_to');
 
                                                                   context.goNamed(
-                                                                      'camera');
+                                                                      'HomeCopyCopy');
 
                                                                   logFirebaseEvent(
                                                                       'Button_backend_call');

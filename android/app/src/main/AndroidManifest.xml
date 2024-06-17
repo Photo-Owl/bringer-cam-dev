@@ -100,10 +100,6 @@
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="Required to track when camera is opened to display auto upload prompt" />
         </service>
-        <service
-            android:name=".services.OverlayService"
-            android:enabled="true"
-            android:exported="true" />
 
     </application>
 </manifest>

@@ -56,6 +56,11 @@ Future startAutoUpload() async {
   const autoUploadChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
   autoUploadChannel.setMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == "upload_image") {
+      WidgetsFlutterBinding.ensureInitialized();
+      final appState = FFAppState();
+      appState.update(() {
+        appState.shouldReloadGallery = true;
+      });
       Workmanager().registerOneOffTask(
         'com.smoose.photoowldev.immediateTask',
         'upload-img',
@@ -67,18 +72,4 @@ Future startAutoUpload() async {
       );
     }
   });
-
-  // Workmanager().cancelAll();
-  // Workmanager().registerOneOffTask(
-  //   'com.smoose.photoowldev.upload1',
-  //   'upload-img',
-  //   existingWorkPolicy: ExistingWorkPolicy.replace,
-  //   constraints: Constraints(
-  //     networkType: NetworkType.connected,
-  //     requiresBatteryNotLow: true,
-  //   ),
-  // );
-  // if (FirebaseAuth.instance.currentUser != null) {
-  //     final uploader = Uploader();
-  // }
 }
