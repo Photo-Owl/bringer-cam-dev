@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -94,13 +95,15 @@ class _MyAppState extends State<MyApp> {
       debugPrint('bringer/sharePhotos: received method call');
       if (methodCall.method == "sharePhotos") {
         final photosList = List.castFrom<dynamic, String>(methodCall.arguments as List);
-        final uploader = Uploader();
         final timestamp = DateTime.timestamp().millisecondsSinceEpoch;
         for (final pic in photosList) {
-          await uploader.addToUploadQueue(pic, timestamp);
+          await SQLiteManager.instance.insertImage(
+            path: pic,
+            ownerId: FirebaseAuth.instance.currentUser?.uid,
+            unixTimestamp: timestamp,
+          );
         }
         Fluttertoast.showToast(msg: "Uploading the pics to Bringer...");
-        await uploader.waitForUploads();
       }
     });
   }
