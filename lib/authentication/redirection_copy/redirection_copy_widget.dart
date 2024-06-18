@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/authentication/dos_and_donts_copy/dos_and_donts_copy_widget.dart';
 import '/backend/backend.dart';
@@ -87,6 +89,9 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
             },
           ),
         });
+        
+        const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
+        await channel.invokeMethod('startService');
       }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));

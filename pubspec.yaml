@@ -126,6 +126,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   fluttertoast: ^8.2.5
+  android_intent_plus: ^5.0.2
 
 dependency_overrides:
   http: 1.2.0
