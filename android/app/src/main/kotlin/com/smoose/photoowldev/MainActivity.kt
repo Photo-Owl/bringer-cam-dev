@@ -14,7 +14,6 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.IntentCompat
 import com.smoose.photoowldev.services.AutoUploadService
-import com.smoose.photoowldev.services.ServiceState
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -62,6 +61,15 @@ class MainActivity : FlutterActivity() {
                         "requestIgnoreBatteryOptimization" -> result.success(
                             requestIgnoreBatteryOptimization()
                         )
+
+                        "startService" -> {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                startForegroundService(Intent(applicationContext, AutoUploadService::class.java))
+                            } else {
+                                startService(Intent(applicationContext, AutoUploadService::class.java))
+                            }
+                            result.success("")
+                        }
 
                         "openCamera" -> {
                             startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA))

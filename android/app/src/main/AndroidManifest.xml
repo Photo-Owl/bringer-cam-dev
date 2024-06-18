@@ -137,5 +137,14 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".receiver.RestartReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.smoose.photoowldev.action.RESTART_SERVICE" />
+            </intent-filter>
+        </receiver>
+
     </application>
 </manifest>
