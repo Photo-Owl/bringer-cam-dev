@@ -31,6 +31,12 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.smoose.photoowldev.R
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.embedding.engine.dart.DartExecutor
+import com.smoose.photoowldev.MethodChannelHolder
 
 internal class ServiceState {
     companion object {
@@ -136,7 +142,16 @@ class AutoUploadService : Service() {
         flags: Int,
         startId: Int
     ): Int {
-        val newState = intent?.extras?.getInt(SERVICE_STATE_EXTRA, 1) ?: 1
+        val flutterEngine: FlutterEngine = FlutterEngine(this)
+        flutterEngine.getDartExecutor().executeDartEntrypoint(
+            DartExecutor.DartEntrypoint.createDefault()
+        )
+
+        val channel: MethodChannel =
+            MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "com.smoose.photoowldev/autoUpload")
+        MethodChannelHolder.serviceMethodChannel = channel
+        val newState = intent?.extras?.getInt(SERVICE_STATE_EXTRA, 0) ?: 0
+
         when (newState) {
             ServiceState.START_SHARING -> startSharing()
             ServiceState.STOP_SHARING -> stopSharing()
@@ -316,6 +331,7 @@ class AutoUploadService : Service() {
         val usageStatsManager =
             getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val endTime = System.currentTimeMillis()
+
         val startTime = endTime - 1000
         // Need to change compileSdk to 35 for query builder
         // val eventsQuery = UsageEventsQuery.Builder().setBeginTimeMillis(startTime)

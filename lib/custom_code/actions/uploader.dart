@@ -139,6 +139,11 @@ class Uploader {
         _appState!.isUploading = _isUploading;
         _appState!.uploadCount = _uploadedCount.toDouble();
       });
+
+    }
+
+    if (_totalCount < double.infinity) {
+
       await notifPlugin.show(
         1234,
         'Uploading images',
@@ -290,7 +295,8 @@ class Uploader {
         );
       }
     }
-    if (didUpload) {
+
+    if (didUpload &&_uploadedCount > 0 ) {
       _isUploading = false;
       await notifPlugin.cancel(1234);
       _appState?.update(() {
