@@ -53,8 +53,6 @@ class AddImageToSqliteWorker(
             )
 
 
-            MethodChannelHolder.serviceMethodChannel?.invokeMethod("upload_image", imagePath)
-
             val images = imagesDao.lastAdded()
             Log.d(LOG_TAG, "inserted: ${images.path}")
             return Result.success()

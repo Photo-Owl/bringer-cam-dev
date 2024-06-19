@@ -50,7 +50,7 @@ Future startAutoUpload() async {
     existingWorkPolicy: ExistingWorkPolicy.replace,
     constraints: Constraints(
       networkType: NetworkType.connected,
-      requiresBatteryNotLow: true,
+      requiresBatteryNotLow: false,
     ),
   );
   const autoUploadChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
@@ -67,7 +67,7 @@ Future startAutoUpload() async {
         existingWorkPolicy: ExistingWorkPolicy.append,
         constraints: Constraints(
           networkType: NetworkType.connected,
-          requiresBatteryNotLow: true,
+          requiresBatteryNotLow: false,
         ),
       );
     }

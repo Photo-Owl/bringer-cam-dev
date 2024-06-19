@@ -350,10 +350,6 @@ class AutoUploadService : Service() {
 
                     val lastTimeUsed = usageStats.lastTimeUsed
                     val totalTimeInForeground = usageStats.totalTimeInForeground
-                    Log.d(
-                        LOG_TAG,
-                        "CAMERA PACKAGE - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
-                    )
                     // Check if variables exist in shared preferences
                     val oldCameraLastTimeUsed =
                         sharedPrefs.getString("camera_last_time_used", "")
