@@ -25,6 +25,7 @@ void taskDispatcher() {
   Workmanager().executeTask((task, _) async {
     try {
       await initFirebase();
+      if (FirebaseAuth.instance.currentUser == null) return false;
       await SQLiteManager.initialize();
       final uploader = Uploader();
       await uploader.waitForUploads();

@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'package:content_resolver/content_resolver.dart';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
@@ -50,7 +52,7 @@ class Uploader {
   // Can be initialized only once
   Uploader._() : userId = FirebaseAuth.instance.currentUser!.uid {
     _startupTask = SQLiteManager.instance
-        .fetchImagesToUpload(ownerId: userId)
+        .fetchImagesToUpload()
         .then((rows) async {
       _uploadQueue.addAll(rows.map(
         (row) => UploadItem(
@@ -120,6 +122,8 @@ class Uploader {
   Future<void> uploadImages() async {
     if (_isUploading) return;
 
+    var didUpload = false;
+
     final notifPlugin = FlutterLocalNotificationsPlugin();
     await notifPlugin.initialize(
       const InitializationSettings(
@@ -135,9 +139,11 @@ class Uploader {
         _appState!.isUploading = _isUploading;
         _appState!.uploadCount = _uploadedCount.toDouble();
       });
+
     }
 
     if (_totalCount < double.infinity) {
+
       await notifPlugin.show(
         1234,
         'Uploading images',
@@ -171,14 +177,26 @@ class Uploader {
         );
 
         // Upload the image to Firebase Storage
-        final filePath = row.path;
-        final fileName = basename(filePath);
-        final ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
-        await ref.putFile(
-          File(filePath),
-          SettableMetadata(
-              contentType: mime(fileName)), // Set the content type here
-        );
+        late Reference ref;
+        if (row.path.startsWith('content://')) {
+          final image = await ContentResolver.resolveContent(row.path);
+          final fileName = image.fileName;
+          ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
+          await ref.putData(
+            image.data,
+            SettableMetadata(contentType: image.mimeType),
+          );
+        } else {
+          final filePath = row.path;
+          final fileName = basename(filePath);
+          ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
+          await ref.putFile(
+            File(filePath),
+            SettableMetadata(
+              contentType: mime(fileName),
+            ), // Set the content type here
+          );
+        }
 
         // Get the URL of the uploaded image
         final url = await ref.getDownloadURL();
@@ -255,6 +273,7 @@ class Uploader {
           _appState!.isUploading = _isUploading;
           _appState!.uploadCount = _uploadedCount.toDouble();
         });
+        didUpload = true;
         await notifPlugin.show(
           1234,
           'Uploading images',
@@ -276,12 +295,13 @@ class Uploader {
         );
       }
     }
-    _isUploading = false;
-    await notifPlugin.cancel(1234);
-    _appState?.update(() {
-      _appState!.isUploading = _isUploading;
-    });
-    if (_uploadedCount > 0) {
+
+    if (didUpload &&_uploadedCount > 0 ) {
+      _isUploading = false;
+      await notifPlugin.cancel(1234);
+      _appState?.update(() {
+        _appState!.isUploading = _isUploading;
+      });
       await notifPlugin.show(
         1235,
         'All photos uploaded!',

@@ -135,9 +135,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
                     child: FutureBuilder<List<ReadImagesToUploadRow>>(
-                      future: SQLiteManager.instance.readImagesToUpload(
-                        ownerId: currentUserUid,
-                      ),
+                      future: SQLiteManager.instance.readImagesToUpload(),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
@@ -247,9 +245,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                     ),
                   ),
                   FutureBuilder<List<ReadUploadedImagesRow>>(
-                    future: SQLiteManager.instance.readUploadedImages(
-                      ownerId: currentUserUid,
-                    ),
+                    future: SQLiteManager.instance.readUploadedImages(),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {

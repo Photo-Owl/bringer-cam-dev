@@ -29,37 +29,17 @@ class SQLiteManager {
 
   /// START READ QUERY CALLS
 
-  Future<List<FetchImagesToUploadRow>> fetchImagesToUpload({
-    String? ownerId,
-  }) =>
-      performFetchImagesToUpload(
-        _database,
-        ownerId: ownerId,
-      );
+  Future<List<FetchImagesToUploadRow>> fetchImagesToUpload() =>
+      performFetchImagesToUpload(_database);
 
-  Future<List<ReadUploadedImagesRow>> readUploadedImages({
-    String? ownerId,
-  }) =>
-      performReadUploadedImages(
-        _database,
-        ownerId: ownerId,
-      );
+  Future<List<ReadUploadedImagesRow>> readUploadedImages() =>
+      performReadUploadedImages(_database);
 
-  Future<List<ReadImagesToUploadRow>> readImagesToUpload({
-    String? ownerId,
-  }) =>
-      performReadImagesToUpload(
-        _database,
-        ownerId: ownerId,
-      );
+  Future<List<ReadImagesToUploadRow>> readImagesToUpload() =>
+      performReadImagesToUpload(_database);
 
-  Future<List<ShowLocalImagesRow>> showLocalImages({
-    String? ownerId,
-  }) =>
-      performShowLocalImages(
-        _database,
-        ownerId: ownerId,
-      );
+  Future<List<ShowLocalImagesRow>> showLocalImages() =>
+      performShowLocalImages(_database);
 
   /// END READ QUERY CALLS
 

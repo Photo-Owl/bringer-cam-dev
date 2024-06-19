@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:io';
+import 'package:content_resolver/content_resolver.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 
 class ShowLocalImage extends StatefulWidget {
   const ShowLocalImage({
@@ -33,7 +35,23 @@ class ShowLocalImage extends StatefulWidget {
 class _ShowLocalImageState extends State<ShowLocalImage> {
   @override
   Widget build(BuildContext context) {
-    var imageFile = File(widget.path);
-    return Image.file(imageFile, fit: BoxFit.cover);
+    if (widget.path.startsWith('content://')) {
+      final data = ContentResolver.resolveContent(widget.path);
+      return FutureBuilder(
+        future: data,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            return Image.memory(snapshot.requireData.data, fit: BoxFit.cover);
+          }
+          return const Image(
+            image: BlurHashImage('LAKBRFxu9FWB-;M{~qRj00xu00j['),
+            fit: BoxFit.cover,
+          );
+        },
+      );
+    } else {
+      return Image.file(File(widget.path), fit: BoxFit.cover);
+    }
   }
 }

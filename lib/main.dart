@@ -1,3 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 import '/custom_code/actions/index.dart' as actions;
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +13,7 @@ import 'auth/firebase_auth/auth_util.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
 import 'backend/firebase/firebase_config.dart';
+import '/custom_code/actions/uploader.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 void main() async {
@@ -69,6 +74,8 @@ class _MyAppState extends State<MyApp> {
       const Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
+
+    _handleSharedPhotos();
   }
 
   @override
@@ -81,6 +88,25 @@ class _MyAppState extends State<MyApp> {
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
+
+  void _handleSharedPhotos() {
+    const photosChannel = MethodChannel('com.smoose.photoowldev/sharePhotos');
+    photosChannel.setMethodCallHandler((methodCall) async {
+      debugPrint('bringer/sharePhotos: received method call');
+      if (methodCall.method == "sharePhotos") {
+        final photosList = List.castFrom<dynamic, String>(methodCall.arguments as List);
+        final timestamp = DateTime.timestamp().millisecondsSinceEpoch;
+        for (final pic in photosList) {
+          await SQLiteManager.instance.insertImage(
+            path: pic,
+            ownerId: FirebaseAuth.instance.currentUser?.uid,
+            unixTimestamp: timestamp,
+          );
+        }
+        Fluttertoast.showToast(msg: "Uploading the pics to Bringer...");
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

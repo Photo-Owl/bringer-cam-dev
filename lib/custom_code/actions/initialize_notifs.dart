@@ -1,4 +1,8 @@
 // Automatic FlutterFlow imports
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
@@ -76,7 +80,13 @@ Future<void> initializeNotifs() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 }
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print("Handling a background message: ${message.messageId}");
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    await const AndroidIntent(
+      action: 'com.smoose.photoowldev.action.RESTART_SERVICE',
+      package: 'com.smoose.photoowldev',
+      componentName: 'com.smoose.photoowldev.receiver.RestartReceiver',
+    ).sendBroadcast();
+  }
 }

@@ -129,7 +129,7 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
 Future<List<ImageModelStruct>> fetchImagesFromSQLite(String uid) async {
   // Get a reference to the database
   var showLocalImagesRows =
-      await SQLiteManager.instance.showLocalImages(ownerId: uid);
+      await SQLiteManager.instance.showLocalImages();
   // Query the database to get all images
   final List<ShowLocalImagesRow> maps = showLocalImagesRows;
 
