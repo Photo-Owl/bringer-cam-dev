@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.core.content.IntentCompat
 import com.smoose.photoowldev.services.AutoUploadService
 import com.smoose.photoowldev.services.ServiceState
 import io.flutter.embedding.android.FlutterActivity
@@ -27,10 +28,14 @@ class MainActivity : FlutterActivity() {
 
         @JvmStatic
         private val CHANNEL_ID = "com.smoose.photoowldev/autoUpload"
+
+        @JvmStatic
+        private val SHARE_CHANNEL_ID = "com.smoose.photoowldev/sharePhotos"
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        handleSharedPhotos(flutterEngine)
         autoUploadChannel = MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             CHANNEL_ID
@@ -77,6 +82,41 @@ class MainActivity : FlutterActivity() {
 
     }
 
+    private fun handleSharedPhotos(flutterEngine: FlutterEngine) {
+        var photosList: List<String> = listOf()
+        when (intent.action) {
+            Intent.ACTION_SEND -> {
+                IntentCompat.getParcelableExtra(
+                    intent,
+                    Intent.EXTRA_STREAM,
+                    Uri::class.java
+                )?.let {
+                    photosList = listOf(it.toString())
+                }
+            }
+
+            Intent.ACTION_SEND_MULTIPLE -> {
+                IntentCompat.getParcelableArrayListExtra(
+                    intent,
+                    Intent.EXTRA_STREAM,
+                    Uri::class.java
+                )
+                    ?.map { it.toString() }
+                    ?.let { photosList = it }
+            }
+        }
+
+        Log.d("bringer/sharePhotos", "photosList: ${photosList.isNotEmpty()} ${photosList.size}")
+
+        if (photosList.isNotEmpty()) {
+            val channel = MethodChannel(
+                flutterEngine.dartExecutor.binaryMessenger,
+                SHARE_CHANNEL_ID
+            )
+            channel.invokeMethod("sharePhotos", photosList)
+        }
+    }
+
 //    override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
 //        autoUploadChannel.setMethodCallHandler(null)
 //        super.cleanUpFlutterEngine(flutterEngine)
@@ -87,7 +127,8 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun isBatteryOptimizationIgnored(): Boolean {
-        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        val powerManager =
+            getSystemService(Context.POWER_SERVICE) as PowerManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             powerManager.isIgnoringBatteryOptimizations(packageName)
         } else true
