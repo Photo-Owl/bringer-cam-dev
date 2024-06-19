@@ -14,7 +14,6 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.IntentCompat
 import com.smoose.photoowldev.services.AutoUploadService
-import com.smoose.photoowldev.services.ServiceState
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -43,12 +42,6 @@ class MainActivity : FlutterActivity() {
             .apply {
                 setMethodCallHandler { methodCall, result ->
                     when (methodCall.method) {
-                        "setSignInStatus" -> setSignInStatus(
-                            methodCall.argument(
-                                "userId"
-                            ), result
-                        )
-
                         "checkForPermissions" -> result.success(
                             checkForPermissions()
                         )
@@ -68,6 +61,15 @@ class MainActivity : FlutterActivity() {
                         "requestIgnoreBatteryOptimization" -> result.success(
                             requestIgnoreBatteryOptimization()
                         )
+
+                        "startService" -> {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                startForegroundService(Intent(applicationContext, AutoUploadService::class.java))
+                            } else {
+                                startService(Intent(applicationContext, AutoUploadService::class.java))
+                            }
+                            result.success("")
+                        }
 
                         "openCamera" -> {
                             startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA))
@@ -243,46 +245,5 @@ class MainActivity : FlutterActivity() {
             granted = canDrawOverlays()
         }
         return granted
-    }
-
-    private fun initializeService(
-        isSignedIn: Boolean,
-        result: MethodChannel.Result
-    ) {
-        try {
-            val intent = Intent(this, AutoUploadService::class.java)
-            intent.putExtra(
-                AutoUploadService.SERVICE_STATE_EXTRA,
-                if (isSignedIn) ServiceState.INIT_SIGNED_IN else ServiceState.INIT
-            )
-            val canSend =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ) == PackageManager.PERMISSION_GRANTED
-                else true
-            if (canSend) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(intent)
-                } else {
-                    startService(intent)
-                }
-            }
-            result.success("")
-        } catch (e: Error) {
-            Log.e(LOG_TAG, "Unexpected error.", e)
-            result.error("ERROR", "Unexpected error", null)
-        }
-    }
-
-    private fun setSignInStatus(userId: String?, result: MethodChannel.Result) {
-        if (userId == null) {
-            AppState.authUser = null
-            initializeService(false, result)
-        } else {
-            AppState.authUser = userId
-            initializeService(true, result)
-        }
     }
 }

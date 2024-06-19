@@ -52,7 +52,7 @@ class Uploader {
   // Can be initialized only once
   Uploader._() : userId = FirebaseAuth.instance.currentUser!.uid {
     _startupTask = SQLiteManager.instance
-        .fetchImagesToUpload(ownerId: userId)
+        .fetchImagesToUpload()
         .then((rows) async {
       _uploadQueue.addAll(rows.map(
         (row) => UploadItem(

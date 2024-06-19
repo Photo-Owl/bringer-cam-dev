@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -90,14 +89,10 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
             },
           ),
         });
+        
+        const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
+        await channel.invokeMethod('startService');
       }
-      const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
-      await platform.invokeMethod('setSignInStatus',
-          {"userId": FirebaseAuth.instance.currentUser?.uid});
-      // final permsGiven = await platform.invokeMethod('checkForPermissions', null);
-      // if (!permsGiven) {
-      //   context.goNamed('connectgallery');
-      // }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

@@ -1,5 +1,6 @@
 package com.smoose.photoowldev.db
 
+import androidx.room.AutoMigration
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
@@ -15,7 +16,7 @@ data class Images (
     @ColumnInfo(name = "image_id")
     val imageId: Int = 0,
     val path: String,
-    val owner: String,
+    val owner: String?,
     @ColumnInfo(name = "unix_timestamp") val unixTimestamp: Long?,
     @ColumnInfo(name = "is_uploading") val isUploading: Int,
     @ColumnInfo(name = "is_uploaded") val isUploaded: Int,
@@ -30,7 +31,11 @@ interface ImagesDao {
     fun insertAll(vararg images: Images)
 }
 
-@Database(entities = [Images::class], version = 1)
+@Database(
+    entities = [Images::class],
+    version = 2,
+    autoMigrations = [AutoMigration(from = 1, to = 2)]
+)
 abstract class ImagesDB: RoomDatabase() {
     abstract fun imagesDao(): ImagesDao
 }

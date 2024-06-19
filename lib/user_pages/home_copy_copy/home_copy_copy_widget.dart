@@ -490,9 +490,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                         child: FutureBuilder<
                                             List<ReadUploadedImagesRow>>(
                                           future: SQLiteManager.instance
-                                              .readUploadedImages(
-                                            ownerId: currentUserUid,
-                                          ),
+                                              .readUploadedImages(),
                                           builder: (context, snapshot) {
                                             // Customize what your widget looks like when it's loading.
                                             if (!snapshot.hasData) {
