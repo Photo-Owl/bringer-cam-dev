@@ -63,6 +63,7 @@ class AutoUploadService : Service() {
     private var fileObserver: ImageFileObserver? = null
     private var serviceState: Int = ServiceState.START_SHARING
     private val handler = Handler(Looper.getMainLooper())
+    private var isPopUpShowing: Boolean = false
     private val runnable = object : Runnable {
         override fun run() {
             val defaultCameraApp = getDefaultCameraApp()
@@ -146,16 +147,18 @@ class AutoUploadService : Service() {
         flutterEngine.getDartExecutor().executeDartEntrypoint(
             DartExecutor.DartEntrypoint.createDefault()
         )
+        Log.d(LOG_TAG, "onStartCommand")
 
         val channel: MethodChannel =
             MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "com.smoose.photoowldev/autoUpload")
         MethodChannelHolder.serviceMethodChannel = channel
-        val newState = intent?.extras?.getInt(SERVICE_STATE_EXTRA, 0) ?: 0
+        val newState = intent?.extras?.getInt(SERVICE_STATE_EXTRA, 1) ?: 1
 
         when (newState) {
             ServiceState.START_SHARING -> startSharing()
             ServiceState.STOP_SHARING -> stopSharing()
         }
+        Log.d(LOG_TAG, "onStartCommand returning start_sticky")
         return START_STICKY
     }
 
@@ -245,6 +248,7 @@ class AutoUploadService : Service() {
     }
 
     private fun showPopUp() {
+        if(isPopUpShowing) return
 
         overlayView.setOnTouchListener { v, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
@@ -271,6 +275,7 @@ class AutoUploadService : Service() {
         params.gravity = Gravity.START
         windowManager.addView(overlayView, params)
         showToolTip()
+        isPopUpShowing = true
     }
 
     private fun showToolTip() {
@@ -306,10 +311,12 @@ class AutoUploadService : Service() {
     }
 
     private fun hidePopUp() {
+        if(!isPopUpShowing) return
         if (overlayView.parent != null) {
             (getSystemService(Context.WINDOW_SERVICE) as WindowManager).removeView(
                 overlayView
             )
+            isPopUpShowing = false
 
         }
     }

@@ -64,7 +64,7 @@ class AddImageToSqliteWorker(
                 }
             }
             return Result.success()
-        } catch (e: Error) {
+        } catch (e: Exception) {
             Log.e(LOG_TAG, "Unexpected error", e)
             return Result.failure()
         }
