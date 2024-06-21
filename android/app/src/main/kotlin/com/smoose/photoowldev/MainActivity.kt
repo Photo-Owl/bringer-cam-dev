@@ -64,8 +64,10 @@ class MainActivity : FlutterActivity() {
 
                         "startService" -> {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                Log.d(LOG_TAG, "Starting service")
                                 startForegroundService(Intent(applicationContext, AutoUploadService::class.java))
                             } else {
+                                Log.d(LOG_TAG, "Starting service")
                                 startService(Intent(applicationContext, AutoUploadService::class.java))
                             }
                             result.success("")

@@ -73,6 +73,9 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
         parameters: {'screen_name': 'RedirectionCopy'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      print("calling startService from dart");
+      const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
+      await channel.invokeMethod('startService');
       logFirebaseEvent('REDIRECTION_COPY_RedirectionCopy_ON_INIT');
       if ((currentUserPhoto != '') &&
           (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
@@ -89,9 +92,6 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
             },
           ),
         });
-        
-        const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
-        await channel.invokeMethod('startService');
       }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));

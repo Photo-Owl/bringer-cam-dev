@@ -36,6 +36,12 @@
             <action android:name="android.intent.action.CAMERA_BUTTON" />
         </intent>
     </queries>
+    <queries>
+        <package android:name="com.android.camera2" />
+        <intent>
+            <action android:name="android.intent.action.CAMERA_BUTTON" />
+        </intent>
+    </queries>
 
     <application
         android:label="Bringer"

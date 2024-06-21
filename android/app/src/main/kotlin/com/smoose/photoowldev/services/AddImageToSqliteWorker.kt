@@ -34,7 +34,7 @@ class AddImageToSqliteWorker(
     override fun doWork(): Result {
         val imagePath = inputData.getString("path")
         val imageOwner = inputData.getString("owner")
-        if (imagePath == null || imageOwner == null) {
+        if (imagePath == null) {
             Log.d(LOG_TAG, "Path or owner missing: Cannot add to DB")
             return Result.success()
         }

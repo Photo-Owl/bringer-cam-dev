@@ -119,6 +119,7 @@ class AutoUploadService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.d(LOG_TAG, "onCreate Called")
         overlayView =
             LayoutInflater.from(this).inflate(R.layout.popup_layout, null)
         sharedPrefs = getSharedPreferences(
