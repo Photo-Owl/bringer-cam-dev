@@ -7,7 +7,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.PowerManager
+import android.content.ContentResolver
+import android.media.AudioAttributes
+import android.media.AudioAttributes.Builder
+import androidx.core.app.NotificationChannelCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.smoose.photoowldev.R
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
@@ -247,5 +255,26 @@ class MainActivity : FlutterActivity() {
             granted = canDrawOverlays()
         }
         return granted
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val audioAttributes: AudioAttributes = Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build()
+            val sound: Uri =
+                Uri.parse((ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName()).toString() + "/" + R.raw.custom_sound)
+            val notifChannel = NotificationChannelCompat.Builder(
+                "photo_found",
+                NotificationManagerCompat.IMPORTANCE_MAX
+            )
+                .setName(getString(R.string.photo_found_channel_name)).setSound(sound, audioAttributes)
+                .build()
+            NotificationManagerCompat.from(applicationContext).createNotificationChannel(notifChannel)
+
+        }
+
     }
 }
