@@ -62,6 +62,14 @@ class MainActivity : FlutterActivity() {
                             requestIgnoreBatteryOptimization()
                         )
 
+                        "checkForContactsPermission" -> result.success(
+                            checkForContactsPermission()
+                        )
+
+                        "requestContactsPermission" -> result.success(
+                            requestContactsPermission()
+                        )
+
                         "startService" -> {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 startForegroundService(Intent(applicationContext, AutoUploadService::class.java))
@@ -245,5 +253,25 @@ class MainActivity : FlutterActivity() {
             granted = canDrawOverlays()
         }
         return granted
+    }
+
+    private fun checkForContactsPermission() : Boolean {
+        return ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_CONTACTS
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestContactsPermission() : Boolean {
+        var isGranted = checkForContactsPermission()
+        if (!isGranted) {
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(Manifest.permission.READ_CONTACTS),
+                123
+            )
+            isGranted = checkForContactsPermission()
+        }
+        return isGranted
     }
 }
