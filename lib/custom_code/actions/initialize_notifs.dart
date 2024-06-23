@@ -54,6 +54,7 @@ Future<void> initializeNotifs() async {
   await notifPlugin.initialize(
     const InitializationSettings(
       android: AndroidInitializationSettings('ic_mono'),
+      iOS: DarwinInitializationSettings(),
     ),
   );
 
