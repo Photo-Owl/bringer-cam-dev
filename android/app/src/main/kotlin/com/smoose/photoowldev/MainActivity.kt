@@ -7,13 +7,21 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.PowerManager
+import android.content.ContentResolver
+import android.media.AudioAttributes
+import android.media.AudioAttributes.Builder
+import androidx.core.app.NotificationChannelCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.smoose.photoowldev.R
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.core.content.IntentCompat
 import com.smoose.photoowldev.services.AutoUploadService
-import com.smoose.photoowldev.services.ServiceState
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -27,10 +35,14 @@ class MainActivity : FlutterActivity() {
 
         @JvmStatic
         private val CHANNEL_ID = "com.smoose.photoowldev/autoUpload"
+
+        @JvmStatic
+        private val SHARE_CHANNEL_ID = "com.smoose.photoowldev/sharePhotos"
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        handleSharedPhotos(flutterEngine)
         autoUploadChannel = MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             CHANNEL_ID
@@ -38,12 +50,6 @@ class MainActivity : FlutterActivity() {
             .apply {
                 setMethodCallHandler { methodCall, result ->
                     when (methodCall.method) {
-                        "setSignInStatus" -> setSignInStatus(
-                            methodCall.argument(
-                                "userId"
-                            ), result
-                        )
-
                         "checkForPermissions" -> result.success(
                             checkForPermissions()
                         )
@@ -64,6 +70,17 @@ class MainActivity : FlutterActivity() {
                             requestIgnoreBatteryOptimization()
                         )
 
+                        "startService" -> {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                Log.d(LOG_TAG, "Starting service")
+                                startForegroundService(Intent(applicationContext, AutoUploadService::class.java))
+                            } else {
+                                Log.d(LOG_TAG, "Starting service")
+                                startService(Intent(applicationContext, AutoUploadService::class.java))
+                            }
+                            result.success("")
+                        }
+
                         "openCamera" -> {
                             startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA))
                             result.success("")
@@ -77,6 +94,41 @@ class MainActivity : FlutterActivity() {
 
     }
 
+    private fun handleSharedPhotos(flutterEngine: FlutterEngine) {
+        var photosList: List<String> = listOf()
+        when (intent.action) {
+            Intent.ACTION_SEND -> {
+                IntentCompat.getParcelableExtra(
+                    intent,
+                    Intent.EXTRA_STREAM,
+                    Uri::class.java
+                )?.let {
+                    photosList = listOf(it.toString())
+                }
+            }
+
+            Intent.ACTION_SEND_MULTIPLE -> {
+                IntentCompat.getParcelableArrayListExtra(
+                    intent,
+                    Intent.EXTRA_STREAM,
+                    Uri::class.java
+                )
+                    ?.map { it.toString() }
+                    ?.let { photosList = it }
+            }
+        }
+
+        Log.d("bringer/sharePhotos", "photosList: ${photosList.isNotEmpty()} ${photosList.size}")
+
+        if (photosList.isNotEmpty()) {
+            val channel = MethodChannel(
+                flutterEngine.dartExecutor.binaryMessenger,
+                SHARE_CHANNEL_ID
+            )
+            channel.invokeMethod("sharePhotos", photosList)
+        }
+    }
+
 //    override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
 //        autoUploadChannel.setMethodCallHandler(null)
 //        super.cleanUpFlutterEngine(flutterEngine)
@@ -87,7 +139,8 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun isBatteryOptimizationIgnored(): Boolean {
-        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        val powerManager =
+            getSystemService(Context.POWER_SERVICE) as PowerManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             powerManager.isIgnoringBatteryOptimizations(packageName)
         } else true
@@ -204,44 +257,24 @@ class MainActivity : FlutterActivity() {
         return granted
     }
 
-    private fun initializeService(
-        isSignedIn: Boolean,
-        result: MethodChannel.Result
-    ) {
-        try {
-            val intent = Intent(this, AutoUploadService::class.java)
-            intent.putExtra(
-                AutoUploadService.SERVICE_STATE_EXTRA,
-                if (isSignedIn) ServiceState.INIT_SIGNED_IN else ServiceState.INIT
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val audioAttributes: AudioAttributes = Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build()
+            val sound: Uri =
+                Uri.parse((ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName()).toString() + "/" + R.raw.custom_sound)
+            val notifChannel = NotificationChannelCompat.Builder(
+                "photo_found",
+                NotificationManagerCompat.IMPORTANCE_MAX
             )
-            val canSend =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ) == PackageManager.PERMISSION_GRANTED
-                else true
-            if (canSend) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startForegroundService(intent)
-                } else {
-                    startService(intent)
-                }
-            }
-            result.success("")
-        } catch (e: Error) {
-            Log.e(LOG_TAG, "Unexpected error.", e)
-            result.error("ERROR", "Unexpected error", null)
-        }
-    }
+                .setName(getString(R.string.photo_found_channel_name)).setSound(sound, audioAttributes)
+                .build()
+            NotificationManagerCompat.from(applicationContext).createNotificationChannel(notifChannel)
 
-    private fun setSignInStatus(userId: String?, result: MethodChannel.Result) {
-        if (userId == null) {
-            AppState.authUser = null
-            initializeService(false, result)
-        } else {
-            AppState.authUser = userId
-            initializeService(true, result)
         }
+
     }
 }

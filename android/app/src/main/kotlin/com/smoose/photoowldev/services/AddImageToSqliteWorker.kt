@@ -9,6 +9,14 @@ import com.smoose.photoowldev.db.Images
 import com.smoose.photoowldev.db.ImagesDB
 import java.util.Calendar
 import com.smoose.photoowldev.MethodChannelHolder
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.dart.DartExecutor
+import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.embedding.engine.loader.FlutterLoader;
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.*
 
 class AddImageToSqliteWorker(
     context: Context,
@@ -26,33 +34,37 @@ class AddImageToSqliteWorker(
     override fun doWork(): Result {
         val imagePath = inputData.getString("path")
         val imageOwner = inputData.getString("owner")
-        if (imagePath == null || imageOwner == null) {
+        if (imagePath == null) {
             Log.d(LOG_TAG, "Path or owner missing: Cannot add to DB")
             return Result.success()
         }
         try {
-            val db = Room.databaseBuilder(
-                applicationContext,
-                ImagesDB::class.java,
-                DB_NAME
-            ).build()
-            val imagesDao = db.imagesDao()
-            imagesDao.insertAll(
-                Images(
-                    path = imagePath,
-                    owner = imageOwner,
-                    unixTimestamp = Calendar.getInstance().timeInMillis,
-                    isUploaded = 0,
-                    isUploading = 0,
+            GlobalScope.launch(Dispatchers.IO) {
+                val db = Room.databaseBuilder(
+                    applicationContext,
+                    ImagesDB::class.java,
+                    DB_NAME
+                ).build()
+                val imagesDao = db.imagesDao()
+                imagesDao.insertAll(
+                    Images(
+                        path = imagePath,
+                        owner = imageOwner,
+                        unixTimestamp = Calendar.getInstance().timeInMillis,
+                        isUploaded = 0,
+                        isUploading = 0,
+                    )
                 )
-            )
 
-            MethodChannelHolder.methodChannel?.invokeMethod("upload_image", imagePath)
 
-            val images = imagesDao.lastAdded()
-            Log.d(LOG_TAG, "inserted: ${images.path}")
+                val images = imagesDao.lastAdded()
+                Log.d(LOG_TAG, "inserted: ${images.path}")
+                withContext(Dispatchers.Main) {
+                    MethodChannelHolder?.serviceMethodChannel?.invokeMethod("upload_image", "Success")
+                }
+            }
             return Result.success()
-        } catch (e: Error) {
+        } catch (e: Exception) {
             Log.e(LOG_TAG, "Unexpected error", e)
             return Result.failure()
         }

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -74,6 +73,9 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
         parameters: {'screen_name': 'RedirectionCopy'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      print("calling startService from dart");
+      const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
+      await channel.invokeMethod('startService');
       logFirebaseEvent('REDIRECTION_COPY_RedirectionCopy_ON_INIT');
       if ((currentUserPhoto != '') &&
           (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
@@ -91,13 +93,6 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           ),
         });
       }
-      const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
-      await platform.invokeMethod('setSignInStatus',
-          {"userId": FirebaseAuth.instance.currentUser?.uid});
-      // final permsGiven = await platform.invokeMethod('checkForPermissions', null);
-      // if (!permsGiven) {
-      //   context.goNamed('connectgallery');
-      // }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

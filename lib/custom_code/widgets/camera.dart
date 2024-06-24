@@ -188,11 +188,11 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
   Future<void> _fetchLastImage() async {
     var lastImage = await SQLiteManager.instance
-        .readImagesToUpload(ownerId: currentUserUid)
+        .readImagesToUpload()
         .then((images) => images.firstOrNull)
         .then((image) => image?.path);
     lastImage ??= await SQLiteManager.instance
-        .readUploadedImages(ownerId: currentUserUid)
+        .readUploadedImages()
         .then((images) => images.firstOrNull)
         .then((image) => image?.path);
     lastImagePath = lastImage;

@@ -9,6 +9,7 @@ import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -24,7 +25,8 @@ import 'package:workmanager/workmanager.dart';
 void taskDispatcher() {
   Workmanager().executeTask((task, _) async {
     try {
-      await initFirebase();
+      if (Firebase.apps.isEmpty) await initFirebase();
+      if (FirebaseAuth.instance.currentUser == null) return false;
       await SQLiteManager.initialize();
       final uploader = Uploader();
       await uploader.waitForUploads();
@@ -50,7 +52,7 @@ Future startAutoUpload() async {
     existingWorkPolicy: ExistingWorkPolicy.replace,
     constraints: Constraints(
       networkType: NetworkType.connected,
-      requiresBatteryNotLow: true,
+      requiresBatteryNotLow: false,
     ),
   );
   const autoUploadChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
@@ -67,7 +69,7 @@ Future startAutoUpload() async {
         existingWorkPolicy: ExistingWorkPolicy.append,
         constraints: Constraints(
           networkType: NetworkType.connected,
-          requiresBatteryNotLow: true,
+          requiresBatteryNotLow: false,
         ),
       );
     }
