@@ -164,15 +164,14 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
   Future<void> checkForPerms() async {
     const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
     showPermsRequest =
-    ! (await platform.invokeMethod<bool>('checkForPermissions', null) ?? false);
+        !(await platform.invokeMethod<bool>('checkForPermissions', null) ??
+            false);
     safeSetState(() {});
   }
 
   Future<void> onRefresh() async {
-    logFirebaseEvent(
-        'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
-    logFirebaseEvent(
-        'ListView_update_page_state');
+    logFirebaseEvent('HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
+    logFirebaseEvent('ListView_update_page_state');
     setState(() {
       _model.loaded = false;
     });
@@ -180,13 +179,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     _model.timeline2 = await actions.getAllImages(
       currentUserUid,
     );
-    logFirebaseEvent(
-        'ListView_update_page_state');
+    logFirebaseEvent('ListView_update_page_state');
     setState(() {
       _model.loaded = true;
-      _model.timeline = _model.timeline2!
-          .toList()
-          .cast<TimelineItemStruct>();
+      _model.timeline = _model.timeline2!.toList().cast<TimelineItemStruct>();
     });
   }
 
@@ -305,132 +301,716 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
             body: Builder(
               builder: (context) {
                 if (_model.loaded) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.max,
+                  return Stack(
                     children: [
-                      Align(
-                        alignment: AlignmentDirectional(-1.0, 0.0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.white, Color(0x00FFFFFF)],
-                              stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.0, -1.0),
-                              end: AlignmentDirectional(0, 1.0),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Align(
+                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [Colors.white, Color(0x00FFFFFF)],
+                                  stops: [0.0, 1.0],
+                                  begin: AlignmentDirectional(0.0, -1.0),
+                                  end: AlignmentDirectional(0, 1.0),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 4.0, 0.0, 4.0),
+                                child: Text(
+                                  'Gallery',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        fontSize: 20.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                              ),
                             ),
                           ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 4.0, 0.0, 4.0),
-                            child: Text(
-                              'Gallery',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    fontSize: 20.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
+                          if (!FFAppState().isUploading &&
+                              (FFAppState().uploadCount > 0.0))
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 16.0, 10.0, 16.0),
+                              child: Container(
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.sizeOf(context).width * 1.0,
+                                  maxHeight:
+                                      MediaQuery.sizeOf(context).height * 0.09,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF5F5CFF),
+                                  borderRadius: BorderRadius.circular(16.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      19.0, 15.0, 19.0, 15.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
+                                            child: FutureBuilder<
+                                                List<ReadUploadedImagesRow>>(
+                                              future: SQLiteManager.instance
+                                                  .readUploadedImages(),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        valueColor:
+                                                            AlwaysStoppedAnimation<
+                                                                Color>(
+                                                          Color(0xFF5282E5),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                                final showLocalImageReadUploadedImagesRowList =
+                                                    snapshot.data!;
+                                                return Container(
+                                                  width: 48.0,
+                                                  height: 48.0,
+                                                  child: custom_widgets
+                                                      .ShowLocalImage(
+                                                    width: 48.0,
+                                                    height: 48.0,
+                                                    path:
+                                                        showLocalImageReadUploadedImagesRowList
+                                                            .first.path,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          FFAppState().uploadCount > 1.0
+                                              ? 'All${(double var1) {
+                                                  return ' ${var1.truncate()} ';
+                                                }(FFAppState().uploadCount)}photos you took were shared! 🎉'
+                                              : 'Photo that you took was shared! 🎉',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                color: Colors.white,
+                                                fontSize: 18.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                ),
+                              ),
+                            ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 4.0, 10.0, 0.0),
+                              child: Builder(
+                                builder: (context) {
+                                  final album = _model.timeline.toList();
+                                  if (album.isEmpty) {
+                                    return Center(
+                                      child: NoPhotosWidget(),
+                                    );
+                                  }
+                                  return RefreshIndicator(
+                                    key: Key('RefreshIndicator_1ydg9f2c'),
+                                    onRefresh: onRefresh,
+                                    child: ListView.separated(
+                                      padding: EdgeInsets.fromLTRB(
+                                        0,
+                                        0,
+                                        0,
+                                        8.0,
+                                      ),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: album.length,
+                                      separatorBuilder: (_, __) =>
+                                          SizedBox(height: 10.0),
+                                      itemBuilder: (context, albumIndex) {
+                                        final albumItem = album[albumIndex];
+                                        return Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Opacity(
+                                                opacity: 0.6,
+                                                child: Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          -1.0, 0.0),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(6.0, 0.0,
+                                                                0.0, 6.0),
+                                                    child: Text(
+                                                      albumItem.date,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              if (albumItem.owners.isNotEmpty)
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xFFF4F4FF),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(12.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Builder(
+                                                          builder: (context) {
+                                                            final owners =
+                                                                albumItem.owners
+                                                                    .toList();
+                                                            return Wrap(
+                                                              spacing: 0.0,
+                                                              runSpacing: 0.0,
+                                                              alignment:
+                                                                  WrapAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  WrapCrossAlignment
+                                                                      .start,
+                                                              direction: Axis
+                                                                  .horizontal,
+                                                              runAlignment:
+                                                                  WrapAlignment
+                                                                      .start,
+                                                              verticalDirection:
+                                                                  VerticalDirection
+                                                                      .down,
+                                                              clipBehavior: Clip
+                                                                  .antiAlias,
+                                                              children: List.generate(
+                                                                  owners.length,
+                                                                  (ownersIndex) {
+                                                                final ownersItem =
+                                                                    owners[
+                                                                        ownersIndex];
+                                                                return Container(
+                                                                  width: 32.0,
+                                                                  height: 32.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .info,
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                  ),
+                                                                  child: Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child: Text(
+                                                                      (String
+                                                                          var1) {
+                                                                        return var1[
+                                                                            0];
+                                                                      }(ownersItem),
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Figtree',
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontSize:
+                                                                                16.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }),
+                                                            );
+                                                          },
+                                                        ),
+                                                        Expanded(
+                                                          child: Align(
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    -1.0, 0.0),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          10.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                'Photos from ${albumItem.owners.first}${(List<String> var1) {
+                                                                  return var1.length >
+                                                                          2
+                                                                      ? ', ${var1[1]} & ${var1.length - 2} more'
+                                                                      : var1.length >
+                                                                              1
+                                                                          ? '& ${var1[1]}'
+                                                                          : '';
+                                                                }(albumItem.owners.toList())}!',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Figtree',
+                                                                      color: Color(
+                                                                          0xFF5D5AFF),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              Padding(
+                                                padding: EdgeInsets.all(10.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              -1.0, 0.0),
+                                                      child: Builder(
+                                                        builder: (context) {
+                                                          final imagesList =
+                                                              albumItem.images
+                                                                  .toList();
+                                                          return Wrap(
+                                                            spacing: 4.0,
+                                                            runSpacing: 4.0,
+                                                            alignment:
+                                                                WrapAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                WrapCrossAlignment
+                                                                    .start,
+                                                            direction:
+                                                                Axis.horizontal,
+                                                            runAlignment:
+                                                                WrapAlignment
+                                                                    .start,
+                                                            verticalDirection:
+                                                                VerticalDirection
+                                                                    .down,
+                                                            clipBehavior:
+                                                                Clip.none,
+                                                            children: List.generate(
+                                                                imagesList
+                                                                    .length,
+                                                                (imagesListIndex) {
+                                                              final imagesListItem =
+                                                                  imagesList[
+                                                                      imagesListIndex];
+                                                              return Builder(
+                                                                builder:
+                                                                    (context) {
+                                                                  if (!imagesListItem
+                                                                      .isLocal) {
+                                                                    return InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      hoverColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      highlightColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      onTap:
+                                                                          () async {
+                                                                        logFirebaseEvent(
+                                                                            'HOME_COPY_COPY_Image_203iliga_ON_TAP');
+                                                                        await Future
+                                                                            .wait([
+                                                                          Future(
+                                                                              () async {
+                                                                            logFirebaseEvent('Image_navigate_to');
+
+                                                                            context.pushNamed(
+                                                                              'ImageexpandedCopy',
+                                                                              queryParameters: {
+                                                                                'albumDoc': serializeParam(
+                                                                                  albumItem.images,
+                                                                                  ParamType.DataStruct,
+                                                                                  true,
+                                                                                ),
+                                                                                'index': serializeParam(
+                                                                                  imagesListIndex,
+                                                                                  ParamType.int,
+                                                                                ),
+                                                                              }.withoutNulls,
+                                                                            );
+                                                                          }),
+                                                                          Future(
+                                                                              () async {
+                                                                            logFirebaseEvent('Image_custom_action');
+                                                                            await actions.addSeenby(
+                                                                              currentUserUid,
+                                                                              imagesListItem.id,
+                                                                              currentUserDisplayName,
+                                                                            );
+                                                                          }),
+                                                                        ]);
+                                                                      },
+                                                                      child:
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(5.0),
+                                                                        child:
+                                                                            OctoImage(
+                                                                          placeholderBuilder: (_) =>
+                                                                              SizedBox.expand(
+                                                                            child:
+                                                                                Image(
+                                                                              image: BlurHashImage('LAKBRFxu9FWB-;M{~qRj00xu00j['),
+                                                                              fit: BoxFit.cover,
+                                                                            ),
+                                                                          ),
+                                                                          image:
+                                                                              CachedNetworkImageProvider(
+                                                                            functions.convertToImagePath(imagesListItem.imageUrl),
+                                                                          ),
+                                                                          width:
+                                                                              (MediaQuery.sizeOf(context).width - 48) / 3,
+                                                                          height:
+                                                                              (MediaQuery.sizeOf(context).width - 48) / 3,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  } else {
+                                                                    return Container(
+                                                                      width:
+                                                                          (MediaQuery.sizeOf(context).width - 48) /
+                                                                              3,
+                                                                      height:
+                                                                          (MediaQuery.sizeOf(context).width - 48) /
+                                                                              3,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                      child:
+                                                                          InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          logFirebaseEvent(
+                                                                              'HOME_COPY_COPY_Stack_kr54o4qp_ON_TAP');
+                                                                          await Future
+                                                                              .wait([
+                                                                            Future(() async {
+                                                                              logFirebaseEvent('Stack_navigate_to');
+
+                                                                              context.pushNamed(
+                                                                                'ImageexpandedCopy',
+                                                                                queryParameters: {
+                                                                                  'albumDoc': serializeParam(
+                                                                                    albumItem.images,
+                                                                                    ParamType.DataStruct,
+                                                                                    true,
+                                                                                  ),
+                                                                                  'index': serializeParam(
+                                                                                    imagesListIndex,
+                                                                                    ParamType.int,
+                                                                                  ),
+                                                                                }.withoutNulls,
+                                                                              );
+                                                                            }),
+                                                                            Future(() async {
+                                                                              logFirebaseEvent('Stack_custom_action');
+                                                                              await actions.addSeenby(
+                                                                                currentUserUid,
+                                                                                imagesListItem.id,
+                                                                                currentUserDisplayName,
+                                                                              );
+                                                                            }),
+                                                                          ]);
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              80.0,
+                                                                          height:
+                                                                              100.0,
+                                                                          child:
+                                                                              Stack(
+                                                                            children: [
+                                                                              Align(
+                                                                                alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                child: Container(
+                                                                                  width: double.infinity,
+                                                                                  height: double.infinity,
+                                                                                  child: custom_widgets.ShowLocalImage(
+                                                                                    width: double.infinity,
+                                                                                    height: double.infinity,
+                                                                                    path: imagesListItem.imageUrl,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Container(
+                                                                                width: (MediaQuery.sizeOf(context).width - 48) / 3,
+                                                                                height: (MediaQuery.sizeOf(context).width - 48) / 3,
+                                                                                decoration: BoxDecoration(
+                                                                                  gradient: LinearGradient(
+                                                                                    colors: [
+                                                                                      Color(0x99101213),
+                                                                                      Colors.transparent
+                                                                                    ],
+                                                                                    stops: [
+                                                                                      0.0,
+                                                                                      0.4
+                                                                                    ],
+                                                                                    begin: AlignmentDirectional(1.0, 1.0),
+                                                                                    end: AlignmentDirectional(-1.0, -1.0),
+                                                                                  ),
+                                                                                ),
+                                                                                child: Align(
+                                                                                  alignment: AlignmentDirectional(1.0, 1.0),
+                                                                                  child: Builder(
+                                                                                    builder: (context) {
+                                                                                      if (imagesListItem.isUploading) {
+                                                                                        return Padding(
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                          child: Icon(
+                                                                                            Icons.cloud_upload_outlined,
+                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                            size: 14.0,
+                                                                                          ),
+                                                                                        );
+                                                                                      } else {
+                                                                                        return Padding(
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
+                                                                                          child: FaIcon(
+                                                                                            FontAwesomeIcons.clock,
+                                                                                            color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                            size: 14.0,
+                                                                                          ),
+                                                                                        );
+                                                                                      }
+                                                                                    },
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }
+                                                                },
+                                                              );
+                                                            }),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ).animateOnPageLoad(animationsMap[
+                                              'columnOnPageLoadAnimation']!),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                       if (showPermsRequest)
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 16.0),
-                        child: Container(
+                        Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [Color(0xFFFFF8D6), Color(0xFFFFF3B7)],
-                              stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.0, -1.0),
-                              end: AlignmentDirectional(0, 1.0),
+                              colors: [Color(0x32FFFFFF), Colors.white],
+                              stops: [0, 0.5],
+                              begin: AlignmentDirectional(0, -1),
+                              end: AlignmentDirectional(0, 1),
                             ),
-                            borderRadius: BorderRadius.circular(24.0),
+                            borderRadius: BorderRadius.circular(0),
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        27.0, 27.0, 0.0, 0.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/logo.png',
-                                        width: 56.0,
-                                        height: 56.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 27, 0, 0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.asset(
+                                    'assets/images/Design.png',
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.45,
+                                    fit: BoxFit.cover,
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        4.0, 35.0, 4.0, 0.0),
-                                    child: Icon(
-                                      Icons.add,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 27.0, 0.0, 0.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/cam.png',
-                                        width: 56.0,
-                                        height: 56.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 8.0, 8.0, 8.0),
+                                    16, 8, 8, 24),
                                 child: Text(
-                                  'Never worry about sharing photos again!',
+                                  'Let\'s Get Started',
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Inter',
-                                        color: Color(0xFF534308),
-                                        fontSize: 28.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF72707E),
+                                        fontSize: 14,
+                                        letterSpacing: 0,
+                                        fontWeight: FontWeight.w500,
                                       ),
+                                ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(-1, -1),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 0, 8, 8),
+                                  child: Text(
+                                    'Photosharing is a two people job 🤝',
+                                    textAlign: TextAlign.center,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          color: Color(0xFF534308),
+                                          fontSize: 28,
+                                          letterSpacing: 0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(-1, -1),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 8, 8, 0),
+                                  child: Text(
+                                    'In order for you to get started with Social gallery connect our sharing feature in the camera',
+                                    textAlign: TextAlign.center,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          color: Color(0xFF534308),
+                                          fontSize: 14,
+                                          letterSpacing: 0,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                  ),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 16.0),
+                                    16, 24, 16, 24),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('connectgallery');
                                     if (!context.mounted) return;
+                                    context
+                                        .pushReplacementNamed('connectgallery');
                                     await checkForPerms();
                                   },
-                                  showLoadingIndicator: false,
-                                  text: 'Connect Bringer to Your Camera',
+                                  text: 'Enable Sharing Feature',
                                   options: FFButtonOptions(
                                     width: double.infinity,
-                                    height: 50.0,
+                                    height: 50,
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        24.0, 16.0, 24.0, 16.0),
+                                        24, 16, 24, 16),
                                     iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
+                                        0, 0, 0, 0),
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     textStyle: FlutterFlowTheme.of(context)
@@ -438,612 +1018,92 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                         .override(
                                           fontFamily: 'Inter',
                                           color: Colors.white,
-                                          letterSpacing: 0.0,
+                                          letterSpacing: 0,
                                         ),
-                                    elevation: 3.0,
+                                    elevation: 3,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
-                                      width: 1.0,
+                                      width: 1,
                                     ),
-                                    borderRadius: BorderRadius.circular(14.0),
+                                    borderRadius: BorderRadius.circular(14),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      if (!FFAppState().isUploading &&
-                          (FFAppState().uploadCount > 0.0))
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 16.0, 10.0, 16.0),
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxWidth: MediaQuery.sizeOf(context).width * 1.0,
-                              maxHeight:
-                                  MediaQuery.sizeOf(context).height * 0.09,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Color(0xFF5F5CFF),
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  19.0, 15.0, 19.0, 15.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
-                                        child: FutureBuilder<
-                                            List<ReadUploadedImagesRow>>(
-                                          future: SQLiteManager.instance
-                                              .readUploadedImages(),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                            Color>(
-                                                      Color(0xFF5282E5),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            final showLocalImageReadUploadedImagesRowList =
-                                                snapshot.data!;
-                                            return Container(
-                                              width: 48.0,
-                                              height: 48.0,
-                                              child:
-                                                  custom_widgets.ShowLocalImage(
-                                                width: 48.0,
-                                                height: 48.0,
-                                                path:
-                                                    showLocalImageReadUploadedImagesRowList
-                                                        .first.path,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16, 24, 16, 24),
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xDFCEE1FF),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      FFAppState().uploadCount > 1.0
-                                          ? 'All${(double var1) {
-                                              return ' ${var1.truncate()} ';
-                                            }(FFAppState().uploadCount)}photos you took were shared! 🎉'
-                                          : 'Photo that you took was shared! 🎉',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Inter',
-                                            color: Colors.white,
-                                            fontSize: 18.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 10, 0),
+                                          child: Icon(
+                                            Icons.security_sharp,
+                                            color: Color(0xFF0066FF),
+                                            size: 24,
                                           ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 4.0, 10.0, 0.0),
-                          child: Builder(
-                            builder: (context) {
-                              final album = _model.timeline.toList();
-                              if (album.isEmpty) {
-                                return Center(
-                                  child: NoPhotosWidget(),
-                                );
-                              }
-                              return RefreshIndicator(
-                                key: Key('RefreshIndicator_1ydg9f2c'),
-                                onRefresh: onRefresh,
-                                child: ListView.separated(
-                                  padding: EdgeInsets.fromLTRB(
-                                    0,
-                                    0,
-                                    0,
-                                    8.0,
-                                  ),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: album.length,
-                                  separatorBuilder: (_, __) =>
-                                      SizedBox(height: 10.0),
-                                  itemBuilder: (context, albumIndex) {
-                                    final albumItem = album[albumIndex];
-                                    return Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Opacity(
-                                            opacity: 0.6,
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  -1.0, 0.0),
-                                              child: Padding(
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 4, 0, 4),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Secure photo sharing',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                              Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        6.0, 0.0, 0.0, 6.0),
+                                                    .fromSTEB(0, 4, 0, 0),
                                                 child: Text(
-                                                  albumItem.date,
+                                                  'All your photos are end to end encrypted',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
                                                       .override(
                                                         fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
+                                                        color:
+                                                            Color(0xFF696969),
+                                                        fontSize: 12,
+                                                        letterSpacing: 0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                       ),
                                                 ),
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                          if (albumItem.owners.isNotEmpty)
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: Color(0xFFF4F4FF),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsets.all(12.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Builder(
-                                                      builder: (context) {
-                                                        final owners = albumItem
-                                                            .owners
-                                                            .toList();
-                                                        return Wrap(
-                                                          spacing: 0.0,
-                                                          runSpacing: 0.0,
-                                                          alignment:
-                                                              WrapAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              WrapCrossAlignment
-                                                                  .start,
-                                                          direction:
-                                                              Axis.horizontal,
-                                                          runAlignment:
-                                                              WrapAlignment
-                                                                  .start,
-                                                          verticalDirection:
-                                                              VerticalDirection
-                                                                  .down,
-                                                          clipBehavior:
-                                                              Clip.antiAlias,
-                                                          children:
-                                                              List.generate(
-                                                                  owners.length,
-                                                                  (ownersIndex) {
-                                                            final ownersItem =
-                                                                owners[
-                                                                    ownersIndex];
-                                                            return Container(
-                                                              width: 32.0,
-                                                              height: 32.0,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .info,
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                              ),
-                                                              child: Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
-                                                                child: Text(
-                                                                  (String
-                                                                      var1) {
-                                                                    return var1[
-                                                                        0];
-                                                                  }(ownersItem),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Figtree',
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            16.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }),
-                                                        );
-                                                      },
-                                                    ),
-                                                    Expanded(
-                                                      child: Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1.0, 0.0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
-                                                            'Photos from ${albumItem.owners.first}${(List<String> var1) {
-                                                              return var1.length >
-                                                                      2
-                                                                  ? ', ${var1[1]} & ${var1.length - 2} more'
-                                                                  : var1.length >
-                                                                          1
-                                                                      ? '& ${var1[1]}'
-                                                                      : '';
-                                                            }(albumItem.owners.toList())}!',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Figtree',
-                                                                  color: Color(
-                                                                      0xFF5D5AFF),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          -1.0, 0.0),
-                                                  child: Builder(
-                                                    builder: (context) {
-                                                      final imagesList =
-                                                          albumItem.images
-                                                              .toList();
-                                                      return Wrap(
-                                                        spacing: 4.0,
-                                                        runSpacing: 4.0,
-                                                        alignment:
-                                                            WrapAlignment.start,
-                                                        crossAxisAlignment:
-                                                            WrapCrossAlignment
-                                                                .start,
-                                                        direction:
-                                                            Axis.horizontal,
-                                                        runAlignment:
-                                                            WrapAlignment.start,
-                                                        verticalDirection:
-                                                            VerticalDirection
-                                                                .down,
-                                                        clipBehavior: Clip.none,
-                                                        children: List.generate(
-                                                            imagesList.length,
-                                                            (imagesListIndex) {
-                                                          final imagesListItem =
-                                                              imagesList[
-                                                                  imagesListIndex];
-                                                          return Builder(
-                                                            builder: (context) {
-                                                              if (!imagesListItem
-                                                                  .isLocal) {
-                                                                return InkWell(
-                                                                  splashColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  focusColor: Colors
-                                                                      .transparent,
-                                                                  hoverColor: Colors
-                                                                      .transparent,
-                                                                  highlightColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  onTap:
-                                                                      () async {
-                                                                    logFirebaseEvent(
-                                                                        'HOME_COPY_COPY_Image_203iliga_ON_TAP');
-                                                                    await Future
-                                                                        .wait([
-                                                                      Future(
-                                                                          () async {
-                                                                        logFirebaseEvent(
-                                                                            'Image_navigate_to');
-
-                                                                        context
-                                                                            .pushNamed(
-                                                                          'ImageexpandedCopy',
-                                                                          queryParameters:
-                                                                              {
-                                                                            'albumDoc':
-                                                                                serializeParam(
-                                                                              albumItem.images,
-                                                                              ParamType.DataStruct,
-                                                                              true,
-                                                                            ),
-                                                                            'index':
-                                                                                serializeParam(
-                                                                              imagesListIndex,
-                                                                              ParamType.int,
-                                                                            ),
-                                                                          }.withoutNulls,
-                                                                        );
-                                                                      }),
-                                                                      Future(
-                                                                          () async {
-                                                                        logFirebaseEvent(
-                                                                            'Image_custom_action');
-                                                                        await actions
-                                                                            .addSeenby(
-                                                                          currentUserUid,
-                                                                          imagesListItem
-                                                                              .id,
-                                                                          currentUserDisplayName,
-                                                                        );
-                                                                      }),
-                                                                    ]);
-                                                                  },
-                                                                  child:
-                                                                      ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0),
-                                                                    child:
-                                                                        OctoImage(
-                                                                      placeholderBuilder:
-                                                                          (_) =>
-                                                                              SizedBox.expand(
-                                                                        child:
-                                                                            Image(
-                                                                          image:
-                                                                              BlurHashImage('LAKBRFxu9FWB-;M{~qRj00xu00j['),
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        ),
-                                                                      ),
-                                                                      image:
-                                                                          CachedNetworkImageProvider(
-                                                                        functions
-                                                                            .convertToImagePath(imagesListItem.imageUrl),
-                                                                      ),
-                                                                      width:
-                                                                          (MediaQuery.sizeOf(context).width - 48) /
-                                                                              3,
-                                                                      height:
-                                                                          (MediaQuery.sizeOf(context).width - 48) /
-                                                                              3,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              } else {
-                                                                return Container(
-                                                                  width: (MediaQuery.sizeOf(context)
-                                                                              .width -
-                                                                          48) /
-                                                                      3,
-                                                                  height: (MediaQuery.sizeOf(context)
-                                                                              .width -
-                                                                          48) /
-                                                                      3,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
-                                                                  ),
-                                                                  child:
-                                                                      InkWell(
-                                                                    splashColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    focusColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    hoverColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    highlightColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    onTap:
-                                                                        () async {
-                                                                      logFirebaseEvent(
-                                                                          'HOME_COPY_COPY_Stack_kr54o4qp_ON_TAP');
-                                                                      await Future
-                                                                          .wait([
-                                                                        Future(
-                                                                            () async {
-                                                                          logFirebaseEvent(
-                                                                              'Stack_navigate_to');
-
-                                                                          context
-                                                                              .pushNamed(
-                                                                            'ImageexpandedCopy',
-                                                                            queryParameters:
-                                                                                {
-                                                                              'albumDoc': serializeParam(
-                                                                                albumItem.images,
-                                                                                ParamType.DataStruct,
-                                                                                true,
-                                                                              ),
-                                                                              'index': serializeParam(
-                                                                                imagesListIndex,
-                                                                                ParamType.int,
-                                                                              ),
-                                                                            }.withoutNulls,
-                                                                          );
-                                                                        }),
-                                                                        Future(
-                                                                            () async {
-                                                                          logFirebaseEvent(
-                                                                              'Stack_custom_action');
-                                                                          await actions
-                                                                              .addSeenby(
-                                                                            currentUserUid,
-                                                                            imagesListItem.id,
-                                                                            currentUserDisplayName,
-                                                                          );
-                                                                        }),
-                                                                      ]);
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      width:
-                                                                          80.0,
-                                                                      height:
-                                                                          100.0,
-                                                                      child:
-                                                                          Stack(
-                                                                        children: [
-                                                                          Align(
-                                                                            alignment:
-                                                                                AlignmentDirectional(0.0, 0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: double.infinity,
-                                                                              height: double.infinity,
-                                                                              child: custom_widgets.ShowLocalImage(
-                                                                                width: double.infinity,
-                                                                                height: double.infinity,
-                                                                                path: imagesListItem.imageUrl,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          Container(
-                                                                            width:
-                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
-                                                                            height:
-                                                                                (MediaQuery.sizeOf(context).width - 48) / 3,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              gradient: LinearGradient(
-                                                                                colors: [
-                                                                                  Color(0x99101213),
-                                                                                  Colors.transparent
-                                                                                ],
-                                                                                stops: [
-                                                                                  0.0,
-                                                                                  0.4
-                                                                                ],
-                                                                                begin: AlignmentDirectional(1.0, 1.0),
-                                                                                end: AlignmentDirectional(-1.0, -1.0),
-                                                                              ),
-                                                                            ),
-                                                                            child:
-                                                                                Align(
-                                                                              alignment: AlignmentDirectional(1.0, 1.0),
-                                                                              child: Builder(
-                                                                                builder: (context) {
-                                                                                  if (imagesListItem.isUploading) {
-                                                                                    return Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
-                                                                                      child: Icon(
-                                                                                        Icons.cloud_upload_outlined,
-                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                        size: 14.0,
-                                                                                      ),
-                                                                                    );
-                                                                                  } else {
-                                                                                    return Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 5.0, 5.0),
-                                                                                      child: FaIcon(
-                                                                                        FontAwesomeIcons.clock,
-                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                                        size: 14.0,
-                                                                                      ),
-                                                                                    );
-                                                                                  }
-                                                                                },
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              }
-                                                            },
-                                                          );
-                                                        }),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ).animateOnPageLoad(animationsMap[
-                                          'columnOnPageLoadAnimation']!),
-                                    );
-                                  },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
+                        )
                     ],
                   );
                 } else {
