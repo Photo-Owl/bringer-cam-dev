@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.0.0+12
+version: 1.0.1+13
 
 
 environment:
@@ -128,7 +128,6 @@ dependencies:
   cupertino_icons: ^1.0.0
   fluttertoast: ^8.2.5
   android_intent_plus: ^5.0.2
-  pinch_zoom: ^2.0.0
 
 dependency_overrides:
   http: 1.2.0

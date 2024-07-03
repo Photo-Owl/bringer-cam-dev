@@ -1,5 +1,3 @@
-import 'package:pinch_zoom/pinch_zoom.dart';
-
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/expanded_image_options/expanded_image_options_widget.dart';
@@ -362,28 +360,24 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 context)
                                                             .height *
                                                         0.75,
-                                                    child: PinchZoom(
-                                                      child: custom_widgets
-                                                          .FadeInImage(
-                                                        width:
-                                                            MediaQuery.sizeOf(
-                                                                        context)
-                                                                    .width *
-                                                                0.9,
-                                                        height:
-                                                            MediaQuery.sizeOf(
-                                                                        context)
-                                                                    .height *
-                                                                0.75,
-                                                        imageUrl: functions
-                                                            .convertToImagePath(
-                                                                containerUploadsRecord
-                                                                    .uploadUrl),
-                                                        placeholderImage: functions
-                                                            .convertToImagePath(
-                                                                imagesItem
-                                                                    .imageUrl),
-                                                      ),
+                                                    child: custom_widgets
+                                                        .FadeInImage(
+                                                      width: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width *
+                                                          0.9,
+                                                      height: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .height *
+                                                          0.75,
+                                                      imageUrl: functions
+                                                          .convertToImagePath(
+                                                              containerUploadsRecord
+                                                                  .uploadUrl),
+                                                      placeholderImage: functions
+                                                          .convertToImagePath(
+                                                              imagesItem
+                                                                  .imageUrl),
                                                     ),
                                                   ),
                                                 ),
@@ -430,28 +424,24 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 context)
                                                             .height *
                                                         0.75,
-                                                    child: PinchZoom(
-                                                      child: custom_widgets
-                                                          .FadeInImage(
-                                                        width:
-                                                            MediaQuery.sizeOf(
-                                                                        context)
-                                                                    .width *
-                                                                0.9,
-                                                        height:
-                                                            MediaQuery.sizeOf(
-                                                                        context)
-                                                                    .height *
-                                                                0.75,
-                                                        imageUrl: functions
-                                                            .convertToImagePath(
-                                                                imagesItem
-                                                                    .imageUrl),
-                                                        placeholderImage: functions
-                                                            .convertToImagePath(
-                                                                imagesItem
-                                                                    .imageUrl),
-                                                      ),
+                                                    child: custom_widgets
+                                                        .FadeInImage(
+                                                      width: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width *
+                                                          0.9,
+                                                      height: MediaQuery.sizeOf(
+                                                                  context)
+                                                              .height *
+                                                          0.75,
+                                                      imageUrl: functions
+                                                          .convertToImagePath(
+                                                              imagesItem
+                                                                  .imageUrl),
+                                                      placeholderImage: functions
+                                                          .convertToImagePath(
+                                                              imagesItem
+                                                                  .imageUrl),
                                                     ),
                                                   ),
                                                 ),
