@@ -47,6 +47,9 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
   // TODO modify the perm request callbacks like the one above
   // TODO (the if permsGiven part)
 
+  // TODO contacts permission is in a different branch
+  // merge code from dev into this branch after merging the PR
+
   @override
   void initState() {
     super.initState();
