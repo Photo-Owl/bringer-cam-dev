@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../pref_manager.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
@@ -108,9 +110,21 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
         await Future.delayed(const Duration(milliseconds: 10));
       }
 
+      _model.timeline1 = await actions.getAllImages(
+        currentUserUid,
+      );
+      logFirebaseEvent('HomeCopyCopy_update_page_state');
+      var prefs = await PrefManager().prefs;
+      bool removedNotifications = await prefs.remove('sent_notifications');
+
+      print(prefs.containsKey('sent_notifications'));
+      setState(() {
+        _model.loaded = true;
+        _model.timeline = _model.timeline1!.toList().cast<TimelineItemStruct>();
+      });
       logFirebaseEvent('HomeCopyCopy_google_analytics_event');
       logFirebaseEvent(
-        'Home screen shown',
+        'Home_screen_shown',
         parameters: {
           'Uid': currentUserUid,
           'Name': currentUserDisplayName,
@@ -124,14 +138,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
             timestamp: getCurrentTimestamp,
           ));
       logFirebaseEvent('HomeCopyCopy_custom_action');
-      _model.timeline1 = await actions.getAllImages(
-        currentUserUid,
-      );
-      logFirebaseEvent('HomeCopyCopy_update_page_state');
-      setState(() {
-        _model.loaded = true;
-        _model.timeline = _model.timeline1!.toList().cast<TimelineItemStruct>();
-      });
+      //Resetting sent notifications
 
       await checkForPerms();
     });

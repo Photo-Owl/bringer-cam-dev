@@ -147,8 +147,8 @@ class Uploader {
     if (_totalCount < double.infinity) {
       await notifPlugin.show(
         1234,
-        'Uploading images',
-        'Uploading images to the cloud',
+        'Finding Faces',
+        'Finding Faces in your images',
         NotificationDetails(
           android: AndroidNotificationDetails(
             'com.smoose.photoowldev.uploads',
@@ -287,8 +287,8 @@ class Uploader {
         didUpload = true;
         await notifPlugin.show(
           1234,
-          'Uploading images',
-          'Uploading images to the cloud',
+          'Finding Faces',
+          'Finding Faces in your images',
           NotificationDetails(
             android: AndroidNotificationDetails(
               'com.smoose.photoowldev.uploads',
@@ -316,14 +316,16 @@ class Uploader {
       if (_successfullUploadCount > 0) {
         await notifPlugin.show(
           1235,
-          'All photos uploaded!',
-          'All ${_successfullUploadCount.round()} photos you took were shared! 🎉',
+          'Matching with friends',
+          'Searching for friends in the photos you took',
           const NotificationDetails(
             android: AndroidNotificationDetails(
-              'com.smoose.photoowldev.info',
-              'Bringer notifs',
-              channelDescription: 'Any notification from bringer',
-            ),
+                'com.smoose.photoowldev.info', 'Bringer notifs',
+                channelDescription: 'Any notification from bringer',
+                silent: true,
+                indeterminate: true,
+                showProgress: true,
+                ongoing: true),
           ),
         );
       }
