@@ -94,7 +94,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
       logFirebaseEvent('IMAGEEXPANDED_COPY_ImageexpandedCopy_ON_');
       logFirebaseEvent('ImageexpandedCopy_google_analytics_event');
       logFirebaseEvent(
-        'Expanded Image',
+        'expanded_image',
         parameters: {
           'Uid': currentUserUid,
           'Name': currentUserDisplayName,
@@ -191,8 +191,9 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        15.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            15.0, 0.0, 0.0, 0.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
@@ -252,11 +253,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                     Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  1.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                              .fromSTEB(0.0,
+                                                              1.0, 0.0, 0.0),
                                                       child: Text(
                                                         'Shared By ${rowUsersRecord?.displayName}',
                                                         style: FlutterFlowTheme
@@ -297,9 +295,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                             },
                                           ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 6.0, 0.0, 0.0),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0.0, 6.0, 0.0, 0.0),
                                           child: Text(
                                             imagesItem.timestamp!.toString(),
                                             textAlign: TextAlign.start,
@@ -318,7 +315,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                   ),
                                   Expanded(
                                     child: Align(
-                                      alignment: const AlignmentDirectional(0.0, 0.0),
+                                      alignment:
+                                          const AlignmentDirectional(0.0, 0.0),
                                       child: Builder(
                                         builder: (context) {
                                           if (!imagesItem.isLocal &&
@@ -348,9 +346,11 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                 );
                                               },
                                               child: Container(
-                                                decoration: const BoxDecoration(),
+                                                decoration:
+                                                    const BoxDecoration(),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(10.0),
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
                                                   child: SizedBox(
                                                     width: MediaQuery.sizeOf(
                                                                 context)
@@ -410,9 +410,11 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                 );
                                               },
                                               child: Container(
-                                                decoration: const BoxDecoration(),
+                                                decoration:
+                                                    const BoxDecoration(),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.all(10.0),
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
                                                   child: SizedBox(
                                                     width: MediaQuery.sizeOf(
                                                                 context)
@@ -447,11 +449,13 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                             );
                                           } else {
                                             return Padding(
-                                              padding: const EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       0.0, 10.0, 0.0, 0.0),
                                               child: Container(
-                                                decoration: const BoxDecoration(),
+                                                decoration:
+                                                    const BoxDecoration(),
                                                 child: custom_widgets
                                                     .ShowLocalImage(
                                                   width: double.infinity,
@@ -466,10 +470,12 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(0.0, 1.0),
+                                    alignment:
+                                        const AlignmentDirectional(0.0, 1.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 16.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 16.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
@@ -532,13 +538,16 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                           .first
                                                       : null;
                                               return Container(
-                                                constraints: const BoxConstraints(
+                                                constraints:
+                                                    const BoxConstraints(
                                                   maxWidth: 750.0,
                                                 ),
-                                                decoration: const BoxDecoration(),
+                                                decoration:
+                                                    const BoxDecoration(),
                                                 child: Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(15.0, 10.0,
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .fromSTEB(15.0, 10.0,
                                                           15.0, 10.0),
                                                   child: Container(
                                                     width: MediaQuery.sizeOf(
@@ -546,7 +555,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                             .width *
                                                         1.0,
                                                     decoration: BoxDecoration(
-                                                      gradient: const LinearGradient(
+                                                      gradient:
+                                                          const LinearGradient(
                                                         colors: [
                                                           Color(0xFF0F009C),
                                                           Color(0xFF129A8C)
@@ -565,7 +575,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                     ),
                                                     child: Padding(
                                                       padding:
-                                                          const EdgeInsets.all(10.0),
+                                                          const EdgeInsets.all(
+                                                              10.0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -606,10 +617,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                   Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            20.0,
-                                                                            0.0),
+                                                                        0.0,
+                                                                        5.0,
+                                                                        20.0,
+                                                                        0.0),
                                                                     child: Text(
                                                                       'You can download the photo anytime here',
                                                                       style: FlutterFlowTheme.of(
@@ -663,17 +674,17 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          12.0,
-                                                                          0.0,
-                                                                          12.0,
-                                                                          0.0),
+                                                                      12.0,
+                                                                      0.0,
+                                                                      12.0,
+                                                                      0.0),
                                                               iconPadding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
                                                               color:
                                                                   Colors.black,
                                                               textStyle:
@@ -717,7 +728,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                 1.0,
                                             decoration: const BoxDecoration(),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(10.0),
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
@@ -796,10 +808,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                 child: Icon(
                                                                   Icons
                                                                       .remove_red_eye_sharp,
@@ -815,10 +827,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                 child: Text(
                                                                   'Seen',
                                                                   style: FlutterFlowTheme.of(
@@ -885,10 +897,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                   return Padding(
                                                                     padding: const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                     child: Icon(
                                                                       Icons
                                                                           .favorite_rounded,
@@ -916,10 +928,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                      0.0,
+                                                                      5.0,
+                                                                      0.0,
+                                                                      0.0),
                                                               child: Text(
                                                                 'Like',
                                                                 style: FlutterFlowTheme.of(
@@ -1025,10 +1037,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                 child: Text(
                                                                   'Share',
                                                                   style: FlutterFlowTheme.of(
@@ -1124,7 +1136,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                       .of(context)
                                                                   .showSnackBar(
                                                                 SnackBar(
-                                                                  content: const Text(
+                                                                  content:
+                                                                      const Text(
                                                                     'Downloading Image',
                                                                     style:
                                                                         TextStyle(
@@ -1174,10 +1187,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 padding:
                                                                     const EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                        0.0,
+                                                                        5.0,
+                                                                        0.0,
+                                                                        0.0),
                                                                 child: Text(
                                                                   'Download',
                                                                   style: FlutterFlowTheme.of(
@@ -1242,8 +1255,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 padding: MediaQuery
                                                                     .viewInsetsOf(
                                                                         context),
-                                                                child:
-                                                                    SizedBox(
+                                                                child: SizedBox(
                                                                   height: MediaQuery.sizeOf(
                                                                               context)
                                                                           .height *
@@ -1302,10 +1314,10 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                      0.0,
+                                                                      5.0,
+                                                                      0.0,
+                                                                      0.0),
                                                               child: Text(
                                                                 'More',
                                                                 style: FlutterFlowTheme.of(

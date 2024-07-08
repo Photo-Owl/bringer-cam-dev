@@ -38,6 +38,12 @@
             <action android:name="android.intent.action.CAMERA_BUTTON" />
         </intent>
     </queries>
+    <queries>
+        <package android:name="com.android.camera2" />
+        <intent>
+            <action android:name="android.intent.action.CAMERA_BUTTON" />
+        </intent>
+    </queries>
 
     <application
         android:label="Bringer"
@@ -119,6 +125,9 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9817719086198871~5502566209"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="com.smoose.photoowldev.info"/>
 
         <service
             android:name=".services.AutoUploadService"
