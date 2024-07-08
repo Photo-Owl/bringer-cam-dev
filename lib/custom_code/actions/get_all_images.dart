@@ -11,139 +11,130 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:collection/collection.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:bringer_cam_dev/auth/firebase_auth/auth_util.dart';
+
 Future<List<TimelineItemStruct>> getAllImages(String uid) async {
-  final firestoreSnapshot = await FirebaseFirestore.instance
-      .collection('uploads')
-      .where('faces', arrayContains: 'users/$uid')
-      .orderBy('uploaded_at', descending: true)
-      .get();
-
-  final ownerSnapshot = await FirebaseFirestore.instance
-      .collection('uploads')
-      .where('owner_id', isEqualTo: uid)
-      .orderBy('uploaded_at', descending: true)
-      .get();
-  // Fetch images from SQLite and merge them with Firestore images
-  List<ImageModelStruct> sqliteImages = await fetchImagesFromSQLite(uid);
-  // Combine the results of both queries and remove duplicates
-  final uniqueDocIds = <String>{};
-  final combinedDocs = <QueryDocumentSnapshot<Map<String, dynamic>>>[];
-  for (var doc in [...firestoreSnapshot.docs, ...ownerSnapshot.docs]) {
-    if (!uniqueDocIds.contains(doc.id)) {
-      uniqueDocIds.add(doc.id);
-      combinedDocs.add(doc);
-    }
-  }
-
-  // Prepare a map to store images grouped by date and owners
-  Map<String, Map<String, dynamic>> groupedImagesWithOwners = {};
-
-  for (var doc in combinedDocs) {
-    String? ownerId = doc["owner_id"];
-    String date = DateFormat('yyyy-MM-dd').format(doc['uploaded_at'].toDate());
-
-    if (!groupedImagesWithOwners.containsKey(date)) {
-      groupedImagesWithOwners[date] = {
-        'images': [],
-        'owners': Set<String>(),
-      };
-    }
-    // print(doc);
-    final key = doc
-        .data()['upload_url']
-        .split('/')
+  ImageModelStruct fromFirestore(
+      QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+    final data = doc.data();
+    final key = (data['upload_url'] as String?)
+        ?.split('/')
         .removeLast()
         .split('?')[0]
         .split('%2F')
         .removeLast();
-    groupedImagesWithOwners[date]!['images'].add(ImageModelStruct(
-      id: doc.data()['key'] ?? key,
-      imageUrl: doc.data()['resized_image_250'] ?? doc.data()['upload_url'],
-      isUploading: null, // This is Firestore data, so isUploading is null
-      isLocal: false,
-      timestamp: doc['uploaded_at']?.toDate() ??
-          DateTime.fromMillisecondsSinceEpoch(0), // Timestamp from Firestore
-    ));
-    // Add image to the group
-
-    // Add owner to the set of unique owners for this date
-    groupedImagesWithOwners[date]!['owners'].add(ownerId);
-  }
-
-  for (final localimage in sqliteImages) {
-    final date =
-        DateFormat('yyyy-MM-dd').format(localimage.timestamp ?? DateTime.now());
-    if (!groupedImagesWithOwners.containsKey(date)) {
-      groupedImagesWithOwners[date] = {
-        'images': [],
-        'owners': Set<String>(),
-      };
-    }
-    groupedImagesWithOwners[date]!['images'].add(localimage);
-  }
-
-  for (final entry in groupedImagesWithOwners.entries) {
-    final images = entry.value['images'];
-    images.sort((a, b) => (b.timestamp ?? DateTime.now())
-        .compareTo(a.timestamp ?? DateTime.now()) as int);
-    groupedImagesWithOwners[entry.key]?['images'] = images;
-  }
-
-  List<String> dates = groupedImagesWithOwners.keys.toList();
-
-  // Convert each date string to a DateTime object
-  List<DateTime> dateTimes = dates.map((date) => DateTime.parse(date)).toList();
-
-  // Sort the list of DateTime objects in descending order
-  dateTimes.sort((a, b) => b.compareTo(a));
-
-  // Create a new map with the sorted dates as keys and the corresponding values from the original map
-  Map<String, Map<String, dynamic>> sortedGroupedImagesWithOwners = {};
-  for (DateTime dateTime in dateTimes) {
-    String date = dateTime.toIso8601String().substring(8, 10) +
-        '-' +
-        dateTime.toIso8601String().substring(5, 7) +
-        '-' +
-        dateTime.toIso8601String().substring(2, 4);
-    final orginalKey = DateFormat('yyyy-MM-dd').format(dateTime);
-    // print(date);
-    sortedGroupedImagesWithOwners[date] = groupedImagesWithOwners[orginalKey]!;
-  }
-
-  print(sortedGroupedImagesWithOwners);
-  final result = <TimelineItemStruct>[];
-  for (final entry in sortedGroupedImagesWithOwners.entries) {
-    final ownerDetails =
-        await getOwnerDetails((entry.value['owners'] as Set<String>).toList());
-    result.add(
-      TimelineItemStruct(
-        date: entry.key,
-        images: List.castFrom<dynamic, ImageModelStruct>(entry.value['images']),
-        owners: ownerDetails.map((owner) => owner.name).toList(),
-      ),
-    );
-  }
-  return result;
-}
-
-Future<List<ImageModelStruct>> fetchImagesFromSQLite(String uid) async {
-  // Get a reference to the database
-  var showLocalImagesRows =
-      await SQLiteManager.instance.showLocalImages();
-  // Query the database to get all images
-  final List<ShowLocalImagesRow> maps = showLocalImagesRows;
-
-  // Convert the List<Map<String, dynamic>> into a List<ImageModel>
-  return List.generate(maps.length, (i) {
     return ImageModelStruct(
-      id: maps[i]
-          .path
-          .toString(), // Assuming 'id' is a unique identifier for each image
-      imageUrl: maps[i].path, // Assuming 'path' is the URL or path to the image
-      isUploading: maps[i].isUploading == 1,
-      isLocal: true,
-      timestamp: DateTime.fromMillisecondsSinceEpoch(
-          maps[i].timestamp ?? 0), // Convert unixTimestamp to DateTime
+      id: data['key'] ?? key ?? '',
+      imageUrl: data['resized_image_250'] ?? data['upload_url'] ?? '',
+      isUploading: false,
+      isLocal: false,
+      timestamp: data['uploaded_at']?.toDate() ??
+          DateTime.fromMillisecondsSinceEpoch(0),
+      ownerId: data['owner_id'] ?? '',
     );
-  });
+  }
+
+  final imagesMatched = await FirebaseFirestore.instance
+      .collection('uploads')
+      .where('faces', arrayContains: 'users/$uid')
+      .orderBy('uploaded_at', descending: true)
+      .get()
+      .then((snap) => snap.docs)
+      .then((docs) => docs.map(fromFirestore));
+
+  final imagesUploadedByUser = await FirebaseFirestore.instance
+      .collection('uploads')
+      .where('owner_id', isEqualTo: uid)
+      .orderBy('uploaded_at', descending: true)
+      .get()
+      .then((snap) => snap.docs)
+      .then((docs) => docs.map(fromFirestore));
+
+  final sqliteImages =
+      await SQLiteManager.instance.showLocalImages().then((images) => images
+          .map((image) => ImageModelStruct(
+                id: image.path,
+                imageUrl: image.path,
+                isUploading: image.isUploading == 1,
+                isLocal: true,
+                timestamp:
+                    DateTime.fromMillisecondsSinceEpoch(image.timestamp ?? 0),
+                ownerId: currentUserUid,
+              ))
+          .toList());
+
+  final combinedCloudImages = {...imagesMatched, ...imagesUploadedByUser};
+  var filteredCloudImages = <ImageModelStruct>{};
+  final ownerDetails = <String, OwnerDetailsStruct>{};
+
+  const methodChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
+  final isContactsPermGranted =
+      await methodChannel.invokeMethod('checkForContactsPermission');
+
+  final phoneList = isContactsPermGranted
+      ? await FlutterContacts.getContacts(withProperties: true).then(
+          (contacts) => contacts
+              .map((contact) => contact.phones)
+              .flattened
+              .map(
+                (phone) => phone.normalizedNumber.isNotEmpty
+                    ? phone.normalizedNumber
+                    : phone.number,
+              )
+              .toList(),
+        )
+      : const [];
+
+  for (final images in combinedCloudImages.slices(25)) {
+    Iterable<OwnerDetailsStruct> owners = await getOwnerDetails(
+      images.map((image) => image.ownerId).toList(),
+    );
+
+    owners = isContactsPermGranted
+        ? owners.where((owner) => phoneList.contains(owner.phoneNum))
+        : owners;
+
+    for (final owner in owners) {
+      ownerDetails[owner.id] = owner;
+      if (isContactsPermGranted) {
+        images.where((image) => image.ownerId == owner.id).forEach((image) {
+          filteredCloudImages.add(image);
+        });
+      }
+    }
+  }
+
+  if (!isContactsPermGranted) {
+    filteredCloudImages = combinedCloudImages;
+  }
+
+  final groupedImages = <String, List<ImageModelStruct>>{};
+  for (final image in {...filteredCloudImages, ...sqliteImages}) {
+    final date = DateFormat('y-MM-dd')
+        .format(image.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0));
+    if (groupedImages.containsKey(date)) {
+      groupedImages[date]!.add(image);
+    } else {
+      groupedImages[date] = [image];
+    }
+  }
+
+  final sortedGroupedImages = groupedImages.entries
+      .sorted((a, b) => DateTime.parse(a.key).compareTo(DateTime.parse(b.key)));
+  final result = sortedGroupedImages
+      .map(
+        (entry) => TimelineItemStruct(
+          date: entry.key,
+          images: entry.value,
+          owners: {...entry.value.map((image) => image.ownerId)}
+              .map((ownerId) => ownerDetails[ownerId]!.name)
+              .toList(),
+        ),
+      )
+      .toList();
+
+  return result;
 }

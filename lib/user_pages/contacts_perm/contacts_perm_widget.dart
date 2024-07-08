@@ -233,10 +233,12 @@ class _ContactsPermWidgetState extends State<ContactsPermWidget> {
                         Center(
                           child: FFButtonWidget(
                             onPressed: () async {
+                              const platform = MethodChannel(
+                                  'com.smoose.photoowldev/autoUpload');
                               final permsGiven =
-                                  await FlutterContacts.requestPermission(
-                                readonly: false,
-                              );
+                                  await platform.invokeMethod<bool>(
+                                      'requestContactsPermission', null) ??
+                                      false;
                               if (!context.mounted) return;
                               if (permsGiven) {
                                 context.pushNamed('batteryOptimization');
