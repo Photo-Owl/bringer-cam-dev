@@ -62,7 +62,8 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                   child: Container(
                     width: 50.0,
                     height: 4.0,
@@ -75,8 +76,8 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                 Align(
                   alignment: const AlignmentDirectional(-1.0, 0.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 10.0, 0.0, 0.0),
                     child: Text(
                       'Before clicking the selfie make sure to',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -91,8 +92,8 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        10.0, 20.0, 0.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -167,8 +168,8 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                 Align(
                   alignment: const AlignmentDirectional(0.0, 0.0),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 24.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
@@ -250,29 +251,31 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                           uid: currentUserUid,
                         );
 
-                        setState(() {});
+                        // setState(() {});
                       },
                       text: 'Take selfie',
                       options: FFButtonOptions(
                         width: 200.0,
                         height: 56.0,
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: const Color(0xFF1589FC),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
+                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
+                        color: const Color(0xFF5A00CD),
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Inter',
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  letterSpacing: 0.0,
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                        borderSide: const BorderSide(
+                        elevation: 3,
+                        borderSide: BorderSide(
                           color: Colors.transparent,
-                          width: 1.0,
+                          width: 1,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                   ),

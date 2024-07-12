@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:bringer_cam_dev/social_gallery/onboarding_flow/get_perms_widget.dart';
+import 'package:bringer_cam_dev/social_gallery/onboarding_flow/intro_share_widget.dart';
 import 'package:bringer_cam_dev/user_pages/alldone/alldone_widget.dart';
 import 'package:bringer_cam_dev/user_pages/battery_optimization/battery_optimization_widget.dart';
 import 'package:bringer_cam_dev/user_pages/connect_gallery/connect_gallery_widget.dart';
@@ -334,9 +336,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const AlldoneWidget(),
         ),
         FFRoute(
+
+          name: 'introShare',
+          path: '/socialGallery/onboarding/intro',
+          builder: (context, params) => const IntroShareWidget(),
+        ),
+        FFRoute(
+          name: 'getPermsNew',
+          path: '/socialGallery/onboarding/getPerms',
+          builder: (context, params) => const GetPermsWidget(),
+
           name: 'contactsPerm',
           path: '/contactsPerm',
           builder: (context, params) => const ContactsPermWidget(),
+
         ),
         FFRoute(
           name: 'sharePhotos',

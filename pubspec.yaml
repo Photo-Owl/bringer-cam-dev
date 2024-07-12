@@ -17,7 +17,9 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
 
+
 version: 1.0.1+13
+
 
 
 
@@ -176,7 +178,11 @@ flutter:
     - assets/pdfs/
     - assets/sqlite_db_files/
 
-  
+  fonts:
+    - family: Gotham Black
+      fonts:
+        - asset: assets/fonts/Gotham Black.otf
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

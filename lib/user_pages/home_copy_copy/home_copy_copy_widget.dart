@@ -915,6 +915,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                         ],
                       ),
                       if (showPermsRequest)
+
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -958,7 +959,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                         letterSpacing: 0,
                                         fontWeight: FontWeight.w500,
                                       ),
+                                    ),
+                                  ],
                                 ),
+
                               ),
                               Align(
                                 alignment: AlignmentDirectional(-1, -1),
