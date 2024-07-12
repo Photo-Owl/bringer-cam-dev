@@ -341,7 +341,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                               builder: (context, snapshot) {
                                                 // Customize what your widget looks like when it's loading.
                                                 if (!snapshot.hasData) {
-                                                  return Center(
+                                                  return const Center(
                                                     child: SizedBox(
                                                       width: 50.0,
                                                       height: 50.0,
@@ -886,6 +886,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              Spacer(
+                                flex: 3,
+                              ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16, 8, 8, 24),
@@ -907,7 +910,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 alignment: AlignmentDirectional(-1, -1),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      16, 0, 8, 8),
+                                      32, 0, 32, 8),
                                   child: Text(
                                     'Photosharing is a two people job 🤝',
                                     textAlign: TextAlign.center,
@@ -915,10 +918,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Inter',
-                                          color: Color(0xFF534308),
-                                          fontSize: 28,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 26,
                                           letterSpacing: 0,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w900,
                                         ),
                                   ),
                                 ),
@@ -927,7 +931,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 alignment: AlignmentDirectional(-1, -1),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      16, 8, 8, 0),
+                                      32, 8, 32, 0),
                                   child: Text(
                                     'In order for you to get started with Social gallery connect our sharing feature in the camera',
                                     textAlign: TextAlign.center,
@@ -949,8 +953,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     if (!context.mounted) return;
-                                    context
-                                        .pushReplacementNamed('connectgallery');
+                                    context.pushReplacementNamed('introShare');
                                     await checkForPerms();
                                   },
                                   text: 'Enable Sharing Feature',
@@ -961,14 +964,15 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                         24, 16, 24, 16),
                                     iconPadding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 0),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
+                                    color: Color(0xFF5A00CD),
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall
                                         .override(
                                           fontFamily: 'Inter',
                                           color: Colors.white,
+                                          fontSize: 16,
                                           letterSpacing: 0,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                     elevation: 3,
                                     borderSide: BorderSide(
@@ -978,6 +982,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                     borderRadius: BorderRadius.circular(14),
                                   ),
                                 ),
+                              ),
+                              Spacer(
+                                flex: 1,
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
