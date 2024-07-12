@@ -13,7 +13,6 @@ import 'auth/firebase_auth/auth_util.dart';
 
 import '/backend/sqlite/sqlite_manager.dart';
 import 'backend/firebase/firebase_config.dart';
-import '/custom_code/actions/uploader.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 void main() async {

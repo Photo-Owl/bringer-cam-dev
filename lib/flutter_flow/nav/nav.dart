@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bringer_cam_dev/user_pages/alldone/alldone_widget.dart';
 import 'package:bringer_cam_dev/user_pages/battery_optimization/battery_optimization_widget.dart';
 import 'package:bringer_cam_dev/user_pages/connect_gallery/connect_gallery_widget.dart';
+import 'package:bringer_cam_dev/user_pages/contacts_perm/contacts_perm_widget.dart';
 import 'package:bringer_cam_dev/user_pages/displayover/displayover_widget.dart';
 import 'package:bringer_cam_dev/user_pages/share_photos/share_photos_widget.dart';
 import 'package:bringer_cam_dev/user_pages/usageaccess/usageaccess_widget.dart';
@@ -331,6 +332,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'alldone',
           path: '/alldone',
           builder: (context, params) => const AlldoneWidget(),
+        ),
+        FFRoute(
+          name: 'contactsPerm',
+          path: '/contactsPerm',
+          builder: (context, params) => const ContactsPermWidget(),
         ),
         FFRoute(
           name: 'sharePhotos',
