@@ -336,7 +336,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const AlldoneWidget(),
         ),
         FFRoute(
-
           name: 'introShare',
           path: '/socialGallery/onboarding/intro',
           builder: (context, params) => const IntroShareWidget(),
@@ -345,11 +344,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'getPermsNew',
           path: '/socialGallery/onboarding/getPerms',
           builder: (context, params) => const GetPermsWidget(),
-
+        ),
+        FFRoute(
           name: 'contactsPerm',
           path: '/contactsPerm',
           builder: (context, params) => const ContactsPermWidget(),
-
         ),
         FFRoute(
           name: 'sharePhotos',

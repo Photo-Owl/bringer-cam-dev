@@ -214,50 +214,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: Colors.white,
-            floatingActionButton: FloatingActionButton(
-              onPressed: () async {
-                logFirebaseEvent('HOME_COPY_COPY_FloatingActionButton_dtrh');
-                logFirebaseEvent('FloatingActionButton_navigate_to');
-
-                context.goNamed('camera');
-              },
-              backgroundColor: Colors.transparent,
-              child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: FlutterFlowTheme.of(context).primaryText,
-                elevation: 4.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(6.0),
-                  child: Container(
-                    width: 36.0,
-                    height: 36.0,
-                    child: Stack(
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Icon(
-                            Icons.photo_camera_outlined,
-                            color: Colors.white,
-                            size: 18.0,
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(1.0, -1.0),
-                          child: Icon(
-                            Icons.auto_awesome,
-                            color: Colors.white,
-                            size: 14.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
             drawer: Drawer(
               elevation: 16.0,
               child: wrapWithModel(
@@ -314,10 +270,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Container(
                               width: double.infinity,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [Colors.white, Color(0x00FFFFFF)],
                                   stops: [0.0, 1.0],
@@ -326,7 +282,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 ),
                               ),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
                                     16.0, 4.0, 0.0, 4.0),
                                 child: Text(
                                   'Gallery',
@@ -446,13 +402,13 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                             ),
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   10.0, 4.0, 10.0, 0.0),
                               child: Builder(
                                 builder: (context) {
                                   final album = _model.timeline.toList();
                                   if (album.isEmpty) {
-                                    return Center(
+                                    return const Center(
                                       child: NoPhotosWidget(),
                                     );
                                   }
@@ -460,7 +416,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                     key: Key('RefreshIndicator_1ydg9f2c'),
                                     onRefresh: onRefresh,
                                     child: ListView.separated(
-                                      padding: EdgeInsets.fromLTRB(
+                                      padding: const EdgeInsets.fromLTRB(
                                         0,
                                         0,
                                         0,
@@ -915,7 +871,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                         ],
                       ),
                       if (showPermsRequest)
-
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -932,19 +887,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 27, 0, 0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(
-                                    'assets/images/Design.png',
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.45,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16, 8, 8, 24),
                                 child: Text(
@@ -959,10 +901,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                         letterSpacing: 0,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                    ),
-                                  ],
                                 ),
-
                               ),
                               Align(
                                 alignment: AlignmentDirectional(-1, -1),
@@ -1114,7 +1053,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                               ),
                             ],
                           ),
-                        )
+                        ),
                     ],
                   );
                 } else {
