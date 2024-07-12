@@ -8,12 +8,22 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 class OwnerDetailsStruct extends FFFirebaseStruct {
   OwnerDetailsStruct({
+    String? id,
     String? name,
     String? photoURL,
+    String? phoneNum,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
-  })  : _name = name,
+  })  : _id = id,
+        _name = name,
         _photoURL = photoURL,
+        _phoneNum = phoneNum,
         super(firestoreUtilData);
+
+  // "id" field.
+  String? _id;
+  String get id => _id ?? '';
+  set id(String? val) => _id = val;
+  bool hasId() => _id != null;
 
   // "name" field.
   String? _name;
@@ -27,10 +37,18 @@ class OwnerDetailsStruct extends FFFirebaseStruct {
   set photoURL(String? val) => _photoURL = val;
   bool hasPhotoURL() => _photoURL != null;
 
+  // "phoneNum" field.
+  String? _phoneNum;
+  String get phoneNum => _phoneNum ?? '';
+  set phoneNum(String? val) => _phoneNum = val;
+  bool hasPhoneNum() => _phoneNum != null;
+
   static OwnerDetailsStruct fromMap(Map<String, dynamic> data) =>
       OwnerDetailsStruct(
+        id: data['id'] as String?,
         name: data['name'] as String?,
         photoURL: data['photoURL'] as String?,
+        phoneNum: data['phoneNum'] as String?,
       );
 
   static OwnerDetailsStruct? maybeFromMap(dynamic data) => data is Map
@@ -38,12 +56,18 @@ class OwnerDetailsStruct extends FFFirebaseStruct {
       : null;
 
   Map<String, dynamic> toMap() => {
+        'id': _id,
         'name': _name,
         'photoURL': _photoURL,
+        'phoneNum': _phoneNum,
       }.withoutNulls;
 
   @override
   Map<String, dynamic> toSerializableMap() => {
+        'id': serializeParam(
+          _id,
+          ParamType.String,
+        ),
         'name': serializeParam(
           _name,
           ParamType.String,
@@ -52,10 +76,19 @@ class OwnerDetailsStruct extends FFFirebaseStruct {
           _photoURL,
           ParamType.String,
         ),
+        'phoneNum': serializeParam(
+          _phoneNum,
+          ParamType.String,
+        ),
       }.withoutNulls;
 
   static OwnerDetailsStruct fromSerializableMap(Map<String, dynamic> data) =>
       OwnerDetailsStruct(
+        id: deserializeParam(
+          data['id'],
+          ParamType.String,
+          false,
+        ),
         name: deserializeParam(
           data['name'],
           ParamType.String,
@@ -63,6 +96,11 @@ class OwnerDetailsStruct extends FFFirebaseStruct {
         ),
         photoURL: deserializeParam(
           data['photoURL'],
+          ParamType.String,
+          false,
+        ),
+        phoneNum: deserializeParam(
+          data['phoneNum'],
           ParamType.String,
           false,
         ),
@@ -74,25 +112,31 @@ class OwnerDetailsStruct extends FFFirebaseStruct {
   @override
   bool operator ==(Object other) {
     return other is OwnerDetailsStruct &&
+        id == other.id &&
         name == other.name &&
-        photoURL == other.photoURL;
+        photoURL == other.photoURL &&
+        phoneNum == other.phoneNum;
   }
 
   @override
-  int get hashCode => const ListEquality().hash([name, photoURL]);
+  int get hashCode => const ListEquality().hash([id, name, photoURL, phoneNum]);
 }
 
 OwnerDetailsStruct createOwnerDetailsStruct({
+  String? id,
   String? name,
   String? photoURL,
+  String? phoneNum,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
   bool delete = false,
 }) =>
     OwnerDetailsStruct(
+      id: id,
       name: name,
       photoURL: photoURL,
+      phoneNum: phoneNum,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
