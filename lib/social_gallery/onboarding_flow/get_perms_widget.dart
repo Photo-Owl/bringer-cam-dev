@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bringer_cam_dev/flutter_flow/flutter_flow_util.dart';
 import 'package:bringer_cam_dev/social_gallery/common/encrypted_banner.dart';
 import 'package:bringer_cam_dev/social_gallery/onboarding_flow/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -183,7 +184,7 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
                   child: InkWell(
                     onTap: Feedback.wrapForTap(() {
                       if (!_isSetupDone) return;
-                      // TODO finish setup screen
+                      context.pushReplacementNamed('batteryPermission');
                     }, context),
                     child: Container(
                       color: _isSetupDone

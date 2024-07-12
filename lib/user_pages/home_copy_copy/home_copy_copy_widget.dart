@@ -874,7 +874,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [Color(0x32FFFFFF), Colors.white],
                               stops: [0, 0.5],
                               begin: AlignmentDirectional(0, -1),
@@ -886,7 +886,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Spacer(
+                              const Spacer(
                                 flex: 3,
                               ),
                               Padding(
@@ -983,7 +983,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                   ),
                                 ),
                               ),
-                              Spacer(
+                              const Spacer(
                                 flex: 1,
                               ),
                               Padding(

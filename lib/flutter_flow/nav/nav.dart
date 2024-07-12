@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bringer_cam_dev/social_gallery/onboarding_flow/battery_permission_widget/battery_permission_widget.dart';
 import 'package:bringer_cam_dev/social_gallery/onboarding_flow/get_perms_widget.dart';
 import 'package:bringer_cam_dev/social_gallery/onboarding_flow/intro_share_widget.dart';
 import 'package:bringer_cam_dev/user_pages/alldone/alldone_widget.dart';
@@ -339,6 +340,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'introShare',
           path: '/socialGallery/onboarding/intro',
           builder: (context, params) => const IntroShareWidget(),
+        ),
+        FFRoute(
+          name: 'batteryPermission',
+          path: '/socialGallery/onboarding/batteryPermission',
+          builder: (context, params) => const BatteryPermissionWidget(),
         ),
         FFRoute(
           name: 'getPermsNew',
