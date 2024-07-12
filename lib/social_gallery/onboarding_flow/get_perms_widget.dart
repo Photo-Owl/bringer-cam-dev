@@ -14,7 +14,7 @@ class GetPermsWidget extends StatefulWidget {
 }
 
 class _GetPermsWidgetState extends State<GetPermsWidget> {
-  var _permStates = <bool>[false, false, false, false];
+  var _permStates = <bool>[false, false, false];
   var _focused = 0;
   bool get _isSetupDone => _permStates.every((state) => state);
   late final List<
@@ -44,9 +44,55 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
     }
   }
 
-  // TODO modify the perm request callbacks like the one above
-  // TODO (the if permsGiven part)
+  Future<void> usageAccessPermission(int i) async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+    final permsGiven =
+        await platform.invokeMethod<bool>('requestUsageStatsAccess', null) ??
+            false;
+    if (!mounted) return;
+    if (permsGiven) {
+      setState(() {
+        _focused++;
+        _permStates[i] = true;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to get usage access.'),
+        ),
+      );
+    }
+  }
 
+  Future<void> displayOverPermission(int i) async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+    final permsGiven =
+        await platform.invokeMethod<bool>('requestOverlayPermission', null) ??
+            false;
+    if (!mounted) return;
+    if (permsGiven) {
+      setState(() {
+        _focused++;
+        _permStates[i] = true;
+        _isSetupDone;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to get overlay permission.'),
+        ),
+      );
+    }
+  }
+
+  // TODO (the if permsGiven part)
+  void checkAllPerms() async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+
+    bool showPermsRequest =
+        !(await platform.invokeMethod<bool>('checkForPermissions', null) ??
+            false);
+  }
   // TODO contacts permission is in a different branch
   // merge code from dev into this branch after merging the PR
 
@@ -60,24 +106,16 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
             'This allows you to easily share selected photos through Bringer.',
         permReq: requestStoragePermission,
       ),
-      // TODO add rest of the permissions with their callbacks
       (
-        permName: 'Read files in storage',
+        permName: 'Background Permission',
         permDesc:
-            'This allows you to easily share selected photos through Bringer.',
-        permReq: requestStoragePermission,
+            'This allows us to work in the background. So we don\'t delay receiving your photos',
+        permReq: usageAccessPermission,
       ),
       (
-        permName: 'Read files in storage',
-        permDesc:
-            'This allows you to easily share selected photos through Bringer.',
-        permReq: requestStoragePermission,
-      ),
-      (
-        permName: 'Read files in storage',
-        permDesc:
-            'This allows you to easily share selected photos through Bringer.',
-        permReq: requestStoragePermission,
+        permName: 'Display over apps ',
+        permDesc: 'This allows you to easily turn Social Gallery ON/OFF',
+        permReq: displayOverPermission,
       ),
     ];
   }

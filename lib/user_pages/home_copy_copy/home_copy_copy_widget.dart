@@ -164,15 +164,14 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
   Future<void> checkForPerms() async {
     const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
     showPermsRequest =
-    ! (await platform.invokeMethod<bool>('checkForPermissions', null) ?? false);
+        !(await platform.invokeMethod<bool>('checkForPermissions', null) ??
+            false);
     safeSetState(() {});
   }
 
   Future<void> onRefresh() async {
-    logFirebaseEvent(
-        'HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
-    logFirebaseEvent(
-        'ListView_update_page_state');
+    logFirebaseEvent('HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
+    logFirebaseEvent('ListView_update_page_state');
     setState(() {
       _model.loaded = false;
     });
@@ -180,13 +179,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     _model.timeline2 = await actions.getAllImages(
       currentUserUid,
     );
-    logFirebaseEvent(
-        'ListView_update_page_state');
+    logFirebaseEvent('ListView_update_page_state');
     setState(() {
       _model.loaded = true;
-      _model.timeline = _model.timeline2!
-          .toList()
-          .cast<TimelineItemStruct>();
+      _model.timeline = _model.timeline2!.toList().cast<TimelineItemStruct>();
     });
   }
 
@@ -338,121 +334,124 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                         ),
                       ),
                       if (showPermsRequest)
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 16.0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Color(0xFFFFF8D6), Color(0xFFFFF3B7)],
-                              stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.0, -1.0),
-                              end: AlignmentDirectional(0, 1.0),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 16.0, 16.0, 16.0),
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xFFFFF8D6), Color(0xFFFFF3B7)],
+                                stops: [0.0, 1.0],
+                                begin: AlignmentDirectional(0.0, -1.0),
+                                end: AlignmentDirectional(0, 1.0),
+                              ),
+                              borderRadius: BorderRadius.circular(24.0),
                             ),
-                            borderRadius: BorderRadius.circular(24.0),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        27.0, 27.0, 0.0, 0.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/logo.png',
-                                        width: 56.0,
-                                        height: 56.0,
-                                        fit: BoxFit.cover,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          27.0, 27.0, 0.0, 0.0),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.asset(
+                                          'assets/images/logo.png',
+                                          width: 56.0,
+                                          height: 56.0,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        4.0, 35.0, 4.0, 0.0),
-                                    child: Icon(
-                                      Icons.add,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 27.0, 0.0, 0.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/cam.png',
-                                        width: 56.0,
-                                        height: 56.0,
-                                        fit: BoxFit.cover,
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          4.0, 35.0, 4.0, 0.0),
+                                      child: Icon(
+                                        Icons.add,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 24.0,
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 8.0, 8.0, 8.0),
-                                child: Text(
-                                  'Never worry about sharing photos again!',
-                                  textAlign: TextAlign.start,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        color: Color(0xFF534308),
-                                        fontSize: 28.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 27.0, 0.0, 0.0),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.asset(
+                                          'assets/images/cam.png',
+                                          width: 56.0,
+                                          height: 56.0,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 16.0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    context.pushNamed('connectgallery');
-                                    if (!context.mounted) return;
-                                    await checkForPerms();
-                                  },
-                                  showLoadingIndicator: false,
-                                  text: 'Connect Bringer to Your Camera',
-                                  options: FFButtonOptions(
-                                    width: double.infinity,
-                                    height: 50.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        24.0, 16.0, 24.0, 16.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 8.0, 8.0, 8.0),
+                                  child: Text(
+                                    'Never worry about sharing photos again!',
+                                    textAlign: TextAlign.start,
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
                                         .override(
                                           fontFamily: 'Inter',
-                                          color: Colors.white,
+                                          color: Color(0xFF534308),
+                                          fontSize: 28.0,
                                           letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                    elevation: 3.0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(14.0),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 16.0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      context.pushNamed('introShare');
+                                      if (!context.mounted) return;
+                                      await checkForPerms();
+                                    },
+                                    showLoadingIndicator: false,
+                                    text: 'Connect Bringer to Your Camera',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 50.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 16.0, 24.0, 16.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 3.0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(14.0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
                       if (!FFAppState().isUploading &&
                           (FFAppState().uploadCount > 0.0))
                         Padding(
