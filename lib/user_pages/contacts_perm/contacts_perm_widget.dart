@@ -1,34 +1,32 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'connect_gallery_model.dart';
+import 'contacts_perm_model.dart';
 
-export 'connect_gallery_model.dart';
-
-class ConnectGalleryWidget extends StatefulWidget {
-  const ConnectGalleryWidget({super.key});
+class ContactsPermWidget extends StatefulWidget {
+  const ContactsPermWidget({super.key});
 
   @override
-  State<ConnectGalleryWidget> createState() => _ConnectGalleryWidgetState();
+  State<ContactsPermWidget> createState() => _ContactsPermWidgetState();
 }
 
-class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
-  late ConnectGalleryModel _model;
+class _ContactsPermWidgetState extends State<ContactsPermWidget> {
+  late ContactsPermModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ConnectGalleryModel());
+    _model = createModel(context, () => ContactsPermModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'connect_gallery'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'alldone'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -42,7 +40,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
   @override
   Widget build(BuildContext context) {
     return Title(
-        title: 'connect_gallery',
+        title: 'Contacts Permission',
         color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
         child: GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
@@ -88,7 +86,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 20.0),
                           child: LinearPercentIndicator(
-                            percent: 0,
+                            percent: 0.6,
                             lineHeight: 12.0,
                             animation: false,
                             animateFromLastPercent: false,
@@ -98,45 +96,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             padding: EdgeInsets.zero,
                           ),
                         ),
-                        Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 8.0),
-                            child: Text(
-                              '5 steps to make your life easier!',
-                              textAlign: TextAlign.start,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    color: Color(0xFF534308),
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: Text(
-                            'Allow these permissions to get started.',
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  color: Color(0xFF534308),
-                                  fontSize: 12.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Image.asset('assets/images/gallery.png'),
-                        ),
+                        Spacer(flex: 3),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -216,7 +176,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 0.0),
                             child: Text(
-                              'Step 1',
+                              'Step 4',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -225,7 +185,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                                     color: Color(0xFFB4A245),
                                     fontSize: 16.0,
                                     letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.bold,
                                   ),
                             ),
                           ),
@@ -236,7 +196,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 16.0),
                             child: Text(
-                              'Connect your gallery',
+                              'Allow access to contacts list.',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -256,7 +216,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 16.0),
                             child: Text(
-                              'This allows you to easily share selected photos through Bringer.',
+                              'Helps us filter out spam images and block unknown senders.',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -270,57 +230,87 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 16.0, 0.0, 16.0),
-                          child: Builder(builder: (context) {
-                            return FFButtonWidget(
-                              onPressed: () async {
-                                const platform = MethodChannel(
-                                    'com.smoose.photoowldev/autoUpload');
-                                final permsGiven =
-                                    await platform.invokeMethod<bool>(
-                                            'requestExternalStoragePermission',
-                                            null) ??
-                                        false;
-                                if (!context.mounted) return;
-                                if (permsGiven) {
-                                  context.pushNamed('displayover');
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Failed to get gallery access.'),
-                                    ),
-                                  );
-                                }
-                              },
-                              text: 'Give permission to files',
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 50.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 16.0, 24.0, 16.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter',
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(14.0),
+                        Center(
+                          child: FFButtonWidget(
+                            onPressed: () async {
+                              const platform = MethodChannel(
+                                  'com.smoose.photoowldev/autoUpload');
+                              final permsGiven =
+                                  await platform.invokeMethod<bool>(
+                                      'requestContactsPermission', null) ??
+                                      false;
+                              if (!context.mounted) return;
+                              if (permsGiven) {
+                                context.pushNamed('batteryOptimization');
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text('Failed to get contacts access.'),
+                                  ),
+                                );
+                              }
+                            },
+                            text: 'Provide contacts access',
+                            options: FFButtonOptions(
+                              width: double.infinity,
+                              height: 50.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 16.0, 24.0, 16.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
                               ),
-                            );
-                          }),
+                              borderRadius: BorderRadius.circular(14.0),
+                            ),
+                          ),
                         ),
+                        // Padding(
+                        //   padding: EdgeInsetsDirectional.fromSTEB(
+                        //       0.0, 16.0, 0.0, 16.0),
+                        //   child: FFButtonWidget(
+                        //     onPressed: () async {
+                        //       const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+                        //       await platform.invokeMethod('openCamera', null);
+                        //       if (!context.mounted) return;
+                        //       context.goNamed('HomeCopyCopy');
+                        //     },
+                        //     text: 'Go to camera',
+                        //     options: FFButtonOptions(
+                        //       width: double.infinity,
+                        //       height: 50.0,
+                        //       padding: EdgeInsetsDirectional.fromSTEB(
+                        //           24.0, 16.0, 24.0, 16.0),
+                        //       iconPadding: EdgeInsetsDirectional.fromSTEB(
+                        //           0.0, 0.0, 0.0, 0.0),
+                        //       color: FlutterFlowTheme.of(context).primaryText,
+                        //       textStyle: FlutterFlowTheme.of(context)
+                        //           .titleSmall
+                        //           .override(
+                        //         fontFamily: 'Inter',
+                        //         color: Colors.white,
+                        //         letterSpacing: 0.0,
+                        //       ),
+                        //       elevation: 3.0,
+                        //       borderSide: BorderSide(
+                        //         color: Colors.transparent,
+                        //         width: 1.0,
+                        //       ),
+                        //       borderRadius: BorderRadius.circular(14.0),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

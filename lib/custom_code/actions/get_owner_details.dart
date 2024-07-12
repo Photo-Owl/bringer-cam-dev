@@ -15,13 +15,9 @@ import 'package:collection/collection.dart';
 
 Future<List<OwnerDetailsStruct>> getOwnerDetails(List<String> owners) async {
   if (owners.isEmpty) return [];
-  var splitOwners = owners;
-  if (owners.length > 4) {
-    splitOwners = owners.slice(0, 4).toList();
-  }
   final ownerDetails = await FirebaseFirestore.instance
       .collection('users')
-      .where('uid', whereIn: splitOwners)
+      .where('uid', whereIn: owners)
       .get();
   // TODO: decide on a field for photo urls
   return ownerDetails.docs.map((doc) {
@@ -29,6 +25,8 @@ Future<List<OwnerDetailsStruct>> getOwnerDetails(List<String> owners) async {
     return OwnerDetailsStruct(
       name: (data['display_name'] as String? ?? '').split(' ')[0],
       photoURL: data['photo_url'] as String? ?? '',
+      phoneNum: data['phone_number'] as String? ?? '',
+      id: doc.id,
     );
   }).toList();
 }

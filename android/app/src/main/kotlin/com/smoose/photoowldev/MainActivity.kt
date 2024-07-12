@@ -70,6 +70,14 @@ class MainActivity : FlutterActivity() {
                             requestIgnoreBatteryOptimization()
                         )
 
+                        "checkForContactsPermission" -> result.success(
+                            checkForContactsPermission()
+                        )
+
+                        "requestContactsPermission" -> result.success(
+                            requestContactsPermission()
+                        )
+
                         "startService" -> {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 Log.d(LOG_TAG, "Starting service")
@@ -257,9 +265,29 @@ class MainActivity : FlutterActivity() {
         return granted
     }
 
+    private fun checkForContactsPermission() : Boolean {
+        return ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_CONTACTS
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestContactsPermission() : Boolean {
+        var isGranted = checkForContactsPermission()
+        if (!isGranted) {
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(Manifest.permission.READ_CONTACTS),
+                123
+            )
+            isGranted = checkForContactsPermission()
+        }
+        return isGranted
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val audioAttributes: AudioAttributes = Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_ALARM)
@@ -275,6 +303,5 @@ class MainActivity : FlutterActivity() {
             NotificationManagerCompat.from(applicationContext).createNotificationChannel(notifChannel)
 
         }
-
     }
 }
