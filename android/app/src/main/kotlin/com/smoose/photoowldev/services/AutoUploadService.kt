@@ -350,7 +350,7 @@ class AutoUploadService : Service() {
         while (events.hasNextEvent()) {
             events.getNextEvent(usageEvent)
             if(usageEvent.packageName == packageName){
-                if(usageEvent.eventType == 11 || usageEvent.eventType == 1){
+                if(usageEvent.eventType == 1){
                     Log.d(
                                 LOG_TAG,
                                 "CAMERA OPEN DETECTED"
