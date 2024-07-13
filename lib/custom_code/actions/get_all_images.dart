@@ -123,7 +123,7 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
   }
 
   final sortedGroupedImages = groupedImages.entries
-      .sorted((a, b) => DateTime.parse(a.key).compareTo(DateTime.parse(b.key)));
+      .sorted((a, b) => DateTime.parse(b.key).compareTo(DateTime.parse(a.key)));
   final result = sortedGroupedImages
       .map(
         (entry) => TimelineItemStruct(

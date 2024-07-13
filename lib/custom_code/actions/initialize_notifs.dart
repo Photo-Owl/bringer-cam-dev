@@ -135,6 +135,7 @@ Future<Map> _prepareNotifications(String name, String countString) async {
   final int newCount;
   String sentNotifications = '{}';
   var prefs = await PrefManager().prefs;
+  await prefs.reload();
   if (prefs.containsKey('sent_notifications')) {
     sentNotifications = prefs.getString('sent_notifications') ?? '{}';
   }
