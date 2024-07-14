@@ -78,7 +78,7 @@ class _FetchingPhotosWidgetState extends State<FetchingPhotosWidget>
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.asset(
-                'assets/images/ezgif.com-gif-maker.gif',
+                'assets/images/logo.png',
                 width: 100.0,
                 height: 100.0,
                 fit: BoxFit.scaleDown,

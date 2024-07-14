@@ -141,7 +141,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                         if (!snapshot.hasData) {
                           return Center(
                             child: Image.asset(
-                              'assets/images/ezgif.com-gif-maker.gif',
+                              'assets/images/logo.png',
                               width: 64.0,
                               height: 64.0,
                               fit: BoxFit.cover,
@@ -251,7 +251,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                       if (!snapshot.hasData) {
                         return Center(
                           child: Image.asset(
-                            'assets/images/ezgif.com-gif-maker.gif',
+                            'assets/images/logo.png',
                             width: 64.0,
                             height: 64.0,
                             fit: BoxFit.cover,
