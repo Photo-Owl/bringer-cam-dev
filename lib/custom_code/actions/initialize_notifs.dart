@@ -73,8 +73,8 @@ Future<void> initializeNotifs() async {
         const NotificationDetails(
           android: AndroidNotificationDetails(
             'com.smoose.photoowldev.info',
-            'Bringer notifs',
-            channelDescription: 'Any notification from bringer',
+            'Social Gallery notifs',
+            channelDescription: 'Any notification from Social Gallery',
           ),
         ),
       );
@@ -120,7 +120,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
               android: AndroidNotificationDetails(
                 'com.smoose.photoowldev.photo_sent',
                 'Photo sent',
-                channelDescription: 'Photo sent notifications from Bringer',
+                channelDescription: 'Photo sent notifications from Social Gallery',
               ),
               iOS: DarwinNotificationDetails()),
         );

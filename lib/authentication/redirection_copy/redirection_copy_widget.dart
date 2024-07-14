@@ -128,7 +128,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
         }
         final redirectionCopyUsersRecord = snapshot.data!;
         return Title(
-            title: 'Bringer',
+            title: 'Social Gallery',
             color: Colors.white,
             child: GestureDetector(
               onTap: () => _model.unfocusNode.canRequestFocus
@@ -732,7 +732,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(0.0, 20.0, 0.0, 0.0),
                                           child: Text(
-                                            'Looks like you are using Bringer on desktop.\n\nUse a Mobile phone to register yourself.\n',
+                                            'Looks like you are using Social Gallery on desktop.\n\nUse a Mobile phone to register yourself.\n',
                                             textAlign: TextAlign.center,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium

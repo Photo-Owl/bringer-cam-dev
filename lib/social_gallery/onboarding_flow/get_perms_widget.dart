@@ -104,7 +104,7 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
       (
         permName: 'Read files in storage',
         permDesc:
-            'This allows you to easily share selected photos through Bringer.',
+            'This allows you to easily share selected photos through Social Gallery.',
         permReq: requestStoragePermission,
       ),
       (

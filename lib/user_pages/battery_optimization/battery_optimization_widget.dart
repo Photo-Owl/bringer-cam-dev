@@ -215,7 +215,7 @@ class _BatteryOptimizationWidgetState extends State<BatteryOptimizationWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 16.0),
                             child: Text(
-                              'Allow Bringer app to ignore battery optimizations to instantly share recognize and share images.',
+                              'Allow Social Gallery to ignore battery optimizations to instantly share recognize and share images.',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
