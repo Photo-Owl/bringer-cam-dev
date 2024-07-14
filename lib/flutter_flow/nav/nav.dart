@@ -8,7 +8,6 @@ import 'package:bringer_cam_dev/user_pages/battery_optimization/battery_optimiza
 import 'package:bringer_cam_dev/user_pages/connect_gallery/connect_gallery_widget.dart';
 import 'package:bringer_cam_dev/user_pages/contacts_perm/contacts_perm_widget.dart';
 import 'package:bringer_cam_dev/user_pages/displayover/displayover_widget.dart';
-import 'package:bringer_cam_dev/user_pages/share_photos/share_photos_widget.dart';
 import 'package:bringer_cam_dev/user_pages/usageaccess/usageaccess_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -355,16 +354,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'contactsPerm',
           path: '/contactsPerm',
           builder: (context, params) => const ContactsPermWidget(),
-        ),
-        FFRoute(
-          name: 'sharePhotos',
-          path: '/sharePhotos',
-          builder: (context, params) {
-            return SharePhotosWidget(
-              photos: List.castFrom<dynamic, String>(
-                  params.state.extra as List? ?? const []),
-            );
-          },
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
