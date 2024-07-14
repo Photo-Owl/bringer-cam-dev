@@ -85,7 +85,7 @@ class _BatteryOptimizationWidgetState extends State<BatteryOptimizationWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 20.0),
                           child: LinearPercentIndicator(
-                            percent: 0.75,
+                            percent: 0.8,
                             lineHeight: 12.0,
                             animation: false,
                             animateFromLastPercent: false,
@@ -175,7 +175,7 @@ class _BatteryOptimizationWidgetState extends State<BatteryOptimizationWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 0.0),
                             child: Text(
-                              'Step 4',
+                              'Step 5',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -215,7 +215,7 @@ class _BatteryOptimizationWidgetState extends State<BatteryOptimizationWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 16.0),
                             child: Text(
-                              'Allow Bringer app to ignore battery optimizations to instantly share recognize and share images.',
+                              'Allow Social Gallery to ignore battery optimizations to instantly share recognize and share images.',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium

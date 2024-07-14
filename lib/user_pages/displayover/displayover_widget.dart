@@ -87,7 +87,7 @@ class _DisplayoverWidgetState extends State<DisplayoverWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 20.0),
                           child: LinearPercentIndicator(
-                            percent: 0.25,
+                            percent: 0.2,
                             lineHeight: 12.0,
                             animation: true,
                             animateFromLastPercent: true,

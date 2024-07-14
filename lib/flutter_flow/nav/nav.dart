@@ -1,8 +1,12 @@
 import 'dart:async';
 
+import 'package:bringer_cam_dev/social_gallery/onboarding_flow/battery_permission_widget/battery_permission_widget.dart';
+import 'package:bringer_cam_dev/social_gallery/onboarding_flow/get_perms_widget.dart';
+import 'package:bringer_cam_dev/social_gallery/onboarding_flow/intro_share_widget.dart';
 import 'package:bringer_cam_dev/user_pages/alldone/alldone_widget.dart';
 import 'package:bringer_cam_dev/user_pages/battery_optimization/battery_optimization_widget.dart';
 import 'package:bringer_cam_dev/user_pages/connect_gallery/connect_gallery_widget.dart';
+import 'package:bringer_cam_dev/user_pages/contacts_perm/contacts_perm_widget.dart';
 import 'package:bringer_cam_dev/user_pages/displayover/displayover_widget.dart';
 import 'package:bringer_cam_dev/user_pages/share_photos/share_photos_widget.dart';
 import 'package:bringer_cam_dev/user_pages/usageaccess/usageaccess_widget.dart';
@@ -274,7 +278,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'RedirectionCopy',
-          path: '/Bringer',
+          path: '/SocialGallery',
           requireAuth: true,
           builder: (context, params) => const RedirectionCopyWidget(),
         ),
@@ -331,6 +335,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'alldone',
           path: '/alldone',
           builder: (context, params) => const AlldoneWidget(),
+        ),
+        FFRoute(
+          name: 'introShare',
+          path: '/socialGallery/onboarding/intro',
+          builder: (context, params) => const IntroShareWidget(),
+        ),
+        FFRoute(
+          name: 'batteryPermission',
+          path: '/socialGallery/onboarding/batteryPermission',
+          builder: (context, params) => const BatteryPermissionWidget(),
+        ),
+        FFRoute(
+          name: 'getPermsNew',
+          path: '/socialGallery/onboarding/getPerms',
+          builder: (context, params) => const GetPermsWidget(),
+        ),
+        FFRoute(
+          name: 'contactsPerm',
+          path: '/contactsPerm',
+          builder: (context, params) => const ContactsPermWidget(),
         ),
         FFRoute(
           name: 'sharePhotos',

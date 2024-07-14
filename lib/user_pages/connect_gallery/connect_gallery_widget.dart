@@ -104,7 +104,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
                             child: Text(
-                              '3 steps to make your life easier!',
+                              '5 steps to make your life easier!',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -256,7 +256,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 16.0),
                             child: Text(
-                              'This allows you to easily share selected photos through Bringer.',
+                              'This allows you to easily share selected photos through Social Gallery.',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium

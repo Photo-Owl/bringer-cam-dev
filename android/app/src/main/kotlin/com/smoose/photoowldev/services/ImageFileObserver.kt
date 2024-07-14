@@ -40,21 +40,23 @@ class ImageFileObserver (private val context: Context) : FileObserver("/storage/
         Log.d("mainActivity debug","event $event detected on $path")
 
         if(event == 128){
-           val actual_path="/storage/emulated/0/DCIM/Camera/"+path
-            Log.d("mainActivity debug","found new file in path -> "+actual_path)
-            val data = Data.Builder()
+            if(path?.toLowerCase()!!.endsWith(".jpg")||path?.toLowerCase()!!.endsWith(".png")||path?.toLowerCase()!!.endsWith(".jpeg")||path?.toLowerCase()!!.endsWith(".heic")){
+                val actual_path="/storage/emulated/0/DCIM/Camera/"+path
+                Log.d("mainActivity debug","found new file in path -> "+actual_path)
+                val data = Data.Builder()
                     .putString("path", actual_path.toString())
                     .putString("owner", AppState.authUser)
                     .build()
-            val addImageTask =
+                val addImageTask =
                     OneTimeWorkRequestBuilder<AddImageToSqliteWorker>()
-                            .setInputData(data)
-                            .build()
-            WorkManager.getInstance(context).beginUniqueWork(
+                        .setInputData(data)
+                        .build()
+                WorkManager.getInstance(context).beginUniqueWork(
                     ADD_IMAGE_TO_SQLITE,
                     ExistingWorkPolicy.REPLACE,
                     addImageTask,
-            ).enqueue()
+                ).enqueue()
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ import 'package:path/path.dart' show basename;
 import 'package:media_store_plus/media_store_plus.dart';
 
 Future deleteImage(String path) async {
-  MediaStore.appFolder = 'Bringer';
+  MediaStore.appFolder = 'Social Gallery';
   final mediaStore = MediaStore();
   await SQLiteManager.instance.deleteImage(path: path);
   await mediaStore.deleteFile(

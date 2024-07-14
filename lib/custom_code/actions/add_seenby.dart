@@ -39,7 +39,7 @@ Future<void> sendSeenNotification(
     String key, String displayName, String ownerId) async {
   final db = FirebaseFirestore.instance;
   final title = displayName + " has seen the photo you shared";
-  const body = "You’ve been a good friend using Bringer.";
+  const body = "You’ve been a good friend using Social Gallery.";
   final ownerSnapshot = await db.collection("users").doc(ownerId).get();
 
   final token = ownerSnapshot.data()!['fcmToken'];

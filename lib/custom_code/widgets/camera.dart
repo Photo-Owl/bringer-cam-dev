@@ -242,14 +242,14 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     var newPath = '';
     if (defaultTargetPlatform == TargetPlatform.android) {
       final mediaStore = MediaStore();
-      MediaStore.appFolder = 'Bringer';
+      MediaStore.appFolder = 'Social Gallery';
       final isFileSaved = await mediaStore.saveFile(
         tempFilePath: filePath,
         dirType: DirType.photo,
         dirName: DirName.pictures,
       );
       if (isFileSaved?.isNotEmpty ?? false) {
-        newPath = '/sdcard/Pictures/Bringer/$fileName';
+        newPath = '/sdcard/Pictures/Social Gallery/$fileName';
         await MediaScanner.loadMedia(path: newPath);
       }
     }

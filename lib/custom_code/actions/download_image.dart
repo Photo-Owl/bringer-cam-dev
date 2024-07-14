@@ -27,7 +27,7 @@ Future<void> downloadImage(String url, String key) async {
 
   AndroidDownloadManager.enqueue(
     downloadUrl: url,
-    downloadPath: '/sdcard/Pictures/Bringer/',
+    downloadPath: '/sdcard/Pictures/Social Gallery/',
     fileName: fileName,
   );
 }

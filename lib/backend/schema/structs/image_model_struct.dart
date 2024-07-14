@@ -15,12 +15,14 @@ class ImageModelStruct extends FFFirebaseStruct {
     String? imageUrl,
     bool? isUploading,
     bool? isLocal,
+    String? ownerId,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _timestamp = timestamp,
         _id = id,
         _imageUrl = imageUrl,
         _isUploading = isUploading,
         _isLocal = isLocal,
+        _ownerId = ownerId,
         super(firestoreUtilData);
 
   // "timestamp" field.
@@ -53,6 +55,12 @@ class ImageModelStruct extends FFFirebaseStruct {
   set isLocal(bool? val) => _isLocal = val;
   bool hasIsLocal() => _isLocal != null;
 
+  // "owner_id" field.
+  String? _ownerId;
+  String get ownerId => _ownerId ?? '';
+  set ownerId(String? val) => _ownerId = val;
+  bool hasOwnerId() => _ownerId != null;
+
   static ImageModelStruct fromMap(Map<String, dynamic> data) =>
       ImageModelStruct(
         timestamp: data['timestamp'] as DateTime?,
@@ -60,6 +68,7 @@ class ImageModelStruct extends FFFirebaseStruct {
         imageUrl: data['image_url'] as String?,
         isUploading: data['is_uploading'] as bool?,
         isLocal: data['is_local'] as bool?,
+        ownerId: data['owner_id'] as String?,
       );
 
   static ImageModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -72,6 +81,7 @@ class ImageModelStruct extends FFFirebaseStruct {
         'image_url': _imageUrl,
         'is_uploading': _isUploading,
         'is_local': _isLocal,
+        'owner_id': _ownerId,
       }.withoutNulls;
 
   @override
@@ -95,6 +105,10 @@ class ImageModelStruct extends FFFirebaseStruct {
         'is_local': serializeParam(
           _isLocal,
           ParamType.bool,
+        ),
+        'owner_id': serializeParam(
+          _ownerId,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -125,6 +139,7 @@ class ImageModelStruct extends FFFirebaseStruct {
           ParamType.bool,
           false,
         ),
+        ownerId: deserializeParam(data['owner_id'], ParamType.String, false,),
       );
 
   @override
@@ -137,12 +152,13 @@ class ImageModelStruct extends FFFirebaseStruct {
         id == other.id &&
         imageUrl == other.imageUrl &&
         isUploading == other.isUploading &&
-        isLocal == other.isLocal;
+        isLocal == other.isLocal &&
+        ownerId == other.ownerId;
   }
 
   @override
   int get hashCode => const ListEquality()
-      .hash([timestamp, id, imageUrl, isUploading, isLocal]);
+      .hash([timestamp, id, imageUrl, isUploading, isLocal, ownerId]);
 }
 
 ImageModelStruct createImageModelStruct({
@@ -151,6 +167,7 @@ ImageModelStruct createImageModelStruct({
   String? imageUrl,
   bool? isUploading,
   bool? isLocal,
+  String? ownerId,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -162,6 +179,7 @@ ImageModelStruct createImageModelStruct({
       imageUrl: imageUrl,
       isUploading: isUploading,
       isLocal: isLocal,
+      ownerId: ownerId,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
