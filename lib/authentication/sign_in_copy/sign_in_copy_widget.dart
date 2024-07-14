@@ -374,123 +374,15 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                 20.0, 20.0, 20.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                logFirebaseEvent(
-                                    'SIGN_IN_COPY_PAGE_Button-Login_ON_TAP');
-                                var shouldSetState = false;
-                                logFirebaseEvent(
-                                    'Button-Login_google_analytics_event');
-                                logFirebaseEvent('Sign in button pressed');
-                                logFirebaseEvent('Button-Login_validate_form');
-                                if (_model.formKey.currentState == null ||
-                                    !_model.formKey.currentState!.validate()) {
-                                  return;
-                                }
-                                logFirebaseEvent(
-                                    'Button-Login_firestore_query');
-                                _model.userDocument =
-                                    await queryUsersRecordOnce(
-                                  queryBuilder: (usersRecord) =>
-                                      usersRecord.where(
-                                    'phone_number',
-                                    isEqualTo:
-                                        '${_model.textController1.text}${_model.textController2.text}',
-                                  ),
-                                );
-                                shouldSetState = true;
-                                if (_model.userDocument!.isEmpty) {
-                                  logFirebaseEvent('Button-Login_navigate_to');
-
-                                  context.pushNamed(
-                                    'SocialSignInCopy',
-                                    queryParameters: {
-                                      'phoneNumber': serializeParam(
-                                        '${_model.textController1.text}${_model.textController2.text}',
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: const TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType: PageTransitionType.fade,
-                                      ),
-                                    },
-                                  );
-
-                                  if (shouldSetState) setState(() {});
-                                  return;
-                                } else if (_model.userDocument!.first
-                                    .hasIsGoogleLogin()) {
-                                  if (_model
-                                          .userDocument?.first.isGoogleLogin ==
-                                      true) {
-                                    logFirebaseEvent(
-                                        'Button-Login_navigate_to');
-
-                                    context.pushNamed(
-                                      'SocialSignInCopy',
-                                      queryParameters: {
-                                        'phoneNumber': serializeParam(
-                                          '${_model.textController1.text}${_model.textController2.text}',
-                                          ParamType.String,
-                                        ),
-                                        'userDocument': serializeParam(
-                                          _model.userDocument?.first,
-                                          ParamType.Document,
-                                        ),
-                                        'email': serializeParam(
-                                          _model.userDocument?.first.email,
-                                          ParamType.String,
-                                        ),
-                                      }.withoutNulls,
-                                      extra: <String, dynamic>{
-                                        'userDocument':
-                                            _model.userDocument?.first,
-                                        kTransitionInfoKey:
-                                            const TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.fade,
-                                        ),
-                                      },
-                                    );
-
-                                    if (shouldSetState) setState(() {});
-                                    return;
-                                  }
-                                }
-
-                                logFirebaseEvent('Button-Login_auth');
-                                final phoneNumberVal =
-                                    '${_model.textController1.text}${_model.textController2.text}';
-                                if (phoneNumberVal.isEmpty ||
-                                    !phoneNumberVal.startsWith('+')) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                          'Phone Number is required and has to start with +.'),
+                                context.pushNamed(
+                                  'SocialSignInCopy',
+                                  extra: <String, dynamic>{
+                                    kTransitionInfoKey: const TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType: PageTransitionType.fade,
                                     ),
-                                  );
-                                  return;
-                                }
-                                await authManager.beginPhoneAuth(
-                                  context: context,
-                                  phoneNumber: phoneNumberVal,
-                                  onCodeSent: (context) async {
-                                    context.goNamedAuth(
-                                      'OtpVerification',
-                                      context.mounted,
-                                      queryParameters: {
-                                        'name': serializeParam(
-                                          '',
-                                          ParamType.String,
-                                        ),
-                                      }.withoutNulls,
-                                      ignoreRedirect: true,
-                                    );
                                   },
                                 );
-
-                                if (shouldSetState) setState(() {});
                               },
                               text: 'Yes, I do',
                               options: FFButtonOptions(

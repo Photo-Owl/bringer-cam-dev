@@ -93,6 +93,9 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           ),
         });
       }
+      if (currentPhoneNumber == '') {
+        context.goNamed('WaitForVerification');
+      }
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

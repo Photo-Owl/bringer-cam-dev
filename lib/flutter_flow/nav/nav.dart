@@ -89,7 +89,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? const WaitForVerificationWidget()
+              ? const RedirectionCopyWidget()
               : const SignInCopyWidget(),
         ),
         FFRoute(
