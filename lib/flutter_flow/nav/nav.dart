@@ -278,7 +278,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'RedirectionCopy',
-          path: '/Bringer',
+          path: '/SocialGallery',
           requireAuth: true,
           builder: (context, params) => const RedirectionCopyWidget(),
         ),

@@ -205,7 +205,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     }
 
     return Title(
-        title: 'Bringer  | Home',
+        title: 'Social Gallery | Home',
         color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
         child: GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus

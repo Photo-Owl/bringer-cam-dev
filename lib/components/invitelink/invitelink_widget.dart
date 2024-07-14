@@ -110,7 +110,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                     child: Text(
-                      'Invite them to Bringer and we will get this to them 🤗',
+                      'Invite them to Social Gallery and we will get this to them 🤗',
                       textAlign: TextAlign.center,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',

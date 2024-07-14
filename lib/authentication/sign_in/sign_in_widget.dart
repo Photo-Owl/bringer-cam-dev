@@ -447,7 +447,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                       20.0, 20.0, 40.0, 0.0),
                                   child: Text(
                                     widget.qr != null && widget.qr != ''
-                                        ? 'Has invited you to join Bringer to enhance your event experience'
+                                        ? 'Has invited you to join Social Gallery to enhance your event experience'
                                         : 'You are just a few steps away from finding your photos!',
                                     style: FlutterFlowTheme.of(context)
                                         .labelSmall

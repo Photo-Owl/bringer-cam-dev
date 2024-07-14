@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
             unixTimestamp: timestamp,
           );
         }
-        Fluttertoast.showToast(msg: "Uploading the pics to Bringer...");
+        Fluttertoast.showToast(msg: "Uploading the pics to Social Gallery...");
       }
     });
   }
@@ -110,7 +110,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Bringer-cam-dev',
+      title: 'Social Gallery',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

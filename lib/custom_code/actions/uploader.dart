@@ -320,8 +320,8 @@ class Uploader {
           'Searching for friends in the photos you took',
           const NotificationDetails(
             android: AndroidNotificationDetails(
-                'com.smoose.photoowldev.info', 'Bringer notifs',
-                channelDescription: 'Any notification from bringer',
+                'com.smoose.photoowldev.info', 'Social Gallery notifs',
+                channelDescription: 'Any notification from Social Gallery',
                 silent: true,
                 indeterminate: true,
                 showProgress: true,
