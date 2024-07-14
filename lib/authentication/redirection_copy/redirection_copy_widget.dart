@@ -93,7 +93,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           ),
         });
       }
-      if (currentPhoneNumber == '') {
+      if (currentPhoneNumber == '' && (currentUserPhoto != '')) {
         context.goNamed('WaitForVerification');
       }
     });
