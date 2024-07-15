@@ -54,7 +54,7 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                   width: double.infinity,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [Color(0xFFFFF8D6), Color(0xFFFFF3B7)],
                       stops: [0.0, 1.0],
                       begin: AlignmentDirectional(0.0, -1.0),

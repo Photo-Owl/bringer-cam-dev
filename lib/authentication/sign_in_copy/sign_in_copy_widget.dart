@@ -229,7 +229,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(30, 0, 50, 0),
                           child: Text(
-                            'Are you still begging for your photos from others?',
+                            'Are you still begging photos from your friends?',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(

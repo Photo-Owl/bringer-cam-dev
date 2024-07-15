@@ -204,7 +204,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                               .fromSTEB(24, 0, 24, 10),
                                           child: AuthUserStreamWidget(
                                             builder: (context) => Text(
-                                              'Hey ${currentUserDisplayName}',
+                                              'Lets get started',
                                               textAlign: TextAlign.start,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -225,7 +225,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(24, 0, 24, 0),
                                           child: Text(
-                                            'We are almost there, for us to bring your photos to you we need on quick selfie from you',
+                                            'In order to get your photos, give us a quick selfie so AI could recognize your face',
                                             textAlign: TextAlign.start,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -413,7 +413,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                 () {}));
                                                       }
                                                     },
-                                                    text: 'Take a Selfie',
+                                                    text:
+                                                        'Take a Selfie of your face',
                                                     options: FFButtonOptions(
                                                       width: double.infinity,
                                                       padding:

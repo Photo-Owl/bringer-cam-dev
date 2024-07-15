@@ -893,7 +893,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16, 8, 8, 24),
                                 child: Text(
-                                  'Let\'s Get Started',
+                                  'One final step',
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -912,7 +912,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       32, 0, 32, 8),
                                   child: Text(
-                                    'Photosharing is a two people job 🤝',
+                                    'Ready for lightning-fast⚡ photo sharing?',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -933,7 +933,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       32, 8, 32, 0),
                                   child: Text(
-                                    'In order for you to get started with Social gallery connect our sharing feature in the camera',
+                                    'This will help you safely share and receive photos from your friends and events',
                                     textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -956,7 +956,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                     context.pushReplacementNamed('introShare');
                                     await checkForPerms();
                                   },
-                                  text: 'Enable Sharing Feature',
+                                  text: 'Yes, Im ready',
                                   options: FFButtonOptions(
                                     width: double.infinity,
                                     height: 50,

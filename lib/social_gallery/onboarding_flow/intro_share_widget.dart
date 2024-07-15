@@ -22,7 +22,7 @@ class IntroShareWidget extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsetsDirectional.only(top: 64, bottom: 8),
                   child: Text(
-                    'Introducing share for your camera',
+                    'Introducing Instashare',
                     style: TextStyle(
                       fontFamily: 'Gotham Black',
                       fontSize: 36,
@@ -73,7 +73,10 @@ class IntroShareWidget extends StatelessWidget {
                                 color: Colors.white,
                               ),
                             ),
-                            Image.asset('assets/images/Right Arrow.png', height: 24,),
+                            Image.asset(
+                              'assets/images/Right Arrow.png',
+                              height: 24,
+                            ),
                           ],
                         ),
                       ),

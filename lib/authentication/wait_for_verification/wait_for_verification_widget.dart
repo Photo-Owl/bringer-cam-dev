@@ -286,7 +286,7 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
                               child: Text(
-                                'We collect all the photos from your contacts and share it with you',
+                                'Give us your phone number so your friends can share photos with you',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
