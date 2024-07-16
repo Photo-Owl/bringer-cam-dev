@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -126,10 +127,12 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(42, 0, 42, 0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        const platform =
+                            MethodChannel('com.smoose.photoowldev/autoUpload');
+                        await platform.invokeMethod('openCamera', null);
                       },
-                      text: 'Try Instashare ⚡️',
+                      text: 'Try Insta-share ⚡️',
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 50,
@@ -154,7 +157,7 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(42, 16, 42, 0),
                     child: FFButtonWidget(
                       onPressed: () {
-                        print('Button pressed ...');
+                        context.pushReplacementNamed('HomeCopyCopy');
                       },
                       text: 'View Photos',
                       options: FFButtonOptions(
