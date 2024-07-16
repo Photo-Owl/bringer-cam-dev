@@ -250,6 +250,7 @@ class PermissionWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         clipBehavior: Clip.hardEdge,
         child: Container(
+          width: MediaQuery.of(context).size.width,
           color: Colors.white,
           padding: const EdgeInsetsDirectional.all(16),
           child: Column(
