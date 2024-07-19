@@ -69,22 +69,14 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
     super.initState();
     _model = createModel(context, () => RedirectionCopyModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'RedirectionCopy'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       print("calling startService from dart");
       const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
       await channel.invokeMethod('startService');
-      logFirebaseEvent('REDIRECTION_COPY_RedirectionCopy_ON_INIT');
       if ((currentUserPhoto != '') &&
           (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
-        logFirebaseEvent('RedirectionCopy_navigate_to');
-
         context.goNamed('HomeCopyCopy');
-
-        logFirebaseEvent('RedirectionCopy_backend_call');
-
         await currentUserReference!.update({
           ...mapToFirestore(
             {

@@ -2,9 +2,34 @@ import 'package:bringer_cam_dev/flutter_flow/flutter_flow_util.dart';
 import 'package:bringer_cam_dev/social_gallery/onboarding_flow/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:video_player/video_player.dart';
 
-class IntroShareWidget extends StatelessWidget {
+class IntroShareWidget extends StatefulWidget {
   const IntroShareWidget({super.key});
+
+  @override
+  State<IntroShareWidget> createState() => _IntroShareWidgetState();
+}
+
+class _IntroShareWidgetState extends State<IntroShareWidget> {
+  late VideoPlayerController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset(
+      'assets/videos/Instashare.mp4', // Replace with your asset path
+    )..initialize().then((_) {
+        setState(() {
+          _controller.play();
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,81 +37,56 @@ class IntroShareWidget extends StatelessWidget {
       title: 'Get perms',
       color: AppColors.purplishWhite,
       child: Scaffold(
-        backgroundColor: AppColors.purplishWhite,
+        backgroundColor: Color(0xFF4400CA),
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 24),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Color(0xFF4400CA),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsetsDirectional.only(top: 64, bottom: 8),
-                  child: Text(
-                    'Introducing Instashare',
-                    style: TextStyle(
-                      fontFamily: 'Gotham Black',
-                      fontSize: 36,
-                      height: 1.05,
-                      letterSpacing: -0.36,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                FractionallySizedBox(
-                  widthFactor: 0.85,
-                  child: Text(
-                    'Click pictures that you want to share with your friends with sharing mode on and they will be shared instantly.',
-                    style: GoogleFonts.getFont(
-                      'Inter',
-                      fontSize: 16,
-                      height: 1.25,
-                      letterSpacing: -0.3,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 32),
-                  child: Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(12),
-                    clipBehavior: Clip.hardEdge,
-                    child: InkWell(
-                      onTap: Feedback.wrapForTap(
-                          () => context.pushNamed('getPermsNew'), context),
-                      child: Container(
-                        padding: const EdgeInsetsDirectional.symmetric(
-                            vertical: 12, horizontal: 32),
-                        color: AppColors.purple,
-                        child: Wrap(
-                          spacing: 8,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            Text(
-                              'Next',
-                              style: GoogleFonts.getFont(
-                                'Inter',
-                                fontSize: 16,
-                                height: 1.5,
-                                letterSpacing: -0.3,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Image.asset(
-                              'assets/images/Right Arrow.png',
-                              height: 24,
-                            ),
-                          ],
-                        ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Center(
+                      child: AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(_controller),
                       ),
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Image.asset('assets/images/share_intro.png'),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                  child: InkWell(
+                    onTap: Feedback.wrapForTap(
+                        () => context.pushNamed('getPermsNew'), context),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
+                      padding: const EdgeInsetsDirectional.symmetric(
+                          vertical: 12, horizontal: 32),
+                      color: Colors.white,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Continue',
+                            style: GoogleFonts.getFont(
+                              'Inter',
+                              fontSize: 16,
+                              height: 1.5,
+                              letterSpacing: -0.3,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
