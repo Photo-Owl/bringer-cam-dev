@@ -252,11 +252,6 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                               ...createUsersRecordData(
                                 isGoogleLogin: true,
                               ),
-                              ...mapToFirestore(
-                                {
-                                  'photo_url': FieldValue.delete(),
-                                },
-                              ),
                             });
                             context.goNamedAuth(
                                 'RedirectionCopy', context.mounted);

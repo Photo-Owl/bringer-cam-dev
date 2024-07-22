@@ -95,52 +95,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
 
         return;
       }
-
-      if ((widget.phoneNumber != null && widget.phoneNumber != '') &&
-          (widget.name != null && widget.name != '')) {
-        logFirebaseEvent('SignInCopy_auth');
-        final phoneNumberVal = widget.phoneNumber;
-        if (phoneNumberVal == null ||
-            phoneNumberVal.isEmpty ||
-            !phoneNumberVal.startsWith('+')) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content:
-                  Text('Phone Number is required and has to start with +.'),
-            ),
-          );
-          return;
-        }
-        await authManager.beginPhoneAuth(
-          context: context,
-          phoneNumber: phoneNumberVal,
-          onCodeSent: (context) async {
-            context.goNamedAuth(
-              'OtpVerification',
-              context.mounted,
-              queryParameters: {
-                'name': serializeParam(
-                  widget.name,
-                  ParamType.String,
-                ),
-              }.withoutNulls,
-              ignoreRedirect: true,
-            );
-          },
-        );
-      } else {
-        return;
-      }
     });
-
-    authManager.handlePhoneAuthStateChanges(context);
-    _model.textController1 ??= TextEditingController(text: '+');
-    _model.textFieldFocusNode1 ??= FocusNode();
-
-    _model.textController2 ??= TextEditingController(text: '91');
-    _model.textFieldFocusNode2 ??= FocusNode();
-
-    authManager.handlePhoneAuthStateChanges(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
