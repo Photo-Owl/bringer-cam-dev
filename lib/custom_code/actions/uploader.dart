@@ -182,7 +182,9 @@ class Uploader {
         if (row.path.startsWith('content://')) {
           final image = await ContentResolver.resolveContent(row.path);
           final fileName = image.fileName;
-          ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
+          final sanitizedName =
+              (fileName ?? '').replaceAll(RegExp('[^a-zA-Z0-9_.\-:]'), '_');
+          ref = FirebaseStorage.instance.ref('$userId/uploads/$sanitizedName');
           await ref.putData(
             image.data,
             SettableMetadata(contentType: image.mimeType),
@@ -190,7 +192,9 @@ class Uploader {
         } else {
           final filePath = row.path;
           final fileName = basename(filePath);
-          ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
+          final sanitizedName =
+              fileName.replaceAll(RegExp('[^a-zA-Z0-9_.\-:]'), '_');
+          ref = FirebaseStorage.instance.ref('$userId/uploads/$sanitizedName');
           await ref.putFile(
             File(filePath),
             SettableMetadata(
