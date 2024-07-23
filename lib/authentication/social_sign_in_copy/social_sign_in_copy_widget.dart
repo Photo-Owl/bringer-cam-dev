@@ -143,7 +143,7 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(30, 0, 50, 0),
                     child: Text(
-                      'Well, Social gallery helps find your photos from your friends through AI',
+                      'Well, we help you find your photos from friends, events and parties using AI',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             color: Color(0xFFFDFDFD),
@@ -251,11 +251,6 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                             await currentUserReference!.update({
                               ...createUsersRecordData(
                                 isGoogleLogin: true,
-                              ),
-                              ...mapToFirestore(
-                                {
-                                  'photo_url': FieldValue.delete(),
-                                },
                               ),
                             });
                             context.goNamedAuth(

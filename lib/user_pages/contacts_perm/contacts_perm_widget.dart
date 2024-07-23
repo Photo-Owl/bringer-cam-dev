@@ -25,9 +25,16 @@ class _ContactsPermWidgetState extends State<ContactsPermWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ContactsPermModel());
-
+    _requestContactsPermission();
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'alldone'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  Future<void> _requestContactsPermission() async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+    final permsGiven =
+        await platform.invokeMethod<bool>('requestContactsPermission', null) ??
+            false;
   }
 
   @override
@@ -237,7 +244,7 @@ class _ContactsPermWidgetState extends State<ContactsPermWidget> {
                                   'com.smoose.photoowldev/autoUpload');
                               final permsGiven =
                                   await platform.invokeMethod<bool>(
-                                      'requestContactsPermission', null) ??
+                                          'requestContactsPermission', null) ??
                                       false;
                               if (!context.mounted) return;
                               if (permsGiven) {

@@ -91,7 +91,7 @@ class _BatteryPermissionWidgetState extends State<BatteryPermissionWidget> {
                       ),
                       const Padding(
                         padding: EdgeInsets.fromLTRB(0, 16, 0, 8),
-                        child: Text('Allow us to work even when in low battery',
+                        child: Text('Allow us to work in the background',
                             style: TextStyle(
                               fontFamily: 'Gotham Black',
                               fontSize: 36,
@@ -99,12 +99,24 @@ class _BatteryPermissionWidgetState extends State<BatteryPermissionWidget> {
                             )),
                       ),
                       Text(
-                        'Help us make this possible by enabling us skip battery optimizations',
+                        'This helps us share and receive your photos without any interruption.',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               letterSpacing: 0,
                               fontSize: 14,
                             ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          'You can turn it off in the settings anytime',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0,
+                                    fontSize: 14,
+                                  ),
+                        ),
                       ),
                       const Spacer(),
                       FFButtonWidget(

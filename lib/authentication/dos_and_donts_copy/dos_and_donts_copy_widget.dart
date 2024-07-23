@@ -1,3 +1,4 @@
+import '../../backend/schema/users_record.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/firebase_storage/storage.dart';
@@ -222,7 +223,10 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                             return;
                           }
                         }
-
+                        await currentUserReference!
+                            .update(createUsersRecordData(
+                          photoUrl: _model.uploadedFileUrl,
+                        ));
                         logFirebaseEvent('Button_alert_dialog');
                         await showDialog(
                           context: context,

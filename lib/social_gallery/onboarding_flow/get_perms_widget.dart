@@ -104,18 +104,18 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
       (
         permName: 'Read files in storage',
         permDesc:
-            'This allows you to easily share selected photos through Social Gallery.',
+            'This allows us to share photos with your friends. (Your current photos won\'t be shared)',
         permReq: requestStoragePermission,
       ),
       (
         permName: 'Background Permission',
-        permDesc:
-            'This allows us to work in the background. So we don\'t delay receiving your photos',
+        permDesc: 'This helps us get your permission while sharing',
         permReq: usageAccessPermission,
       ),
       (
         permName: 'Display over apps ',
-        permDesc: 'This allows you to easily turn Social Gallery ON/OFF',
+        permDesc:
+            'This allows us to display the InstaShare feature on your camera',
         permReq: displayOverPermission,
       ),
     ];
@@ -250,6 +250,7 @@ class PermissionWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         clipBehavior: Clip.hardEdge,
         child: Container(
+          width: MediaQuery.of(context).size.width,
           color: Colors.white,
           padding: const EdgeInsetsDirectional.all(16),
           child: Column(

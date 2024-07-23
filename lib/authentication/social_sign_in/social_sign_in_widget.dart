@@ -161,7 +161,8 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                             ),
                             if (widget.email != null && widget.email != '')
                               Align(
-                                alignment: const AlignmentDirectional(-1.0, 0.0),
+                                alignment:
+                                    const AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       15.0, 10.0, 15.0, 0.0),
@@ -185,182 +186,11 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                 children: [
                                   FFButtonWidget(
                                     onPressed: () async {
-                                      logFirebaseEvent(
-                                          'SOCIAL_SIGN_IN_SIGN_IN_WITH_GOOGLE_BTN_O');
                                       var shouldSetState = false;
-                                      if (!((String var1) {
-                                        return var1.contains('+');
-                                      }(widget.phoneNumber!))) {
-                                        logFirebaseEvent('Button_navigate_to');
-
-                                        context.goNamedAuth(
-                                            'SignIn', context.mounted);
-
-                                        if (shouldSetState) setState(() {});
-                                        return;
-                                      }
-                                      logFirebaseEvent(
-                                          'Button_firestore_query');
-                                      _model.userDocumentaction =
-                                          await queryUsersRecordOnce(
-                                        queryBuilder: (usersRecord) =>
-                                            usersRecord.where(
-                                          'phone_number',
-                                          isEqualTo: widget.phoneNumber,
-                                        ),
-                                      );
-                                      shouldSetState = true;
                                       logFirebaseEvent('Button_auth');
                                       GoRouter.of(context).prepareAuthEvent();
                                       final user = await authManager
                                           .signInWithGoogle(context);
-                                      if (user == null) {
-                                        return;
-                                      }
-                                      if (currentPhoneNumber == '') {
-                                        if (valueOrDefault<bool>(
-                                            currentUserDocument
-                                                ?.isBusinessAccount,
-                                            false)) {
-                                          logFirebaseEvent('Button_auth');
-                                          GoRouter.of(context)
-                                              .prepareAuthEvent();
-                                          await authManager.signOut();
-                                          GoRouter.of(context)
-                                              .clearRedirectLocation();
-
-                                          logFirebaseEvent(
-                                              'Button_alert_dialog');
-                                          await showDialog(
-                                            context: context,
-                                            builder: (alertDialogContext) {
-                                              return AlertDialog(
-                                                title: const Text('Error'),
-                                                content: const Text(
-                                                    'This email is used for a business account. Try using a different email'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext),
-                                                    child: const Text('Ok'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        } else {
-                                          if (_model
-                                                  .userDocumentaction!.isNotEmpty) {
-                                            logFirebaseEvent(
-                                                'Button_backend_call');
-                                            await currentUserReference!
-                                                .delete();
-                                            logFirebaseEvent('Button_auth');
-                                            GoRouter.of(context)
-                                                .prepareAuthEvent();
-                                            await authManager.signOut();
-                                            GoRouter.of(context)
-                                                .clearRedirectLocation();
-
-                                            logFirebaseEvent(
-                                                'Button_alert_dialog');
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: const Text('Error'),
-                                                  content: const Text(
-                                                      'This phone number is already associated with another email id'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: const Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          } else {
-                                            logFirebaseEvent(
-                                                'Button_backend_call');
-
-                                            await currentUserReference!.update({
-                                              ...createUsersRecordData(
-                                                phoneNumber: widget.phoneNumber,
-                                                isGoogleLogin: true,
-                                              ),
-                                              ...mapToFirestore(
-                                                {
-                                                  'photo_url':
-                                                      FieldValue.delete(),
-                                                },
-                                              ),
-                                            });
-                                          }
-                                        }
-                                      } else if (widget.phoneNumber != null &&
-                                          widget.phoneNumber != '') {
-                                        if (currentPhoneNumber ==
-                                            widget.phoneNumber) {
-                                        } else {
-                                          logFirebaseEvent('Button_auth');
-                                          GoRouter.of(context)
-                                              .prepareAuthEvent();
-                                          await authManager.signOut();
-                                          GoRouter.of(context)
-                                              .clearRedirectLocation();
-
-                                          logFirebaseEvent(
-                                              'Button_alert_dialog');
-                                          await showDialog(
-                                            context: context,
-                                            builder: (alertDialogContext) {
-                                              return AlertDialog(
-                                                title: const Text('Error'),
-                                                content: const Text(
-                                                    'This email id is already registered with another phone number'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext),
-                                                    child: const Text('Ok'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        }
-                                      } else {
-                                        logFirebaseEvent('Button_auth');
-                                        GoRouter.of(context).prepareAuthEvent();
-                                        await authManager.signOut();
-                                        GoRouter.of(context)
-                                            .clearRedirectLocation();
-
-                                        logFirebaseEvent('Button_alert_dialog');
-                                        await showDialog(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: const Text('Error'),
-                                              content: const Text(
-                                                  'This email id is already registered with another phone number'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext),
-                                                  child: const Text('Ok'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      }
 
                                       if (shouldSetState) setState(() {});
                                     },
@@ -368,8 +198,9 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: 56.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 0.0, 24.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              24.0, 0.0, 24.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 10.0, 0.0),
@@ -391,10 +222,12 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                     ),
                                   ),
                                   Align(
-                                    alignment: const AlignmentDirectional(-1.0, 0.0),
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
                                     child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          8.0, 10.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              8.0, 10.0, 0.0, 0.0),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(8.0),
