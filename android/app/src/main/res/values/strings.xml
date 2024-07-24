@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-    <string name="app_name">Social Gallery</string>
+    <string name="app_name"> Social Gallery</string>
     <string name="auto_upload_channel">Auto Upload Service</string>
     <string name="auto_upload_toggle_on">Start Sharing</string>
     <string name="auto_upload_toggle_off">Stop Sharing</string>
