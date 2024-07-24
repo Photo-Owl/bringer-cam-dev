@@ -67,8 +67,6 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('SELECT_PHOTOS_arrow_back_rounded_ICN_ON_');
-                  logFirebaseEvent('IconButton_navigate_back');
                   context.pop();
                 },
               ),
@@ -297,22 +295,16 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                           hoverColor: Colors.transparent,
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
-                                            logFirebaseEvent(
-                                                'SELECT_PHOTOS_PAGE_Stack_9nxhhqb8_ON_TAP');
                                             if (_model.selectedPhotos.contains(
                                                     purchasableimageschildItem
                                                         .toString()) ==
                                                 true) {
-                                              logFirebaseEvent(
-                                                  'Stack_update_page_state');
                                               setState(() {
                                                 _model.removeFromSelectedPhotos(
                                                     purchasableimageschildItem
                                                         .toString());
                                               });
                                             } else {
-                                              logFirebaseEvent(
-                                                  'Stack_update_page_state');
                                               setState(() {
                                                 _model.addToSelectedPhotos(
                                                     purchasableimageschildItem
@@ -380,24 +372,18 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
-                                                        logFirebaseEvent(
-                                                            'SELECT_PHOTOS_PAGE_Image_rqpksrnj_ON_TAP');
                                                         if (_model
                                                                 .selectedPhotos
                                                                 .contains(
                                                                     purchasableimageschildItem
                                                                         .toString()) ==
                                                             true) {
-                                                          logFirebaseEvent(
-                                                              'Image_update_page_state');
                                                           setState(() {
                                                             _model.removeFromSelectedPhotos(
                                                                 purchasableimageschildItem
                                                                     .toString());
                                                           });
                                                         } else {
-                                                          logFirebaseEvent(
-                                                              'Image_update_page_state');
                                                           setState(() {
                                                             _model.addToSelectedPhotos(
                                                                 purchasableimageschildItem
@@ -406,10 +392,6 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                                                         }
                                                       },
                                                       onLongPress: () async {
-                                                        logFirebaseEvent(
-                                                            'SELECT_PHOTOS_Image_rqpksrnj_ON_LONG_PRE');
-                                                        logFirebaseEvent(
-                                                            'Image_expand_image');
                                                         await Navigator.push(
                                                           context,
                                                           PageTransition(
@@ -526,13 +508,10 @@ class _SelectPhotosWidgetState extends State<SelectPhotosWidget> {
                   if (_model.selectedPhotos.isNotEmpty)
                     FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'SELECT_PHOTOS_PAGE_CONTINUE_BTN_ON_TAP');
-                        logFirebaseEvent('Button_backend_call');
                         _model.apiResults = await GetReviwOrderDetailsCall.call(
                           keysList: _model.selectedPhotos,
                         );
-                        logFirebaseEvent('Button_bottom_sheet');
+
                         await showModalBottomSheet(
                           isScrollControlled: true,
                           backgroundColor: Colors.transparent,

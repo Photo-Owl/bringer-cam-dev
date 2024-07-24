@@ -59,8 +59,6 @@ class _ProductWidgetState extends State<ProductWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('PRODUCT_arrow_back_rounded_ICN_ON_TAP');
-                  logFirebaseEvent('IconButton_navigate_back');
                   context.pop();
                 },
               ),
@@ -148,8 +146,6 @@ class _ProductWidgetState extends State<ProductWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('PRODUCT_PAGE_Container_uhd6jyem_ON_TAP');
-                    logFirebaseEvent('Container_navigate_to');
 
                     context.pushNamed(
                       'SelectPhotos',

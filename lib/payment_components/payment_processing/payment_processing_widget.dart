@@ -155,9 +155,6 @@ class _PaymentProcessingWidgetState extends State<PaymentProcessingWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          logFirebaseEvent(
-                              'PAYMENT_PROCESSING_Text_jgv0dxyc_ON_TAP');
-                          logFirebaseEvent('Text_launch_u_r_l');
                           await launchURL(widget.longUrl!);
                         },
                         child: Text(

@@ -64,7 +64,6 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
         parameters: {'screen_name': 'SocialSignInCopy'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('SOCIAL_SIGN_IN_COPY_SocialSignInCopy_ON_');
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -188,9 +187,6 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                   if (currentUserReference != null)
                     FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'SOCIAL_SIGN_IN_COPY_CONTINUE_BTN_ON_TAP');
-                        logFirebaseEvent('Button_navigate_to');
 
                         context.goNamed('RedirectionCopy');
                       },
@@ -252,6 +248,9 @@ class _SocialSignInCopyWidgetState extends State<SocialSignInCopyWidget>
                               ...createUsersRecordData(
                                 isGoogleLogin: true,
                               ),
+                            });
+                            logFirebaseEvent('sign_with_google',parameters: {
+                              'uid': currentUserUid ?? '',
                             });
                             context.goNamedAuth(
                                 'RedirectionCopy', context.mounted);

@@ -107,10 +107,6 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              logFirebaseEvent(
-                                  'SELECTMOREPHOTOS_COMP_close_ICN_ON_TAP');
-                              logFirebaseEvent(
-                                  'IconButton_close_dialog,_drawer,_etc');
                               Navigator.pop(context);
                             },
                           ),
@@ -163,14 +159,10 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                         const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 10.0, 20.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'SELECTMOREPHOTOS_COMP_BUY_NOW_BTN_ON_TAP');
                         var shouldSetState = false;
                         if (widget.albumsdoc!.premiumImageDiscountedCost <
                             10.0) {
-                          logFirebaseEvent('Button_close_dialog,_drawer,_etc');
                           Navigator.pop(context);
-                          logFirebaseEvent('Button_show_snack_bar');
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -188,12 +180,10 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                           if (shouldSetState) setState(() {});
                           return;
                         }
-                        logFirebaseEvent('Button_backend_call');
                         _model.apiResultm8a =
                             await InstamojoGroup.getAccessTokenCall.call();
                         shouldSetState = true;
                         if ((_model.apiResultm8a?.succeeded ?? true)) {
-                          logFirebaseEvent('Button_backend_call');
                           _model.apiResult545 = await InstamojoGroup
                               .createPaymentRequestCall
                               .call(
@@ -209,7 +199,6 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                           );
                           shouldSetState = true;
                           if ((_model.apiResult545?.succeeded ?? true)) {
-                            logFirebaseEvent('Button_backend_call');
 
                             await PremiumPhotoPurchasesRecord.collection
                                 .doc()
@@ -225,7 +214,6 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                                       .toString(),
                                   status: 'Pending',
                                 ));
-                            logFirebaseEvent('Button_launch_u_r_l');
                             await launchURL(
                                 InstamojoGroup.createPaymentRequestCall
                                     .longurl(
@@ -234,7 +222,6 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                                     .toString());
                           }
                         } else {
-                          logFirebaseEvent('Button_show_snack_bar');
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -284,7 +271,7 @@ class _SelectmorephotosWidgetState extends State<SelectmorephotosWidget> {
                       onPressed: () async {
                         logFirebaseEvent(
                             'SELECTMOREPHOTOS_SELECT_MORE_BTN_ON_TAP');
-                        logFirebaseEvent('Button_navigate_to');
+                        
 
                         context.pushNamed('SelectPhotos');
                       },

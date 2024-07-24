@@ -56,14 +56,10 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
         parameters: {'screen_name': 'PremiumPhotos'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('PREMIUM_PHOTOS_PremiumPhotos_ON_INIT_STA');
-      logFirebaseEvent('PremiumPhotos_custom_action');
       _model.versionCheckResult = await actions.checkVersion();
       if (_model.versionCheckResult!) {
-        logFirebaseEvent('PremiumPhotos_wait__delay');
         await Future.delayed(const Duration(milliseconds: 0));
       } else {
-        logFirebaseEvent('PremiumPhotos_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -87,7 +83,6 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
       }
 
       if (currentUserDisplayName == '') {
-        logFirebaseEvent('PremiumPhotos_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -108,8 +103,6 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
       } else {
         return;
       }
-
-      logFirebaseEvent('PremiumPhotos_google_analytics_event');
       logFirebaseEvent(
         'Home screen shown',
         parameters: {
@@ -117,7 +110,6 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
           'Name': currentUserDisplayName,
         },
       );
-      logFirebaseEvent('PremiumPhotos_backend_call');
 
       await UserEventsRecord.collection.doc().set(createUserEventsRecordData(
             eventName: 'Home',
@@ -220,9 +212,6 @@ class _PremiumPhotosWidgetState extends State<PremiumPhotosWidget>
                             size: 24.0,
                           ),
                           onPressed: () async {
-                            logFirebaseEvent(
-                                'PREMIUM_PHOTOS_PAGE_menu_ICN_ON_TAP');
-                            logFirebaseEvent('IconButton_drawer');
                             scaffoldKey.currentState!.openDrawer();
                           },
                         ),

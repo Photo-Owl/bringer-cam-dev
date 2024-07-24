@@ -81,9 +81,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('REPORT_OPTIONS_Container_evwrcs78_ON_TAP');
-                  logFirebaseEvent('Container_backend_call');
-
                   await ImageReportsRecord.collection
                       .doc()
                       .set(createImageReportsRecordData(
@@ -91,7 +88,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                         uid: currentUserUid,
                         reason: 'I\'m not in this image',
                       ));
-                  logFirebaseEvent('Container_alert_dialog');
                   await showDialog(
                     context: context,
                     builder: (alertDialogContext) {
@@ -108,8 +104,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                       );
                     },
                   );
-                  logFirebaseEvent('Container_navigate_to');
-
                   context.pushNamed('HomeCopyCopy');
                 },
                 child: Container(
@@ -142,9 +136,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('REPORT_OPTIONS_Container_awa9qbgi_ON_TAP');
-                  logFirebaseEvent('Container_backend_call');
-
                   await ImageReportsRecord.collection
                       .doc()
                       .set(createImageReportsRecordData(
@@ -152,7 +143,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                         uid: currentUserUid,
                         reason: 'This Image is spam',
                       ));
-                  logFirebaseEvent('Container_alert_dialog');
                   await showDialog(
                     context: context,
                     builder: (alertDialogContext) {
@@ -169,8 +159,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                       );
                     },
                   );
-                  logFirebaseEvent('Container_navigate_to');
-
                   context.goNamed('HomeCopyCopy');
                 },
                 child: Container(
@@ -203,9 +191,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('REPORT_OPTIONS_Container_cunkfvgj_ON_TAP');
-                  logFirebaseEvent('Container_backend_call');
-
                   await ImageReportsRecord.collection
                       .doc()
                       .set(createImageReportsRecordData(
@@ -213,7 +198,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                         uid: currentUserUid,
                         reason: 'Image is uploaded by unknown user',
                       ));
-                  logFirebaseEvent('Container_alert_dialog');
                   await showDialog(
                     context: context,
                     builder: (alertDialogContext) {
@@ -230,7 +214,6 @@ class _ReportOptionsWidgetState extends State<ReportOptionsWidget> {
                       );
                     },
                   );
-                  logFirebaseEvent('Container_navigate_to');
 
                   context.goNamed('HomeCopyCopy');
                 },

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -276,6 +277,9 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                           child: Builder(builder: (context) {
                             return FFButtonWidget(
                               onPressed: () async {
+                                logFirebaseEvent('connect_galley',parameters: {
+                                  'uid': currentUserUid,
+                                });
                                 const platform = MethodChannel(
                                     'com.smoose.photoowldev/autoUpload');
                                 final permsGiven =

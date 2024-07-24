@@ -71,14 +71,10 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'SignInCopy'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('SIGN_IN_COPY_SignInCopy_ON_INIT_STATE');
-      logFirebaseEvent('SignInCopy_custom_action');
       _model.checkVersionResult = await actions.checkVersion();
       if (_model.checkVersionResult!) {
-        logFirebaseEvent('SignInCopy_wait__delay');
         await Future.delayed(const Duration(milliseconds: 0));
       } else {
-        logFirebaseEvent('SignInCopy_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -202,6 +198,7 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                               20.0, 20.0, 20.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
+                              logFirebaseEvent('yes_i_do');
                               context.pushNamed(
                                 'SocialSignInCopy',
                                 extra: <String, dynamic>{
