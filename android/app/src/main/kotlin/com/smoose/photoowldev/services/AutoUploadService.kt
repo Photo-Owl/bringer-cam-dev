@@ -63,10 +63,20 @@ internal class ServiceState {
 }
 
 class AutoUploadService : Service() {
+    //For - moveable
+    private lateinit var windowManager: WindowManager
+    private lateinit var params: WindowManager.LayoutParams
+    private var initialX: Int = 0
+    private var initialY: Int = 0
+    private var initialTouchX: Float = 0f
+    private var initialTouchY: Float = 0f
+    //
+    //For - toot-tip
     private lateinit var overlayView: View
     private lateinit var toolTipLayout: LinearLayout
     private lateinit var bubbleText: TextView
     private lateinit var statusIcon: ImageView
+    //
     private var isSharingOn: Boolean = true
     private lateinit var sharedPrefs: SharedPreferences
     private var fileObserver: ImageFileObserver? = null
@@ -275,14 +285,44 @@ class AutoUploadService : Service() {
                 WindowManager.LayoutParams.TYPE_PHONE
             else
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        val params = WindowManager.LayoutParams(
+            params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
             popupType,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
-        params.gravity = Gravity.START
+        params.gravity = Gravity.TOP or Gravity.START
+        params.x = 0
+        params.y = 100
+        overlayView.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        initialX = params.x
+                        initialY = params.y
+                        initialTouchX = event.rawX
+                        initialTouchY = event.rawY
+                        return true
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        params.x = initialX + (event.rawX - initialTouchX).toInt()
+                        params.y = initialY + (event.rawY - initialTouchY).toInt()
+                        windowManager.updateViewLayout(overlayView, params)
+                        return true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        val moved = Math.abs(event.rawX - initialTouchX) > 5 ||
+                                Math.abs(event.rawY - initialTouchY) > 5
+                        if (!moved) {
+                            overlayOnClick()
+                        }
+                        return true
+                    }
+                }
+                return false
+            }
+        })
         windowManager.addView(overlayView, params)
         showToolTip()
         isPopUpShowing = true
