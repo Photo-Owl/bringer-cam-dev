@@ -329,7 +329,7 @@ class Uploader {
                 silent: true,
                 indeterminate: true,
                 showProgress: true,
-                ongoing: true),
+                ongoing: false),
           ),
         );
       }

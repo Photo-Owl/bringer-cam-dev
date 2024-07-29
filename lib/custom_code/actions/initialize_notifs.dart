@@ -118,10 +118,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
           value,
           const NotificationDetails(
               android: AndroidNotificationDetails(
-                'com.smoose.photoowldev.photo_sent',
-                'Photo sent',
-                channelDescription: 'Photo sent notifications from Social Gallery',
-              ),
+                  'com.smoose.photoowldev.photo_sent', 'Photo sent',
+                  channelDescription:
+                      'Photo sent notifications from Social Gallery',
+                  playSound: false),
               iOS: DarwinNotificationDetails()),
         );
       });
