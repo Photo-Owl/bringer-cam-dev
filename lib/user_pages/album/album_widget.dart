@@ -173,11 +173,12 @@ class _AlbumWidgetState extends State<AlbumWidget>
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          logFirebaseEvent('ALBUM_PAGE_Icon_7c0t5vdv_ON_TAP');
-                          logFirebaseEvent('Icon_copy_to_clipboard');
+                          logFirebaseEvent(
+                              'album_share',parameters: {
+                            'uid': currentUserUid,
+                          });
                           await Clipboard.setData(const ClipboardData(
                               text: 'https://app.bringerapp.com'));
-                          logFirebaseEvent('Icon_show_snack_bar');
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -592,8 +593,6 @@ class _AlbumWidgetState extends State<AlbumWidget>
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
-                                              logFirebaseEvent(
-                                                  'ALBUM_PAGE_Image_jcrrry3c_ON_TAP');
                                             },
                                             child: ClipRRect(
                                               borderRadius:

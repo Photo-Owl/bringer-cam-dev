@@ -102,7 +102,6 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                           logFirebaseEvent(
                               'MORE_WAYS_TO_SIGN_IN_SIGN_IN_WITH_GOOGLE');
                           Function() navigate = () {};
-                          logFirebaseEvent('Button_firestore_query');
                           _model.userDocumentaction =
                               await queryUsersRecordOnce(
                             queryBuilder: (usersRecord) => usersRecord.where(
@@ -110,7 +109,6 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                               isEqualTo: widget.phoneNumber,
                             ),
                           );
-                          logFirebaseEvent('Button_auth');
                           GoRouter.of(context).prepareAuthEvent();
                           final user =
                               await authManager.signInWithGoogle(context);
@@ -123,14 +121,12 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                             if (valueOrDefault<bool>(
                                 currentUserDocument?.isBusinessAccount,
                                 false)) {
-                              logFirebaseEvent('Button_auth');
                               GoRouter.of(context).prepareAuthEvent();
                               await authManager.signOut();
                               GoRouter.of(context).clearRedirectLocation();
 
                               navigate = () => context.goNamedAuth(
                                   'SignInCopy', context.mounted);
-                              logFirebaseEvent('Button_alert_dialog');
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -150,16 +146,13 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                               );
                             } else {
                               if (_model.userDocumentaction!.isNotEmpty) {
-                                logFirebaseEvent('Button_backend_call');
                                 await currentUserReference!.delete();
-                                logFirebaseEvent('Button_auth');
                                 GoRouter.of(context).prepareAuthEvent();
                                 await authManager.signOut();
                                 GoRouter.of(context).clearRedirectLocation();
 
                                 navigate = () => context.goNamedAuth(
                                     'SignInCopy', context.mounted);
-                                logFirebaseEvent('Button_alert_dialog');
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -178,8 +171,6 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                                   },
                                 );
                               } else {
-                                logFirebaseEvent('Button_backend_call');
-
                                 await currentUserReference!.update({
                                   ...createUsersRecordData(
                                     phoneNumber: widget.phoneNumber,
@@ -200,14 +191,12 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                                   '') {
                             if (currentPhoneNumber !=
                                 _model.userDocumentaction?.first.phoneNumber) {
-                              logFirebaseEvent('Button_auth');
                               GoRouter.of(context).prepareAuthEvent();
                               await authManager.signOut();
                               GoRouter.of(context).clearRedirectLocation();
 
                               navigate = () => context.goNamedAuth(
                                   'SignInCopy', context.mounted);
-                              logFirebaseEvent('Button_alert_dialog');
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -227,14 +216,12 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
                               );
                             }
                           } else {
-                            logFirebaseEvent('Button_auth');
                             GoRouter.of(context).prepareAuthEvent();
                             await authManager.signOut();
                             GoRouter.of(context).clearRedirectLocation();
 
                             navigate = () => context.goNamedAuth(
                                 'SignInCopy', context.mounted);
-                            logFirebaseEvent('Button_alert_dialog');
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {
@@ -302,8 +289,6 @@ class _MoreWaysToSignInWidgetState extends State<MoreWaysToSignInWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  logFirebaseEvent('MORE_WAYS_TO_SIGN_IN_SIGN_IN_WITH_O_T_P_');
-                  logFirebaseEvent('Button_auth');
                   final phoneNumberVal = widget.phoneNumber;
                   if (phoneNumberVal == null ||
                       phoneNumberVal.isEmpty ||

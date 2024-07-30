@@ -204,9 +204,10 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                   onChanged: (_) {},
                                   onCompleted: (_) async {
                                     logFirebaseEvent(
-                                        'OTP_VERIFICATION_PinCode_ptgdrbkr_ON_PIN');
+                                        'OTP_VERIFICATION',parameters: {
+                                      'uid': currentUserUid,
+                                    });
                                     Function() navigate = () {};
-                                    logFirebaseEvent('PinCode_auth');
                                     GoRouter.of(context).prepareAuthEvent();
                                     final smsCodeVal =
                                         _model.pinCodeController!.text;
@@ -231,12 +232,9 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
 
                                     navigate = () => context.goNamedAuth(
                                         'RedirectionCopy', context.mounted);
-                                    logFirebaseEvent(
-                                        'PinCode_google_analytics_event');
                                     logFirebaseEvent('Otp filled');
                                     if (widget.name != null &&
                                         widget.name != '') {
-                                      logFirebaseEvent('PinCode_backend_call');
 
                                       await currentUserReference!
                                           .update(createUsersRecordData(
@@ -260,7 +258,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                               16.0, 20.0, 16.0, 100.0),
                           child: FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
+
                             },
                             text: 'Confirm & Continue',
                             options: FFButtonOptions(

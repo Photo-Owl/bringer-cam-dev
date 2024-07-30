@@ -200,23 +200,14 @@ class _ConfirmEventNameWidgetState extends State<ConfirmEventNameWidget> {
                                   30.0, 0.0, 30.0, 0.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  logFirebaseEvent(
-                                      'CONFIRM_EVENT_NAME_UploadPhotos_ON_TAP');
                                   if (_model.yourNameController.text != '') {
-                                    logFirebaseEvent(
-                                        'UploadPhotos_backend_call');
-
                                     await containerAlbumsRecord!.reference
                                         .update(createAlbumsRecordData(
                                       albumName: _model.yourNameController.text,
                                     ));
-                                    logFirebaseEvent(
-                                        'UploadPhotos_close_dialog,_drawer,_etc');
                                     Navigator.pop(context);
                                     return;
                                   } else {
-                                    logFirebaseEvent(
-                                        'UploadPhotos_show_snack_bar');
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(

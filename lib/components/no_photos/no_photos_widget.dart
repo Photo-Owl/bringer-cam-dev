@@ -77,10 +77,6 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
           padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
           child: FFButtonWidget(
             onPressed: () async {
-              logFirebaseEvent('NO_PHOTOS_COMP_REFRESH_BTN_ON_TAP');
-              logFirebaseEvent('Button_google_analytics_event');
-              logFirebaseEvent('Refresh button pressed');
-              logFirebaseEvent('Button_backend_call');
               _model.apiResult = await SearchFacesUsingTIFCall.call(
                 uid: currentUserUid,
                 sourceKey:
@@ -88,7 +84,6 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
                 faceid: valueOrDefault(currentUserDocument?.faceId, ''),
               );
               if ((_model.apiResult?.succeeded ?? true)) {
-                logFirebaseEvent('Button_show_snack_bar');
                 ScaffoldMessenger.of(context).clearSnackBars();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -106,7 +101,6 @@ class _NoPhotosWidgetState extends State<NoPhotosWidget> {
                   ),
                 );
               } else {
-                logFirebaseEvent('Button_show_snack_bar');
                 ScaffoldMessenger.of(context).clearSnackBars();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

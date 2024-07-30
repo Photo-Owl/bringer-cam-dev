@@ -109,31 +109,27 @@ class _DeleteoptionWidgetState extends State<DeleteoptionWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 3.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      logFirebaseEvent(
-                          'DELETEOPTION_YES,_DELETE_FOR_ALL_BTN_ON_');
                       if (widget.deteletype == Deletion.local) {
-                        logFirebaseEvent('Button_custom_action');
                         await actions.deleteImage(
                           widget.imageitem!.imageUrl,
                         );
                       } else {
                         if (widget.deteletype == Deletion.forme) {
-                          logFirebaseEvent('Button_custom_action');
                           await actions.deleteForMe(
                             widget.imageKey!,
                             currentUserUid,
                           );
                         } else {
-                          logFirebaseEvent('Button_backend_call');
                           await DeleteImageCall.call(
                             key: widget.imageKey,
                           );
                         }
                       }
 
-                      logFirebaseEvent('Button_close_dialog,_drawer,_etc');
+                      logFirebaseEvent('delete_image',parameters: {
+                        'uid': currentUserUid,
+                      });
                       Navigator.pop(context);
-                      logFirebaseEvent('Button_navigate_back');
                       context.safePop();
                     },
                     text: () {
@@ -175,8 +171,6 @@ class _DeleteoptionWidgetState extends State<DeleteoptionWidget> {
                   padding: const EdgeInsetsDirectional.fromSTEB(8.0, 3.0, 8.0, 12.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      logFirebaseEvent('DELETEOPTION_COMP_CANCEL_BTN_ON_TAP');
-                      logFirebaseEvent('Button_navigate_back');
                       context.safePop();
                     },
                     text: 'Cancel',

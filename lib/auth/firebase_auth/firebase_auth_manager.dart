@@ -9,6 +9,7 @@ import '../../flutter_flow/flutter_flow_util.dart';
 import '/backend/backend.dart';
 import 'anonymous_auth.dart';
 import 'apple_auth.dart';
+import 'auth_util.dart';
 import 'email_auth.dart';
 import 'firebase_user_provider.dart';
 import 'google_auth.dart';
@@ -57,7 +58,9 @@ class FirebaseAuthManager extends AuthManager
 
   @override
   Future signOut() {
-    logFirebaseEvent("SIGN_OUT");
+    logFirebaseEvent("SIGN_OUT",parameters: {
+      'uid': currentUserUid,
+    });
     return FirebaseAuth.instance.signOut();
   }
 
@@ -68,7 +71,9 @@ class FirebaseAuthManager extends AuthManager
         print('Error: delete user attempted with no logged in user!');
         return;
       }
-      logFirebaseEvent("DELETE_USER");
+      logFirebaseEvent("DELETE_USER",parameters: {
+      'uid': currentUserUid,
+      });
       await currentUser?.delete();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {

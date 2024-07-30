@@ -174,8 +174,9 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
-                            'DOS_AND_DONTS_COPY_TAKE_SELFIE_BTN_ON_TA');
-                        logFirebaseEvent('Button_upload_media_to_firebase');
+                            'DOS_AND_DONTS_CONTINUE',parameters: {
+                          'uid': currentUserUid,
+                        });
                         final selectedMedia = await selectMedia(
                           imageQuality: 75,
                           multiImage: false,
@@ -227,7 +228,6 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                             .update(createUsersRecordData(
                           photoUrl: _model.uploadedFileUrl,
                         ));
-                        logFirebaseEvent('Button_alert_dialog');
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
@@ -245,11 +245,7 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                             );
                           },
                         );
-                        logFirebaseEvent('Button_navigate_to');
-
                         context.goNamed('WaitForVerification');
-
-                        logFirebaseEvent('Button_backend_call');
                         _model.apires = await UserOnboardingCall.call(
                           storageUrl: _model.uploadedFileUrl,
                           uid: currentUserUid,

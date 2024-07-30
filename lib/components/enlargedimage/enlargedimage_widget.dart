@@ -88,8 +88,6 @@ class _EnlargedimageWidgetState extends State<EnlargedimageWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    logFirebaseEvent('ENLARGEDIMAGE_COMP_Icon_a27928lr_ON_TAP');
-                    logFirebaseEvent('Icon_close_dialog,_drawer,_etc');
                     Navigator.pop(context);
                   },
                   child: Icon(

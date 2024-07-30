@@ -64,9 +64,6 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('SIDEBAR_COMP_Container_fhich1a8_ON_TAP');
-                  logFirebaseEvent('Container_navigate_to');
-
                   context.pushNamed('HomeCopyCopy');
                 },
                 child: Container(
@@ -105,9 +102,6 @@ class _SidebarWidgetState extends State<SidebarWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                logFirebaseEvent('SIDEBAR_COMP_Hom_ON_TAP');
-                logFirebaseEvent('Hom_navigate_to');
-
                 context.pushNamed('HomeCopyCopy');
               },
               child: Container(
@@ -148,8 +142,6 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('SIDEBAR_COMP_Hom_ON_TAP');
-                  logFirebaseEvent('Hom_alert_dialog');
                   await showDialog(
                     barrierColor: const Color(0x23000000),
                     context: context,
@@ -204,8 +196,6 @@ class _SidebarWidgetState extends State<SidebarWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                logFirebaseEvent('SIDEBAR_COMP_Hom_ON_TAP');
-                logFirebaseEvent('Hom_launch_u_r_l');
                 await launchURL('https://bringerapp.com/privacy-policy');
               },
               child: Container(
@@ -242,8 +232,6 @@ class _SidebarWidgetState extends State<SidebarWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                logFirebaseEvent('SIDEBAR_COMP_Hom_ON_TAP');
-                logFirebaseEvent('Hom_launch_u_r_l');
                 await launchURL('https://bringerapp.com/');
               },
               child: Container(
@@ -279,8 +267,6 @@ class _SidebarWidgetState extends State<SidebarWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                logFirebaseEvent('SIDEBAR_COMP_Hom_ON_TAP');
-                logFirebaseEvent('Hom_auth');
                 GoRouter.of(context).prepareAuthEvent();
                 await authManager.signOut();
                 GoRouter.of(context).clearRedirectLocation();
