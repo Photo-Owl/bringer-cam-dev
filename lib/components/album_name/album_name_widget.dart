@@ -166,19 +166,15 @@ class _AlbumNameWidgetState extends State<AlbumNameWidget> {
                         const EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 15.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent('ALBUM_NAME_COMP_CONFIRM_BTN_ON_TAP');
                         if (_model.textController.text != '') {
-                          logFirebaseEvent('Button_backend_call');
 
                           await columnAlbumsRecord!.reference
                               .update(createAlbumsRecordData(
                             albumName: _model.textController.text,
                           ));
-                          logFirebaseEvent('Button_close_dialog,_drawer,_etc');
                           Navigator.pop(context);
                           return;
                         } else {
-                          logFirebaseEvent('Button_show_snack_bar');
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(

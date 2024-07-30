@@ -214,21 +214,15 @@ class _GiveNameWidgetState extends State<GiveNameWidget> {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  logFirebaseEvent(
-                                      'GIVE_NAME_COMP_SAVE_CHANGES_BTN_ON_TAP');
                                   if (_model.textController.text != '') {
-                                    logFirebaseEvent('Button_backend_call');
 
                                     await currentUserReference!
                                         .update(createUsersRecordData(
                                       displayName: _model.textController.text,
                                     ));
-                                    logFirebaseEvent(
-                                        'Button_close_dialog,_drawer,_etc');
                                     Navigator.pop(context);
                                     return;
                                   } else {
-                                    logFirebaseEvent('Button_show_snack_bar');
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(

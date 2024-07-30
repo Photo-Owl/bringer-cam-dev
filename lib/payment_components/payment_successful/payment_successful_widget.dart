@@ -198,9 +198,6 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                     20.0, 0.0, 20.0, 0.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    logFirebaseEvent(
-                                        'PAYMENT_SUCCESSFUL_DOWNLOAD_NOW_BTN_ON_T');
-                                    logFirebaseEvent('Button_custom_action');
                                     await actions.getDownloadUrl(
                                       containerUploadsRecord!.key,
                                     );
@@ -238,10 +235,6 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                     if (widget.hasMultipleDocs)
                       FFButtonWidget(
                         onPressed: () async {
-                          logFirebaseEvent(
-                              'PAYMENT_SUCCESSFUL_SEE_ALL_PURCHASED_IMA');
-                          logFirebaseEvent('Button_navigate_to');
-
                           context.goNamed('PremiumPhotos');
                         },
                         text: 'See all Purchased Images',
@@ -276,10 +269,6 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          logFirebaseEvent(
-                              'PAYMENT_SUCCESSFUL_Text_ibgtc266_ON_TAP');
-                          logFirebaseEvent('Text_navigate_to');
-
                           context.goNamed('PremiumPhotos');
                         },
                         child: Text(

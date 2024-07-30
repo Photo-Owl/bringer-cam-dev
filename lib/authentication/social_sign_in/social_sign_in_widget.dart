@@ -66,14 +66,10 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
         parameters: {'screen_name': 'SocialSignIn'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('SOCIAL_SIGN_IN_SocialSignIn_ON_INIT_STAT');
-      logFirebaseEvent('SocialSignIn_custom_action');
       _model.checkVersionResult = await actions.checkVersion();
       if (_model.checkVersionResult!) {
-        logFirebaseEvent('SocialSignIn_wait__delay');
         await Future.delayed(const Duration(milliseconds: 0));
       } else {
-        logFirebaseEvent('SocialSignIn_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -187,7 +183,6 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                   FFButtonWidget(
                                     onPressed: () async {
                                       var shouldSetState = false;
-                                      logFirebaseEvent('Button_auth');
                                       GoRouter.of(context).prepareAuthEvent();
                                       final user = await authManager
                                           .signInWithGoogle(context);
@@ -296,9 +291,7 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  logFirebaseEvent(
-                                      'SOCIAL_SIGN_IN_PAGE_Text_iqqeib1l_ON_TAP');
-                                  logFirebaseEvent('Text_launch_u_r_l');
+                                  logFirebaseEvent('privacy_policy');
                                   await launchURL(
                                       'https://bringerapp.com/privacy-policy');
                                 },
@@ -355,9 +348,9 @@ class _SocialSignInWidgetState extends State<SocialSignInWidget>
                       if (currentUserReference != null)
                         FFButtonWidget(
                           onPressed: () async {
-                            logFirebaseEvent(
-                                'SOCIAL_SIGN_IN_PAGE_CONTINUE_BTN_ON_TAP');
-                            logFirebaseEvent('Button_navigate_to');
+                            logFirebaseEvent('continue_sign_in',parameters: {
+                              'uid': currentUserUid,
+                            });
 
                             context.goNamed('RedirectionCopy');
                           },

@@ -37,14 +37,10 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
         parameters: {'screen_name': 'CreateanEvent'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('CREATEAN_EVENT_CreateanEvent_ON_INIT_STA');
-      logFirebaseEvent('CreateanEvent_custom_action');
       _model.versionCheckResult = await actions.checkVersion();
       if (_model.versionCheckResult!) {
-        logFirebaseEvent('CreateanEvent_wait__delay');
         await Future.delayed(const Duration(milliseconds: 0));
       } else {
-        logFirebaseEvent('CreateanEvent_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -68,7 +64,6 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
       }
 
       if (currentUserDisplayName == '') {
-        logFirebaseEvent('CreateanEvent_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -89,8 +84,6 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
       } else {
         return;
       }
-
-      logFirebaseEvent('CreateanEvent_google_analytics_event');
       logFirebaseEvent(
         'Home screen shown',
         parameters: {
@@ -98,8 +91,6 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
           'Name': currentUserDisplayName,
         },
       );
-      logFirebaseEvent('CreateanEvent_backend_call');
-
       await UserEventsRecord.collection.doc().set(createUserEventsRecordData(
             eventName: 'Home',
             uid: currentUserUid,
@@ -197,9 +188,6 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                             size: 24.0,
                           ),
                           onPressed: () async {
-                            logFirebaseEvent(
-                                'CREATEAN_EVENT_PAGE_menu_ICN_ON_TAP');
-                            logFirebaseEvent('IconButton_drawer');
                             scaffoldKey.currentState!.openDrawer();
                           },
                         ),
@@ -298,10 +286,6 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                                       0.0, 10.0, 0.0, 0.0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
-                                                  logFirebaseEvent(
-                                                      'CREATEAN_EVENT_+_CREATE_AN_EVENT_BTN_ON_');
-                                                  logFirebaseEvent(
-                                                      'Button_bottom_sheet');
                                                   await showModalBottomSheet(
                                                     isScrollControlled: true,
                                                     backgroundColor:
@@ -429,10 +413,6 @@ class _CreateanEventWidgetState extends State<CreateanEventWidget>
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                logFirebaseEvent(
-                                                    'CREATEAN_EVENT_PAGE_Text_qm0vh3pu_ON_TAP');
-                                                logFirebaseEvent(
-                                                    'Text_launch_u_r_l');
                                                 await launchURL(
                                                     'https://api.whatsapp.com/send/?phone=%2B918248171862&text=Issue%20while%20creating%20event&type=phone_number');
                                               },

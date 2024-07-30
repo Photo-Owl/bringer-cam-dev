@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 
+import '../../../auth/firebase_auth/auth_util.dart';
 import '../../common/encrypted_banner.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -121,6 +122,10 @@ class _BatteryPermissionWidgetState extends State<BatteryPermissionWidget> {
                       const Spacer(),
                       FFButtonWidget(
                         onPressed: () async {
+                          logFirebaseEvent(
+                              'battery_permission',parameters: {
+                            'uid': currentUserUid,
+                          });
                           const platform = MethodChannel(
                               'com.smoose.photoowldev/autoUpload');
                           final permsGiven = await platform.invokeMethod<bool>(

@@ -56,14 +56,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
         parameters: {'screen_name': 'HomeCopyCopy'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('HOME_COPY_COPY_HomeCopyCopy_ON_INIT_STAT');
-      logFirebaseEvent('HomeCopyCopy_custom_action');
       _model.versionCheckResult = await actions.checkVersion();
       if (_model.versionCheckResult!) {
-        logFirebaseEvent('HomeCopyCopy_wait__delay');
         await Future.delayed(const Duration(milliseconds: 0));
       } else {
-        logFirebaseEvent('HomeCopyCopy_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -87,7 +83,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
       }
 
       if (currentUserDisplayName == null || currentUserDisplayName == '') {
-        logFirebaseEvent('HomeCopyCopy_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -106,14 +101,12 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
           },
         ).then((value) => safeSetState(() {}));
       } else {
-        logFirebaseEvent('HomeCopyCopy_wait__delay');
         await Future.delayed(const Duration(milliseconds: 10));
       }
 
       _model.timeline1 = await actions.getAllImages(
         currentUserUid,
       );
-      logFirebaseEvent('HomeCopyCopy_update_page_state');
       var prefs = await PrefManager().prefs;
       bool removedNotifications = await prefs.remove('sent_notifications');
 
@@ -122,7 +115,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
         _model.loaded = true;
         _model.timeline = _model.timeline1!.toList().cast<TimelineItemStruct>();
       });
-      logFirebaseEvent('HomeCopyCopy_google_analytics_event');
       logFirebaseEvent(
         'Home_screen_shown',
         parameters: {
@@ -130,14 +122,11 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
           'Name': currentUserDisplayName,
         },
       );
-      logFirebaseEvent('HomeCopyCopy_backend_call');
-
       await UserEventsRecord.collection.doc().set(createUserEventsRecordData(
             eventName: 'Home',
             uid: currentUserUid,
             timestamp: getCurrentTimestamp,
           ));
-      logFirebaseEvent('HomeCopyCopy_custom_action');
       //Resetting sent notifications
 
       await checkForPerms();
@@ -177,16 +166,15 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
   }
 
   Future<void> onRefresh() async {
-    logFirebaseEvent('HOME_COPY_COPY_ListView_anbvrqxh_ON_PULL');
-    logFirebaseEvent('ListView_update_page_state');
+    logFirebaseEvent('refresh_home',parameters: {
+      'uid': currentUserUid,
+    });
     setState(() {
       _model.loaded = false;
     });
-    logFirebaseEvent('ListView_custom_action');
     _model.timeline2 = await actions.getAllImages(
       currentUserUid,
     );
-    logFirebaseEvent('ListView_update_page_state');
     setState(() {
       _model.loaded = true;
       _model.timeline = _model.timeline2!.toList().cast<TimelineItemStruct>();
@@ -658,13 +646,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                               .transparent,
                                                                       onTap:
                                                                           () async {
-                                                                        logFirebaseEvent(
-                                                                            'HOME_COPY_COPY_Image_203iliga_ON_TAP');
                                                                         await Future
                                                                             .wait([
                                                                           Future(
                                                                               () async {
-                                                                            logFirebaseEvent('Image_navigate_to');
 
                                                                             context.pushNamed(
                                                                               'ImageexpandedCopy',
@@ -683,7 +668,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                           }),
                                                                           Future(
                                                                               () async {
-                                                                            logFirebaseEvent('Image_custom_action');
                                                                             await actions.addSeenby(
                                                                               currentUserUid,
                                                                               imagesListItem.id,
@@ -744,13 +728,12 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                             Colors.transparent,
                                                                         onTap:
                                                                             () async {
-                                                                          logFirebaseEvent(
-                                                                              'HOME_COPY_COPY_Stack_kr54o4qp_ON_TAP');
                                                                           await Future
                                                                               .wait([
                                                                             Future(() async {
-                                                                              logFirebaseEvent('Stack_navigate_to');
-
+                                                                              logFirebaseEvent('view_image',parameters: {
+                                                                                'uid': currentUserUid,
+                                                                              });
                                                                               context.pushNamed(
                                                                                 'ImageexpandedCopy',
                                                                                 queryParameters: {
@@ -767,7 +750,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                               );
                                                                             }),
                                                                             Future(() async {
-                                                                              logFirebaseEvent('Stack_custom_action');
                                                                               await actions.addSeenby(
                                                                                 currentUserUid,
                                                                                 imagesListItem.id,

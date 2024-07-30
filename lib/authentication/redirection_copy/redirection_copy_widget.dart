@@ -270,7 +270,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                     BorderRadius.circular(0),
                                               ),
                                               child: Padding(
-                                                padding: EdgeInsets.all(8),
+                                                padding: const EdgeInsets.all(8),
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(0),
@@ -285,7 +285,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                             ),
                                           ],
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         if ((currentUserPhoto != '') &&
                                             (valueOrDefault(
                                                     currentUserDocument?.faceId,
@@ -316,8 +316,6 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                     onPressed: () async {
                                                       logFirebaseEvent(
                                                           'REDIRECTION_COPY_TAKE_SELFIE_BTN_ON_TAP');
-                                                      logFirebaseEvent(
-                                                          'Button_backend_call');
 
                                                       await UserEventsRecord
                                                           .collection
@@ -332,8 +330,6 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                           ));
                                                       if (listViewConstantsRecord!
                                                           .allowNewUsers) {
-                                                        logFirebaseEvent(
-                                                            'Button_bottom_sheet');
                                                         await showModalBottomSheet(
                                                           isScrollControlled:
                                                               true,
@@ -367,8 +363,6 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                             safeSetState(
                                                                 () {}));
                                                       } else {
-                                                        logFirebaseEvent(
-                                                            'Button_bottom_sheet');
                                                         await showModalBottomSheet(
                                                           isScrollControlled:
                                                               true,
@@ -410,14 +404,14 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                     options: FFButtonOptions(
                                                       width: double.infinity,
                                                       padding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(24, 24,
                                                                   24, 24),
                                                       iconPadding:
-                                                          EdgeInsetsDirectional
+                                                          const EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0, 0, 0, 0),
-                                                      color: Color(0xFF5A00CD),
+                                                      color: const Color(0xFF5A00CD),
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -435,7 +429,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                         .w600,
                                                               ),
                                                       elevation: 3,
-                                                      borderSide: BorderSide(
+                                                      borderSide: const BorderSide(
                                                         color:
                                                             Colors.transparent,
                                                         width: 1,
@@ -476,7 +470,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                     ),
                                                     Align(
                                                       alignment:
-                                                          AlignmentDirectional(
+                                                          const AlignmentDirectional(
                                                               0, 0),
                                                       child: Text(
                                                         'All your photos are',
@@ -610,16 +604,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                             0.0, 0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () async {
-                                                        logFirebaseEvent(
-                                                            'REDIRECTION_COPY_TAKE_PHOTOS_BTN_ON_TAP');
-                                                        logFirebaseEvent(
-                                                            'Button_navigate_to');
-
                                                         context.goNamed(
                                                             'HomeCopyCopy');
-
-                                                        logFirebaseEvent(
-                                                            'Button_backend_call');
 
                                                         await currentUserReference!
                                                             .update({

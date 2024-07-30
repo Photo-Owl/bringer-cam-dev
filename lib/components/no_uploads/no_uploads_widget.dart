@@ -63,9 +63,6 @@ class _NoUploadsWidgetState extends State<NoUploadsWidget> {
           padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
           child: FFButtonWidget(
             onPressed: () async {
-              logFirebaseEvent('NO_UPLOADS_COMP_CREATE_EVENT_BTN_ON_TAP');
-              logFirebaseEvent('Button_navigate_to');
-
               context.pushNamed('CreateanEvent');
             },
             text: 'Create Event',

@@ -96,12 +96,14 @@ class _ExpandedImageOptionsWidgetState
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          logFirebaseEvent(
-                              'EXPANDED_IMAGE_OPTIONS_Deleteme_ON_TAP');
-                          logFirebaseEvent(
-                              'Deleteme_close_dialog,_drawer,_etc');
+                          logFirebaseEvent('Delete_for_me',parameters: {
+                          'uid': currentUserUid,
+                          'photoid': valueOrDefault<String>(
+                            widget.imageitem?.imageUrl,
+                            '',
+                          ),
+                        });
                           Navigator.pop(context);
-                          logFirebaseEvent('Deleteme_alert_dialog');
                           await showDialog(
                             context: context,
                             builder: (dialogContext) {
@@ -119,8 +121,6 @@ class _ExpandedImageOptionsWidgetState
                               );
                             },
                           ).then((value) => setState(() {}));
-
-                          logFirebaseEvent('Deleteme_navigate_back');
                           context.safePop();
                         },
                         child: Container(
@@ -161,12 +161,14 @@ class _ExpandedImageOptionsWidgetState
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          logFirebaseEvent(
-                              'EXPANDED_IMAGE_OPTIONS_Deleteeveryone_ON');
-                          logFirebaseEvent(
-                              'Deleteeveryone_close_dialog,_drawer,_etc');
+                          logFirebaseEvent('Delete_for_everyone',parameters: {
+                          'uid': currentUserUid,
+                          'photoid': valueOrDefault<String>(
+                            widget.imageitem?.imageUrl,
+                            '',
+                          ),
+                        });
                           Navigator.pop(context);
-                          logFirebaseEvent('Deleteeveryone_alert_dialog');
                           await showDialog(
                             context: context,
                             builder: (dialogContext) {
@@ -185,7 +187,6 @@ class _ExpandedImageOptionsWidgetState
                             },
                           ).then((value) => setState(() {}));
 
-                          logFirebaseEvent('Deleteeveryone_navigate_back');
                           context.safePop();
                         },
                         child: Container(
@@ -225,12 +226,14 @@ class _ExpandedImageOptionsWidgetState
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          logFirebaseEvent(
-                              'EXPANDED_IMAGE_OPTIONS_DeleteImage_ON_TA');
-                          logFirebaseEvent(
-                              'DeleteImage_close_dialog,_drawer,_etc');
+                          logFirebaseEvent('Delete_image',parameters: {
+                            'uid': currentUserUid,
+                            'photoid': valueOrDefault<String>(
+                              widget.imageitem?.imageUrl,
+                              '',
+                            ),
+                          });
                           Navigator.pop(context);
-                          logFirebaseEvent('DeleteImage_alert_dialog');
                           await showDialog(
                             context: context,
                             builder: (dialogContext) {
@@ -249,7 +252,6 @@ class _ExpandedImageOptionsWidgetState
                             },
                           ).then((value) => setState(() {}));
 
-                          logFirebaseEvent('DeleteImage_navigate_back');
                           context.safePop();
                         },
                         child: Container(
@@ -286,11 +288,14 @@ class _ExpandedImageOptionsWidgetState
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      logFirebaseEvent(
-                          'EXPANDED_IMAGE_OPTIONS_ReportImage_ON_TA');
-                      logFirebaseEvent('ReportImage_close_dialog,_drawer,_etc');
+                      logFirebaseEvent('Report_image',parameters: {
+                      'uid': currentUserUid,
+                      'photoid': valueOrDefault<String>(
+                        widget.imageitem?.imageUrl,
+                        '',
+                      ),
+                    });
                       Navigator.pop(context);
-                      logFirebaseEvent('ReportImage_bottom_sheet');
                       await showModalBottomSheet(
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,

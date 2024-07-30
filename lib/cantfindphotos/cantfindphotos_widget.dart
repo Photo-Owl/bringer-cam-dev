@@ -61,8 +61,6 @@ class _CantfindphotosWidgetState extends State<CantfindphotosWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('CANTFINDPHOTOS_arrow_back_rounded_ICN_ON');
-                  logFirebaseEvent('IconButton_navigate_back');
                   context.pop();
                 },
               ),
