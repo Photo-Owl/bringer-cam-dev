@@ -148,7 +148,7 @@ class Uploader {
       await notifPlugin.show(
         1234,
         'Finding Faces',
-        'Finding Faces in your images',
+        'Finding faces 🔍 in the photos you just took.',
         NotificationDetails(
           android: AndroidNotificationDetails(
             'com.smoose.photoowldev.uploads',
@@ -292,7 +292,7 @@ class Uploader {
         await notifPlugin.show(
           1234,
           'Finding Faces',
-          'Finding Faces in your images',
+          'Finding faces 🔍 in the photos you just took.',
           NotificationDetails(
             android: AndroidNotificationDetails(
               'com.smoose.photoowldev.uploads',
@@ -321,7 +321,7 @@ class Uploader {
         await notifPlugin.show(
           1235,
           'Matching with friends',
-          'Searching for friends in the photos you took',
+          'Matching 🔗 with your friends in contacts.',
           const NotificationDetails(
             android: AndroidNotificationDetails(
                 'com.smoose.photoowldev.info', 'Social Gallery notifs',
