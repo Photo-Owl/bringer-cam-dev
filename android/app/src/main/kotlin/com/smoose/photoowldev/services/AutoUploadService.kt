@@ -30,6 +30,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import com.smoose.photoowldev.R
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -37,6 +39,10 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.embedding.engine.dart.DartExecutor
 import com.smoose.photoowldev.MethodChannelHolder
+import android.widget.Space
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
+import android.view.ViewGroup
 
 internal class ServiceState {
     companion object {
@@ -57,7 +63,20 @@ internal class ServiceState {
 }
 
 class AutoUploadService : Service() {
+    //For - moveable
+    private lateinit var windowManager: WindowManager
+    private lateinit var params: WindowManager.LayoutParams
+    private var initialX: Int = 0
+    private var initialY: Int = 0
+    private var initialTouchX: Float = 0f
+    private var initialTouchY: Float = 0f
+    //
+    //For - toot-tip
     private lateinit var overlayView: View
+    private lateinit var toolTipLayout: LinearLayout
+    private lateinit var bubbleText: TextView
+    private lateinit var statusIcon: ImageView
+    //
     private var isSharingOn: Boolean = true
     private lateinit var sharedPrefs: SharedPreferences
     private var fileObserver: ImageFileObserver? = null
@@ -266,37 +285,163 @@ class AutoUploadService : Service() {
                 WindowManager.LayoutParams.TYPE_PHONE
             else
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        val params = WindowManager.LayoutParams(
+            params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
             popupType,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
-        params.gravity = Gravity.START
+        params.gravity = Gravity.TOP or Gravity.START
+        params.x = 50
+        params.y = 100
+        overlayView.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        initialX = params.x
+                        initialY = params.y
+                        initialTouchX = event.rawX
+                        initialTouchY = event.rawY
+                        return true
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        params.x = initialX + (event.rawX - initialTouchX).toInt()
+                        params.y = initialY + (event.rawY - initialTouchY).toInt()
+                        windowManager.updateViewLayout(overlayView, params)
+                        return true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        val moved = Math.abs(event.rawX - initialTouchX) > 5 ||
+                                Math.abs(event.rawY - initialTouchY) > 5
+                        if (!moved) {
+                            overlayOnClick()
+                        }
+                        return true
+                    }
+                }
+                return false
+            }
+        })
         windowManager.addView(overlayView, params)
         showToolTip()
         isPopUpShowing = true
     }
-
-    private fun showToolTip() {
-        val toolTipLayout =
-            overlayView.findViewById<LinearLayout>(R.id.toolTipLayout)
-        //check for status and update the text and icon
-        val bubbleText = overlayView.findViewById<TextView>(R.id.bubbleText)
-        val bubbleIcon = overlayView.findViewById<ImageView>(R.id.statusIcon)
-        if (isSharingOn) {
-            bubbleText.text = getString(R.string.chat_message_on)
-            bubbleIcon.setImageResource(R.drawable.status_icon_on)
-        } else {
-            bubbleText.text = getString(R.string.chat_message_off)
-            bubbleIcon.setImageResource(R.drawable.status_icon_off)
+    private fun dpToPx(dp: Int): Int {
+        val density = resources.displayMetrics.density
+        return (dp * density).toInt()
+    }
+    private fun createTooltip(): Triple<LinearLayout, TextView, ImageView>  {
+        // Create the main LinearLayout
+        val toolTipLayout = LinearLayout(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            gravity = Gravity.CENTER
+            orientation = LinearLayout.HORIZONTAL
+            id = resources.getIdentifier("toolTipLayout", "id", packageName)
         }
 
+        // Add Space
+        val space = Space(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                dpToPx(6),
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+        }
+        toolTipLayout.addView(space)
+
+        // Add triangle ImageView
+        val triangleImageView = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+            setImageResource(R.drawable.triangle_pointer)
+            contentDescription = getString(R.string.chat_bubble_triangle)
+        }
+        toolTipLayout.addView(triangleImageView)
+
+        // Create inner LinearLayout
+        val innerLayout = LinearLayout(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+            orientation = LinearLayout.HORIZONTAL
+            setBackgroundResource(R.drawable.chat_bubble_shape)
+        }
+
+        val bubbleText = TextView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            gravity = Gravity.CENTER_VERTICAL or Gravity.START
+            setPadding(0, dpToPx(6), dpToPx(6), dpToPx(6))
+            text = getString(R.string.chat_message_on)
+            textSize = 16f
+            setTextColor(ContextCompat.getColor(context, android.R.color.darker_gray))
+            id = resources.getIdentifier("bubbleText", "id", packageName)
+        }
+
+        val statusIcon = ImageView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(dpToPx(24), dpToPx(24)).apply {
+                gravity = Gravity.CENTER
+            }
+            setPadding(dpToPx(6), dpToPx(6), dpToPx(6), dpToPx(6))
+            setImageResource(R.drawable.status_icon_on)
+            id = resources.getIdentifier("statusIcon", "id", packageName)
+        }
+
+        innerLayout.addView(statusIcon)
+        innerLayout.addView(bubbleText)
+        // Add inner LinearLayout to main LinearLayout
+        toolTipLayout.addView(innerLayout)
+
+        return Triple(toolTipLayout, bubbleText, statusIcon)
+    }
+
+
+
+    private fun showToolTip() {
+            val existingTooltip = overlayView.findViewById<View>(R.id.toolTipLayout)
+        if (existingTooltip != null) {
+            Log.d(LOG_TAG, "Tooltip already present, removing existing one")
+            (overlayView as? ViewGroup)?.removeView(existingTooltip)
+        }
+            Log.d(LOG_TAG, "showToolTip")
+            val (tooltip, text, icon) = createTooltip()
+            toolTipLayout = tooltip
+            bubbleText = text
+            statusIcon = icon
+            toolTipLayout.id = R.id.toolTipLayout
+            (overlayView as? ViewGroup)?.addView(toolTipLayout)
+            Log.d(LOG_TAG,"toolTip $toolTipLayout");
+
+
+
+
+        // Check for status and update the text and icon
+        if (isSharingOn) {
+            bubbleText.text = getString(R.string.chat_message_on)
+            statusIcon.setImageResource(R.drawable.status_icon_on)
+        } else {
+            bubbleText.text = getString(R.string.chat_message_off)
+            statusIcon.setImageResource(R.drawable.status_icon_off)
+        }
+        toolTipLayout.alpha = 0f
+        toolTipLayout.visibility = View.VISIBLE
         //animate the tool tip
         val animator = ObjectAnimator.ofFloat(toolTipLayout, "alpha", 0f, 1f)
         animator.duration = 700 // Duration of the animation in milliseconds
         animator.start()
+
         // Create a Handler to post delayed runnable
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
@@ -306,6 +451,18 @@ class AutoUploadService : Service() {
             reverseAnimator.duration =
                 700 // Reverse animation duration in milliseconds
             reverseAnimator.start()
+            reverseAnimator.addListener(object : AnimatorListener {
+                override fun onAnimationStart(animation: Animator) {}
+                override fun onAnimationEnd(animation: Animator) {
+                    (toolTipLayout.parent as? ViewGroup)?.removeView(toolTipLayout)
+                    toolTipLayout.visibility = View.GONE
+                }
+                override fun onAnimationCancel(animation: Animator) {
+                    (toolTipLayout.parent as? ViewGroup)?.removeView(toolTipLayout)
+                    toolTipLayout.visibility = View.GONE
+                }
+                override fun onAnimationRepeat(animation: Animator) {}
+            })
 
         }, 1200)
 
@@ -350,13 +507,14 @@ class AutoUploadService : Service() {
         while (events.hasNextEvent()) {
             events.getNextEvent(usageEvent)
             if(usageEvent.packageName == packageName){
+                Log.d(LOG_TAG,"Event type ${usageEvent.eventType}")
                 if(usageEvent.eventType == 1){
                     Log.d(
                                 LOG_TAG,
                                 "CAMERA OPEN DETECTED"
                             )
                             showPopUp()
-                }else if(usageEvent.eventType == 2 || usageEvent.eventType == 23){
+                }else if(usageEvent.eventType == 2){
                     Log.d(
                                 LOG_TAG,
                                 "CAMERA CLOSE DETECTED"
@@ -367,66 +525,6 @@ class AutoUploadService : Service() {
             }
 
         }
-//        val query = UsageStatsManager.INTERVAL_DAILY
-//        val stats = usageStatsManager.queryUsageStats(query, startTime, endTime)
-//        if (stats != null && stats.isNotEmpty()) {
-//            for (usageStats in stats) {
-//                if (usageStats.packageName == packageName) {
-//
-//                    val lastTimeUsed = usageStats.lastTimeUsed
-//                    val totalTimeInForeground = usageStats.totalTimeInForeground
-//                    Log.d(
-//                        LOG_TAG,
-//                        "CAMERA PACKAGE - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
-//                    )
-//                    // Check if variables exist in shared preferences
-//                    val oldCameraLastTimeUsed =
-//                        sharedPrefs.getString("camera_last_time_used", "")
-//                    val oldCameraTotalTimeInForeground =
-//                        sharedPrefs.getString(
-//                            "camera_total_time_in_foreground",
-//                            ""
-//                        )
-//
-//                    // If variables are not present, initialize them
-//                    if (oldCameraLastTimeUsed!!.isEmpty() || oldCameraTotalTimeInForeground!!.isEmpty()) {
-//                        Log.d(
-//                            LOG_TAG,
-//                            "First time detected"
-//                        )
-//
-//                    } else {
-//                        if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground == totalTimeInForeground.toString())) {
-//                            Log.d(
-//                                LOG_TAG,
-//                                "CAMERA OPEN DETECTED"
-//                            )
-//                            showPopUp()
-//                        } else if ((oldCameraLastTimeUsed != lastTimeUsed.toString()) && (oldCameraTotalTimeInForeground != totalTimeInForeground.toString())) {
-//
-//                            Log.d(
-//                                LOG_TAG,
-//                                "CAMERA CLOSE DETECTED - LAST TIME USED $lastTimeUsed and TOTAL TIME IN FOREGROUND $totalTimeInForeground"
-//                            )
-//
-//                            hidePopUp()
-//                        }
-//
-//                    }
-//                    editor.putString(
-//                        "camera_last_time_used",
-//                        lastTimeUsed.toString()
-//                    )
-//                    editor.putString(
-//                        "camera_total_time_in_foreground",
-//                        totalTimeInForeground.toString()
-//                    )
-//                    editor.apply()
-//                    break
-//                }
-//
-//            }
-//        }
     }
 
     private fun updatePersistentNotification() {

@@ -118,10 +118,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
           value,
           const NotificationDetails(
               android: AndroidNotificationDetails(
-                'com.smoose.photoowldev.photo_sent',
-                'Photo sent',
-                channelDescription: 'Photo sent notifications from Social Gallery',
-              ),
+                  'com.smoose.photoowldev.photo_sent', 'Photo sent',
+                  channelDescription:
+                      'Photo sent notifications from Social Gallery',
+                  playSound: false),
               iOS: DarwinNotificationDetails()),
         );
       });
@@ -149,7 +149,12 @@ Future<Map> _prepareNotifications(String name, String countString) async {
   sentNotificationsMap[name] = newCount;
 
   sentNotificationsMap.forEach((name, count) {
-    returnable[name] = '$count Photos sent to $name';
+    if (name == 'no one') {
+      returnable[name] =
+          '🔒 $count photos sent to no one and stored privately.';
+    } else {
+      returnable[name] = '$count photos 📸 sent to $name';
+    }
   });
   String newJson = jsonEncode(sentNotificationsMap);
   await prefs.setString('sent_notifications', newJson);

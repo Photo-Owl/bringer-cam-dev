@@ -18,47 +18,7 @@
         android:contentDescription="@string/bringer_logo"
         android:padding="10dp"
         android:src="@drawable/bringer_logo" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolTipLayout"
-        android:layout_gravity="center">
-        <Space
-            android:layout_width="6dp"
-            android:layout_height="0dp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/chat_bubble_triangle"
-            android:src="@drawable/triangle_pointer"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/chat_bubble_shape"
-            android:layout_gravity="center">
-            <ImageView
-                android:id="@+id/statusIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:padding="6dp"
-                android:src="@drawable/status_icon_on"
-                android:layout_gravity="center"/>
-            <!-- Content inside the chat bubble goes here -->
-            <TextView
-                android:id="@+id/bubbleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|start"
-                android:paddingVertical="6dp"
-                android:paddingRight="6dp"
-                android:text="@string/chat_message_on"
-                android:textSize="16sp"
-                android:textColor="#484848"/>
-        </LinearLayout>
-    </LinearLayout>
 </LinearLayout>
 
 

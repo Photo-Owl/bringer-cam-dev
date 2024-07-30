@@ -47,18 +47,33 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            body: SafeArea(
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20.0, 30.0, 20.0, 30.0),
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFFFFF8D6), Color(0xFFFFF3B7)],
-                      stops: [0.0, 1.0],
-                      begin: AlignmentDirectional(0.0, -1.0),
-                      end: AlignmentDirectional(0, 1.0),
+
+            body: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF278525), Color(0xFF005445)],
+                  stops: [0, 0.5700000000000001],
+                  begin: AlignmentDirectional(0.53, -1),
+                  end: AlignmentDirectional(-0.53, 1),
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Spacer(),
+                  Container(
+                    height: MediaQuery.sizeOf(context).height * 0.35,
+                    decoration: BoxDecoration(),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        'assets/images/Group_669615.png',
+                        fit: BoxFit.contain,
+                      ),
+
                     ),
                     borderRadius: BorderRadius.circular(16.0),
                   ),

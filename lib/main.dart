@@ -93,7 +93,8 @@ class _MyAppState extends State<MyApp> {
     photosChannel.setMethodCallHandler((methodCall) async {
       debugPrint('bringer/sharePhotos: received method call');
       if (methodCall.method == "sharePhotos") {
-        final photosList = List.castFrom<dynamic, String>(methodCall.arguments as List);
+        final photosList =
+            List.castFrom<dynamic, String>(methodCall.arguments as List);
         final timestamp = DateTime.timestamp().millisecondsSinceEpoch;
         for (final pic in photosList) {
           await SQLiteManager.instance.insertImage(
@@ -110,7 +111,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Social Gallery',
+      title: ' Social Gallery',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

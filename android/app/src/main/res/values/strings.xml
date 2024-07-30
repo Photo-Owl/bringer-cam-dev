@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-    <string name="app_name">Social Gallery</string>
+    <string name="app_name"> Social Gallery</string>
     <string name="auto_upload_channel">Auto Upload Service</string>
     <string name="auto_upload_toggle_on">Start Sharing</string>
     <string name="auto_upload_toggle_off">Stop Sharing</string>
-    <string name="auto_upload_notif_title">Auto Upload</string>
-    <string name="auto_upload_notif_sub_text">Social Gallery ✨</string>
+    <string name="auto_upload_notif_title">Searching for photos</string>
+    <string name="auto_upload_notif_sub_text">Social Gallery</string>
     <string name="auto_upload_notif_body_inactive">Sign in to start sharing automatically.</string>
-    <string name="auto_upload_notif_body_on">Photos taken while using the Camera app will be automatically shared :)</string>
-    <string name="auto_upload_notif_body_off">Tap on "Start sharing" to share pictures automatically with your buddies!</string>
+    <string name="auto_upload_notif_body_on">Searching 🔍 photos from your friends and events. Instant sharing mode is ON.</string>
+    <string name="auto_upload_notif_body_off">Searching 🔍 photos from your friends and events. Instant sharing mode is OFF</string>
     <string name="bringer_logo">SocialGalleryLogo</string>
     <string name="chat_bubble_triangle">chat_bubble_triangle</string>
-    <string name="chat_message_on">Sharing Mode is ON 🚀</string>
-    <string name="chat_message_off">Sharing Mode is OFF  🫣</string>
+    <string name="chat_message_on">Safe face sharing mode ON 🚀</string>
+    <string name="chat_message_off">Safe face sharing mode OFF 🙈</string>
     <string name="photo_found_channel_name">Photo Found</string>"
 </resources>
