@@ -70,7 +70,7 @@ class _AlldoneWidgetState extends State<AlldoneWidget> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
-                        'assets/images/Group_669614.png',
+                        'assets/images/Group_669615.png',
                         fit: BoxFit.contain,
                       ),
                     ),
