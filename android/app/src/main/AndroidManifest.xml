@@ -46,7 +46,7 @@
     </queries>
 
     <application
-        android:label=" Social Gallery"
+        android:label="&#160;Social Gallery"
         tools:replace="android:label"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">
