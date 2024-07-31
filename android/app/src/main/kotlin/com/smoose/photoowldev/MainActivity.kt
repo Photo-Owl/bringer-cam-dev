@@ -57,6 +57,10 @@ class MainActivity : FlutterActivity() {
                             checkForPermissions()
                         )
 
+                        "checkExternalStoragePermission" -> result.success(
+                            checkForExternalStoragePermission()
+                        )
+
                         "requestExternalStoragePermission" -> {
                             requestExternalStoragePermission()
                             checkPermissionWithTimeout(::checkForExternalStoragePermission, result)
