@@ -1,43 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import '../auth/firebase_auth/auth_util.dart';
-
 import '../flutter_flow/flutter_flow_util.dart';
-import 'schema/util/firestore_util.dart';
-
-import 'schema/users_record.dart';
-import 'schema/uploads_record.dart';
-import 'schema/matches_record.dart';
-import 'schema/constants_record.dart';
-import 'schema/messages_record.dart';
-import 'schema/banners_record.dart';
 import 'schema/albums_record.dart';
+import 'schema/banners_record.dart';
+import 'schema/constants_record.dart';
 import 'schema/image_reports_record.dart';
+import 'schema/matches_record.dart';
+import 'schema/messages_record.dart';
 import 'schema/orders_record.dart';
-import 'schema/user_events_record.dart';
-import 'schema/transactions_record.dart';
 import 'schema/premium_photo_purchases_record.dart';
 import 'schema/qr_codes_record.dart';
+import 'schema/transactions_record.dart';
+import 'schema/uploads_record.dart';
+import 'schema/user_events_record.dart';
+import 'schema/users_record.dart';
+import 'schema/util/firestore_util.dart';
 
 export 'dart:async' show StreamSubscription;
-export 'package:cloud_firestore/cloud_firestore.dart';
-export 'schema/index.dart';
-export 'schema/util/firestore_util.dart';
-export 'schema/util/schema_util.dart';
 
-export 'schema/users_record.dart';
-export 'schema/uploads_record.dart';
-export 'schema/matches_record.dart';
-export 'schema/constants_record.dart';
-export 'schema/messages_record.dart';
-export 'schema/banners_record.dart';
+export 'package:cloud_firestore/cloud_firestore.dart';
+
 export 'schema/albums_record.dart';
+export 'schema/banners_record.dart';
+export 'schema/constants_record.dart';
 export 'schema/image_reports_record.dart';
+export 'schema/index.dart';
+export 'schema/matches_record.dart';
+export 'schema/messages_record.dart';
 export 'schema/orders_record.dart';
-export 'schema/user_events_record.dart';
-export 'schema/transactions_record.dart';
 export 'schema/premium_photo_purchases_record.dart';
 export 'schema/qr_codes_record.dart';
+export 'schema/transactions_record.dart';
+export 'schema/uploads_record.dart';
+export 'schema/user_events_record.dart';
+export 'schema/users_record.dart';
+export 'schema/util/firestore_util.dart';
+export 'schema/util/schema_util.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -676,7 +676,7 @@ Future maybeCreateUser(User user) async {
         user.providerData.firstOrNull?.email,
     displayName:
         user.displayName ?? FirebaseAuth.instance.currentUser?.displayName,
-    photoUrl: user.photoURL,
+    // photoUrl: user.photoURL,
     uid: user.uid,
     phoneNumber: user.phoneNumber,
     createdTime: getCurrentTimestamp,

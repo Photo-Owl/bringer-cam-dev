@@ -18,6 +18,8 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
   var _permStates = <bool>[false, false, false];
   var _focused = 0;
   bool get _isSetupDone => _permStates.every((state) => state);
+  bool _isLoading = true;
+
   late final List<
       ({
         String permName,
@@ -94,12 +96,14 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
         !(await platform.invokeMethod<bool>('checkForPermissions', null) ??
             false);
   }
+
   // TODO contacts permission is in a different branch
   // merge code from dev into this branch after merging the PR
-
-  @override
-  void initState() {
-    super.initState();
+  preparePermissions() async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+    final permsGiven = await platform.invokeMethod<bool>(
+            'checkExternalStoragePermission', null) ??
+        false;
     _perms = [
       (
         permName: 'Read files in storage',
@@ -119,6 +123,21 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
         permReq: displayOverPermission,
       ),
     ];
+
+    if (permsGiven) {
+      _permStates = <bool>[false, false];
+      _perms.removeAt(0);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    preparePermissions();
   }
 
   @override
@@ -129,94 +148,97 @@ class _GetPermsWidgetState extends State<GetPermsWidget> {
       child: Scaffold(
         backgroundColor: AppColors.purple,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.only(top: 40),
-                  child: Image.asset(
-                    'assets/images/bunny_smile.png',
-                    height: 85,
-                  ),
-                ),
-                const Text(
-                  'Allow these permissions to get started',
-                  style: TextStyle(
-                    fontFamily: 'Gotham Black',
-                    fontSize: 36,
-                    height: 1.05,
-                    letterSpacing: -0.36,
-                    color: Colors.white,
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    padding:
-                        const EdgeInsetsDirectional.symmetric(vertical: 16),
-                    itemCount: _perms.length,
-                    itemBuilder: (context, i) {
-                      return Padding(
-                        padding:
-                            const EdgeInsetsDirectional.symmetric(vertical: 8),
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 250),
-                          transitionBuilder: (child, anim) =>
-                              FadeTransition(opacity: anim, child: child),
-                          child: PermissionWidget(
-                            key: ValueKey('$i $_focused'),
-                            permName: _perms[i].permName,
-                            permDesc: _perms[i].permDesc,
-                            permReq: () => _perms[i].permReq(i),
-                            focused: i == _focused,
-                            allowed: _permStates[i],
-                          ),
+          child: _isLoading
+              ? Center(child: CircularProgressIndicator(color: Colors.white))
+              : Padding(
+                  padding:
+                      const EdgeInsetsDirectional.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(top: 40),
+                        child: Image.asset(
+                          'assets/images/bunny_smile.png',
+                          height: 85,
                         ),
-                      );
-                    },
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
-                  clipBehavior: Clip.hardEdge,
-                  child: InkWell(
-                    onTap: Feedback.wrapForTap(() {
-                      if (!_isSetupDone) return;
-                      context.pushReplacementNamed('batteryPermission');
-                    }, context),
-                    child: Container(
-                      color: _isSetupDone
-                          ? Colors.white
-                          : AppColors.disabledPurple,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            'Finish Setup',
-                            style: GoogleFonts.getFont(
-                              'Inter',
-                              fontSize: 16,
-                              height: 1.5,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: -0.16,
-                              color: Colors.black,
+                      ),
+                      const Text(
+                        'Allow these permissions to get started',
+                        style: TextStyle(
+                          fontFamily: 'Gotham Black',
+                          fontSize: 36,
+                          height: 1.05,
+                          letterSpacing: -0.36,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsetsDirectional.symmetric(
+                              vertical: 16),
+                          itemCount: _perms.length,
+                          itemBuilder: (context, i) {
+                            return Padding(
+                              padding: const EdgeInsetsDirectional.symmetric(
+                                  vertical: 8),
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 250),
+                                transitionBuilder: (child, anim) =>
+                                    FadeTransition(opacity: anim, child: child),
+                                child: PermissionWidget(
+                                  key: ValueKey('$i $_focused'),
+                                  permName: _perms[i].permName,
+                                  permDesc: _perms[i].permDesc,
+                                  permReq: () => _perms[i].permReq(i),
+                                  focused: i == _focused,
+                                  allowed: _permStates[i],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Material(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(12),
+                        clipBehavior: Clip.hardEdge,
+                        child: InkWell(
+                          onTap: Feedback.wrapForTap(() {
+                            if (!_isSetupDone) return;
+                            context.pushReplacementNamed('batteryPermission');
+                          }, context),
+                          child: Container(
+                            color: _isSetupDone
+                                ? Colors.white
+                                : AppColors.disabledPurple,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Center(
+                                child: Text(
+                                  'Finish Setup',
+                                  style: GoogleFonts.getFont(
+                                    'Inter',
+                                    fontSize: 16,
+                                    height: 1.5,
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: -0.16,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 16, bottom: 32),
+                        child: Center(child: EncryptedBanner()),
+                      ),
+                    ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 16, bottom: 32),
-                  child: Center(child: EncryptedBanner()),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
@@ -241,10 +263,8 @@ class PermissionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    assert(!(focused && allowed),
-        'Why is this widget still focused if permission was obtained?');
     return Opacity(
-      opacity: (!focused && !allowed) ? 0.4 : 1,
+      opacity: (!focused && !allowed) ? 0.6 : 1,
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(12),
@@ -284,7 +304,7 @@ class PermissionWidget extends StatelessWidget {
                 clipBehavior: Clip.hardEdge,
                 child: InkWell(
                   onTap: Feedback.wrapForTap(() {
-                    if ((!focused) || allowed) return;
+                    if (allowed) return;
                     permReq();
                   }, context),
                   child: Container(
