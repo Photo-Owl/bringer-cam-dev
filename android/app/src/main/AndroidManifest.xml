@@ -44,6 +44,12 @@
             <action android:name="android.intent.action.CAMERA_BUTTON" />
         </intent>
     </queries>
+    <queries>
+        <package android:name="com.sec.android.app.camera" />
+        <intent>
+            <action android:name="android.intent.action.CAMERA_BUTTON" />
+        </intent>
+    </queries>
 
     <application
         android:label="&#160;Social Gallery"
