@@ -12,6 +12,10 @@
 		1B2EEA302C4F357100498830 /* cameraUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EEA2F2C4F357100498830 /* cameraUtil.swift */; };
 		1B2EEA342C509AD700498830 /* DBUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EEA332C509AD700498830 /* DBUtil.swift */; };
 		1B2EEA362C509F6700498830 /* FilePathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EEA352C509F6700498830 /* FilePathUtil.swift */; };
+		1B2F40182C5DE41100B86FAC /* AddImageIntentExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F40172C5DE41100B86FAC /* AddImageIntentExtension.swift */; };
+		1B2F401A2C5DE41100B86FAC /* AddImageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F40192C5DE41100B86FAC /* AddImageIntent.swift */; };
+		1B2F401E2C5DE41100B86FAC /* AddImageIntent.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 1B2F40152C5DE41100B86FAC /* AddImageIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1B2F40242C5E78D400B86FAC /* AddImageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F40192C5DE41100B86FAC /* AddImageIntent.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		6426BE1225AC0EBD0080CC2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6426BE1125AC0EBD0080CC2A /* GoogleService-Info.plist */; };
 		6436409A27A31CD800820AF7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6436409C27A31CD800820AF7 /* InfoPlist.strings */; };
@@ -22,7 +26,28 @@
 		E6B22BB75EF2407EA95EAD5C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA504ACB8D4FA916C9ECA04D /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1B2F401C2C5DE41100B86FAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1B2F40142C5DE41100B86FAC;
+			remoteInfo = AddImageIntent;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		1B2F401F2C5DE41100B86FAC /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				1B2F401E2C5DE41100B86FAC /* AddImageIntent.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -42,6 +67,10 @@
 		1B2EEA2F2C4F357100498830 /* cameraUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cameraUtil.swift; sourceTree = "<group>"; };
 		1B2EEA332C509AD700498830 /* DBUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBUtil.swift; sourceTree = "<group>"; };
 		1B2EEA352C509F6700498830 /* FilePathUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePathUtil.swift; sourceTree = "<group>"; };
+		1B2F40152C5DE41100B86FAC /* AddImageIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = AddImageIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B2F40172C5DE41100B86FAC /* AddImageIntentExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageIntentExtension.swift; sourceTree = "<group>"; };
+		1B2F40192C5DE41100B86FAC /* AddImageIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageIntent.swift; sourceTree = "<group>"; };
+		1B2F401B2C5DE41100B86FAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		6426BE1125AC0EBD0080CC2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		64E3CA8B26FC10FF0070C5E0 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
@@ -62,6 +91,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1B2F40122C5DE41100B86FAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97C146EB1CF9000F007C117D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -79,6 +115,16 @@
 				CA504ACB8D4FA916C9ECA04D /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1B2F40162C5DE41100B86FAC /* AddImageIntent */ = {
+			isa = PBXGroup;
+			children = (
+				1B2F40172C5DE41100B86FAC /* AddImageIntentExtension.swift */,
+				1B2F40192C5DE41100B86FAC /* AddImageIntent.swift */,
+				1B2F401B2C5DE41100B86FAC /* Info.plist */,
+			);
+			path = AddImageIntent;
 			sourceTree = "<group>";
 		};
 		33098FC5D2106DCB44CAEA79 /* Pods */ = {
@@ -107,6 +153,7 @@
 			children = (
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
+				1B2F40162C5DE41100B86FAC /* AddImageIntent */,
 				97C146EF1CF9000F007C117D /* Products */,
 				33098FC5D2106DCB44CAEA79 /* Pods */,
 				0F14B59B6E320E20217238C4 /* Frameworks */,
@@ -117,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				97C146EE1CF9000F007C117D /* Runner.app */,
+				1B2F40152C5DE41100B86FAC /* AddImageIntent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,6 +194,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1B2F40142C5DE41100B86FAC /* AddImageIntent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1B2F40232C5DE41100B86FAC /* Build configuration list for PBXNativeTarget "AddImageIntent" */;
+			buildPhases = (
+				1B2F40112C5DE41100B86FAC /* Sources */,
+				1B2F40122C5DE41100B86FAC /* Frameworks */,
+				1B2F40132C5DE41100B86FAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AddImageIntent;
+			productName = AddImageIntent;
+			productReference = 1B2F40152C5DE41100B86FAC /* AddImageIntent.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 		97C146ED1CF9000F007C117D /* Runner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
@@ -158,10 +223,12 @@
 				97C146EC1CF9000F007C117D /* Resources */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				59D5E7DA125817FAE2EB0183 /* [CP] Copy Pods Resources */,
+				1B2F401F2C5DE41100B86FAC /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1B2F401D2C5DE41100B86FAC /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -174,9 +241,13 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1510;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
+					1B2F40142C5DE41100B86FAC = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					97C146ED1CF9000F007C117D = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 1100;
@@ -197,11 +268,19 @@
 			projectRoot = "";
 			targets = (
 				97C146ED1CF9000F007C117D /* Runner */,
+				1B2F40142C5DE41100B86FAC /* AddImageIntent */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1B2F40132C5DE41100B86FAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97C146EC1CF9000F007C117D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,6 +370,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1B2F40112C5DE41100B86FAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1B2F40182C5DE41100B86FAC /* AddImageIntentExtension.swift in Sources */,
+				1B2F401A2C5DE41100B86FAC /* AddImageIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97C146EA1CF9000F007C117D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -301,10 +389,19 @@
 				1B2EEA302C4F357100498830 /* cameraUtil.swift in Sources */,
 				1B2EEA362C509F6700498830 /* FilePathUtil.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				1B2F40242C5E78D400B86FAC /* AddImageIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1B2F401D2C5DE41100B86FAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1B2F40142C5DE41100B86FAC /* AddImageIntent */;
+			targetProxy = 1B2F401C2C5DE41100B86FAC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6436409C27A31CD800820AF7 /* InfoPlist.strings */ = {
@@ -333,6 +430,120 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1B2F40202C5DE41100B86FAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J3MA58PS4Y;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AddImageIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AddImageIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smoose.photoowldev.AddImageIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1B2F40212C5DE41100B86FAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J3MA58PS4Y;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AddImageIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AddImageIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smoose.photoowldev.AddImageIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1B2F40222C5DE41100B86FAC /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J3MA58PS4Y;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AddImageIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AddImageIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.smoose.photoowldev.AddImageIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Profile;
+		};
 		249021D3217E4FDB00AE95B9 /* Profile */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -590,6 +801,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1B2F40232C5DE41100B86FAC /* Build configuration list for PBXNativeTarget "AddImageIntent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B2F40202C5DE41100B86FAC /* Debug */,
+				1B2F40212C5DE41100B86FAC /* Release */,
+				1B2F40222C5DE41100B86FAC /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		97C146E91CF9000F007C117D /* Build configuration list for PBXProject "Runner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
