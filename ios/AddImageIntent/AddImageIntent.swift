@@ -6,20 +6,131 @@
 //
 
 import AppIntents
+import Foundation
+import AppIntents
+import Photos
+import PhotosUI
+//import FMDB
 
+@available(iOS 16.0, macOS 12.0, *)
 struct AddImageIntent: AppIntent {
-    @available(iOS 16, *)
-    static var title: LocalizedStringResource = "Add Image"
     
-    @available(iOS 16.0, *)
-    static var description = IntentDescription("This intent allows you to add an image to MyApp.")
+    static var title: LocalizedStringResource = "Share Photos through Social Gallery"
     
-    @available(iOS 16, *)
-    static var shortcutPhrase: LocalizedStringResource = "Add image to MyApp"
+    
+    static var description = IntentDescription("The photos taken while this service is running will be shared through social gallery")
+    
+    static var openAppWhenRun: Bool = false
+    
+    @Parameter(title: "Date", description: "The Date from which the photos should be taken")
+    var date: String
+    
+    
+    
+    @MainActor
+    func perform() async throws -> some IntentResult & ReturnsValue<String>{
+        
+        // Request authorization to access photo library
+        let status = PHPhotoLibrary.authorizationStatus()
+        if status != .authorized {
+            let newStatus = await PHPhotoLibrary.requestAuthorization(for: .readWrite)
+            guard newStatus == .authorized else {
+                print("Photo library access not authorized")
+                return .result(value: date)
+            }
+        }
+        
+        // Fetch the latest photo from the photo library
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        fetchOptions.fetchLimit = 1
+        
+        let fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        
+        guard let latestAsset = fetchResult.firstObject else {
+            print("No photos found in the library")
+            return .result(value: date)
+        }
+        
+        // Get the creation date of the latest photo
+        guard let creationDate = latestAsset.creationDate else {
+            print("Could not retrieve the creation date of the latest photo")
+            return .result(value: date)
+        }
+        
+        
+        // convert date(input) to Date
+        let dateStrings = date.components(separatedBy: "\n")
+        
+        if let lastDateString = dateStrings.last {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "d MMM yyyy 'at' h:mm:ss a"
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            if let formatedDate = dateFormatter.date(from: lastDateString) {
+                
+                
+                
+                let returnable:Date;
+                
+                print(formatedDate)
+                print(creationDate)
+                if Calendar.current.compare(creationDate, to: formatedDate, toGranularity: .second) == .orderedSame {
+                    print(false)
+                    returnable = formatedDate
+                } else if(creationDate>formatedDate){
+                    fetchPhotos(after: creationDate)
+                    print(true)
+                    returnable = creationDate;
+                }else{
+                    print(false)
+                    returnable = formatedDate;
+                }
+                
+                // Convert the Date to a String
+                let dateString = dateFormatter.string(from: returnable)
+                
+                return .result(value: dateString)
+            } else {
+                return .result(value: date)
+            }
+        }
+        return .result(value: "Error")
+        
+    }
+    
+    func fetchPhotos(after date: Date) {
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.predicate = NSPredicate(format: "creationDate > %@", date as NSDate)
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
 
-    @available(iOS 16.0, *)
-    func perform() async throws -> some IntentResult & ProvidesDialog {
-        // Custom logic to add an image
-        return .result(dialog: "Image added successfully to MyApp.")
+        let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+        
+        fetchResult.enumerateObjects { (asset, _, _) in
+            self.getImage(asset: asset)
+        }
+    }
+    
+    func getImage(asset: PHAsset) {
+        let imageManager = PHImageManager.default()
+        let options = PHImageRequestOptions()
+        options.isSynchronous = true
+        
+        imageManager.requestImage(for: asset,
+                                  targetSize: CGSize(width: 300, height: 300),
+                                  contentMode: .aspectFill,
+                                  options: options) { (image, info) in
+            if let image = image {
+                let imageId = FilePathUtil.randomIntBasedOnTimestamp()
+                let imagePath = FilePathUtil.imagePath(imgId: imageId.description)
+                
+                FilePathUtil.saveImage(image, to: URL(filePath: imagePath))
+                
+//                DBUtil.sharedInstance().insertDBColumn(imageId: imageId, path: imagePath)
+//                DBUtil.sharedInstance().retriveData()
+            } else {
+                // Handle error
+            }
+        }
     }
 }

@@ -11,8 +11,22 @@ import FMDB
 class DBUtil: NSObject {
     let databaseURL: URL = URL(fileURLWithPath: "")
     var database = FMDatabase(url: URL(fileURLWithPath: ""))
+    private static var privateShared : DBUtil?
     
-    override init() {
+    @objc public final class func sharedInstance() -> DBUtil {
+        guard let instance = privateShared else {
+            privateShared = DBUtil()
+            return privateShared!
+        }
+        
+        return instance
+    }
+    
+    @objc class func destroy() {
+        privateShared = nil
+    }
+
+    private override init() {
         super.init()
         
         setDB()

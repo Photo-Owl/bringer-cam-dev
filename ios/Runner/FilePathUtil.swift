@@ -57,4 +57,14 @@ class FilePathUtil: NSObject {
             print("Error copying file: \(error)")
         }
     }
+    
+    class func saveImage(_ image: UIImage, to path: URL) -> Void {
+        if let data = image.jpegData(compressionQuality: 1.0) {
+            do {
+                try data.write(to: path)
+            } catch {
+                print("Failed to save image: \(error)")
+            }
+        }
+    }
 }

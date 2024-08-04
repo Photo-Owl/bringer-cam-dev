@@ -6,7 +6,6 @@ import Foundation
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
-    var dbInstance = DBUtil.init()
     
     override func application(
         _ application: UIApplication,
@@ -14,32 +13,32 @@ import Foundation
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
       // Register background task with your bundle ID as prefix
-      BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.smoose.photoowldev.backgroundtask", using: nil) { task in
-          self.handleBackgroundTask(task: task as! BGProcessingTask)
-      }
+//      BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.smoose.photoowldev.backgroundtask", using: nil) { task in
+//          self.handleBackgroundTask(task: task as! BGProcessingTask)
+//      }
       
-      UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-          if granted {
-              print("Permission granted")
-//              let content = UNMutableNotificationContent()
-//              content.title = "Good morning"
-//              content.subtitle = "This is a local notification"
-//              content.body = "Don't forget to check out our app."
-//              content.userInfo = ["content-available": 1]
-//              
-//              let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
-//
-//              let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-//
-//              UNUserNotificationCenter.current().add(request) { error in
-//                  if let error = error {
-//                      print("Error: \(error.localizedDescription)")
-//                  }
-//              }
-          } else if let error = error {
-              print("Error: \(error.localizedDescription)")
-          }
-      }
+//      UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+//          if granted {
+//              print("Permission granted")
+////              let content = UNMutableNotificationContent()
+////              content.title = "Good morning"
+////              content.subtitle = "This is a local notification"
+////              content.body = "Don't forget to check out our app."
+////              content.userInfo = ["content-available": 1]
+////              
+////              let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
+////
+////              let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+////
+////              UNUserNotificationCenter.current().add(request) { error in
+////                  if let error = error {
+////                      print("Error: \(error.localizedDescription)")
+////                  }
+////              }
+//          } else if let error = error {
+//              print("Error: \(error.localizedDescription)")
+//          }
+//      }
       
       return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
@@ -86,12 +85,12 @@ import Foundation
         scheduleBackgroundTask()
     }
     
-    override func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let userInfo = notification.request.content.userInfo
-        print("Notification received with userInfo: \(userInfo)")
-        
-        completionHandler([])
-    }
+//    override func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//        let userInfo = notification.request.content.userInfo
+//        print("Notification received with userInfo: \(userInfo)")
+//        
+//        completionHandler([])
+//    }
     
     //MARK: Importing methods
     override func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
@@ -104,8 +103,8 @@ import Foundation
         
         FilePathUtil.copyImage(from: url, to: imagePath)
         
-        dbInstance.insertDBColumn(imageId: imageId, path: imagePath)
-        dbInstance.retriveData()
+        DBUtil.sharedInstance().insertDBColumn(imageId: imageId, path: imagePath)
+        DBUtil.sharedInstance().retriveData()
         return true
     }
 }
