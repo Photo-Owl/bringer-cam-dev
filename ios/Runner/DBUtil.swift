@@ -61,29 +61,35 @@ class DBUtil: NSObject {
             // Insert data
             let insertQuery = "INSERT INTO bringerImages (image_id, path, owner, unix_timestamp, is_uploading, is_uploaded) VALUES (?, ?, ?, ?, ?, ?)"
             if database.executeUpdate(insertQuery, withArgumentsIn: [imageId, path, "0", self.getCurrentUnixTimestampAsInt(), 0, 0]) {
+                database.close()
                 print("Data inserted successfully")
             } else {
+                database.close()
                 print("Failed to insert data: \(database.lastErrorMessage())")
             }
         }
     }
     
     func retriveData() -> Void {
-        let selectQuery = "SELECT * FROM bringerImages"
-        if let resultSet = database.executeQuery(selectQuery, withArgumentsIn: []) {
-            while resultSet.next() {
-                let imageId = resultSet.int(forColumn: "image_id")
-                let path = resultSet.string(forColumn: "path") ?? ""
-                let owner = resultSet.string(forColumn: "owner") ?? ""
-                let unixTimestamp = resultSet.int(forColumn: "unix_timestamp")
-                let isUploading = resultSet.int(forColumn: "is_uploading") == 1
-                let isUploaded = resultSet.int(forColumn: "is_uploaded") == 1
-                print("image_id: \(imageId), path: \(path), owner: \(owner), unix_timestamp: \(unixTimestamp), is_uploading: \(isUploading), is_uploaded: \(isUploaded)")
+        if database.open() {
+            let selectQuery = "SELECT * FROM bringerImages"
+            if let resultSet = database.executeQuery(selectQuery, withArgumentsIn: []) {
+                while resultSet.next() {
+                    let imageId = resultSet.int(forColumn: "image_id")
+                    let path = resultSet.string(forColumn: "path") ?? ""
+                    let owner = resultSet.string(forColumn: "owner") ?? ""
+                    let unixTimestamp = resultSet.int(forColumn: "unix_timestamp")
+                    let isUploading = resultSet.int(forColumn: "is_uploading") == 1
+                    let isUploaded = resultSet.int(forColumn: "is_uploaded") == 1
+                    print("image_id: \(imageId), path: \(path), owner: \(owner), unix_timestamp: \(unixTimestamp), is_uploading: \(isUploading), is_uploaded: \(isUploaded)")
+                }
+                
+                database.close()
+            } else {
+                print("Failed to retrieve data: \(database.lastErrorMessage())")
+                database.close()
             }
-        } else {
-            print("Failed to retrieve data: \(database.lastErrorMessage())")
         }
-
     }
     
     func getCurrentUnixTimestampAsInt() -> Int {

@@ -14,22 +14,15 @@ import PhotosUI
 
 @available(iOS 16.0, macOS 12.0, *)
 struct AddImageIntent: AppIntent {
-    
     static var title: LocalizedStringResource = "Share Photos through Social Gallery"
-    
-    
     static var description = IntentDescription("The photos taken while this service is running will be shared through social gallery")
-    
     static var openAppWhenRun: Bool = false
     
     @Parameter(title: "Date", description: "The Date from which the photos should be taken")
     var date: String
     
-    
-    
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<String>{
-        
         // Request authorization to access photo library
         let status = PHPhotoLibrary.authorizationStatus()
         if status != .authorized {
@@ -58,7 +51,6 @@ struct AddImageIntent: AppIntent {
             return .result(value: date)
         }
         
-        
         // convert date(input) to Date
         let dateStrings = date.components(separatedBy: "\n")
         
@@ -68,9 +60,6 @@ struct AddImageIntent: AppIntent {
             dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             
             if let formatedDate = dateFormatter.date(from: lastDateString) {
-                
-                
-                
                 let returnable:Date;
                 
                 print(formatedDate)
@@ -79,7 +68,7 @@ struct AddImageIntent: AppIntent {
                     print(false)
                     returnable = formatedDate
                 } else if(creationDate>formatedDate){
-                    fetchPhotos(after: creationDate)
+                    updateImageInDB(asset: latestAsset)
                     print(true)
                     returnable = creationDate;
                 }else{
@@ -96,28 +85,19 @@ struct AddImageIntent: AppIntent {
             }
         }
         return .result(value: "Error")
-        
     }
     
-    func fetchPhotos(after date: Date) {
-        let fetchOptions = PHFetchOptions()
-        fetchOptions.predicate = NSPredicate(format: "creationDate > %@", date as NSDate)
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
-
-        let fetchResult: PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
-        
-        fetchResult.enumerateObjects { (asset, _, _) in
-            self.getImage(asset: asset)
-        }
-    }
-    
-    func getImage(asset: PHAsset) {
+    func updateImageInDB(asset: PHAsset) {
         let imageManager = PHImageManager.default()
         let options = PHImageRequestOptions()
         options.isSynchronous = true
         
+        let originalWidth = asset.pixelWidth
+        let originalHeight = asset.pixelHeight
+        let targetSize = CGSize(width: originalWidth, height: originalHeight)
+        
         imageManager.requestImage(for: asset,
-                                  targetSize: CGSize(width: 300, height: 300),
+                                  targetSize: targetSize,
                                   contentMode: .aspectFill,
                                   options: options) { (image, info) in
             if let image = image {
@@ -126,10 +106,9 @@ struct AddImageIntent: AppIntent {
                 
                 FilePathUtil.saveImage(image, to: URL(filePath: imagePath))
                 
-//                DBUtil.sharedInstance().insertDBColumn(imageId: imageId, path: imagePath)
-//                DBUtil.sharedInstance().retriveData()
-            } else {
-                // Handle error
+                DBUtil.sharedInstance().insertDBColumn(imageId: imageId, path: imagePath)
+            } else if let info = info, let error = info[PHImageErrorKey] as? NSError {
+                print("Error retrieving image: \(error.localizedDescription)")
             }
         }
     }
