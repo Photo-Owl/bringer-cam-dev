@@ -1,28 +1,12 @@
 // Automatic FlutterFlow imports
-import 'dart:ffi';
-
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../pref_manager.dart';
-import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
-import '/backend/schema/enums/enums.dart';
-import '/backend/sqlite/sqlite_manager.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
-import 'package:flutter/material.dart';
-// Begin custom action code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../../pref_manager.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
 Future<void> initializeNotifs() async {
   try {
@@ -111,19 +95,20 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         await notifPlugin.cancel(1235);
       }
       notifications.forEach((key, value) async {
-        //The message is shown
-        await notifPlugin.show(
-          key.hashCode,
-          "Photos sent",
-          value,
-          const NotificationDetails(
-              android: AndroidNotificationDetails(
-                  'com.smoose.photoowldev.photo_sent', 'Photo sent',
-                  channelDescription:
-                      'Photo sent notifications from Social Gallery',
-                  playSound: false),
-              iOS: DarwinNotificationDetails()),
-        );
+        if (key != 'no faces') {
+          await notifPlugin.show(
+            key.hashCode,
+            "Photos sent",
+            value,
+            const NotificationDetails(
+                android: AndroidNotificationDetails(
+                    'com.smoose.photoowldev.photo_sent', 'Photo sent',
+                    channelDescription:
+                        'Photo sent notifications from Social Gallery',
+                    playSound: false),
+                iOS: DarwinNotificationDetails()),
+          );
+        }
       });
     }
   }
