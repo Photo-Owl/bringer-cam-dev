@@ -103,7 +103,7 @@ import Foundation
         
         FilePathUtil.copyImage(from: url, to: imagePath)
         
-        DBUtil.sharedInstance().insertDBColumn(imageId: imageId, path: imagePath)
+        DBUtil.sharedInstance().insertImage(imageId: imageId, path: imagePath)
         return true
     }
 }
