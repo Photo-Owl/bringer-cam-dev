@@ -9,6 +9,7 @@ import UIKit
 import FMDB
 import FirebaseStorage
 import FirebaseFirestore
+import FirebaseAuth
 
 class DBUtil: NSObject {
     private var database: FMDatabase?
@@ -83,7 +84,7 @@ class DBUtil: NSObject {
     }
 
     private func uploadImageToStorage(imageId: Int, path: String) {
-        let storageRef = Storage.storage().reference().child("uploads/\(imageId).jpg")
+        let storageRef = Storage.storage().reference().child("\(getUserUID()!)/uploads/\(imageId).jpg")
         let localFile = URL(fileURLWithPath: path)
         
         let uploadTask = storageRef.putFile(from: localFile, metadata: nil) { [weak self] metadata, error in
@@ -97,7 +98,7 @@ class DBUtil: NSObject {
                     return
                 }
                 guard let downloadURL = url else { return }
-                self?.updateAlbums(userId: "user_id_here", uploadURL: downloadURL, timestamp: Date(), imageId: imageId)
+                self?.updateAlbums(userId: self?.getUserUID() ?? "", uploadURL: downloadURL, timestamp: Date(), imageId: imageId)
             }
         }
         
@@ -205,5 +206,13 @@ class DBUtil: NSObject {
     private func getCurrentUnixTimestampAsInt() -> Int {
         return Int(Date().timeIntervalSince1970)
     }
+    
+    private func getUserUID() -> String? {
+            guard let user = Auth.auth().currentUser else {
+                print("No user is currently signed in.")
+                return nil
+            }
+            return user.uid
+        }
 }
 
