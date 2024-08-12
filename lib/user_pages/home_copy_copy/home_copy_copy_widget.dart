@@ -1,33 +1,31 @@
-import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../pref_manager.dart';
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
-import '/backend/sqlite/sqlite_manager.dart';
-import '/components/fetching_photos_widget.dart';
-import '/components/give_name/give_name_widget.dart';
-import '/components/no_photos/no_photos_widget.dart';
-import '/components/sidebar/sidebar_widget.dart';
-import '/components/update_required/update_required_widget.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/custom_code/actions/index.dart' as actions;
-import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 
+import '../../pref_manager.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/sqlite/sqlite_manager.dart';
+import '/components/fetching_photos_widget.dart';
+import '/components/give_name/give_name_widget.dart';
+import '/components/no_photos/no_photos_widget.dart';
+import '/components/sidebar/sidebar_widget.dart';
+import '/components/update_required/update_required_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'home_copy_copy_model.dart';
+
 export 'home_copy_copy_model.dart';
 
 class HomeCopyCopyWidget extends StatefulWidget {
@@ -166,7 +164,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
   }
 
   Future<void> onRefresh() async {
-    logFirebaseEvent('refresh_home',parameters: {
+    logFirebaseEvent('refresh_home', parameters: {
       'uid': currentUserUid,
     });
     setState(() {
@@ -650,7 +648,6 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                             .wait([
                                                                           Future(
                                                                               () async {
-
                                                                             context.pushNamed(
                                                                               'ImageexpandedCopy',
                                                                               queryParameters: {
@@ -731,7 +728,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                                                           await Future
                                                                               .wait([
                                                                             Future(() async {
-                                                                              logFirebaseEvent('view_image',parameters: {
+                                                                              logFirebaseEvent('view_image', parameters: {
                                                                                 'uid': currentUserUid,
                                                                               });
                                                                               context.pushNamed(
@@ -935,7 +932,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     if (!context.mounted) return;
-                                    context.pushReplacementNamed('introShare');
+                                    context.pushNamed('introShare');
                                     await checkForPerms();
                                   },
                                   text: 'Yes, Im ready',
