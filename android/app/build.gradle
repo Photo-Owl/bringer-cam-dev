@@ -69,6 +69,14 @@ android {
         release {
             signingConfig signingConfigs.release
         }
+
+        profile {
+            applicationIdSuffix '.dev'
+        }
+
+        debug {
+            applicationIdSuffix '.dev'
+        }
     }
 }
 
