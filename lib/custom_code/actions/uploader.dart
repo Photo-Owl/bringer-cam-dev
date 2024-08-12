@@ -44,6 +44,8 @@ class Uploader {
   final String userId;
   final _uploadQueue = ListQueue<UploadItem>();
   var _uploadedCount = 0;
+  var _successfullUploadCount = 0;
+  var _errorUploadCount = 0;
   var _totalCount = double.infinity;
   var _isUploading = false;
   late final Future _startupTask;
@@ -51,9 +53,8 @@ class Uploader {
 
   // Can be initialized only once
   Uploader._() : userId = FirebaseAuth.instance.currentUser!.uid {
-    _startupTask = SQLiteManager.instance
-        .fetchImagesToUpload()
-        .then((rows) async {
+    _startupTask =
+        SQLiteManager.instance.fetchImagesToUpload().then((rows) async {
       _uploadQueue.addAll(rows.map(
         (row) => UploadItem(
           path: row.path,
@@ -134,20 +135,20 @@ class Uploader {
     if (_uploadQueue.isNotEmpty) {
       _isUploading = true;
       _uploadedCount = 0;
+      _successfullUploadCount = 0;
+      _errorUploadCount = 0;
       _totalCount = _uploadQueue.length.toDouble();
       _appState?.update(() {
         _appState!.isUploading = _isUploading;
         _appState!.uploadCount = _uploadedCount.toDouble();
       });
-
     }
 
     if (_totalCount < double.infinity) {
-
       await notifPlugin.show(
         1234,
-        'Uploading images',
-        'Uploading images to the cloud',
+        'Finding Faces',
+        'Finding faces 🔍 in the photos you just took.',
         NotificationDetails(
           android: AndroidNotificationDetails(
             'com.smoose.photoowldev.uploads',
@@ -181,7 +182,9 @@ class Uploader {
         if (row.path.startsWith('content://')) {
           final image = await ContentResolver.resolveContent(row.path);
           final fileName = image.fileName;
-          ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
+          final sanitizedName =
+              (fileName ?? '').replaceAll(RegExp('[^a-zA-Z0-9_.\-:]'), '_');
+          ref = FirebaseStorage.instance.ref('$userId/uploads/$sanitizedName');
           await ref.putData(
             image.data,
             SettableMetadata(contentType: image.mimeType),
@@ -189,7 +192,9 @@ class Uploader {
         } else {
           final filePath = row.path;
           final fileName = basename(filePath);
-          ref = FirebaseStorage.instance.ref('$userId/uploads/$fileName');
+          final sanitizedName =
+              fileName.replaceAll(RegExp('[^a-zA-Z0-9_.\-:]'), '_');
+          ref = FirebaseStorage.instance.ref('$userId/uploads/$sanitizedName');
           await ref.putFile(
             File(filePath),
             SettableMetadata(
@@ -252,7 +257,16 @@ class Uploader {
           where: "path = ?",
           whereArgs: [row.path],
         );
+        // Counting successful operation
+        _successfullUploadCount++;
       } catch (e) {
+        if (e is FirebaseException) {
+          if (e.code == "unknown") {
+            //happens when photo is added without write permission
+            //happens when photo is deleted before the upload action
+          }
+        }
+
         if (e is Error) {
           debugPrintStack(stackTrace: e.stackTrace);
         } else {
@@ -266,6 +280,7 @@ class Uploader {
           where: "path = ?",
           whereArgs: [row.path],
         );
+        _errorUploadCount++;
       } finally {
         _uploadQueue.removeFirst();
         _uploadedCount++;
@@ -276,8 +291,8 @@ class Uploader {
         didUpload = true;
         await notifPlugin.show(
           1234,
-          'Uploading images',
-          'Uploading images to the cloud',
+          'Finding Faces',
+          'Finding faces 🔍 in the photos you just took.',
           NotificationDetails(
             android: AndroidNotificationDetails(
               'com.smoose.photoowldev.uploads',
@@ -296,24 +311,28 @@ class Uploader {
       }
     }
 
-    if (didUpload &&_uploadedCount > 0 ) {
+    if (didUpload && _uploadedCount > 0) {
       _isUploading = false;
       await notifPlugin.cancel(1234);
       _appState?.update(() {
         _appState!.isUploading = _isUploading;
       });
-      await notifPlugin.show(
-        1235,
-        'All photos uploaded!',
-        'All ${_uploadedCount.round()} photos you took were shared! 🎉',
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'com.smoose.photoowldev.info',
-            'Bringer notifs',
-            channelDescription: 'Any notification from bringer',
+      if (_successfullUploadCount > 0) {
+        await notifPlugin.show(
+          1235,
+          'Matching with friends',
+          'Matching 🔗 with your friends in contacts.',
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+                'com.smoose.photoowldev.info', 'Social Gallery notifs',
+                channelDescription: 'Any notification from Social Gallery',
+                silent: true,
+                indeterminate: true,
+                showProgress: true,
+                ongoing: false),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 }

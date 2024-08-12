@@ -404,11 +404,8 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                   padding: const EdgeInsets.all(10.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      logFirebaseEvent(
-                          'REVIEW_ORDERPOP_COMP_PAY_NOW_BTN_ON_TAP');
                       var shouldSetState = false;
                       if (widget.total! < 10.0) {
-                        logFirebaseEvent('Button_show_snack_bar');
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: const Text(
@@ -424,12 +421,10 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                         if (shouldSetState) setState(() {});
                         return;
                       }
-                      logFirebaseEvent('Button_backend_call');
                       _model.apiResultm8a =
                           await InstamojoGroup.getAccessTokenCall.call();
                       shouldSetState = true;
                       if ((_model.apiResultm8a?.succeeded ?? true)) {
-                        logFirebaseEvent('Button_backend_call');
                         _model.apiResult545 =
                             await InstamojoGroup.createPaymentRequestCall.call(
                           authToken:
@@ -446,7 +441,6 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                         );
                         shouldSetState = true;
                         if ((_model.apiResult545?.succeeded ?? true)) {
-                          logFirebaseEvent('Button_custom_action');
                           await actions.createphotoPurchasedDocForMultipleKeys(
                             widget.imagekeys!.toList(),
                             InstamojoGroup.createPaymentRequestCall
@@ -457,7 +451,6 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                             getCurrentTimestamp.toString(),
                             currentUserUid,
                           );
-                          logFirebaseEvent('Button_launch_u_r_l');
                           await launchURL(
                               InstamojoGroup.createPaymentRequestCall
                                   .longurl(
@@ -466,7 +459,6 @@ class _ReviewOrderpopWidgetState extends State<ReviewOrderpopWidget> {
                                   .toString());
                         }
                       } else {
-                        logFirebaseEvent('Button_show_snack_bar');
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(

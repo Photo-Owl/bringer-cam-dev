@@ -8,6 +8,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
+import android.os.Handler
 import android.os.PowerManager
 import android.content.ContentResolver
 import android.media.AudioAttributes
@@ -25,6 +27,7 @@ import com.smoose.photoowldev.services.AutoUploadService
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+import kotlinx.coroutines.*
 
 class MainActivity : FlutterActivity() {
     private lateinit var autoUploadChannel: MethodChannel
@@ -54,21 +57,38 @@ class MainActivity : FlutterActivity() {
                             checkForPermissions()
                         )
 
-                        "requestExternalStoragePermission" -> result.success(
+                        "checkExternalStoragePermission" -> result.success(
+                            checkForExternalStoragePermission()
+                        )
+
+                        "requestExternalStoragePermission" -> {
                             requestExternalStoragePermission()
-                        )
+                            checkPermissionWithTimeout(::checkForExternalStoragePermission, result)
+                        }
 
-                        "requestUsageStatsAccess" -> result.success(
+                        "requestUsageStatsAccess" -> {
                             requestUsageStatsAccess()
-                        )
+                            checkPermissionWithTimeout(::checkForUsageStatsAccess, result)
+                        }
 
-                        "requestOverlayPermission" -> result.success(
+                        "requestOverlayPermission" ->{
                             requestOverlayPermission()
+                            checkPermissionWithTimeout(::canDrawOverlays, result)
+                        }
+
+                        "requestIgnoreBatteryOptimization" -> {
+                        requestIgnoreBatteryOptimization()
+                        checkPermissionWithTimeout(::isBatteryOptimizationIgnored, result)
+                    }
+
+                        "checkForContactsPermission" -> result.success(
+                            checkForContactsPermission()
                         )
 
-                        "requestIgnoreBatteryOptimization" -> result.success(
-                            requestIgnoreBatteryOptimization()
-                        )
+                        "requestContactsPermission" -> {
+                            requestContactsPermission()
+                            checkPermissionWithTimeout(::checkForContactsPermission, result)
+                        }
 
                         "startService" -> {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -92,6 +112,25 @@ class MainActivity : FlutterActivity() {
             }
         MethodChannelHolder.methodChannel = autoUploadChannel
 
+    }
+    private fun checkPermissionWithTimeout(permissionCheck: () -> Boolean, result: MethodChannel.Result) {
+        val handler = Handler(Looper.getMainLooper())
+        var elapsedTime = 0
+
+        val runnable = object : Runnable {
+            override fun run() {
+                if (permissionCheck()) {
+                    result.success(true)
+                } else if (elapsedTime >= 120) {
+                    result.success(null)
+                } else {
+                    elapsedTime++
+                    handler.postDelayed(this, 1000)
+                }
+            }
+        }
+
+        handler.post(runnable)
     }
 
     private fun handleSharedPhotos(flutterEngine: FlutterEngine) {
@@ -170,7 +209,7 @@ class MainActivity : FlutterActivity() {
                 context, Manifest.permission.READ_EXTERNAL_STORAGE
             ) == PackageManager.PERMISSION_GRANTED
 
-    private fun requestExternalStoragePermission(): Boolean {
+    private fun requestExternalStoragePermission() {
         var isGranted = checkForExternalStoragePermission()
         if (!isGranted) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -189,9 +228,9 @@ class MainActivity : FlutterActivity() {
                     123
                 )
             }
-            isGranted = checkForExternalStoragePermission()
+
         }
-        return isGranted
+
     }
 
     private fun checkForUsageStatsAccess(): Boolean {
@@ -215,7 +254,7 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun requestUsageStatsAccess(): Boolean {
+    private fun requestUsageStatsAccess() {
         Log.d("mainActivity debug", "Checking usage stats permission...")
         var granted = checkForUsageStatsAccess()
         Log.d("mainActivity debug", "permission $granted")
@@ -231,11 +270,11 @@ class MainActivity : FlutterActivity() {
                 )
                 startActivityForResult(intent, 1)
             }
-            granted = checkForUsageStatsAccess()
+
         } else {
             Log.d("mainActivity debug", "Permission already granted.")
         }
-        return granted
+
     }
 
     private fun canDrawOverlays() =
@@ -244,7 +283,7 @@ class MainActivity : FlutterActivity() {
         else
             true
 
-    private fun requestOverlayPermission(): Boolean {
+    private fun requestOverlayPermission() {
         var granted = canDrawOverlays()
         if (!granted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val intent = Intent(
@@ -252,14 +291,34 @@ class MainActivity : FlutterActivity() {
                 Uri.parse("package:$packageName")
             )
             startActivityForResult(intent, 1)
-            granted = canDrawOverlays()
+
         }
-        return granted
+
+    }
+
+    private fun checkForContactsPermission() : Boolean {
+        return ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_CONTACTS
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestContactsPermission()  {
+        var isGranted = checkForContactsPermission()
+        if (!isGranted) {
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(Manifest.permission.READ_CONTACTS),
+                123
+            )
+
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val audioAttributes: AudioAttributes = Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .setUsage(AudioAttributes.USAGE_ALARM)
@@ -275,6 +334,5 @@ class MainActivity : FlutterActivity() {
             NotificationManagerCompat.from(applicationContext).createNotificationChannel(notifChannel)
 
         }
-
     }
 }

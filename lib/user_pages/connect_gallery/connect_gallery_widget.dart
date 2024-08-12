@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -104,7 +105,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 8.0),
                             child: Text(
-                              '3 steps to make your life easier!',
+                              '5 steps to make your life easier!',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -256,7 +257,7 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 16.0),
                             child: Text(
-                              'This allows you to easily share selected photos through Bringer.',
+                              'This allows you to easily share selected photos through Social Gallery.',
                               textAlign: TextAlign.start,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -276,6 +277,9 @@ class _ConnectGalleryWidgetState extends State<ConnectGalleryWidget> {
                           child: Builder(builder: (context) {
                             return FFButtonWidget(
                               onPressed: () async {
+                                logFirebaseEvent('connect_galley',parameters: {
+                                  'uid': currentUserUid,
+                                });
                                 const platform = MethodChannel(
                                     'com.smoose.photoowldev/autoUpload');
                                 final permsGiven =

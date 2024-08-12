@@ -146,10 +146,6 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                             size: 24.0,
                                           ),
                                           onPressed: () async {
-                                            logFirebaseEvent(
-                                                'LOCAL_IMAGE_PAGE_arrow_back_ICN_ON_TAP');
-                                            logFirebaseEvent(
-                                                'IconButton_navigate_back');
                                             context.safePop();
                                           },
                                         ),
@@ -170,16 +166,15 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                               size: 24.0,
                                             ),
                                             onPressed: () async {
-                                              logFirebaseEvent(
-                                                  'LOCAL_IMAGE_delete_rounded_ICN_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'IconButton_custom_action');
+                                              logFirebaseEvent('delete_image_local',parameters: {
+                                                'uid': currentUserUid,
+                                                'path': uploadedReadUploadedImagesRow
+                                                    .path
+                                              });
                                               await actions.deleteImage(
                                                 uploadedReadUploadedImagesRow
                                                     .path,
                                               );
-                                              logFirebaseEvent(
-                                                  'IconButton_carousel');
                                               await _model.uploadedController
                                                   ?.previousPage(
                                                 duration:
@@ -283,10 +278,6 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                             size: 24.0,
                                           ),
                                           onPressed: () async {
-                                            logFirebaseEvent(
-                                                'LOCAL_IMAGE_PAGE_arrow_back_ICN_ON_TAP');
-                                            logFirebaseEvent(
-                                                'IconButton_navigate_back');
                                             context.safePop();
                                           },
                                         ),
@@ -307,16 +298,15 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                                               size: 24.0,
                                             ),
                                             onPressed: () async {
-                                              logFirebaseEvent(
-                                                  'LOCAL_IMAGE_delete_rounded_ICN_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'IconButton_custom_action');
+                                              logFirebaseEvent('delete_image_local',parameters: {
+                                                'uid': currentUserUid,
+                                                'path': notuploadedReadImagesToUploadRow
+                                                    .path
+                                              });
                                               await actions.deleteImage(
                                                 notuploadedReadImagesToUploadRow
                                                     .path,
                                               );
-                                              logFirebaseEvent(
-                                                  'IconButton_carousel');
                                               await _model.notuploadedController
                                                   ?.previousPage(
                                                 duration:

@@ -66,8 +66,6 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
             padding: const EdgeInsets.all(16.0),
             child: RefreshIndicator(
               onRefresh: () async {
-                logFirebaseEvent('UPLOADS_ListView_1ygeinss_ON_PULL_TO_REF');
-                logFirebaseEvent('ListView_navigate_to');
                 if (Navigator.of(context).canPop()) {
                   context.pop();
                 }
@@ -141,7 +139,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                         if (!snapshot.hasData) {
                           return Center(
                             child: Image.asset(
-                              'assets/images/ezgif.com-gif-maker.gif',
+                              'assets/images/logo.png',
                               width: 64.0,
                               height: 64.0,
                               fit: BoxFit.cover,
@@ -177,9 +175,6 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  logFirebaseEvent(
-                                      'UPLOADS_PAGE_COMP_Stack_o07fkcbe_ON_TAP');
-                                  logFirebaseEvent('Stack_navigate_to');
 
                                   context.pushNamed(
                                     'LocalImage',
@@ -251,7 +246,7 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                       if (!snapshot.hasData) {
                         return Center(
                           child: Image.asset(
-                            'assets/images/ezgif.com-gif-maker.gif',
+                            'assets/images/logo.png',
                             width: 64.0,
                             height: 64.0,
                             fit: BoxFit.cover,
@@ -283,10 +278,6 @@ class _UploadsPageWidgetState extends State<UploadsPageWidget> {
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                logFirebaseEvent(
-                                    'UPLOADS_PAGE_COMP_Stack_n7039dmy_ON_TAP');
-                                logFirebaseEvent('Stack_navigate_to');
-
                                 context.pushNamed(
                                   'LocalImage',
                                   queryParameters: {

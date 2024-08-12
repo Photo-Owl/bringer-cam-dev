@@ -87,8 +87,6 @@ class _AddressWidgetState extends State<AddressWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('ADDRESS_arrow_back_rounded_ICN_ON_TAP');
-                  logFirebaseEvent('IconButton_navigate_back');
                   context.pop();
                 },
               ),
@@ -709,11 +707,6 @@ class _AddressWidgetState extends State<AddressWidget> {
                                             0.0, 20.0, 0.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            logFirebaseEvent(
-                                                'ADDRESS_REVIEW_YOUR_ORDER_BTN_ON_TAP');
-                                            logFirebaseEvent(
-                                                'Button_backend_call');
-
                                             var ordersRecordReference =
                                                 OrdersRecord.collection.doc();
                                             await ordersRecordReference.set({
@@ -775,9 +768,6 @@ class _AddressWidgetState extends State<AddressWidget> {
                                                 },
                                               ),
                                             }, ordersRecordReference);
-                                            logFirebaseEvent(
-                                                'Button_navigate_to');
-
                                             context.goNamed(
                                               'ReviewOrder',
                                               queryParameters: {

@@ -263,10 +263,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
                                                       logFirebaseEvent(
-                                                          'SKIP_SELFIE_PAGE_1_HOUR_BTN_ON_TAP');
-                                                      logFirebaseEvent(
-                                                          'Button_backend_call');
-
+                                                          'SKIP_SELFIE_PAGE_1_HOUR_BTN_ON_TAP',parameters: {
+                                                        'uid': currentUserUid,
+                                                      });
                                                       await UserEventsRecord
                                                           .collection
                                                           .doc()
@@ -278,8 +277,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                             timestamp:
                                                                 getCurrentTimestamp,
                                                           ));
-                                                      logFirebaseEvent(
-                                                          'Button_backend_call');
 
                                                       await currentUserReference!
                                                           .update(
@@ -288,8 +285,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                             functions
                                                                 .add1Hour(),
                                                       ));
-                                                      logFirebaseEvent(
-                                                          'Button_alert_dialog');
                                                       await showDialog(
                                                         context: context,
                                                         builder:
@@ -311,9 +306,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                           );
                                                         },
                                                       );
-                                                      logFirebaseEvent(
-                                                          'Button_navigate_to');
-
                                                       context.goNamed(
                                                           'RedirectionCopy');
                                                     },
@@ -371,9 +363,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
                                                       logFirebaseEvent(
-                                                          'SKIP_SELFIE_TODAY_EVENING_BTN_ON_TAP');
-                                                      logFirebaseEvent(
-                                                          'Button_backend_call');
+                                                          'SKIP_SELFIE_TODAY_EVENING_BTN_ON_TAP',parameters: {
+                                                        'uid': currentUserUid,
+                                                      });
 
                                                       await UserEventsRecord
                                                           .collection
@@ -386,8 +378,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                             timestamp:
                                                                 getCurrentTimestamp,
                                                           ));
-                                                      logFirebaseEvent(
-                                                          'Button_backend_call');
 
                                                       await currentUserReference!
                                                           .update(
@@ -396,8 +386,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                             functions
                                                                 .todayEvening(),
                                                       ));
-                                                      logFirebaseEvent(
-                                                          'Button_alert_dialog');
                                                       await showDialog(
                                                         context: context,
                                                         builder:
@@ -419,8 +407,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                           );
                                                         },
                                                       );
-                                                      logFirebaseEvent(
-                                                          'Button_navigate_to');
 
                                                       context.goNamed(
                                                           'RedirectionCopy');
@@ -479,9 +465,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
                                                       logFirebaseEvent(
-                                                          'SKIP_SELFIE_TOMMOROW_EVENING_BTN_ON_TAP');
-                                                      logFirebaseEvent(
-                                                          'Button_backend_call');
+                                                          'SKIP_SELFIE_TOMMOROW_EVENING_BTN_ON_TAP',parameters: {
+                                                        'uid': currentUserUid,
+                                                      });
 
                                                       await UserEventsRecord
                                                           .collection
@@ -494,8 +480,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                             timestamp:
                                                                 getCurrentTimestamp,
                                                           ));
-                                                      logFirebaseEvent(
-                                                          'Button_backend_call');
 
                                                       await currentUserReference!
                                                           .update(
@@ -504,8 +488,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                             functions
                                                                 .tommorowEvening(),
                                                       ));
-                                                      logFirebaseEvent(
-                                                          'Button_alert_dialog');
                                                       await showDialog(
                                                         context: context,
                                                         builder:
@@ -527,8 +509,6 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                                           );
                                                         },
                                                       );
-                                                      logFirebaseEvent(
-                                                          'Button_navigate_to');
 
                                                       context.goNamed(
                                                           'RedirectionCopy');
@@ -612,9 +592,9 @@ class _SkipSelfieWidgetState extends State<SkipSelfieWidget>
                                             child: FFButtonWidget(
                                               onPressed: () async {
                                                 logFirebaseEvent(
-                                                    'SKIP_SELFIE_PAGE_TAKE_SELFIE_BTN_ON_TAP');
-                                                logFirebaseEvent(
-                                                    'Button_navigate_to');
+                                                    'SKIP_SELFIE_PAGE_TAKE_SELFIE_BTN_ON_TAP',parameters: {
+                                                  'uid': currentUserUid,
+                                                });
 
                                                 context
                                                     .goNamed('RedirectionCopy');

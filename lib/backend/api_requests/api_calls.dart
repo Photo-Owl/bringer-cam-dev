@@ -3,6 +3,8 @@ import 'dart:convert';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
+import 'package:flutter/foundation.dart' show kReleaseMode;
+
 export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
@@ -11,7 +13,7 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
 class InstamojoGroup {
   static String baseUrl =
-      'https://us-central1-bringer-cam-dev.cloudfunctions.net';
+      'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net';
   static Map<String, String> headers = {};
   static GetAccessTokenCall getAccessTokenCall = GetAccessTokenCall();
   static CreatePaymentRequestCall createPaymentRequestCall =
@@ -165,7 +167,7 @@ class UserOnboardingCall {
     return ApiManager.instance.makeApiCall(
       callName: 'userOnboarding',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/userOnboardingTIF',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/userOnboardingTIF',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -195,7 +197,7 @@ class SearchFacesUsingTIFCall {
     return ApiManager.instance.makeApiCall(
       callName: 'searchFacesUsingTIF',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/searchFacesUsingTIF',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/searchFacesUsingTIF',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -221,7 +223,7 @@ class DeleteImageCall {
     return ApiManager.instance.makeApiCall(
       callName: 'DeleteImage',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/deleteImage',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/deleteImage',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -241,7 +243,7 @@ class CompressedImageForAllCall {
     return ApiManager.instance.makeApiCall(
       callName: 'compressedImageForAll',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/generatecompressedImageUrlForAllDocuments',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/generatecompressedImageUrlForAllDocuments',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -268,7 +270,7 @@ class GetBannerDetailsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetBannerDetails',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/getBanner',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/getBanner',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -322,7 +324,7 @@ class SearchOnUploadCall {
     return ApiManager.instance.makeApiCall(
       callName: 'SearchOnUpload',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/searchFacesOnUploadTIF',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/searchFacesOnUploadTIF',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -348,7 +350,7 @@ class GetPurchasableImagesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getPurchasableImages',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/getImagesForPurchases',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/getImagesForPurchases',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -376,7 +378,7 @@ class GetReviwOrderDetailsCall {
     return ApiManager.instance.makeApiCall(
       callName: 'GetReviwOrderDetails',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/getReviewOrderDetails',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/getReviewOrderDetails',
       callType: ApiCallType.POST,
       headers: {},
       params: {},
@@ -411,7 +413,7 @@ class GetMatchesCall {
     return ApiManager.instance.makeApiCall(
       callName: 'getMatches',
       apiUrl:
-          'https://us-central1-bringer-cam-dev.cloudfunctions.net/getAllMatches',
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/getAllMatches',
       callType: ApiCallType.GET,
       headers: {},
       params: {

@@ -1,4 +1,5 @@
 // Automatic FlutterFlow imports
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show kReleaseMode;
 
 Future addSeenby(String userId, String key, String displayName) async {
   final db = FirebaseFirestore.instance;
@@ -39,7 +41,7 @@ Future<void> sendSeenNotification(
     String key, String displayName, String ownerId) async {
   final db = FirebaseFirestore.instance;
   final title = displayName + " has seen the photo you shared";
-  const body = "You’ve been a good friend using Bringer.";
+  const body = "You’ve been a good friend using Social Gallery.";
   final ownerSnapshot = await db.collection("users").doc(ownerId).get();
 
   final token = ownerSnapshot.data()!['fcmToken'];
@@ -51,7 +53,7 @@ Future<void> sendSeenNotification(
 
   final response = await http.post(
     Uri.parse(
-        'https://us-central1-bringer-cam-dev.cloudfunctions.net/sendNotification'),
+        'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/sendNotification'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

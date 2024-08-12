@@ -79,9 +79,6 @@ class _ContactUsbottomsheetWidgetState
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                logFirebaseEvent('CONTACT_USBOTTOMSHEET_Container_mst6n3w4');
-                logFirebaseEvent('Container_navigate_to');
-
                 context.pushNamed('Cantfindphotos');
               },
               child: Container(
@@ -96,10 +93,6 @@ class _ContactUsbottomsheetWidgetState
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      logFirebaseEvent(
-                          'CONTACT_USBOTTOMSHEET_Row_o2i4lgi4_ON_TA');
-                      logFirebaseEvent('Row_navigate_to');
-
                       context.pushNamed('Cantfindphotos');
                     },
                     child: Row(
@@ -154,8 +147,6 @@ class _ContactUsbottomsheetWidgetState
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                logFirebaseEvent('CONTACT_USBOTTOMSHEET_Container_tejsizvt');
-                logFirebaseEvent('Container_launch_u_r_l');
                 await launchURL(
                     'https://wa.me/918248171862?text=I%20want%20to%20report%20a%20bug');
               },
@@ -216,8 +207,6 @@ class _ContactUsbottomsheetWidgetState
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                logFirebaseEvent('CONTACT_USBOTTOMSHEET_Container_mx71krbr');
-                logFirebaseEvent('Container_launch_u_r_l');
                 await launchURL(
                     'https://wa.me/918248171862?text=I%20want%20to%20know%20more%20about%20your%20commercial%20plan');
               },

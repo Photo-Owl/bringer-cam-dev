@@ -543,9 +543,6 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                                 padding: const EdgeInsets.all(10.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    logFirebaseEvent(
-                                        'DOWNLOADBOTTOMSHEET_BUY_NOW_BTN_ON_TAP');
-                                    logFirebaseEvent('Button_alert_dialog');
                                     await showDialog(
                                       context: context,
                                       builder: (dialogContext) {
@@ -616,8 +613,6 @@ class _DownloadbottomsheetWidgetState extends State<DownloadbottomsheetWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  logFirebaseEvent('DOWNLOADBOTTOMSHEET_RichText_6rbdn3f1_ON');
-                  logFirebaseEvent('RichText_custom_action');
                   await actions.downloadImage(
                     widget.imageDocument!.watermarkedImage500,
                     widget.imageDocument!.key,

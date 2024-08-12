@@ -123,9 +123,6 @@ class _ReadQrWidgetState extends State<ReadQrWidget> {
                               0.0, 25.0, 0.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              logFirebaseEvent(
-                                  'READ_QR_PAGE_FOLLOW_NOW_BTN_ON_TAP');
-                              logFirebaseEvent('Button_launch_u_r_l');
                               await launchURL(columnQrCodesRecord.redirectUrl);
                             },
                             text: 'Follow Now',

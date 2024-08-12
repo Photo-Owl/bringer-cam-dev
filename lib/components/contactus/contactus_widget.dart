@@ -1,3 +1,4 @@
+import '../../auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -86,9 +87,6 @@ class _ContactusWidgetState extends State<ContactusWidget> {
                             size: 24.0,
                           ),
                           onPressed: () async {
-                            logFirebaseEvent('CONTACTUS_COMP_close_ICN_ON_TAP');
-                            logFirebaseEvent(
-                                'IconButton_close_dialog,_drawer,_etc');
                             Navigator.pop(context);
                           },
                         ),
@@ -126,8 +124,9 @@ class _ContactusWidgetState extends State<ContactusWidget> {
             padding: const EdgeInsets.all(10.0),
             child: FFButtonWidget(
               onPressed: () async {
-                logFirebaseEvent('CONTACTUS_CHAT_WITH_US_NOW!_BTN_ON_TAP');
-                logFirebaseEvent('Button_launch_u_r_l');
+                logFirebaseEvent('contact_us',parameters: {
+                  'uid': currentUserUid,
+                });
                 await launchURL('https://wa.me/918248171862');
               },
               text: 'Chat with us Now!',

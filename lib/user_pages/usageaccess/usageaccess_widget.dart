@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -52,12 +53,12 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20.0, 30.0, 20.0, 30.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(20.0, 30.0, 20.0, 30.0),
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [Color(0xFFFFF8D6), Color(0xFFFFF3B7)],
                       stops: [0.0, 1.0],
                       begin: AlignmentDirectional(0.0, -1.0),
@@ -67,13 +68,13 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                   ),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 8.0, 20.0, 8.0),
+                        const EdgeInsetsDirectional.fromSTEB(20.0, 8.0, 20.0, 8.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(1.0, -1.0),
+                          alignment: const AlignmentDirectional(1.0, -1.0),
                           child: IconButton(
                             icon: Icon(
                               Icons.close,
@@ -84,16 +85,16 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 20.0),
                           child: LinearPercentIndicator(
-                            percent: 0.5,
+                            percent: 0.4,
                             lineHeight: 12.0,
                             animation: false,
                             animateFromLastPercent: false,
-                            progressColor: Color(0xFF342C00),
-                            backgroundColor: Color(0xFFCEC48D),
-                            barRadius: Radius.circular(10.0),
+                            progressColor: const Color(0xFF342C00),
+                            backgroundColor: const Color(0xFFCEC48D),
+                            barRadius: const Radius.circular(10.0),
                             padding: EdgeInsets.zero,
                           ),
                         ),
@@ -101,7 +102,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                           child: Stack(
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                                alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: Container(
                                   width: 250.0,
                                   height: 400.0,
@@ -109,7 +110,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     boxShadow: [
-                                      BoxShadow(
+                                      const BoxShadow(
                                         blurRadius: 4.0,
                                         color: Color(0x33000000),
                                         offset: Offset(
@@ -132,10 +133,10 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(0.0, 1.0),
+                                alignment: const AlignmentDirectional(0.0, 1.0),
                                 child: Container(
                                   height: 150.0,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
                                         Color(0x00FFF4BB),
@@ -147,7 +148,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(12.0),
+                                    padding: const EdgeInsets.all(12.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
@@ -166,9 +167,9 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                           ),
                                           showBadge: true,
                                           shape: badges.BadgeShape.circle,
-                                          badgeColor: Color(0xFFBBBBBB),
+                                          badgeColor: const Color(0xFFBBBBBB),
                                           elevation: 4.0,
-                                          padding: EdgeInsets.all(4.0),
+                                          padding: const EdgeInsets.all(4.0),
                                           position:
                                               badges.BadgePosition.topEnd(),
                                           animationType:
@@ -187,10 +188,10 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(0.0, 0.8),
+                                              const AlignmentDirectional(0.0, 0.8),
                                           child: Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
+                                                const EdgeInsetsDirectional.fromSTEB(
                                                     4.0, 15.0, 4.0, 0.0),
                                             child: Icon(
                                               Icons.add,
@@ -214,9 +215,9 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                           ),
                                           showBadge: true,
                                           shape: badges.BadgeShape.circle,
-                                          badgeColor: Color(0xFFBBBBBB),
+                                          badgeColor: const Color(0xFFBBBBBB),
                                           elevation: 4.0,
-                                          padding: EdgeInsets.all(4.0),
+                                          padding: const EdgeInsets.all(4.0),
                                           position:
                                               badges.BadgePosition.topEnd(),
                                           animationType:
@@ -242,9 +243,9 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 0.0),
                             child: Text(
                               'Step 3',
@@ -253,7 +254,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Inter',
-                                    color: Color(0xFFB4A245),
+                                    color: const Color(0xFFB4A245),
                                     fontSize: 16.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
@@ -262,9 +263,9 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 16.0),
                             child: Text(
                               'Allow Usage Access',
@@ -273,7 +274,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Inter',
-                                    color: Color(0xFF534308),
+                                    color: const Color(0xFF534308),
                                     fontSize: 28.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
@@ -282,9 +283,9 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 16.0),
                             child: Text(
                               'Helps us know you’re clicking photos so we can help you share them.\n',
@@ -293,7 +294,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Inter',
-                                    color: Color(0xFF534308),
+                                    color: const Color(0xFF534308),
                                     fontSize: 16.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
@@ -302,10 +303,13 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 16.0, 0.0, 16.0),
                           child: FFButtonWidget(
                             onPressed: () async {
+                              logFirebaseEvent('usage_access',parameters: {
+                                'uid': currentUserUid,
+                              });
                               const platform = MethodChannel(
                                   'com.smoose.photoowldev/autoUpload');
                               final permsGiven =
@@ -314,7 +318,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                       false;
                               if (!context.mounted) return;
                               if (permsGiven) {
-                                context.pushNamed('batteryOptimization');
+                                context.pushNamed('contactsPerm');
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -328,9 +332,9 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 50.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   24.0, 16.0, 24.0, 16.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primaryText,
                               textStyle: FlutterFlowTheme.of(context)
@@ -341,7 +345,7 @@ class _UsageaccessWidgetState extends State<UsageaccessWidget> {
                                     letterSpacing: 0.0,
                                   ),
                               elevation: 3.0,
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.transparent,
                                 width: 1.0,
                               ),

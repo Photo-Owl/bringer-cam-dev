@@ -150,9 +150,6 @@ class _PaymentFailedWidgetState extends State<PaymentFailedWidget> {
             padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
             child: FFButtonWidget(
               onPressed: () async {
-                logFirebaseEvent('PAYMENT_FAILED_GO_BACK_TO_HOME_BTN_ON_TA');
-                logFirebaseEvent('Button_navigate_to');
-
                 context.goNamed('HomeCopyCopy');
               },
               text: 'Go back to Home',

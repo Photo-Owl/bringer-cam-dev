@@ -172,8 +172,9 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                     child: FFButtonWidget(
                       onPressed: () async {
                         logFirebaseEvent(
-                            'DOS_AND_DONTS_TAKE_SELFIE_BTN_ON_TAP');
-                        logFirebaseEvent('Button_upload_media_to_firebase');
+                            'DOS_AND_DONTS_CONTINUE',parameters: {
+                          'uid': currentUserUid,
+                        });
                         final selectedMedia = await selectMedia(
                           imageQuality: 34,
                           multiImage: false,
@@ -221,8 +222,6 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                             return;
                           }
                         }
-
-                        logFirebaseEvent('Button_alert_dialog');
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
@@ -240,11 +239,7 @@ class _DosAndDontsWidgetState extends State<DosAndDontsWidget> {
                             );
                           },
                         );
-                        logFirebaseEvent('Button_navigate_to');
-
                         context.goNamed('WaitForVerification');
-
-                        logFirebaseEvent('Button_backend_call');
                         _model.apires = await UserOnboardingCall.call(
                           storageUrl: _model.uploadedFileUrl,
                           uid: currentUserUid,

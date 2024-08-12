@@ -68,9 +68,6 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        logFirebaseEvent(
-                            'INVITELINK_COMP_Icon_qr9axwyh_ON_TAP');
-                        logFirebaseEvent('Icon_close_dialog,_drawer,_etc');
                         Navigator.pop(context);
                       },
                       child: Icon(
@@ -110,7 +107,7 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                     child: Text(
-                      'Invite them to Bringer and we will get this to them 🤗',
+                      'Invite them to Social Gallery and we will get this to them 🤗',
                       textAlign: TextAlign.center,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
@@ -132,12 +129,9 @@ class _InvitelinkWidgetState extends State<InvitelinkWidget> {
                         const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 10.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent('INVITELINK_COMP_GET_LINK_BTN_ON_TAP');
-                        logFirebaseEvent('Button_copy_to_clipboard');
                         await Clipboard.setData(const ClipboardData(
                             text:
                                 'https://your-photos-vdpy50.flutterflow.app/'));
-                        logFirebaseEvent('Button_show_snack_bar');
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(

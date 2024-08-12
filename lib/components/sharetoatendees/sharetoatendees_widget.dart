@@ -67,9 +67,6 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        logFirebaseEvent(
-                            'SHARETOATENDEES_Icon_c3bcfytq_ON_TAP');
-                        logFirebaseEvent('Icon_close_dialog,_drawer,_etc');
                         Navigator.pop(context);
                       },
                       child: Icon(
@@ -144,13 +141,9 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                         const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'SHARETOATENDEES_COMP_GET_LINK_BTN_ON_TAP');
-                        logFirebaseEvent('Button_copy_to_clipboard');
                         await Clipboard.setData(const ClipboardData(
                             text:
                                 'https://your-photos-vdpy50.flutterflow.app/'));
-                        logFirebaseEvent('Button_show_snack_bar');
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
@@ -223,9 +216,6 @@ class _SharetoatendeesWidgetState extends State<SharetoatendeesWidget> {
                         const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'SHARETOATENDEES_DOWNLOAD_Q_R_CODE_BTN_ON');
-                        logFirebaseEvent('Button_launch_u_r_l');
                         await launchURL(
                             'https://firebasestorage.googleapis.com/v0/b/yourphotos-c5382.appspot.com/o/users%2F70hY4WMZP0fGdl8cHBBuz55kZSj2%2FHosting%2Fqrdownload.pdf?alt=media&token=8c676076-d872-4b5a-8cd9-8534e541f422');
                       },

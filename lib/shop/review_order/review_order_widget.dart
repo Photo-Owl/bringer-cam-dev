@@ -71,8 +71,6 @@ class _ReviewOrderWidgetState extends State<ReviewOrderWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('REVIEW_ORDER_arrow_back_rounded_ICN_ON_T');
-                  logFirebaseEvent('IconButton_navigate_back');
                   context.pop();
                 },
               ),

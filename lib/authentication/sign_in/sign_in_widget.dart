@@ -70,13 +70,10 @@ class _SignInWidgetState extends State<SignInWidget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('SIGN_IN_PAGE_SignIn_ON_INIT_STATE');
-      logFirebaseEvent('SignIn_custom_action');
       _model.checkVersionResult = await actions.checkVersion();
       if (_model.checkVersionResult!) {
-        logFirebaseEvent('SignIn_wait__delay');
         await Future.delayed(const Duration(milliseconds: 0));
       } else {
-        logFirebaseEvent('SignIn_bottom_sheet');
         await showModalBottomSheet(
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -447,7 +444,7 @@ class _SignInWidgetState extends State<SignInWidget>
                                       20.0, 20.0, 40.0, 0.0),
                                   child: Text(
                                     widget.qr != null && widget.qr != ''
-                                        ? 'Has invited you to join Bringer to enhance your event experience'
+                                        ? 'Has invited you to join Social Gallery to enhance your event experience'
                                         : 'You are just a few steps away from finding your photos!',
                                     style: FlutterFlowTheme.of(context)
                                         .labelSmall
@@ -663,22 +660,14 @@ class _SignInWidgetState extends State<SignInWidget>
                                       20.0, 15.0, 20.0, 0.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      logFirebaseEvent(
-                                          'SIGN_IN_PAGE_Button-Login_ON_TAP');
+
+                                      logFirebaseEvent('sign_in');
                                       var shouldSetState = false;
-                                      logFirebaseEvent(
-                                          'Button-Login_google_analytics_event');
-                                      logFirebaseEvent(
-                                          'Sign in button pressed');
-                                      logFirebaseEvent(
-                                          'Button-Login_validate_form');
                                       if (_model.formKey.currentState == null ||
                                           !_model.formKey.currentState!
                                               .validate()) {
                                         return;
                                       }
-                                      logFirebaseEvent(
-                                          'Button-Login_firestore_query');
                                       _model.userDocument =
                                           await queryUsersRecordOnce(
                                         queryBuilder: (usersRecord) =>
@@ -690,8 +679,6 @@ class _SignInWidgetState extends State<SignInWidget>
                                       );
                                       shouldSetState = true;
                                       if (_model.userDocument!.isEmpty) {
-                                        logFirebaseEvent(
-                                            'Button-Login_navigate_to');
 
                                         context.pushNamed(
                                           'SocialSignIn',
@@ -717,8 +704,6 @@ class _SignInWidgetState extends State<SignInWidget>
                                         if (_model.userDocument?.first
                                                 .isGoogleLogin ==
                                             true) {
-                                          logFirebaseEvent(
-                                              'Button-Login_navigate_to');
 
                                           context.pushNamed(
                                             'SocialSignIn',
@@ -748,7 +733,6 @@ class _SignInWidgetState extends State<SignInWidget>
                                         }
                                       }
 
-                                      logFirebaseEvent('Button-Login_auth');
                                       final phoneNumberVal =
                                           '${_model.textController1.text}${_model.textController2.text}';
                                       if (phoneNumberVal.isEmpty ||
@@ -834,9 +818,6 @@ class _SignInWidgetState extends State<SignInWidget>
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
-                                    logFirebaseEvent(
-                                        'SIGN_IN_PAGE_Text_2vuh190c_ON_TAP');
-                                    logFirebaseEvent('Text_launch_u_r_l');
                                     await launchURL(
                                         'https://bringerapp.com/privacy-policy');
                                   },
@@ -1013,10 +994,6 @@ class _SignInWidgetState extends State<SignInWidget>
                                     0.0, 15.0, 0.0, 0.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    logFirebaseEvent(
-                                        'SIGN_IN_PAGE_CONTINUE_BTN_ON_TAP');
-                                    logFirebaseEvent('Button_navigate_to');
-
                                     context.goNamed('RedirectionCopy');
                                   },
                                   text: 'Continue',

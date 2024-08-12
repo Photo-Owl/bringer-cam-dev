@@ -84,8 +84,6 @@ class _UpdateRequiredWidgetState extends State<UpdateRequiredWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    logFirebaseEvent('UPDATE_REQUIRED_UPDATE_NOW_BTN_ON_TAP');
-                    logFirebaseEvent('Button_launch_u_r_l');
                     await launchURL(
                         'https://play.google.com/store/apps/details?id=com.smoose.photoowldev');
                   },
