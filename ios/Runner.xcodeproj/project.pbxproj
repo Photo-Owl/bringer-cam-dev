@@ -18,7 +18,6 @@
 		1B2F401E2C5DE41100B86FAC /* AddImageIntent.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 1B2F40152C5DE41100B86FAC /* AddImageIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1B2F40242C5E78D400B86FAC /* AddImageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2F40192C5DE41100B86FAC /* AddImageIntent.swift */; };
 		1BDA94952C5F495500F66FDB /* FilePathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EEA352C509F6700498830 /* FilePathUtil.swift */; };
-		1BE099F52C5F4AD500D77E19 /* DBUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EEA332C509AD700498830 /* DBUtil.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		6426BE1225AC0EBD0080CC2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6426BE1125AC0EBD0080CC2A /* GoogleService-Info.plist */; };
 		6436409A27A31CD800820AF7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6436409C27A31CD800820AF7 /* InfoPlist.strings */; };
@@ -412,7 +411,6 @@
 				1B2F40182C5DE41100B86FAC /* AddImageIntentExtension.swift in Sources */,
 				1BDA94952C5F495500F66FDB /* FilePathUtil.swift in Sources */,
 				1B2F401A2C5DE41100B86FAC /* AddImageIntent.swift in Sources */,
-				1BE099F52C5F4AD500D77E19 /* DBUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
