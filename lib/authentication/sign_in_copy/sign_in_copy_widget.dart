@@ -212,20 +212,16 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                   ),
                                 },
                               );
-
+*/
                               try {
-                                final String result = await const MethodChannel('com.smoose.photoowldev/mess').invokeMethod('msg');
+                                final String result = await const MethodChannel('com.smoose.photoowldev/autoUpload').invokeMethod('getlog');
 
                                 print(result);
 
                               } on PlatformException catch (e) {
                                 print("Failed to get message: '${e.message}'.");
-                              }*/
+                              }
 
-
-                              Flogger.registerListener(
-                                    (record) => print(record.toString()),
-                              );
 
 
                               /*Directory directory = await getTemporaryDirectory();

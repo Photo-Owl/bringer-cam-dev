@@ -106,6 +106,11 @@ class MainActivity : FlutterActivity() {
                             result.success("")
                         }
 
+                        "getlog" -> {
+
+                            result.success("log")
+                        }
+
                         else -> result.notImplemented()
                     }
                 }
