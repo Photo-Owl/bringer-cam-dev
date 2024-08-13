@@ -133,6 +133,36 @@ class MainActivity : FlutterActivity() {
         handler.post(runnable)
     }
 
+/*    private fun getlog() : String{
+
+            val processBuilder = ProcessBuilder("logcat", "-d")
+            val process = processBuilder.start()
+            val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+
+            val currentTimeMillis = System.currentTimeMillis()
+            val thirtyMinutesAgoMillis = currentTimeMillis - (30 * 60 * 1000)
+
+            val logs = StringBuilder()
+
+            val dateFormat = SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault())
+
+            bufferedReader.forEachLine { line ->
+                val timestampString = line.substring(0, 18) // "MM-dd HH:mm:ss.SSS"
+                val logTime: Date? = try {
+                    dateFormat.parse(timestampString)
+                } catch (e: Exception) {
+                    null
+                }
+
+                if (logTime != null && logTime.time >= thirtyMinutesAgoMillis) {
+                    logs.append(line).append("\n")
+                }
+            }
+
+            return logs.toString()
+    }
+ */
+
     private fun handleSharedPhotos(flutterEngine: FlutterEngine) {
         var photosList: List<String> = listOf()
         when (intent.action) {

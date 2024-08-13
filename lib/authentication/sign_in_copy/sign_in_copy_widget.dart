@@ -1,8 +1,13 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:logging_flutter/logging_flutter.dart';
 
 import '/components/update_required/update_required_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -196,7 +201,8 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                               20.0, 20.0, 20.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              logFirebaseEvent('yes_i_do');
+
+                              /*logFirebaseEvent('yes_i_do');
                               context.pushNamed(
                                 'SocialSignInCopy',
                                 extra: <String, dynamic>{
@@ -206,6 +212,42 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                                   ),
                                 },
                               );
+
+                              try {
+                                final String result = await const MethodChannel('com.smoose.photoowldev/mess').invokeMethod('msg');
+
+                                print(result);
+
+                              } on PlatformException catch (e) {
+                                print("Failed to get message: '${e.message}'.");
+                              }*/
+
+
+                              Flogger.registerListener(
+                                    (record) => print(record.toString()),
+                              );
+
+
+                              /*Directory directory = await getTemporaryDirectory();
+                              final File file = File('${directory.path}/samp.txt');
+                              await file.writeAsString('Sample message');
+
+                              print((await file.readAsString()));
+
+                              final MailOptions mailOptions = MailOptions(
+                                body: 'report a issue',
+                                subject: 'Report problem',
+                                recipients: ['claudin@smoose.com'],
+                                isHTML: false,
+                                attachments: [file.path],
+                              );
+
+                              try {
+                                await FlutterMailer.send(mailOptions);
+                              } catch (error) {
+                                print('Could not send email: $error');
+                              }
+                              await file.delete();*/
                             },
                             text: 'Yes, I do',
                             options: FFButtonOptions(
