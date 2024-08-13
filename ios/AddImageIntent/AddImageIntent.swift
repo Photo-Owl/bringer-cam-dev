@@ -101,12 +101,12 @@ struct AddImageIntent: AppIntent {
                                   contentMode: .aspectFill,
                                   options: options) { (image, info) in
             if let image = image {
-                let imageId = FilePathUtil.randomIntBasedOnTimestamp()
-                let imagePath = FilePathUtil.imagePath(imgId: imageId.description)
+//                let imageId = FilePathUtil.randomIntBasedOnTimestamp()
+//                let imagePath = FilePathUtil.imagePath(imgId: imageId.description)
                 
-                FilePathUtil.saveImage(image, to: URL(filePath: imagePath))
-                
-                DBUtil.sharedInstance().insertDBColumn(imageId: imageId, path: imagePath)
+//                FilePathUtil.saveImage(image, to: URL(filePath: imagePath))
+//                
+//                DBUtil.sharedInstance().insertDBColumn(imageId: imageId, path: imagePath)
             } else if let info = info, let error = info[PHImageErrorKey] as? NSError {
                 print("Error retrieving image: \(error.localizedDescription)")
             }
