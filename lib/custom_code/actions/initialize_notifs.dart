@@ -26,7 +26,7 @@ Future<void> initializeNotifs() async {
             AuthorizationStatus.authorized) {
       final String? uid = FirebaseAuth.instance.currentUser!.uid;
       final String? fcmToken = await FirebaseMessaging.instance.getToken();
-
+      print('FCM token $fcmToken');
       if (uid != null && fcmToken != null) {
         await FirebaseFirestore.instance
             .collection('users')
