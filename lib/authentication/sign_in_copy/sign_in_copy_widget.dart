@@ -1,13 +1,8 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:logging_flutter/logging_flutter.dart';
 
 import '/components/update_required/update_required_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -201,7 +196,6 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                               20.0, 20.0, 20.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-
                               /*logFirebaseEvent('yes_i_do');
                               context.pushNamed(
                                 'SocialSignInCopy',
@@ -214,15 +208,16 @@ class _SignInCopyWidgetState extends State<SignInCopyWidget>
                               );
 */
                               try {
-                                final String result = await const MethodChannel('com.smoose.photoowldev/autoUpload').invokeMethod('getlog');
+                                const platform = MethodChannel(
+                                    'com.smoose.photoowldev/autoUpload');
 
+                                final String result = (await platform
+                                        .invokeMethod<String>('getlog', null))
+                                    as String;
                                 print(result);
-
                               } on PlatformException catch (e) {
                                 print("Failed to get message: '${e.message}'.");
                               }
-
-
 
                               /*Directory directory = await getTemporaryDirectory();
                               final File file = File('${directory.path}/samp.txt');
