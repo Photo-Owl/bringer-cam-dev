@@ -28,6 +28,10 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : FlutterActivity() {
     private lateinit var autoUploadChannel: MethodChannel
@@ -107,8 +111,8 @@ class MainActivity : FlutterActivity() {
                         }
 
                         "getlog" -> {
-
-                            result.success("log")
+                            var data = getlog();
+                            result.success(data.toString())
                         }
 
                         else -> result.notImplemented()
@@ -138,35 +142,49 @@ class MainActivity : FlutterActivity() {
         handler.post(runnable)
     }
 
-/*    private fun getlog() : String{
+    private fun getlog() : String{
 
-            val processBuilder = ProcessBuilder("logcat", "-d")
-            val process = processBuilder.start()
-            val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+        val processBuilder = ProcessBuilder("logcat", "-d")
+        val process = processBuilder.start()
+        val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
 
-            val currentTimeMillis = System.currentTimeMillis()
-            val thirtyMinutesAgoMillis = currentTimeMillis - (30 * 60 * 1000)
+        val currentTimeMillis = System.currentTimeMillis()
+        val thirtyMinutesAgoMillis = currentTimeMillis - (1 * 60 * 1000)
 
-            val logs = StringBuilder()
+        val dateFormat = SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault())
 
-            val dateFormat = SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault())
+        val calendar = Calendar.getInstance()
 
-            bufferedReader.forEachLine { line ->
-                val timestampString = line.substring(0, 18) // "MM-dd HH:mm:ss.SSS"
-                val logTime: Date? = try {
-                    dateFormat.parse(timestampString)
+        val logs = StringBuilder()
+
+        bufferedReader.forEachLine { line ->
+            // Check if the line has the correct timestamp format
+            if (line.length >= 18 && line.substring(0, 18).matches(Regex("\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}"))) {
+                try {
+                    val timestampString = line.substring(0, 18)
+                    val logTime = dateFormat.parse(timestampString)
+
+                    if (logTime != null) {
+                        calendar.time = logTime
+                        calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR))
+                        val adjustedLogTime = calendar.time
+
+                        if (adjustedLogTime.time >= thirtyMinutesAgoMillis) {
+                            logs.append(line).append("\n")
+                        }
+                    }
                 } catch (e: Exception) {
-                    null
+                    e.printStackTrace()
                 }
-
-                if (logTime != null && logTime.time >= thirtyMinutesAgoMillis) {
-                    logs.append(line).append("\n")
-                }
+            } else {
+                // Log line does not contain a valid timestamp, skip it
+                println("Skipping line: $line")
             }
+        }
 
-            return logs.toString()
+        return logs.toString()
     }
- */
+
 
     private fun handleSharedPhotos(flutterEngine: FlutterEngine) {
         var photosList: List<String> = listOf()
