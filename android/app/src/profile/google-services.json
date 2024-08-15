@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "243455242976",
+    "project_id": "social-gallery-dev",
+    "storage_bucket": "social-gallery-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243455242976:android:18f0f561725214ee08d685",
+        "android_client_info": {
+          "package_name": "com.smoose.photoowldev.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243455242976-i2mhggponiv86q27uinstjeg7rk2cmpb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smoose.photoowldev.dev",
+            "certificate_hash": "4e0fb71e6ca5aa1e4fb89368141e71cd407a25c5"
+          }
+        },
+        {
+          "client_id": "243455242976-ino138t16mon3stpppmbb5ikc6qeo2uu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2eC25t9NSamuH46gBpah8Cpwa40t03xQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243455242976-ino138t16mon3stpppmbb5ikc6qeo2uu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

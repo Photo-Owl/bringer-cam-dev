@@ -69,7 +69,17 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-        }}}
+        }
+
+        profile {
+            applicationIdSuffix '.dev'
+        }
+
+        debug {
+            applicationIdSuffix '.dev'
+        }
+    }
+}
 
 
 flutter {

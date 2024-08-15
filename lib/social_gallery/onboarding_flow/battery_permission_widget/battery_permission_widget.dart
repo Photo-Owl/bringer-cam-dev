@@ -1,15 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../auth/firebase_auth/auth_util.dart';
-import '../../common/encrypted_banner.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-
 import 'battery_permission_model.dart';
+
 export 'battery_permission_model.dart';
 
 class BatteryPermissionWidget extends StatefulWidget {
@@ -122,8 +119,7 @@ class _BatteryPermissionWidgetState extends State<BatteryPermissionWidget> {
                       const Spacer(),
                       FFButtonWidget(
                         onPressed: () async {
-                          logFirebaseEvent(
-                              'battery_permission',parameters: {
+                          logFirebaseEvent('battery_permission', parameters: {
                             'uid': currentUserUid,
                           });
                           const platform = MethodChannel(
@@ -133,7 +129,7 @@ class _BatteryPermissionWidgetState extends State<BatteryPermissionWidget> {
                               false;
                           if (!context.mounted) return;
                           if (permsGiven) {
-                            context.pushNamed('alldone');
+                            context.pushReplacementNamed('alldone');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

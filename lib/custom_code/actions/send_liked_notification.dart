@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart' show kReleaseMode;
 
 Future sendLikedNotification(
     String key, String displayName, String userId) async {
@@ -43,7 +44,7 @@ Future sendLikedNotification(
 
   final response = await http.post(
     Uri.parse(
-        'https://us-central1-bringer-cam-dev.cloudfunctions.net/sendNotification'),
+        'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/sendNotification'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
