@@ -149,7 +149,7 @@ class MainActivity : FlutterActivity() {
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
 
         val currentTimeMillis = System.currentTimeMillis()
-        val thirtyMinutesAgoMillis = currentTimeMillis - (1 * 60 * 1000)
+        val thirtyMinutesAgoMillis = currentTimeMillis - (30 * 60 * 1000)
 
         val dateFormat = SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault())
 
