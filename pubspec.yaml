@@ -126,13 +126,14 @@ dependencies:
   percent_indicator: 4.2.3
   content_resolver: 0.3.1
 
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   fluttertoast: ^8.2.5
   android_intent_plus: ^5.0.2
   flutter_contacts: ^1.1.8
+
+  flutter_mailer: any
+  logging_flutter: any
+
 
 dependency_overrides:
   http: 1.2.0
