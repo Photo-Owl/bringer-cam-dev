@@ -39,6 +39,12 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Stream<UsersRecord> getuserRecord(String uid){
+    return FirebaseFirestore.instance.doc('/users/$uid').snapshots().map((data){
+      return UsersRecord.fromSnapshot(data);
+    });
+  }
+
   final animationsMap = {
     'iconOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -200,17 +206,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                           CrossAxisAlignment.start,
                                       children: [
                                         if (imagesItem.isLocal == false)
-                                          StreamBuilder<List<UsersRecord>>(
-                                            stream: queryUsersRecord(
-                                              queryBuilder: (usersRecord) =>
-                                                  usersRecord.where(
-                                                'uid',
-                                                isEqualTo:
-                                                    containerUploadsRecord
-                                                        ?.ownerId,
-                                              ),
-                                              singleRecord: true,
-                                            ),
+                                          StreamBuilder<UsersRecord>(
+                                            stream: getuserRecord(containerUploadsRecord!.ownerId),
                                             builder: (context, snapshot) {
                                               // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
@@ -228,17 +225,18 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                   ),
                                                 );
                                               }
-                                              List<UsersRecord>
+                                              /*List<UsersRecord>
                                                   rowUsersRecordList =
                                                   snapshot.data!;
-                                              // Return an empty Container when the item does not exist.
-                                              if (snapshot.data!.isEmpty) {
+                                              if (snapshot.data!) {
                                                 return Container();
                                               }
                                               final rowUsersRecord =
                                                   rowUsersRecordList.isNotEmpty
                                                       ? rowUsersRecordList.first
                                                       : null;
+                                               */
+                                             UsersRecord rowUsersRecord = snapshot.data!;
                                               return SingleChildScrollView(
                                                 scrollDirection:
                                                     Axis.horizontal,
@@ -256,7 +254,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                               .fromSTEB(0.0,
                                                               1.0, 0.0, 0.0),
                                                       child: Text(
-                                                        'Shared By ${rowUsersRecord?.displayName}',
+                                                        'Shared By ${rowUsersRecord.displayName}',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -294,6 +292,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                               );
                                             },
                                           ),
+
                                         Padding(
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(0.0, 6.0, 0.0, 0.0),
