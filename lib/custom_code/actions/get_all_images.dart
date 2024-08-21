@@ -94,7 +94,13 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
     );
 
     owners = isContactsPermGranted
-        ? owners.where((owner) => phoneList.contains(owner.phoneNum))
+        ? owners.where((owner) {
+            if (owner.phoneNum != '') {
+              return phoneList.contains(owner.phoneNum);
+            } else {
+              return true;
+            }
+          })
         : owners;
 
     for (final owner in owners) {
