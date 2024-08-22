@@ -145,7 +145,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
       ),
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
+          showSnackbar();
+        }));
   }
 
   @override
@@ -177,6 +179,18 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
       _model.loaded = true;
       _model.timeline = _model.timeline2!.toList().cast<TimelineItemStruct>();
     });
+  }
+
+  showSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Turn off Static Notification"),
+      action: SnackBarAction(
+        label: 'Go to settings',
+        onPressed: () {
+          context.pushNamed('settingsPage');
+        },
+      ),
+    ));
   }
 
   @override

@@ -1,6 +1,7 @@
 package com.smoose.photoowldev
 
 import android.Manifest
+import android.app.NotificationManager
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
@@ -32,6 +33,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MainActivity : FlutterActivity() {
     private lateinit var autoUploadChannel: MethodChannel
@@ -98,6 +100,7 @@ class MainActivity : FlutterActivity() {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 Log.d(LOG_TAG, "Starting service")
                                 startForegroundService(Intent(applicationContext, AutoUploadService::class.java))
+
                             } else {
                                 Log.d(LOG_TAG, "Starting service")
                                 startService(Intent(applicationContext, AutoUploadService::class.java))
@@ -113,6 +116,10 @@ class MainActivity : FlutterActivity() {
                         "getlog" -> {
                             var data = getlog();
                             result.success(data.toString())
+                        }
+                        "hideStaticNotification"->{
+                            hideStaticNotification()
+                            result.success("")
                         }
 
                         else -> result.notImplemented()
@@ -184,7 +191,20 @@ class MainActivity : FlutterActivity() {
 
         return logs.toString()
     }
-
+    private fun hideStaticNotification(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Open the app's notification settings
+            val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            intent.putExtra(Settings.EXTRA_CHANNEL_ID, "com.smoose.photoowldev.autoUploadServiceNotif")
+            context.startActivity(intent)
+        } else {
+            // Open the app's general notification settings
+            val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            context.startActivity(intent)
+        }
+    }
 
     private fun handleSharedPhotos(flutterEngine: FlutterEngine) {
         var photosList: List<String> = listOf()

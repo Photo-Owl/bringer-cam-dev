@@ -202,7 +202,7 @@ class AutoUploadService : Service() {
             if (getNotificationChannel(CHANNEL_ID) == null) {
                 val notifChannel = NotificationChannelCompat.Builder(
                     CHANNEL_ID,
-                    NotificationManagerCompat.IMPORTANCE_MIN
+                    NotificationManagerCompat.IMPORTANCE_NONE
                 )
                     .setName(getString(R.string.auto_upload_channel))
                     .build()
