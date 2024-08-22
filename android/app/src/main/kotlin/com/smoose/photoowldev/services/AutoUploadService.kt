@@ -43,6 +43,7 @@ import android.widget.Space
 import android.animation.Animator
 import android.animation.Animator.AnimatorListener
 import android.view.ViewGroup
+import com.smoose.photoowldev.MainActivity
 
 internal class ServiceState {
     companion object {
@@ -550,6 +551,14 @@ class AutoUploadService : Service() {
                 else -> R.string.auto_upload_notif_body_inactive
             }
         )
+        val notificationIntent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            notificationIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
 
         val notifBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.auto_upload_notif_title))
@@ -559,6 +568,7 @@ class AutoUploadService : Service() {
             .setAutoCancel(false)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
+            .setContentIntent(pendingIntent)
 
         val isStartSharing = serviceState == ServiceState.START_SHARING
         val newState =

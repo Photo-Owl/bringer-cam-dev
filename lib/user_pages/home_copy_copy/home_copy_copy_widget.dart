@@ -183,9 +183,10 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
 
   showSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Turn off Static Notification"),
+      content: const Text(
+          "You can turn off sharing mode Notification from the app settings"),
       action: SnackBarAction(
-        label: 'Go to settings',
+        label: 'Go to notification settings',
         onPressed: () {
           context.pushNamed('settingsPage');
         },

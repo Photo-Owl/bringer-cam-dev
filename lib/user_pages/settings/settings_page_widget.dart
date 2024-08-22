@@ -103,7 +103,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
                           child: Text(
-                            'Turn off static notification?',
+                            'Turn off Sharing mode notification?',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -117,7 +117,7 @@ class _SettingsPageWidgetState extends State<SettingsPageWidget> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
                           child: Text(
-                            'Turning off static notification does not turn off instant share feature. Turn off from settings.',
+                            'Turning off Sharing mode notification does not turn off instant share feature. You will be redirected to your settings to turn off the notification',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
