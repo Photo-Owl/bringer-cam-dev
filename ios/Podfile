@@ -34,6 +34,7 @@ target 'Runner' do
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   pod 'FirebaseFirestore', :git => 'https://github.com/invertase/firestore-ios-sdk-frameworks.git', :tag => '10.22.0'
+  pod 'GoogleUtilities', '7.13.3'
 end
 
 target 'AddImageIntent' do
@@ -43,6 +44,7 @@ target 'AddImageIntent' do
   pod 'FirebaseStorage'
   pod 'FirebaseFirestore', :git => 'https://github.com/invertase/firestore-ios-sdk-frameworks.git', :tag => '10.22.0'
   pod 'FirebaseAuth'
+  pod 'GoogleUtilities', '7.13.3'
 end
 
 post_install do |installer|
