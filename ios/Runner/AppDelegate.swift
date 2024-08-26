@@ -13,9 +13,9 @@ import Foundation
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
       // Register background task with your bundle ID as prefix
-//      BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.smoose.photoowldev.backgroundtask", using: nil) { task in
-//          self.handleBackgroundTask(task: task as! BGProcessingTask)
-//      }
+      BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.smoose.photoowldev.backgroundtask", using: nil) { task in
+          self.handleBackgroundTask(task: task as! BGProcessingTask)
+      }
       
 //      UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
 //          if granted {
