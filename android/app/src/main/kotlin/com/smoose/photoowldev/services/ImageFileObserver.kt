@@ -11,7 +11,22 @@ import androidx.work.Data
 import com.smoose.photoowldev.AppState
 import android.content.SharedPreferences
 
-class ImageFileObserver (private val context: Context) : FileObserver("/storage/emulated/0/DCIM/Camera") {
+
+fun getCameraStoragePath(context: Context): String {
+    val isExternalStorageWritable = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+
+    if (isExternalStorageWritable) {
+        val sdCardCameraPath = File(context.getExternalFilesDir(Environment.DIRECTORY_DCIM), "Camera")
+        if (sdCardCameraPath.exists() || sdCardCameraPath.mkdirs()) {
+            return sdCardCameraPath.absolutePath
+        }
+    }
+
+    val internalStorageCameraPath = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera")
+    return internalStorageCameraPath.absolutePath
+}
+
+class ImageFileObserver (private val context: Context) : FileObserver(getCameraStoragePath(context)) {
     private lateinit var sharedPrefs: SharedPreferences
     init {
         sharedPrefs = context.getSharedPreferences(
@@ -41,7 +56,7 @@ class ImageFileObserver (private val context: Context) : FileObserver("/storage/
 
         if(event == 128){
             if(path?.toLowerCase()!!.endsWith(".jpg")||path?.toLowerCase()!!.endsWith(".png")||path?.toLowerCase()!!.endsWith(".jpeg")||path?.toLowerCase()!!.endsWith(".heic")){
-                val actual_path="/storage/emulated/0/DCIM/Camera/"+path
+                val actual_path= getCameraStoragePath(context)+path
                 Log.d("mainActivity debug","found new file in path -> "+actual_path)
                 val data = Data.Builder()
                     .putString("path", actual_path.toString())
