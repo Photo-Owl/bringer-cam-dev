@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -92,23 +94,16 @@
 	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<false/>
 	<key>NSCameraUsageDescription</key>
 	<string>In order to take a picture or video, this app requires permission to access the camera.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In order to upload data, this app requires permission to access the photo library.</string>
 	<key>PermissionGroupNotification</key>
 	<string>In order to  receive photo share notifications and other messages, tihs app requires  notification permission.</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-		<string>fetch</string>
-		<string>location</string>
-		<string>nearby-interaction</string>
-		<string>processing</string>
-		<string>push-to-talk</string>
-		<string>remote-notification</string>
-		<string>voip</string>
-	</array>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -126,6 +121,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UISupportsDocumentBrowser</key>
+	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>UTImportedTypeDeclarations</key>
@@ -225,38 +222,6 @@
 				</array>
 			</dict>
 		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Microsoft Word data</string>
-			<key>UTTypeIconFiles</key>
-			<array/>
-			<key>UTTypeIdentifier</key>
-			<string>com.microsoft.word.doc</string>
-			<key>UTTypeTagSpecification</key>
-			<dict/>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Microsoft Word data</string>
-			<key>UTTypeIconFiles</key>
-			<array/>
-			<key>UTTypeIdentifier</key>
-			<string>org.openxmlformats.wordprocessingml.document</string>
-			<key>UTTypeTagSpecification</key>
-			<dict/>
-		</dict>
 	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 </dict>
 </plist>
