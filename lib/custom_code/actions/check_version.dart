@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'dart:io';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
@@ -21,6 +23,9 @@ Future<bool> checkVersion() async {
     var version = query.docs[0].get('website_build_number');
     var info = await PackageInfo.fromPlatform();
     if (info.buildNumber.isEmpty) {
+      return true;
+    }
+    if (Platform.isIOS) {
       return true;
     }
     if (info.buildNumber.toString() == version.toString()) {
