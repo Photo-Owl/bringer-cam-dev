@@ -1,0 +1,17 @@
+import '/flutter_flow/flutter_flow_util.dart';
+import 'redirection_copy_widget.dart' show RedirectionCopyWidget;
+import 'package:flutter/material.dart';
+
+class RedirectionCopyModel extends FlutterFlowModel<RedirectionCopyWidget> {
+  ///  State fields for stateful widgets in this page.
+
+  final unfocusNode = FocusNode();
+
+  @override
+  void initState(BuildContext context) {}
+
+  @override
+  void dispose() {
+    unfocusNode.dispose();
+  }
+}

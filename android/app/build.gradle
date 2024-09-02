@@ -1,0 +1,98 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "com.google.devtools.ksp"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+     namespace "com.smoose.photoowldev"
+     compileSdkVersion 34
+
+     sourceSets {
+         main.java.srcDirs += 'src/main/kotlin'
+     }
+
+     defaultConfig {
+         minSdkVersion 21
+         targetSdkVersion 34
+         versionCode flutterVersionCode.toInteger()
+         versionName flutterVersionName
+     }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schema")
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        // redundant line but required to build using AGP 7 for download_manager
+        // package
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+
+        profile {
+            applicationIdSuffix '.dev'
+        }
+
+        debug {
+            applicationIdSuffix '.dev'
+        }
+    }
+}
+
+
+flutter {
+    source '../..'
+}
+
+kotlin {
+    jvmToolchain 17
+}
+
+dependencies {
+    def room_version = "2.5.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+    ksp "androidx.room:room-compiler:$room_version"
+}

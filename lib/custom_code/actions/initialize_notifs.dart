@@ -1,0 +1,148 @@
+// Automatic FlutterFlow imports
+import 'package:android_intent_plus/android_intent.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import '../../pref_manager.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+
+Future<void> initializeNotifs() async {
+  try {
+    final NotificationSettings notificationSettings =
+        await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      carPlay: true,
+      criticalAlert: true,
+      sound: true,
+      announcement: true,
+      provisional: true,
+      badge: true,
+    );
+
+    if (FirebaseAuth.instance.currentUser != null &&
+        notificationSettings.authorizationStatus ==
+            AuthorizationStatus.authorized) {
+      final String? uid = FirebaseAuth.instance.currentUser!.uid;
+      final String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+      if (uid != null && fcmToken != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .update({'fcmToken': fcmToken});
+      }
+    }
+  } catch (e) {
+    print('Error initializing notifications: $e');
+  }
+
+  final notifPlugin = FlutterLocalNotificationsPlugin();
+  await notifPlugin.initialize(
+    const InitializationSettings(
+      android: AndroidInitializationSettings('ic_mono'),
+      iOS: DarwinInitializationSettings(),
+    ),
+  );
+
+  // Listen for foreground messages
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    RemoteNotification? notification = message.notification;
+    if (notification != null && notification.android != null) {
+      await notifPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'com.smoose.photoowldev.info',
+            'Social Gallery notifs',
+            channelDescription: 'Any notification from Social Gallery',
+          ),
+        ),
+      );
+    }
+  });
+
+  // Background message handler (optional)
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    await const AndroidIntent(
+      action: 'com.smoose.photoowldev.action.RESTART_SERVICE',
+      package: 'com.smoose.photoowldev',
+      componentName: 'com.smoose.photoowldev.receiver.RestartReceiver',
+    ).sendBroadcast();
+  }
+  if (message.data.containsKey("channel_id")) {
+    if (message.data["channel_id"] == "photo_sent") {
+      //The NotificationPlugin is initalised
+      final notifPlugin = FlutterLocalNotificationsPlugin();
+      await notifPlugin.initialize(
+        const InitializationSettings(
+          android: AndroidInitializationSettings('ic_mono'),
+          iOS: DarwinInitializationSettings(),
+        ),
+      );
+      //calculating messages
+      Map notifications = await _prepareNotifications(
+          message.data['name'], message.data['count']);
+      if (notifications.isNotEmpty) {
+        await notifPlugin.cancel(1235);
+      }
+      notifications.forEach((key, value) async {
+        if (key != 'no faces') {
+          await notifPlugin.show(
+            key.hashCode,
+            "Photos sent",
+            value,
+            const NotificationDetails(
+                android: AndroidNotificationDetails(
+                    'com.smoose.photoowldev.photo_sent', 'Photo sent',
+                    channelDescription:
+                        'Photo sent notifications from Social Gallery',
+                    playSound: false),
+                iOS: DarwinNotificationDetails()),
+          );
+        }
+      });
+    }
+  }
+}
+
+Future<Map> _prepareNotifications(String name, String countString) async {
+  Map returnable = {};
+  final int count = int.parse(countString);
+  final int newCount;
+  String sentNotifications = '{}';
+  var prefs = await PrefManager().prefs;
+  await prefs.reload();
+  if (prefs.containsKey('sent_notifications')) {
+    sentNotifications = prefs.getString('sent_notifications') ?? '{}';
+  }
+  Map<String, dynamic> sentNotificationsMap = jsonDecode(sentNotifications);
+  if (sentNotificationsMap.containsKey(name)) {
+    final previousCount = sentNotificationsMap[name];
+    newCount = previousCount + count;
+  } else {
+    newCount = count;
+  }
+  sentNotificationsMap[name] = newCount;
+
+  sentNotificationsMap.forEach((name, count) {
+    if (name == 'no one') {
+      returnable[name] =
+          '🔒 $count photos sent to no one and stored privately.';
+    } else {
+      returnable[name] = '$count photos 📸 sent to $name';
+    }
+  });
+  String newJson = jsonEncode(sentNotificationsMap);
+  await prefs.setString('sent_notifications', newJson);
+
+  return returnable;
+}
