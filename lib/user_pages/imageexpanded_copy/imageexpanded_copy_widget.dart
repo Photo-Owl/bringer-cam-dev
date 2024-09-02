@@ -45,6 +45,12 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
     });
   }
 
+  Stream<UploadsRecord> getuploadRecord(String id){
+    return FirebaseFirestore.instance.doc('/uploads/$id').snapshots().map((data){
+      return UploadsRecord.fromSnapshot(data);
+    });
+  }
+
   final animationsMap = {
     'iconOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -160,15 +166,16 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                       itemCount: images.length,
                       itemBuilder: (context, imagesIndex, _) {
                         final imagesItem = images[imagesIndex];
-                        return StreamBuilder<List<UploadsRecord>>(
-                          stream: queryUploadsRecord(
+                        return StreamBuilder<UploadsRecord>(
+                          stream: getuploadRecord(imagesItem.id),
+                          /*stream: queryUploadsRecord(
                             queryBuilder: (uploadsRecord) =>
                                 uploadsRecord.where(
                               'key',
                               isEqualTo: imagesItem.id,
                             ),
                             singleRecord: true,
-                          ),
+                          ),*/
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -184,12 +191,16 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                 ),
                               );
                             }
-                            List<UploadsRecord> containerUploadsRecordList =
+
+                            /*List<UploadsRecord> containerUploadsRecordList =
                                 snapshot.data!;
                             final containerUploadsRecord =
                                 containerUploadsRecordList.isNotEmpty
                                     ? containerUploadsRecordList.first
                                     : null;
+                             */
+
+                            UploadsRecord containerUploadsRecord = snapshot.data!;
                             return Container(
                               decoration: const BoxDecoration(),
                               child: Column(
@@ -207,9 +218,8 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                       children: [
                                         if (imagesItem.isLocal == false)
                                           StreamBuilder<UsersRecord>(
-                                            stream: getuserRecord(containerUploadsRecord!.ownerId),
+                                            stream: getuserRecord(containerUploadsRecord.ownerId),
                                             builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
                                               if (!snapshot.hasData) {
                                                 return Center(
                                                   child: SizedBox(
