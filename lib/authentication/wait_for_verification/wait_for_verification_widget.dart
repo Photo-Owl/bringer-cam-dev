@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -32,8 +33,15 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
         parameters: {'screen_name': 'WaitForVerification'});
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
-
+    _getContactsPermission();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  void _getContactsPermission() async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+    final permsGiven =
+        await platform.invokeMethod<bool>('requestContactsPermission', null) ??
+            false;
   }
 
   @override

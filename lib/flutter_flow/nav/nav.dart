@@ -358,6 +358,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ContactsPermWidget(),
         ),
         FFRoute(
+
           name: 'checkLiveness',
           path: '/checkLiveness',
           builder: (context, params) => const LivenessWidget(),
@@ -366,6 +367,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'startLivenessCheck',
           path: '/startLivenessCheck',
           builder: (context, params) => const LivenessStartWidget(),
+),FFRoute(
+          name: 'settingsPage',
+          path: '/socialGallery/settingsPage',
+          builder: (context, params) => SettingsPageWidget(),
+
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

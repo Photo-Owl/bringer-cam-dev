@@ -145,7 +145,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
       ),
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
+          showSnackbar();
+        }));
   }
 
   @override
@@ -177,6 +179,19 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
       _model.loaded = true;
       _model.timeline = _model.timeline2!.toList().cast<TimelineItemStruct>();
     });
+  }
+
+  showSnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text(
+          "You can turn off sharing mode Notification from the app settings"),
+      action: SnackBarAction(
+        label: 'Go to notification settings',
+        onPressed: () {
+          context.pushNamed('settingsPage');
+        },
+      ),
+    ));
   }
 
   @override
