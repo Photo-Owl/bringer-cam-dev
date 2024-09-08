@@ -18,15 +18,15 @@ fun getCameraStoragePath(context: Context): String {
     if (isExternalStorageWritable) {
         val sdCardCameraPath = File(context.getExternalFilesDir(Environment.DIRECTORY_DCIM), "Camera")
         if (sdCardCameraPath.exists() || sdCardCameraPath.mkdirs()) {
-            return sdCardCameraPath.absolutePath
+            return '/storage/emulated/1/DCIM/Camera'
         }
     }
 
-    val internalStorageCameraPath = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera")
-    return internalStorageCameraPath.absolutePath
+    return "/storage/emulated/0/DCIM/Camera";
 }
 
 class ImageFileObserver (private val context: Context) : FileObserver(getCameraStoragePath(context)) {
+    //print(Environment.DIRECTORY_DCIM)
     private lateinit var sharedPrefs: SharedPreferences
     init {
         sharedPrefs = context.getSharedPreferences(
