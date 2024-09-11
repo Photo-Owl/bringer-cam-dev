@@ -23,7 +23,7 @@ class _LivenessWidgetState extends State<LivenessWidget> {
   Future<String> setSessionId() async {
     final resp = await post(
       Uri.parse(
-          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net'),
+          'https://us-central1-${kReleaseMode ? 'bringer-cam-dev' : 'social-gallery-dev'}.cloudfunctions.net/createFaceLivenessSession'),
     );
 
     if (resp.statusCode == 200) {
@@ -48,8 +48,8 @@ class _LivenessWidgetState extends State<LivenessWidget> {
         webViewController = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
           ..setBackgroundColor(Colors.black)
-          // TODO: Replace the link with hosted app
-          ..loadRequest(Uri.parse('https://example.com?SessionId=$sessionId'));
+          ..loadRequest(Uri.parse(
+              'https://${kReleaseMode ? 'main' : 'qa'}.d3613fn7sidf3k.amplifyapp.com/?SessionId=$sessionId'));
         setState(() {
           loading = false;
         });

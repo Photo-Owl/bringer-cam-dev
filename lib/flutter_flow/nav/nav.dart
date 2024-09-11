@@ -90,7 +90,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? const RedirectionCopyWidget()
+              ? const LivenessStartWidget()
               : const SignInCopyWidget(),
         ),
         FFRoute(
@@ -358,7 +358,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const ContactsPermWidget(),
         ),
         FFRoute(
-
           name: 'checkLiveness',
           path: '/checkLiveness',
           builder: (context, params) => const LivenessWidget(),
@@ -367,11 +366,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'startLivenessCheck',
           path: '/startLivenessCheck',
           builder: (context, params) => const LivenessStartWidget(),
-),FFRoute(
+        ),
+        FFRoute(
           name: 'settingsPage',
           path: '/socialGallery/settingsPage',
           builder: (context, params) => SettingsPageWidget(),
-
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
