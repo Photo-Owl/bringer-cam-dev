@@ -14,8 +14,10 @@ import 'auth/firebase_auth/auth_util.dart';
 import '/backend/sqlite/sqlite_manager.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'package:flutter_driver/driver_extension.dart';
 
 void main() async {
+  enableFlutterDriverExtension(commands: [], finders: []);
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await initFirebase();
@@ -93,7 +95,8 @@ class _MyAppState extends State<MyApp> {
     photosChannel.setMethodCallHandler((methodCall) async {
       debugPrint('bringer/sharePhotos: received method call');
       if (methodCall.method == "sharePhotos") {
-        final photosList = List.castFrom<dynamic, String>(methodCall.arguments as List);
+        final photosList =
+            List.castFrom<dynamic, String>(methodCall.arguments as List);
         final timestamp = DateTime.timestamp().millisecondsSinceEpoch;
         for (final pic in photosList) {
           await SQLiteManager.instance.insertImage(
