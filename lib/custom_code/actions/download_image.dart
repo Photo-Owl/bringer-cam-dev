@@ -42,10 +42,11 @@ Future<void> downloadImage(String url, String key) async {
       print('File downloaded to: $filePath');
     } else {
       print('Failed to download file: ${response.statusCode}');
+    }
+    AndroidDownloadManager.enqueue(
+      downloadUrl: url,
+      downloadPath: '/sdcard/Pictures/Social Gallery/',
+      fileName: fileName,
+    );
   }
-  AndroidDownloadManager.enqueue(
-    downloadUrl: url,
-    downloadPath: '/sdcard/Pictures/Social Gallery/',
-    fileName: fileName,
-  );
 }
