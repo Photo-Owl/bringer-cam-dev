@@ -102,6 +102,8 @@
 	<string>Allow contact Access</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In order to upload data, this app requires permission to access the photo library.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs access to save images to your photo library.</string>
 	<key>PermissionGroupNotification</key>
 	<string>In order to  receive photo share notifications and other messages, tihs app requires  notification permission.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

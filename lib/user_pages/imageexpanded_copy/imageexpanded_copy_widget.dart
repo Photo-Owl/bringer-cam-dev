@@ -1138,7 +1138,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                                                                 SnackBar(
                                                                   content:
                                                                       const Text(
-                                                                    'Downloading Image',
+                                                                    'Downloading Image.. Images will be saved in your gallery',
                                                                     style:
                                                                         TextStyle(
                                                                       color: Colors

@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
 import 'dart:io';
 
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/backend/backend.dart';
@@ -13,6 +14,7 @@ import 'index.dart'; // Imports other custom actions
 import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -32,21 +34,32 @@ Future<void> downloadImage(String url, String key) async {
   }
   print(' is ios ${Platform.isIOS}');
   if (Platform.isIOS) {
-    final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/$fileName';
-    print('Downloading file from: $directory to: $filePath');
-    // Download the file
-    final response = await http.get(Uri.parse(url));
-    print('statusCode: ${response.statusCode}');
-
-    if (response.statusCode == 200) {
-      // Save the file
-      File file = File(filePath);
-      await file.writeAsBytes(response.bodyBytes);
-      print('File downloaded to: $filePath');
-    } else {
-      print('Failed to download file: ${response.statusCode}');
+    // Request photos permission
+    var status = await Permission.photos.request();
+    // if (status.isGranted) {
+    try {
+      // Download the file
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        // Save the image to gallery
+        final result = await ImageGallerySaver.saveImage(
+          Uint8List.fromList(response.bodyBytes),
+          name: fileName,
+        );
+        if (result['isSuccess']) {
+          print('Image saved to gallery successfully');
+        } else {
+          print('Failed to save image to gallery');
+        }
+      } else {
+        print('Failed to download image: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error occurred while saving image: $e');
     }
+    // } else {
+    //   print('Photos permission denied');
+    // }
     return;
   }
   if (Platform.isAndroid) {
