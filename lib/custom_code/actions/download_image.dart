@@ -21,20 +21,24 @@ import 'package:flutter/foundation.dart';
 import 'package:android_download_manager/android_download_manager.dart';
 
 Future<void> downloadImage(String url, String key) async {
+  print('Downloading image from: $url');
   final [_, fileName] = key.split('/');
-  if (defaultTargetPlatform != TargetPlatform.android) {
+  if (kIsWeb) {
     await FileSaver.instance.saveFile(
       name: fileName,
       link: LinkDetails(link: url),
     );
     return;
   }
+  print(' is ios ${Platform.isIOS}');
   if (Platform.isIOS) {
     final directory = await getApplicationDocumentsDirectory();
     final filePath = '${directory.path}/$fileName';
-
+    print('Downloading file from: $directory to: $filePath');
     // Download the file
     final response = await http.get(Uri.parse(url));
+    print('statusCode: ${response.statusCode}');
+
     if (response.statusCode == 200) {
       // Save the file
       File file = File(filePath);
@@ -43,6 +47,9 @@ Future<void> downloadImage(String url, String key) async {
     } else {
       print('Failed to download file: ${response.statusCode}');
     }
+    return;
+  }
+  if (Platform.isAndroid) {
     AndroidDownloadManager.enqueue(
       downloadUrl: url,
       downloadPath: '/sdcard/Pictures/Social Gallery/',
