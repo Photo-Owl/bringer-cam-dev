@@ -45,7 +45,9 @@ class _LivenessWidgetState extends State<LivenessWidget> {
     super.initState();
     setSessionId().then((sessionId) {
       if (mounted) {
-        webViewController = WebViewController()
+        webViewController = WebViewController(
+          onPermissionRequest: (request) => request.grant(),
+        )
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
           ..setBackgroundColor(Colors.black)
           ..loadRequest(Uri.parse(
