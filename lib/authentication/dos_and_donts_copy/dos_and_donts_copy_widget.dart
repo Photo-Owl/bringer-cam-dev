@@ -178,10 +178,8 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                         logFirebaseEvent('DOS_AND_DONTS_CONTINUE', parameters: {
                           'uid': currentUserUid,
                         });
-
                         final permissionStatus =
                             await Permission.camera.request();
-
                         if (permissionStatus.isGranted) {
                           if (currentUserDocument?.isLive ?? false) {
                             context.pushNamed('WaitForVerification');
