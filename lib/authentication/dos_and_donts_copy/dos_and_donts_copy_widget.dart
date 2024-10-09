@@ -1,3 +1,5 @@
+import 'package:permission_handler/permission_handler.dart';
+
 import '../../backend/schema/users_record.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
@@ -176,10 +178,23 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                         logFirebaseEvent('DOS_AND_DONTS_CONTINUE', parameters: {
                           'uid': currentUserUid,
                         });
-                        if (currentUserDocument?.isLive ?? false) {
-                          context.pushNamed('WaitForVerification');
+
+                        final permissionStatus =
+                            await Permission.camera.request();
+
+                        if (permissionStatus.isGranted) {
+                          if (currentUserDocument?.isLive ?? false) {
+                            context.pushNamed('WaitForVerification');
+                          } else {
+                            context.pushNamed('checkLiveness');
+                          }
                         } else {
-                          context.pushNamed('checkLiveness');
+                          // Handle the case when permission is not granted
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                    'Camera permission is required to proceed.')),
+                          );
                         }
                       },
                       text: 'Take selfie',
