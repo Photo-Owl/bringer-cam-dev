@@ -58,7 +58,7 @@ class FirebaseAuthManager extends AuthManager
 
   @override
   Future signOut() {
-    logFirebaseEvent("SIGN_OUT",parameters: {
+    logFirebaseEvent("SIGN_OUT", parameters: {
       'uid': currentUserUid,
     });
     return FirebaseAuth.instance.signOut();
@@ -71,8 +71,8 @@ class FirebaseAuthManager extends AuthManager
         print('Error: delete user attempted with no logged in user!');
         return;
       }
-      logFirebaseEvent("DELETE_USER",parameters: {
-      'uid': currentUserUid,
+      logFirebaseEvent("DELETE_USER", parameters: {
+        'uid': currentUserUid,
       });
       await currentUser?.delete();
     } on FirebaseAuthException catch (e) {
@@ -220,8 +220,8 @@ class FirebaseAuthManager extends AuthManager
     // * Finally modify verificationCompleted below as instructed.
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      timeout:
-          const Duration(seconds: 0), // Skips Android's default auto-verification
+      timeout: const Duration(
+          seconds: 0), // Skips Android's default auto-verification
       verificationCompleted: (phoneAuthCredential) async {
         await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
         phoneAuthManager.update(() {
@@ -278,6 +278,30 @@ class FirebaseAuthManager extends AuthManager
         () => FirebaseAuth.instance.signInWithCredential(authCredential),
         'PHONE',
       );
+    }
+  }
+
+  Future linkWithExistingAccount({
+    required BuildContext context,
+    required String smsCode,
+  }) async {
+    if (kIsWeb) {
+      return _signInOrCreateAccount(
+        context,
+        () => phoneAuthManager.webPhoneAuthConfirmationResult!.confirm(smsCode),
+        'PHONE',
+      );
+    } else {
+      try {
+        final authCredential = PhoneAuthProvider.credential(
+          verificationId: phoneAuthManager.phoneAuthVerificationCode!,
+          smsCode: smsCode,
+        );
+        final user = FirebaseAuth.instance.currentUser;
+        return await user?.linkWithCredential(authCredential);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      }
     }
   }
 

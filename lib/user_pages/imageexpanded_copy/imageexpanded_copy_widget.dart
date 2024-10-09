@@ -1355,7 +1355,7 @@ class _ImageexpandedCopyWidgetState extends State<ImageexpandedCopyWidget>
                         );
                       },
                       carouselController: _model.carouselController ??=
-                          CarouselController(),
+                          CarouselSliderController(),
                       options: CarouselOptions(
                         initialPage: min(
                             valueOrDefault<int>(
