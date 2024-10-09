@@ -90,7 +90,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? const LivenessStartWidget()
+              ? const RedirectionCopyWidget()
               : const SignInCopyWidget(),
         ),
         FFRoute(

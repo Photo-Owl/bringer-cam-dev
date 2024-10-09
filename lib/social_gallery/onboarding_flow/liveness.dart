@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:bringer_cam_dev/auth/firebase_auth/auth_util.dart';
 import 'package:bringer_cam_dev/backend/backend.dart';
+import 'package:bringer_cam_dev/flutter_flow/flutter_flow_util.dart';
+import 'package:bringer_cam_dev/flutter_flow/flutter_flow_widgets.dart';
 import 'package:bringer_cam_dev/social_gallery/onboarding_flow/app_colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -78,9 +80,77 @@ class _LivenessWidgetState extends State<LivenessWidget> {
             ),
           ),
         ),
-        body: loading
-            ? const Center(child: CircularProgressIndicator())
-            : WebViewWidget(controller: webViewController),
+        body: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('users')
+              .doc(currentUserUid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            var userDoc = snapshot.data!;
+            var userDocData = userDoc.data() as Map<String, dynamic>? ?? {};
+            var isLive = userDocData['isLive'] as bool?;
+
+            if (isLive == true) {
+              return Container(
+                color: Colors.white,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                        size: 100,
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Liveness check passed",
+                        style: GoogleFonts.getFont(
+                          'Inter',
+                          height: 1.5,
+                          letterSpacing: -0.3,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                      ),
+                      FFButtonWidget(
+                        text: 'Continue',
+                        onPressed: () {
+                          context.pushReplacementNamed('waitForVerification');
+                        },
+                        options: FFButtonOptions(
+                          width: 200,
+                          height: 50,
+                          color: Colors.white,
+                          textStyle: GoogleFonts.getFont(
+                            'Inter',
+                            height: 1.5,
+                            letterSpacing: -0.3,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            return loading
+                ? const Center(child: CircularProgressIndicator())
+                : WebViewWidget(controller: webViewController);
+          },
+        ),
       ),
     );
   }
