@@ -35,6 +35,9 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
         parameters: {'screen_name': 'WaitForVerification'});
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    if (currentPhoneNumber.length > 3) {
+      _model.textController.text = currentPhoneNumber.substring(3);
+    }
     _getContactsPermission();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -274,30 +277,11 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                         return Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Align(
-                              alignment: AlignmentDirectional(-1, -1),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24, 50, 0, 0),
-                                child: Text(
-                                  'How we bring your photos',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        color: Color(0xFF775C7B),
-                                        fontSize: 16,
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                            ),
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
                               child: Text(
-                                'Give us your phone number so your friends can share photos with you',
+                                'Verify your phone number to continue.',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
