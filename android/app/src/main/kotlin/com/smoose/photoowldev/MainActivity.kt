@@ -204,8 +204,6 @@ class MainActivity : FlutterActivity() {
         return true
     }
     private fun hideStaticNotification(){
-        //TODO: Remove the following line
-        checkStaticNotificationImportance()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Open the app's notification settings
             val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
