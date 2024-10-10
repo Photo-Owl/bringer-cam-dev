@@ -181,17 +181,27 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     });
   }
 
-  showSnackbar() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text(
-          "You can turn off sharing mode Notification from the app settings"),
-      action: SnackBarAction(
-        label: 'Go to notification settings',
-        onPressed: () {
-          context.pushNamed('settingsPage');
-        },
-      ),
-    ));
+  showSnackbar() async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+    try {
+      final bool result = await platform
+              .invokeMethod<bool>('checkStaticNotificationImportance') ??
+          true;
+      if (result && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+              "You can turn off sharing mode Notification from the app settings"),
+          action: SnackBarAction(
+            label: 'Go to notification settings',
+            onPressed: () {
+              context.pushNamed('settingsPage');
+            },
+          ),
+        ));
+      }
+    } on PlatformException catch (e) {
+      print("Failed to check notification importance: '${e.message}'.");
+    }
   }
 
   @override

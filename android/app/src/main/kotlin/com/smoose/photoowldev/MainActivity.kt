@@ -117,6 +117,10 @@ class MainActivity : FlutterActivity() {
                             var data = getlog();
                             result.success(data.toString())
                         }
+                        "checkStaticNotificationImportance"->{
+                            var isON= checkStaticNotificationImportance()
+                            result.success(isON)
+                        }
                         "hideStaticNotification"->{
                             hideStaticNotification()
                             result.success("")
@@ -191,7 +195,17 @@ class MainActivity : FlutterActivity() {
 
         return logs.toString()
     }
+    private fun checkStaticNotificationImportance():Boolean{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val channel = notificationManager.getNotificationChannel("com.smoose.photoowldev.autoUploadServiceNotif")
+            return channel.importance != NotificationManager.IMPORTANCE_NONE
+        }
+        return true
+    }
     private fun hideStaticNotification(){
+        //TODO: Remove the following line
+        checkStaticNotificationImportance()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Open the app's notification settings
             val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
