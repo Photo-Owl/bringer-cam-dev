@@ -147,7 +147,19 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
           showSnackbar();
+          showMobileLink();
         }));
+  }
+
+  Future<void> showMobileLink() async {
+    final userRecord = await UsersRecord.collection
+        .where('uid', isEqualTo: currentUserUid)
+        .get();
+    final userDoc = userRecord.docs[0];
+    final userMap = userDoc.data() as Map<String, dynamic>;
+    if (userMap['phone_number_verified'] == null) {
+      context.pushNamed('WaitForVerification');
+    }
   }
 
   @override
