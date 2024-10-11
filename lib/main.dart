@@ -17,7 +17,7 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'package:flutter_driver/driver_extension.dart';
 
 void main() async {
-  enableFlutterDriverExtension(commands: [], finders: []);
+  // enableFlutterDriverExtension(commands: [], finders: []);
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await initFirebase();

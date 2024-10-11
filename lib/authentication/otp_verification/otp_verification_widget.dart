@@ -14,9 +14,11 @@ class OtpVerificationWidget extends StatefulWidget {
   const OtpVerificationWidget({
     super.key,
     required this.name,
+    required this.phoneNumber,
   });
 
   final String? name;
+  final String? phoneNumber;
 
   @override
   State<OtpVerificationWidget> createState() => _OtpVerificationWidgetState();
@@ -203,10 +205,10 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                   controller: _model.pinCodeController,
                                   onChanged: (_) {},
                                   onCompleted: (_) async {
-                                    logFirebaseEvent(
-                                        'OTP_VERIFICATION',parameters: {
-                                      'uid': currentUserUid,
-                                    });
+                                    logFirebaseEvent('OTP_VERIFICATION',
+                                        parameters: {
+                                          'uid': currentUserUid,
+                                        });
                                     Function() navigate = () {};
                                     GoRouter.of(context).prepareAuthEvent();
                                     final smsCodeVal =
@@ -222,7 +224,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                       return;
                                     }
                                     final phoneVerifiedUser =
-                                        await authManager.verifySmsCode(
+                                        await authManager.linkWithExistingAccount(
                                       context: context,
                                       smsCode: smsCodeVal,
                                     );
@@ -230,12 +232,19 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                                       return;
                                     }
 
+                                    await currentUserReference!
+                                        .update(createUsersRecordData(
+                                      phoneNumber: widget.phoneNumber,
+                                      phoneNumberVerified: true,
+                                    ));
+
+                                    // navigate = () => context.goNamedAuth(
+                                    //     'RedirectionCopy', context.mounted);
                                     navigate = () => context.goNamedAuth(
-                                        'RedirectionCopy', context.mounted);
+                                        'WaitForVerification', context.mounted);
                                     logFirebaseEvent('Otp filled');
                                     if (widget.name != null &&
                                         widget.name != '') {
-
                                       await currentUserReference!
                                           .update(createUsersRecordData(
                                         displayName: widget.name,
@@ -257,9 +266,7 @@ class _OtpVerificationWidgetState extends State<OtpVerificationWidget>
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 20.0, 16.0, 100.0),
                           child: FFButtonWidget(
-                            onPressed: () {
-
-                            },
+                            onPressed: () {},
                             text: 'Confirm & Continue',
                             options: FFButtonOptions(
                               width: double.infinity,
