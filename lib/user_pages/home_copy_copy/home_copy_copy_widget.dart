@@ -158,7 +158,7 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     final userDoc = userRecord.docs[0];
     final userMap = userDoc.data() as Map<String, dynamic>;
     if (userMap['phone_number_verified'] == null) {
-      context.pushNamed('WaitForVerification');
+      context.pushReplacementNamed('WaitForVerification');
     }
   }
 
