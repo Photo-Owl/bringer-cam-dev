@@ -12,7 +12,7 @@ class ImageexpandedCopyModel extends FlutterFlowModel<ImageexpandedCopyWidget> {
 
   final unfocusNode = FocusNode();
   // State field(s) for Carousel widget.
-  CarouselController? carouselController;
+  CarouselSliderController? carouselController;
 
   int carouselCurrentIndex = 1;
 

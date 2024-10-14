@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 
 
-version: 1.0.3+15
+version: 1.0.4+16
 
 
 
@@ -35,7 +35,7 @@ dependencies:
   auto_size_text: 3.0.0
   cached_network_image: 3.3.1
   camera: ^0.10.5+9
-  carousel_slider: 4.2.1
+  carousel_slider: 5.0.0
   cloud_firestore: 4.15.7
   cloud_firestore_platform_interface: 6.1.8
   cloud_firestore_web: 3.10.7
@@ -60,6 +60,7 @@ dependencies:
   firebase_storage: 11.6.8
   firebase_storage_platform_interface: 5.1.11
   firebase_storage_web: 3.7.2
+  flutter_svg: ^2.0.10+1
   flutter_animate: 4.1.1+1
   flutter_blurhash: 0.8.2
   flutter_cache_manager: 3.3.1
@@ -126,15 +127,16 @@ dependencies:
   percent_indicator: 4.2.3
   content_resolver: 0.3.1
 
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   fluttertoast: ^8.2.5
   android_intent_plus: ^5.0.2
   flutter_contacts: ^1.1.8
   image_gallery_saver: ^2.0.3
   permission_handler: ^11.3.1
+
+  flutter_mailer: any
+  logging_flutter: any
+
 
 dependency_overrides:
   http: 1.2.0
@@ -144,7 +146,8 @@ dev_dependencies:
   flutter_launcher_icons: 0.13.1
   flutter_lints: 3.0.0
   lints: 3.0.0
-
+  flutter_driver:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 

@@ -99,6 +99,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'name',
               ParamType.String,
             ),
+            phoneNumber: params.getParam('phoneNumber', ParamType.String),
           ),
         ),
         FFRoute(
@@ -354,6 +355,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'contactsPerm',
           path: '/contactsPerm',
           builder: (context, params) => const ContactsPermWidget(),
+        ),
+        FFRoute(
+          name: 'settingsPage',
+          path: '/socialGallery/settingsPage',
+          builder: (context, params) => SettingsPageWidget(),
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

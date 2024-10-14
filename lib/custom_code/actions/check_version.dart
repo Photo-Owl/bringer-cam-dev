@@ -12,7 +12,7 @@ import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
+import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -35,7 +35,11 @@ Future<bool> checkVersion() async {
     } else {
       print(info.buildNumber.toString() + '==' + version.toString());
       print('check version returned false');
-      return false;
+      if (kDebugMode) {
+        return true;
+      } else {
+        return false;
+      }
     }
   } catch (ex) {
     print('Error in checkversion ' + ex.toString());

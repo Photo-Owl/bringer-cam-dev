@@ -56,6 +56,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
