@@ -13,16 +13,20 @@ import android.content.SharedPreferences
 
 
 fun getCameraStoragePath(context: Context): String {
+
     val isExternalStorageWritable = Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
-
-    if (isExternalStorageWritable) {
-        val sdCardCameraPath = File(context.getExternalFilesDir(Environment.DIRECTORY_DCIM), "Camera")
-        if (sdCardCameraPath.exists() || sdCardCameraPath.mkdirs()) {
-            return '/storage/emulated/1/DCIM/Camera'
-        }
-    }
-
-    return "/storage/emulated/0/DCIM/Camera";
+    val cameraPath = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera")
+    Log.d("mainActivity debug","using path -> "+cameraPath.toString())
+    return cameraPath.toString()
+//    if (isExternalStorageWritable) {
+//        val sdCardCameraPath = File(context.getExternalFilesDir(Environment.DIRECTORY_DCIM), "Camera")
+//        if (sdCardCameraPath.exists() || sdCardCameraPath.mkdirs()) {
+//            Log.d("mainActivity debug","using path -> "+sdCardCameraPath.toString())
+//            return "/storage/emulated/1/DCIM/Camera"
+//        }
+//    }
+//    Log.d("mainActivity debug","using default path")
+//    return "/storage/emulated/0/DCIM/Camera";
 }
 
 class ImageFileObserver (private val context: Context) : FileObserver(getCameraStoragePath(context)) {
@@ -56,7 +60,7 @@ class ImageFileObserver (private val context: Context) : FileObserver(getCameraS
 
         if(event == 128){
             if(path?.toLowerCase()!!.endsWith(".jpg")||path?.toLowerCase()!!.endsWith(".png")||path?.toLowerCase()!!.endsWith(".jpeg")||path?.toLowerCase()!!.endsWith(".heic")){
-                val actual_path= getCameraStoragePath(context)+path
+                val actual_path= getCameraStoragePath(context)+'/'+path
                 Log.d("mainActivity debug","found new file in path -> "+actual_path)
                 val data = Data.Builder()
                     .putString("path", actual_path.toString())
