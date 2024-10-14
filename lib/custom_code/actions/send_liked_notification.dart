@@ -54,6 +54,7 @@ Future sendLikedNotification(
     // If the server returns a 200 OK response, then parse the JSON.
     print('Notification sent successfully');
   } else {
+    print(payloadJson);
     // If the server returns an unexpected response, throw an exception.
     throw Exception('Failed to send notification');
   }

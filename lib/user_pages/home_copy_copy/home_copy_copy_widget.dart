@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -126,8 +128,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
             timestamp: getCurrentTimestamp,
           ));
       //Resetting sent notifications
-
-      await checkForPerms();
+      if (Platform.isAndroid) {
+        await checkForPerms();
+      }
     });
 
     animationsMap.addAll({
