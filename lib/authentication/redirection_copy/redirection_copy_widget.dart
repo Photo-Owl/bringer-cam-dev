@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -71,10 +73,14 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      print("calling startService from dart");
-      const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
-      await channel.invokeMethod('startService');
-      if ((currentUserPhoto != '') &&
+
+      if (!Platform.isIOS) {
+        print("calling startService from dart");
+        const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
+        await channel.invokeMethod('startService');
+      }
+
+      if ((currentUserDocument?.isLive == true) &&
           (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
         context.goNamed('HomeCopyCopy');
         await currentUserReference!.update({
@@ -85,7 +91,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           ),
         });
       }
-      if (currentPhoneNumber == '' && (currentUserPhoto != '')) {
+      if (currentPhoneNumber == '') {
         context.goNamed('WaitForVerification');
       }
     });
@@ -270,7 +276,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                     BorderRadius.circular(0),
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.all(8),
+                                                padding:
+                                                    const EdgeInsets.all(8),
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(0),
@@ -405,13 +412,14 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                       width: double.infinity,
                                                       padding:
                                                           const EdgeInsetsDirectional
-                                                              .fromSTEB(24, 24,
-                                                                  24, 24),
+                                                              .fromSTEB(
+                                                              24, 24, 24, 24),
                                                       iconPadding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 0, 0, 0),
-                                                      color: const Color(0xFF5A00CD),
+                                                              0, 0, 0, 0),
+                                                      color: const Color(
+                                                          0xFF5A00CD),
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -429,7 +437,8 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
                                                                         .w600,
                                                               ),
                                                       elevation: 3,
-                                                      borderSide: const BorderSide(
+                                                      borderSide:
+                                                          const BorderSide(
                                                         color:
                                                             Colors.transparent,
                                                         width: 1,

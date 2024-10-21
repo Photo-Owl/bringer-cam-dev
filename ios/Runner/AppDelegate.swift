@@ -1,4 +1,5 @@
 import UIKit
+import Photos
 import BackgroundTasks
 import Flutter
 import UserNotifications
@@ -12,6 +13,7 @@ import Foundation
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
+        requestPhotoLibraryAuthorization()
       // Register background task with your bundle ID as prefix
 //      BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.smoose.photoowldev.backgroundtask", using: nil) { task in
 //          self.handleBackgroundTask(task: task as! BGProcessingTask)
@@ -81,8 +83,35 @@ import Foundation
         }
     }
     
+    private func requestPhotoLibraryAuthorization() {
+        let status = PHPhotoLibrary.authorizationStatus()
+        
+        switch status {
+        case .authorized:
+            // Access already granted
+            print("Photo Library Access: Granted")
+        case .denied, .restricted:
+            // Access has been denied or restricted
+            print("Photo Library Access: Denied/Restricted")
+        case .notDetermined:
+            // Access has not been requested yet, request it now
+            PHPhotoLibrary.requestAuthorization { status in
+                switch status {
+                case .authorized:
+                    print("Photo Library Access: Granted")
+                case .denied, .restricted, .notDetermined:
+                    print("Photo Library Access: Denied/Restricted/NotDetermined")
+                @unknown default:
+                    fatalError("Unknown authorization status")
+                }
+            }
+        @unknown default:
+            fatalError("Unknown authorization status")
+        }
+    }
+    
     override func applicationDidEnterBackground(_ application: UIApplication) {
-        scheduleBackgroundTask()
+//        scheduleBackgroundTask()
     }
     
 //    override func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

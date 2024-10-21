@@ -7,8 +7,8 @@
     <string name="auto_upload_notif_title">Searching for photos</string>
     <string name="auto_upload_notif_sub_text">Social Gallery</string>
     <string name="auto_upload_notif_body_inactive">Sign in to start sharing automatically.</string>
-    <string name="auto_upload_notif_body_on">Searching 🔍 photos from your friends and events. Instant sharing mode is ON.</string>
-    <string name="auto_upload_notif_body_off">Searching 🔍 photos from your friends and events. Instant sharing mode is OFF</string>
+    <string name="auto_upload_notif_body_on">Tap to turn off this notification from the app settings.</string>
+    <string name="auto_upload_notif_body_off">Tap to turn off this notification from the app settings.</string>
     <string name="bringer_logo">SocialGalleryLogo</string>
     <string name="chat_bubble_triangle">chat_bubble_triangle</string>
     <string name="chat_message_on">Safe face sharing mode ON 🚀</string>

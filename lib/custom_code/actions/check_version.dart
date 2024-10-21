@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'dart:io';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
@@ -10,7 +12,7 @@ import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
+import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -23,6 +25,9 @@ Future<bool> checkVersion() async {
     if (info.buildNumber.isEmpty) {
       return true;
     }
+    if (Platform.isIOS) {
+      return true;
+    }
     if (info.buildNumber.toString() == version.toString()) {
       print(info.buildNumber.toString() + '==' + version.toString());
       print('check version returned true');
@@ -30,7 +35,11 @@ Future<bool> checkVersion() async {
     } else {
       print(info.buildNumber.toString() + '==' + version.toString());
       print('check version returned false');
-      return false;
+      if (kDebugMode) {
+        return true;
+      } else {
+        return false;
+      }
     }
   } catch (ex) {
     print('Error in checkversion ' + ex.toString());

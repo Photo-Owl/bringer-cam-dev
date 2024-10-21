@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'dart:io';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
@@ -69,10 +71,14 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
   final combinedCloudImages = {...imagesMatched, ...imagesUploadedByUser};
   var filteredCloudImages = <ImageModelStruct>{};
   final ownerDetails = <String, OwnerDetailsStruct>{};
-
-  const methodChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
-  final isContactsPermGranted =
-      await methodChannel.invokeMethod('checkForContactsPermission');
+  var isContactsPermGranted;
+  if (Platform.isAndroid) {
+    const methodChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
+    isContactsPermGranted =
+        await methodChannel.invokeMethod('checkForContactsPermission');
+  } else {
+    isContactsPermGranted = false;
+  }
 
   final phoneList = isContactsPermGranted
       ? await FlutterContacts.getContacts(withProperties: true).then(
@@ -94,7 +100,13 @@ Future<List<TimelineItemStruct>> getAllImages(String uid) async {
     );
 
     owners = isContactsPermGranted
-        ? owners.where((owner) => phoneList.contains(owner.phoneNum))
+        ? owners.where((owner) {
+            if (owner.phoneNum != '') {
+              return phoneList.contains(owner.phoneNum);
+            } else {
+              return true;
+            }
+          })
         : owners;
 
     for (final owner in owners) {

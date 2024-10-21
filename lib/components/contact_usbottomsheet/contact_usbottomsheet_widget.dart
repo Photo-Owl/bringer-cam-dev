@@ -1,3 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
+import 'package:path_provider/path_provider.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +59,8 @@ class _ContactUsbottomsheetWidgetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
               child: Text(
                 'Contact Us',
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
@@ -63,7 +70,8 @@ class _ContactUsbottomsheetWidgetState
               ),
             ),
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 8.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 8.0),
               child: Text(
                 'Need help with anything?',
                 style: FlutterFlowTheme.of(context).labelMedium.override(
@@ -86,7 +94,8 @@ class _ContactUsbottomsheetWidgetState
                 height: 60.0,
                 decoration: const BoxDecoration(),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      12.0, 8.0, 12.0, 8.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -147,15 +156,46 @@ class _ContactUsbottomsheetWidgetState
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                await launchURL(
-                    'https://wa.me/918248171862?text=I%20want%20to%20report%20a%20bug');
+                //await launchURL(
+                //    'https://wa.me/918248171862?text=I%20want%20to%20report%20a%20bug');
+
+                try {
+                  const platform =
+                      MethodChannel('com.smoose.photoowldev/autoUpload');
+
+                  final String result = (await platform.invokeMethod<String>(
+                      'getlog', null)) as String;
+
+                  Directory directory = await getTemporaryDirectory();
+                  final File file = File('${directory.path}/issues.txt');
+                  await file.writeAsString(result);
+
+                  final MailOptions mailOptions = MailOptions(
+                    body: 'report a issue',
+                    subject: 'Report problem',
+                    recipients: ['claudin@smoose.in'],
+                    isHTML: false,
+                    attachments: [file.path],
+                  );
+
+                  try {
+                    await FlutterMailer.send(mailOptions);
+                  } catch (error) {
+                    print('Could not send email: $error');
+                  }
+                  await file.delete();
+                } on PlatformException catch (e) {
+                  print("Failed to get message: '${e.message}'.");
+                }
+
               },
               child: Container(
                 width: double.infinity,
                 height: 60.0,
                 decoration: const BoxDecoration(),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      12.0, 8.0, 12.0, 8.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -215,7 +255,8 @@ class _ContactUsbottomsheetWidgetState
                 height: 60.0,
                 decoration: const BoxDecoration(),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      12.0, 8.0, 12.0, 8.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [

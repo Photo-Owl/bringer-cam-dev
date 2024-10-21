@@ -1,3 +1,5 @@
+import 'package:permission_handler/permission_handler.dart';
+
 import '../../backend/schema/users_record.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
@@ -173,85 +175,25 @@ class _DosAndDontsCopyWidgetState extends State<DosAndDontsCopyWidget> {
                         0.0, 24.0, 0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'DOS_AND_DONTS_CONTINUE',parameters: {
+                        logFirebaseEvent('DOS_AND_DONTS_CONTINUE', parameters: {
                           'uid': currentUserUid,
                         });
-                        final selectedMedia = await selectMedia(
-                          imageQuality: 75,
-                          multiImage: false,
-                        );
-                        if (selectedMedia != null &&
-                            selectedMedia.every((m) =>
-                                validateFileFormat(m.storagePath, context))) {
-                          setState(() => _model.isDataUploading = true);
-                          var selectedUploadedFiles = <FFUploadedFile>[];
-
-                          var downloadUrls = <String>[];
-                          try {
-                            selectedUploadedFiles = selectedMedia
-                                .map((m) => FFUploadedFile(
-                                      name: m.storagePath.split('/').last,
-                                      bytes: m.bytes,
-                                      height: m.dimensions?.height,
-                                      width: m.dimensions?.width,
-                                      blurHash: m.blurHash,
-                                    ))
-                                .toList();
-
-                            downloadUrls = (await Future.wait(
-                              selectedMedia.map(
-                                (m) async =>
-                                    await uploadData(m.storagePath, m.bytes),
-                              ),
-                            ))
-                                .where((u) => u != null)
-                                .map((u) => u!)
-                                .toList();
-                          } finally {
-                            _model.isDataUploading = false;
-                          }
-                          if (selectedUploadedFiles.length ==
-                                  selectedMedia.length &&
-                              downloadUrls.length == selectedMedia.length) {
-                            setState(() {
-                              _model.uploadedLocalFile =
-                                  selectedUploadedFiles.first;
-                              _model.uploadedFileUrl = downloadUrls.first;
-                            });
+                        final permissionStatus =
+                            await Permission.camera.request();
+                        if (permissionStatus.isGranted) {
+                          if (currentUserDocument?.isLive ?? false) {
+                            context.pushNamed('WaitForVerification');
                           } else {
-                            setState(() {});
-                            return;
+                            context.pushNamed('checkLiveness');
                           }
+                        } else {
+                          // Handle the case when permission is not granted
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                content: Text(
+                                    'Camera permission is required to proceed.')),
+                          );
                         }
-                        await currentUserReference!
-                            .update(createUsersRecordData(
-                          photoUrl: _model.uploadedFileUrl,
-                        ));
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('You light up the room!'),
-                              content: const Text(
-                                  'Leave the magic to us . Sit back and Enjoy your photos :)'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        context.goNamed('WaitForVerification');
-                        _model.apires = await UserOnboardingCall.call(
-                          storageUrl: _model.uploadedFileUrl,
-                          uid: currentUserUid,
-                        );
-
-                        // setState(() {});
                       },
                       text: 'Take selfie',
                       options: FFButtonOptions(
