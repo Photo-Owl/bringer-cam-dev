@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bringer_cam_dev/social_gallery/onboarding_flow/battery_permission_widget/battery_permission_widget.dart';
 import 'package:bringer_cam_dev/social_gallery/onboarding_flow/get_perms_widget.dart';
 import 'package:bringer_cam_dev/social_gallery/onboarding_flow/intro_share_widget.dart';
+import 'package:bringer_cam_dev/social_gallery/onboarding_flow/liveness.dart';
+import 'package:bringer_cam_dev/social_gallery/onboarding_flow/start_liveness.dart';
 import 'package:bringer_cam_dev/user_pages/alldone/alldone_widget.dart';
 import 'package:bringer_cam_dev/user_pages/battery_optimization/battery_optimization_widget.dart';
 import 'package:bringer_cam_dev/user_pages/connect_gallery/connect_gallery_widget.dart';
@@ -355,6 +357,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'contactsPerm',
           path: '/contactsPerm',
           builder: (context, params) => const ContactsPermWidget(),
+        ),
+        FFRoute(
+          name: 'checkLiveness',
+          path: '/checkLiveness',
+          builder: (context, params) => const LivenessWidget(),
+        ),
+        FFRoute(
+          name: 'startLivenessCheck',
+          path: '/startLivenessCheck',
+          builder: (context, params) => const LivenessStartWidget(),
         ),
         FFRoute(
           name: 'settingsPage',

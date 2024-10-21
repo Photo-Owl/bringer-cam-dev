@@ -88,14 +88,10 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                         ),
                         AuthUserStreamWidget(
                           builder: (context) {
-                            if ((currentUserPhoto != null &&
-                                    currentUserPhoto != '') &&
+                            if ((currentUserDocument?.isLive == true) &&
                                 (valueOrDefault(
-                                            currentUserDocument?.faceId, '') ==
-                                        null ||
-                                    valueOrDefault(
-                                            currentUserDocument?.faceId, '') ==
-                                        '')) {
+                                        currentUserDocument?.faceId, '') ==
+                                    '')) {
                               return Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     24, 45, 24, 0),

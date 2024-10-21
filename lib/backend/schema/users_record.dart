@@ -104,6 +104,10 @@ class UsersRecord extends FirestoreRecord {
   bool? _isGoogleLogin;
   bool get isGoogleLogin => _isGoogleLogin ?? false;
   bool hasIsGoogleLogin() => _isGoogleLogin != null;
+  // "is_live" field.
+  bool? _isLive;
+  bool get isLive => _isLive ?? false;
+  bool hasIsLive() => _isLive != null;
 
   bool? _phoneNumberVerified;
   bool get phoneNumberVerified => _phoneNumberVerified ?? false;
@@ -129,7 +133,9 @@ class UsersRecord extends FirestoreRecord {
     _lastDownloadedAt = snapshotData['last_downloaded_at'] as DateTime?;
     _allowPhotoAlbumPrint = snapshotData['allow_photo_album_print'] as bool?;
     _isGoogleLogin = snapshotData['is_google_login'] as bool?;
+    _isLive = snapshotData['isLive'] as bool?;
     _phoneNumberVerified = snapshotData['phone_number_verified'] as bool?;
+
   }
 
   static CollectionReference get collection =>
@@ -206,6 +212,7 @@ Map<String, dynamic> createUsersRecordData({
       'last_downloaded_at': lastDownloadedAt,
       'allow_photo_album_print': allowPhotoAlbumPrint,
       'is_google_login': isGoogleLogin,
+      'is_live': false,
       'phone_number_verified': phoneNumberVerified,
     }.withoutNulls,
   );
@@ -236,6 +243,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.lastDownloadedAt == e2?.lastDownloadedAt &&
         e1?.allowPhotoAlbumPrint == e2?.allowPhotoAlbumPrint &&
         e1?.isGoogleLogin == e2?.isGoogleLogin &&
+        e1?.isLive == e2?.isLive;
         e1?.phoneNumberVerified == e2?.phoneNumberVerified;
   }
 
@@ -259,6 +267,7 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.lastDownloadedAt,
         e?.allowPhotoAlbumPrint,
         e?.isGoogleLogin,
+        e?.isLive,
         e?.phoneNumberVerified,
       ]);
 

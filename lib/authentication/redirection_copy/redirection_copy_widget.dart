@@ -73,13 +73,14 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+
       if (!Platform.isIOS) {
         print("calling startService from dart");
         const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
         await channel.invokeMethod('startService');
       }
 
-      if ((currentUserPhoto != '') &&
+      if ((currentUserDocument?.isLive == true) &&
           (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
         context.goNamed('HomeCopyCopy');
         await currentUserReference!.update({
@@ -90,7 +91,7 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
           ),
         });
       }
-      if (currentPhoneNumber == '' && (currentUserPhoto != '')) {
+      if (currentPhoneNumber == '') {
         context.goNamed('WaitForVerification');
       }
     });
