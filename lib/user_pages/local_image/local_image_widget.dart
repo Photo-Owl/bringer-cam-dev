@@ -203,7 +203,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                               );
                             },
                             carouselController: _model.uploadedController ??=
-                                CarouselController(),
+                                CarouselSliderController(),
                             options: CarouselOptions(
                               initialPage: min(
                                   valueOrDefault<int>(
@@ -335,7 +335,7 @@ class _LocalImageWidgetState extends State<LocalImageWidget>
                               );
                             },
                             carouselController: _model.notuploadedController ??=
-                                CarouselController(),
+                                CarouselSliderController(),
                             options: CarouselOptions(
                               initialPage: min(
                                   valueOrDefault<int>(

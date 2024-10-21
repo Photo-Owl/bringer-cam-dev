@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'dart:io';
+
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,8 +12,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 
 Future<void> initializeNotifs() async {
   try {
+    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
     final NotificationSettings notificationSettings =
-        await FirebaseMessaging.instance.requestPermission(
+        await _firebaseMessaging.requestPermission(
       alert: true,
       carPlay: true,
       criticalAlert: true,
@@ -21,12 +24,29 @@ Future<void> initializeNotifs() async {
       badge: true,
     );
 
+    await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    if (Platform.isIOS) {
+      String? apnsToken = await _firebaseMessaging.getAPNSToken();
+      print('APNS token: $apnsToken');
+
+      // If APNS token is null, you might want to retry after a delay
+      if (apnsToken == null) {
+        await Future.delayed(Duration(seconds: 5));
+        apnsToken = await _firebaseMessaging.getAPNSToken();
+        print('APNS token after retry: $apnsToken');
+      }
+    }
+
     if (FirebaseAuth.instance.currentUser != null &&
         notificationSettings.authorizationStatus ==
             AuthorizationStatus.authorized) {
       final String? uid = FirebaseAuth.instance.currentUser!.uid;
-      final String? fcmToken = await FirebaseMessaging.instance.getToken();
-
+      final String? fcmToken = await _firebaseMessaging.getToken();
+      print('FCM token $fcmToken');
       if (uid != null && fcmToken != null) {
         await FirebaseFirestore.instance
             .collection('users')

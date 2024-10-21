@@ -12,7 +12,9 @@ import 'wait_for_verification_model.dart';
 export 'wait_for_verification_model.dart';
 
 class WaitForVerificationWidget extends StatefulWidget {
-  const WaitForVerificationWidget({super.key});
+  const WaitForVerificationWidget({
+    super.key,
+  });
 
   @override
   State<WaitForVerificationWidget> createState() =>
@@ -33,6 +35,9 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
         parameters: {'screen_name': 'WaitForVerification'});
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    if (currentPhoneNumber.length > 3) {
+      _model.textController.text = currentPhoneNumber.substring(3);
+    }
     _getContactsPermission();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -263,34 +268,16 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                     ),
                     AuthUserStreamWidget(builder: (context) {
                       if (currentPhoneNumber == null ||
-                          currentPhoneNumber == '') {
+                          currentPhoneNumber == '' ||
+                          !currentUserPhoneNumberVerified) {
                         return Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Align(
-                              alignment: AlignmentDirectional(-1, -1),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24, 50, 0, 0),
-                                child: Text(
-                                  'How we bring your photos',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Inter',
-                                        color: Color(0xFF775C7B),
-                                        fontSize: 16,
-                                        letterSpacing: 0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ),
-                            ),
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(24, 24, 24, 0),
                               child: Text(
-                                'Give us your phone number so your friends can share photos with you',
+                                'Verify your phone number to continue.',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -417,11 +404,40 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                                   24, 16, 24, 16),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  await currentUserReference!
-                                      .update(createUsersRecordData(
-                                    phoneNumber:
-                                        '+91${_model.textController.text}',
-                                  ));
+                                  // await currentUserReference!
+                                  //     .update(createUsersRecordData(
+                                  //   phoneNumber:
+                                  //       '+91${_model.textController.text}',
+                                  // ));
+                                  if (_model.textController.text.length < 10) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Please enter a valid mobile number.')));
+                                    return;
+                                  }
+
+                                  final codeSent =
+                                      await authManager.beginPhoneAuth(
+                                          context: context,
+                                          phoneNumber:
+                                              '+91${_model.textController.text}',
+                                          onCodeSent: (context) {});
+
+                                  if (codeSent) {
+                                    context.pushNamed('OtpVerification',
+                                        queryParameters: {
+                                          'phoneNumber':
+                                              '+91${_model.textController.text}',
+                                        });
+                                  }
+                                  final error = authManager
+                                      .phoneAuthManager.phoneAuthError;
+                                  if (error != null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(error.toString())));
+                                  }
                                 },
                                 text: 'Continue',
                                 options: FFButtonOptions(
@@ -452,7 +468,8 @@ class _WaitForVerificationWidgetState extends State<WaitForVerificationWidget> {
                           ],
                         );
                       } else if (currentPhoneNumber != null &&
-                          currentPhoneNumber != '') {
+                          currentPhoneNumber != '' &&
+                          currentUserPhoneNumberVerified) {
                         return Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.center,

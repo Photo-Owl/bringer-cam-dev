@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -126,8 +128,9 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
             timestamp: getCurrentTimestamp,
           ));
       //Resetting sent notifications
-
-      await checkForPerms();
+      if (Platform.isAndroid) {
+        await checkForPerms();
+      }
     });
 
     animationsMap.addAll({
@@ -147,7 +150,19 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
           showSnackbar();
+          showMobileLink();
         }));
+  }
+
+  Future<void> showMobileLink() async {
+    final userRecord = await UsersRecord.collection
+        .where('uid', isEqualTo: currentUserUid)
+        .get();
+    final userDoc = userRecord.docs[0];
+    final userMap = userDoc.data() as Map<String, dynamic>;
+    if (userMap['phone_number_verified'] == null) {
+      context.pushReplacementNamed('WaitForVerification');
+    }
   }
 
   @override
@@ -181,17 +196,27 @@ class _HomeCopyCopyWidgetState extends State<HomeCopyCopyWidget>
     });
   }
 
-  showSnackbar() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: const Text(
-          "You can turn off sharing mode Notification from the app settings"),
-      action: SnackBarAction(
-        label: 'Go to notification settings',
-        onPressed: () {
-          context.pushNamed('settingsPage');
-        },
-      ),
-    ));
+  showSnackbar() async {
+    const platform = MethodChannel('com.smoose.photoowldev/autoUpload');
+    try {
+      final bool result = await platform
+              .invokeMethod<bool>('checkStaticNotificationImportance') ??
+          true;
+      if (result && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text(
+              "You can turn off sharing mode Notification from the app settings"),
+          action: SnackBarAction(
+            label: 'Go to notification settings',
+            onPressed: () {
+              context.pushNamed('settingsPage');
+            },
+          ),
+        ));
+      }
+    } on PlatformException catch (e) {
+      print("Failed to check notification importance: '${e.message}'.");
+    }
   }
 
   @override

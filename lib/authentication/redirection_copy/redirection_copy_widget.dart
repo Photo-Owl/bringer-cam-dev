@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
@@ -71,10 +73,13 @@ class _RedirectionCopyWidgetState extends State<RedirectionCopyWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      print("calling startService from dart");
-      const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
-      await channel.invokeMethod('startService');
-      print(currentUserDocument?.isLive);
+
+      if (!Platform.isIOS) {
+        print("calling startService from dart");
+        const channel = MethodChannel('com.smoose.photoowldev/autoUpload');
+        await channel.invokeMethod('startService');
+      }
+
       if ((currentUserDocument?.isLive == true) &&
           (valueOrDefault(currentUserDocument?.faceId, '') != '')) {
         context.goNamed('HomeCopyCopy');

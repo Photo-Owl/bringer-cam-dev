@@ -101,6 +101,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'name',
               ParamType.String,
             ),
+            phoneNumber: params.getParam('phoneNumber', ParamType.String),
           ),
         ),
         FFRoute(

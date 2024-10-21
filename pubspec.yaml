@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 
 
-version: 1.0.3+15
+version: 1.0.4+16
 
 
 
@@ -35,7 +35,7 @@ dependencies:
   auto_size_text: 3.0.0
   cached_network_image: 3.3.1
   camera: ^0.10.5+9
-  carousel_slider: 4.2.1
+  carousel_slider: 5.0.0
   cloud_firestore: 4.15.7
   cloud_firestore_platform_interface: 6.1.8
   cloud_firestore_web: 3.10.7
@@ -60,6 +60,7 @@ dependencies:
   firebase_storage: 11.6.8
   firebase_storage_platform_interface: 5.1.11
   firebase_storage_web: 3.7.2
+  flutter_svg: ^2.0.10+1
   flutter_animate: 4.1.1+1
   flutter_blurhash: 0.8.2
   flutter_cache_manager: 3.3.1
@@ -82,7 +83,7 @@ dependencies:
   image_picker_for_web: 3.0.1
   image_picker_ios: 0.8.8+2
   image_picker_platform_interface: 2.9.1
-  intl: ^0.18.1
+  intl: 0.19.0
   json_path: 0.6.2
   lottie: 2.7.0
   media_scanner: ^2.1.0
@@ -131,6 +132,8 @@ dependencies:
   android_intent_plus: ^5.0.2
   flutter_contacts: ^1.1.8
   webview_flutter: ^4.8.0
+  image_gallery_saver: ^2.0.3
+  permission_handler: ^11.3.1
 
   flutter_mailer: any
   logging_flutter: any
@@ -145,7 +148,8 @@ dev_dependencies:
   flutter_launcher_icons: 0.13.1
   flutter_lints: 3.0.0
   lints: 3.0.0
-
+  flutter_driver:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 

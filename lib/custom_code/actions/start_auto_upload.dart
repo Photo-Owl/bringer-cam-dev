@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'dart:io';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
@@ -41,37 +43,40 @@ void taskDispatcher() {
 }
 
 Future startAutoUpload() async {
-  Workmanager().initialize(
-    taskDispatcher,
-    isInDebugMode: false,
-  );
-  Workmanager().registerPeriodicTask(
-    'com.smoose.photoowldev.uploadTask',
-    'com.smoose.photoowldev.uploadTask',
-    frequency: const Duration(minutes: 15),
-    existingWorkPolicy: ExistingWorkPolicy.replace,
-    constraints: Constraints(
-      networkType: NetworkType.connected,
-      requiresBatteryNotLow: false,
-    ),
-  );
-  const autoUploadChannel = MethodChannel('com.smoose.photoowldev/autoUpload');
-  autoUploadChannel.setMethodCallHandler((MethodCall methodCall) async {
-    if (methodCall.method == "upload_image") {
-      WidgetsFlutterBinding.ensureInitialized();
-      final appState = FFAppState();
-      appState.update(() {
-        appState.shouldReloadGallery = true;
-      });
-      Workmanager().registerOneOffTask(
-        'com.smoose.photoowldev.immediateTask',
-        'upload-img',
-        existingWorkPolicy: ExistingWorkPolicy.append,
-        constraints: Constraints(
-          networkType: NetworkType.connected,
-          requiresBatteryNotLow: false,
-        ),
-      );
-    }
-  });
+  if (Platform.isAndroid) {
+    Workmanager().initialize(
+      taskDispatcher,
+      isInDebugMode: false,
+    );
+    Workmanager().registerPeriodicTask(
+      'com.smoose.photoowldev.uploadTask',
+      'com.smoose.photoowldev.uploadTask',
+      frequency: const Duration(minutes: 15),
+      existingWorkPolicy: ExistingWorkPolicy.replace,
+      constraints: Constraints(
+        networkType: NetworkType.connected,
+        requiresBatteryNotLow: false,
+      ),
+    );
+    const autoUploadChannel =
+        MethodChannel('com.smoose.photoowldev/autoUpload');
+    autoUploadChannel.setMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == "upload_image") {
+        WidgetsFlutterBinding.ensureInitialized();
+        final appState = FFAppState();
+        appState.update(() {
+          appState.shouldReloadGallery = true;
+        });
+        Workmanager().registerOneOffTask(
+          'com.smoose.photoowldev.immediateTask',
+          'upload-img',
+          existingWorkPolicy: ExistingWorkPolicy.append,
+          constraints: Constraints(
+            networkType: NetworkType.connected,
+            requiresBatteryNotLow: false,
+          ),
+        );
+      }
+    });
+  }
 }
